@@ -2,4 +2,6 @@
 *.dll
 *.suo
 */bin
+*/obj
+*.csproj.user
 !.gitkeep
