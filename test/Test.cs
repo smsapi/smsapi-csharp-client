@@ -19,8 +19,8 @@ namespace SMSApi
 
         public SMSApi.Api.Client client()
         {
-            SMSApi.Api.Client client = new SMSApi.Api.Client("lentzy");
-            client.SetPasswordRAW("ytz");
+            SMSApi.Api.Client client = new SMSApi.Api.Client("test");
+            client.SetPasswordRAW("test");
 
             return client;
         }

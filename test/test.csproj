@@ -56,9 +56,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\api\api.csproj">
+    <ProjectReference Include="..\smsapi\smsapi.csproj">
       <Project>{05C2A720-2CD1-401B-A832-9CE85313C248}</Project>
-      <Name>api</Name>
+      <Name>smsapi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

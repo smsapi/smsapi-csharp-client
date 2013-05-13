@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{05C2A720-2CD1-401B-A832-9CE85313C248}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smsapi", "smsapi\smsapi.csproj", "{05C2A720-2CD1-401B-A832-9CE85313C248}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,16 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|x86.ActiveCfg = Release|Any CPU
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -35,6 +25,16 @@ Global
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Release|x86.ActiveCfg = Release|x86
 		{B90E3E85-A785-4790-8BD0-D1A1A4EFFDD2}.Release|x86.Build.0 = Release|x86
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{05C2A720-2CD1-401B-A832-9CE85313C248}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
