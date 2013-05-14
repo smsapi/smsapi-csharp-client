@@ -34,7 +34,7 @@ namespace SMSApi.Api
 
             action.Client(client);
             action.Proxy(proxy);
-            action.Id(id);
+            action.Ids(id);
 
             return action;
         }

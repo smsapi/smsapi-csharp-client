@@ -1,18 +1,16 @@
 ﻿using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class MMSDelete : BaseDeprecated
+    public class MMSDelete : Base<SMSApi.Api.Response.List>
     {
-        public MMSDelete() : base()
-        {
-        }
+        public MMSDelete() : base() { }
 
-        protected string[] _Id;
+        protected override string Uri() { return "mms.do"; }
 
-        private NameValueCollection Values()
+        protected string[] ids;
+
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -21,39 +19,20 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("sch_del", string.Join("|", _Id));
+            collection.Add("sch_del", string.Join("|", ids));
 
             return collection;
         }
 
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.List Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("mms.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.List));
-            SMSApi.Api.Response.List response = (SMSApi.Api.Response.List)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
-        }
-
         public MMSDelete Id(string id)
         {
-            this._Id = new string[] { id };
+            this.ids = new string[] { id };
             return this;
         }
 
-        public MMSDelete Id(string[] ids)
+        public MMSDelete Ids(string[] ids)
         {
-            this._Id = ids;
+            this.ids = ids;
             return this;
         }
     }

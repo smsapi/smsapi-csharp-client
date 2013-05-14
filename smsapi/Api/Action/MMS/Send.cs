@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
@@ -10,19 +8,6 @@ namespace SMSApi.Api.Action
         public MMSSend() : base() { }
 
         protected override string Uri() { return "mms.do"; }
-
-/*        public SMSApi.Api.Response.Status Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("mms.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Status));
-            SMSApi.Api.Response.Status response = (SMSApi.Api.Response.Status)serializer.ReadObject(data);
-            data.Close();
-
-            return response;
-        }*/
 
         protected override NameValueCollection Values()
         {

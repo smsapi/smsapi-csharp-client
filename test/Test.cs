@@ -9,8 +9,8 @@ namespace SMSApi
         {
             var o = new Test();
 
-            o.test_sms();
-//            o.test_mms();
+//            o.test_sms();
+            o.test_mms();
 //            o.test_vms();
 //            o.test_hlr();
 //            o.test_sender();
@@ -26,14 +26,10 @@ namespace SMSApi
             return client;
         }
 
-        protected SMSApi.Api.SMSFactory SMSFactory;
-        protected SMSApi.Api.MMSFactory MMSFactory;
         protected SMSApi.Api.VMSFactory VMSFactory;
 
         public Test()
         {
-            SMSFactory = new SMSApi.Api.SMSFactory(client());
-            MMSFactory = new SMSApi.Api.MMSFactory(client());
             VMSFactory = new SMSApi.Api.VMSFactory(client());
         }
 
@@ -159,7 +155,7 @@ namespace SMSApi
 
             System.Console.WriteLine("Get:");
             result =
-                SMSFactory.ActionGet()
+                smsApi.ActionGet()
                     .Ids(ids)
                     .Execute();
 
@@ -169,7 +165,7 @@ namespace SMSApi
             }       
 
             var deleted =
-                SMSFactory
+                smsApi
                     .ActionDelete()
                         .Id(ids)
                         .Execute();
@@ -179,8 +175,10 @@ namespace SMSApi
 
         public void test_mms()
         {
+            var mmsApi = new SMSApi.Api.MMSFactory(client());
+
             var result =
-                MMSFactory.ActionSend()
+                mmsApi.ActionSend()
                     .SetSubject("test subject")
                     .SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"http://www.smsapi.pl/media/mms.jpg\" region=\"Image\"></img></par></body></smil>")
                     .SetTo("694562829")
@@ -199,8 +197,8 @@ namespace SMSApi
 
             System.Console.WriteLine("Get:");
             result =
-                MMSFactory.ActionGet()
-                    .Id(ids)
+                mmsApi.ActionGet()
+                    .Ids(ids)
                     .Execute();
 
             foreach (var status in result.List)
@@ -209,9 +207,9 @@ namespace SMSApi
             }
 
             var deleted =
-                MMSFactory
+                mmsApi
                     .ActionDelete()
-                        .Id(ids)
+                        .Ids(ids)
                         .Execute();
 
             System.Console.WriteLine("Deleted: " + deleted.Count);
