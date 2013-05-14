@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Action\BaseDeprecated.cs" />
     <Compile Include="Api\Action\Base.cs" />
     <Compile Include="Api\Action\Phonebook\ContactGet.cs" />
     <Compile Include="Api\Action\Phonebook\ContactList.cs" />
