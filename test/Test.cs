@@ -9,10 +9,10 @@ namespace SMSApi
         {
             var o = new Test();
 
-//            o.test_sms();
+            o.test_sms();
 //            o.test_mms();
 //            o.test_vms();
-            o.test_hlr();
+//            o.test_hlr();
 //            o.test_sender();
 //            o.test_phonebookgroup();
 //            o.test_phonebookcontact();
@@ -131,8 +131,11 @@ namespace SMSApi
 
         public void test_sms()
         {
-            var result = 
-                SMSFactory.ActionSend()
+            var smsApi = new SMSApi.Api.SMSFactory(client());
+
+
+            var result =
+                smsApi.ActionSend()
                     .SetText("test message")
                     .SetTo("694562829")
                     .SetDateSent(DateTime.Now.AddHours(2))
@@ -157,7 +160,7 @@ namespace SMSApi
             System.Console.WriteLine("Get:");
             result =
                 SMSFactory.ActionGet()
-                    .Id(ids)
+                    .Ids(ids)
                     .Execute();
 
             foreach (var status in result.List)

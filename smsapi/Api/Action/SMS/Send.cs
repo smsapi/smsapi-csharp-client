@@ -9,22 +9,9 @@ namespace SMSApi.Api.Action
     {
         public SMSSend() : base() { }
 
-        public SMSApi.Api.Response.Status Execute()
-        {
-            Validate();
+        protected override string Uri() { return "sms.do"; }
 
-            Stream data = proxy.Execute("sms.do", Values());
-
-            HandleError(data);
-
-            SMSApi.Api.Response.Status response = ResponseToObject<SMSApi.Api.Response.Status>(data);
-
-            data.Close();
-
-            return response;
-        }
-
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -78,7 +65,7 @@ namespace SMSApi.Api.Action
             return collection;
         }
 
-        private void Validate()
+        protected override void Validate()
         {
             if( To != null && Group != null )
             {

@@ -9,7 +9,9 @@ namespace SMSApi.Api.Action
     {
         public MMSSend() : base() { }
 
-        public SMSApi.Api.Response.Status Execute()
+        protected override string Uri() { return "mms.do"; }
+
+/*        public SMSApi.Api.Response.Status Execute()
         {
             Validate();
 
@@ -20,9 +22,9 @@ namespace SMSApi.Api.Action
             data.Close();
 
             return response;
-        }
+        }*/
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -60,7 +62,7 @@ namespace SMSApi.Api.Action
             return collection;
         }
 
-        private void Validate()
+        protected override void Validate()
         {
             if( To != null && Group != null )
             {

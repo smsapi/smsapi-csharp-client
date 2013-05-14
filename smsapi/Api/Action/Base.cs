@@ -34,7 +34,7 @@ namespace SMSApi.Api.Action
         }
 
         abstract protected NameValueCollection Values();
-        protected void Validate() { }
+        protected virtual void Validate() { }
 
         public T Execute()
         {

@@ -4,15 +4,15 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSDelete : BaseDeprecated
+    public class SMSDelete : Base<SMSApi.Api.Response.List>
     {
-        public SMSDelete() : base()
-        {
-        }
+        public SMSDelete() : base() { }
+
+        protected override string Uri() { return "sms.do"; }
 
         protected string[] ids;
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -24,25 +24,6 @@ namespace SMSApi.Api.Action
             collection.Add("sch_del", string.Join("|", ids));
 
             return collection;
-        }
-
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.List Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("sms.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.List));
-            SMSApi.Api.Response.List response = (SMSApi.Api.Response.List)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
 
         public SMSDelete Id(string id)
