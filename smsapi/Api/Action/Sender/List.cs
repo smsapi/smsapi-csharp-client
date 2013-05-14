@@ -1,31 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Runtime.Serialization.Json;
-using System.IO;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderList : BaseDeprecated
+    public class SenderList : Base<List<SMSApi.Api.Response.Sender>>
     {
-        public List<SMSApi.Api.Response.Sender> Execute()
-        {
-            Validate();
+        protected override string Uri() { return "sender.do"; }
 
-            Stream data = proxy.Execute("sender.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(List<SMSApi.Api.Response.Sender>));
-            List<SMSApi.Api.Response.Sender> response = (List<SMSApi.Api.Response.Sender>)serializer.ReadObject(data);
-            data.Close();
-
-//            this.ValidateResponse(response);
-
-            return response;
-        }
-
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -37,10 +19,6 @@ namespace SMSApi.Api.Action
             collection.Add("list", "1");
 
             return collection;
-        }
-
-        private void Validate()
-        {
         }
     }
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Json;
+﻿using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : BaseDeprecated
+    public class SenderSetDefault : Base<SMSApi.Api.Response.Base>
     {
+        protected override string Uri() { return "sender.do"; }
+
         private string name;
 
         public SenderSetDefault Name(string name)
@@ -30,25 +26,6 @@ namespace SMSApi.Api.Action
             collection.Add("default", this.name);
 
             return collection;
-        }
-
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.Group Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("sender.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Group));
-            SMSApi.Api.Response.Group response = (SMSApi.Api.Response.Group)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
     }
 }

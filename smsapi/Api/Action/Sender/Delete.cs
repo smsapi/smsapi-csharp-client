@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Json;
+﻿using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : BaseDeprecated
+    public class SenderDelete : Base<SMSApi.Api.Response.Base>
     {
+        protected override string Uri() { return "sender.do"; }
+
         private string name;
 
         public SenderDelete Name(string name)
@@ -18,7 +14,7 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -27,28 +23,9 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("delete", string.Join("|", this.name));
+            collection.Add("delete", this.name);
 
             return collection;
-        }
-
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.List Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("sender.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.List));
-            SMSApi.Api.Response.List response = (SMSApi.Api.Response.List)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
     }
 }
