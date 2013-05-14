@@ -1,7 +1,8 @@
-﻿
+﻿using System.IO;
+
 namespace SMSApi.Api.Action
 {
-    public abstract class Send : Base
+    public abstract class Send : BaseDeprecated
     {
         protected Send() : base() {}
 

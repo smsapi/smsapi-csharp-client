@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSGet : Base
+    public class SMSGet : BaseDeprecated
     {
         public SMSGet() : base() { }
 

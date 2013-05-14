@@ -10,28 +10,28 @@ namespace SMSApi.Api.Response
         [DataMember(Name = "number", IsRequired = true)]
         public readonly string Number;
 
-        [DataMember(Name = "first_name", IsRequired = true)]
+        [DataMember(Name = "first_name", IsRequired = false)]
         public readonly string FirstName;
 
-        [DataMember(Name = "last_name", IsRequired = true)]
+        [DataMember(Name = "last_name", IsRequired = false)]
         public readonly string LastName;
 
-        [DataMember(Name = "info", IsRequired = true)]
+        [DataMember(Name = "info", IsRequired = false)]
         public readonly string info;
 
-        [DataMember(Name = "birthday", IsRequired = true)]
+        [DataMember(Name = "birthday", IsRequired = false)]
         public readonly string Birthday;
 
-        [DataMember(Name = "city", IsRequired = true)]
+        [DataMember(Name = "city", IsRequired = false)]
         public readonly string City;
 
         [DataMember(Name = "gender", IsRequired = true)]
         public readonly string Gender;
 
         [DataMember(Name = "date_add", IsRequired = true)]
-        public readonly int DateAdd;
+        public readonly uint DateAdd;
 
         [DataMember(Name = "date_mod", IsRequired = true)]
-        public readonly int DateMod;
+        public readonly uint DateMod;
     }
 }

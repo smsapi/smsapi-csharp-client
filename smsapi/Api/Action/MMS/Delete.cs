@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class MMSDelete : Base
+    public class MMSDelete : BaseDeprecated
     {
         public MMSDelete() : base()
         {

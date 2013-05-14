@@ -1,11 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Runtime.Serialization;
 
 namespace SMSApi.Api.Response
 {
-    class Error : Base
+    [DataContract]
+    public class Error
     {
+        protected Error()
+        {
+            Code = 0;
+            Message = "";
+        }
+
+        [DataMember(Name = "error", IsRequired = true)]
+        public readonly int Code;
+
+        [DataMember(Name = "message", IsRequired = true)]
+        public readonly string Message;
+
+        public bool isError()
+        {
+            return (Code != 0);
+        }
     }
 }

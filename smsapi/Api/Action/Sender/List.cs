@@ -8,7 +8,7 @@ using System.IO;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderList : Base
+    public class SenderList : BaseDeprecated
     {
         public List<SMSApi.Api.Response.Sender> Execute()
         {

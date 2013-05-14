@@ -4,9 +4,9 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactGet : Base<SMSApi.Api.Response.Contact>
+    public class PhonebookContactDelete : Base<SMSApi.Api.Response.Base>
     {
-        public PhonebookContactGet() : base() { }
+        public PhonebookContactDelete() : base() { }
 
         protected override string Uri() { return "phonebook.do"; }
 
@@ -21,12 +21,12 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("get_contact", number);
+            collection.Add("delete_contact", number);
 
             return collection;
         }
 
-        public PhonebookContactGet Number(string number)
+        public PhonebookContactDelete Number(string number)
         {
             this.number = number;
             return this;

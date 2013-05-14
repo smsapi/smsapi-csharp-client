@@ -4,15 +4,16 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactList : Base
+    public class PhonebookContactList : Base<SMSApi.Api.Response.Contacts>
     {
         public PhonebookContactList() 
             : base() 
         {
-
             offset = 0;
             limit = 0;
         }
+
+        protected override string Uri() { return "phonebook.do"; }
 
         protected string number;
         protected string[] groups;
@@ -23,8 +24,7 @@ namespace SMSApi.Api.Action
         protected uint limit;
         protected uint offset;
 
-
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -45,25 +45,6 @@ namespace SMSApi.Api.Action
             if (offset > 0) collection.Add("offset", offset.ToString());
 
             return collection;
-        }
-
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.Contacts Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("phonebook.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Contacts));
-            SMSApi.Api.Response.Contacts response = (SMSApi.Api.Response.Contacts)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
 
         public PhonebookContactList Number(string number)

@@ -164,13 +164,13 @@ namespace SMSApi.Api
 
             if (error.isError())
             {
-                switch (error.ErrorCode)
+                switch (error.Code)
                 {
                     case 8:
                     case 201:
                     case 666:
                     case 999:
-                        throw new ProxyException(error.ErrorMessage);
+                        throw new ProxyException(error.Message);
                 }
             }
         }

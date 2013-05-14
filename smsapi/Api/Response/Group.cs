@@ -11,7 +11,7 @@ namespace SMSApi.Api.Response
     {
         private Group() : base() { }
 
-        [DataMember(Name = "name", IsRequired = false)]
+        [DataMember(Name = "name", IsRequired = true)]
         public readonly string Name;
 
         [DataMember(Name = "info", IsRequired = false)]

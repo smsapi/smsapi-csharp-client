@@ -1,15 +1,12 @@
-﻿using System.IO;
+﻿
+using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Collections.Specialized;
-
 namespace SMSApi.Api.Action
 {
-    public abstract class Base<T>
+    public abstract class BaseDeprecated
     {
         protected Client client;
         protected Proxy proxy;
-
-        abstract protected string Uri();
 
         public void Client(Client client)
         {
@@ -21,43 +18,27 @@ namespace SMSApi.Api.Action
             this.proxy = proxy;
         }
 
-        protected TT ResponseToObject<TT>(Stream data)
+        protected T ResponseToObject<T>(Stream data)
         {
             data.Position = 0;
 
-            var serializer = new DataContractJsonSerializer(typeof(TT));
-            TT result = (TT)serializer.ReadObject(data);
+            var serializer = new DataContractJsonSerializer(typeof(T));
+            T result = (T)serializer.ReadObject(data);
 
             data.Position = 0;
 
             return result;
         }
 
-        abstract protected NameValueCollection Values();
-        protected void Validate() { }
-
-        public T Execute()
+        protected void ValidateResponse(SMSApi.Api.Response.Base obj)
         {
-            Validate();
-
-            Stream data = proxy.Execute(Uri(), Values());
-
-            T response = default(T);
-
-            HandleError(data);
-
-            try
+            if (obj.isError())
             {
-                response = ResponseToObject<T>(data);
+                if (isApiError(obj.ErrorCode))
+                {
+                    throw new ApiException(obj.ErrorMessage, obj.ErrorCode);
+                }
             }
-            catch (System.Runtime.Serialization.SerializationException e)
-            {
-                throw new ApiException(e.Message, 999);
-            }
-
-            data.Close();
-
-            return response;
         }
 
         protected void HandleError(Stream data) {

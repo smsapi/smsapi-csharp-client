@@ -15,8 +15,10 @@ namespace SMSApi.Api.Action
 
             Stream data = proxy.Execute("sms.do", Values());
 
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Status));
-            SMSApi.Api.Response.Status response = (SMSApi.Api.Response.Status)serializer.ReadObject(data);
+            HandleError(data);
+
+            SMSApi.Api.Response.Status response = ResponseToObject<SMSApi.Api.Response.Status>(data);
+
             data.Close();
 
             return response;

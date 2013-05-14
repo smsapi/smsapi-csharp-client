@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : Base
+    public class SenderDelete : BaseDeprecated
     {
         private string name;
 

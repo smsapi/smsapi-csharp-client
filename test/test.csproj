@@ -51,11 +51,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="tts.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\smsapi\smsapi.csproj">
       <Project>{05C2A720-2CD1-401B-A832-9CE85313C248}</Project>
       <Name>smsapi</Name>

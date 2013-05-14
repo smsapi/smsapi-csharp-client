@@ -14,7 +14,8 @@ namespace SMSApi
 //            o.test_vms();
 //            o.test_hlr();
 //            o.test_sender();
-            o.test_phonebook();
+//            o.test_phonebookgroup();
+            o.test_phonebookcontact();
         }
 
         public SMSApi.Api.Client client()
@@ -36,77 +37,59 @@ namespace SMSApi
             VMSFactory = new SMSApi.Api.VMSFactory(client());
         }
 
-        public void test_phonebook()
+        public void test_phonebookgroup()
         {
-            var proxy = new SMSApi.Api.ProxyHTTP("http://smsapi.local/api/");
+            var phonebook = new SMSApi.Api.PhonebookFactory(client());
 
-/*            var agg = new SMSApi.Api.Action.PhonebookGroupGet();
-            agg.Client(client());
-            agg.Proxy(proxy);
+            string groupName = "new group123" + DateTime.Now.ToString("his");
 
-            agg.Name("tEst123");
+            phonebook.ActionGroupAdd()
+                .SetInfo("ooo info")
+                .SetName(groupName)
+                .Execute();
 
-            var rgg = agg.Execute();
+            var group = 
+                phonebook.ActionGroupEdit(groupName)
+                    .SetName(groupName + "#edit")
+                    .SetInfo("edited info")
+                    .Execute();
 
-            System.Console.WriteLine(rgg.Name);
+            group = 
+                phonebook.ActionGroupGet(group.Name)
+                    .Execute();
 
-            var agl = new SMSApi.Api.Action.PhonebookGroupList();
-            agl.Client(client());
-            agl.Proxy(proxy);
+            var groups = phonebook.ActionGroupList().Execute();
 
-            var rgl = agl.Execute();
-
-            foreach(var rgle in rgl.List) {
-                System.Console.WriteLine(rgle.Name + " " + rgle.NumbersCount +" " + rgle.Info);
-            }
-
-
-            var aga = new SMSApi.Api.Action.PhonebookGroupAdd();
-            aga.Client(client());
-            aga.Proxy(proxy);
-
-            aga.SetInfo("ooo info");
-            aga.SetName("new group");
-            var rga = aga.Execute();
-
-            var age = new SMSApi.Api.Action.PhonebookGroupEdit();
-            age.Client(client());
-            age.Proxy(proxy);
-
-            age.SetInfo("ooo new info #2");
-            age.SetName("new group edited");
-            age.Name("new group");
-            var rge = age.Execute();
-
-            var agd = new SMSApi.Api.Action.PhonebookGroupDelete();
-            agd.Client(client());
-            agd.Proxy(proxy);
-
-            agd.Name("new group edited");
-            agd.Contacts(true);
-            var rgd = agd.Execute();
- */
-
-            var acg = new SMSApi.Api.Action.PhonebookContactGet();
-            acg.Client(client());
-            acg.Proxy(proxy);
-
-            acg.Number("48694562829");
-            var rcg = acg.Execute();
-
-            System.Console.WriteLine(rcg.Number +" "+ rcg.FirstName +" "+ rcg.LastName +" "+ rcg.Gender);
-
-
-            var acl = new SMSApi.Api.Action.PhonebookContactList();
-            acl.Client(client());
-            acl.Proxy(proxy);
-
-            var rcl = acl.Execute();
-
-            foreach (var rcle in rcl.List)
+            foreach (var g in groups.List)
             {
-                System.Console.WriteLine(rcle.Number + " " + rcle.FirstName + " " + rcle.LastName + " " + rcle.Gender);
+                System.Console.WriteLine(g.Name + " " + g.NumbersCount + " " + g.Info);
             }
+
+            phonebook.ActionGroupDelete(group.Name)
+                .Contacts(false)
+                .Execute();
+        }
+
+        public void test_phonebookcontact() {
+
+            var phonebook = new SMSApi.Api.PhonebookFactory(client());
+
+            var number = "694562821";
+
+            var contact = 
+                phonebook.ActionContactAdd(number)
+                    .SetFirstName("Test contact" + DateTime.Now.ToString("his"))
+                    .Execute();
+
+            var contacts = phonebook.ActionContactList().Execute();
+            foreach (var c in contacts.List)
+            {
+                System.Console.WriteLine(c.Number + " " + c.FirstName + " " + c.LastName + " " + c.Gender);
+            }
+
+            contact = phonebook.ActionContactGet(contact.Number).Execute();
+
+            phonebook.ActionContactDelete(contact.Number).Execute();
         }
 
         public void test_sender()

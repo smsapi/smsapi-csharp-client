@@ -4,15 +4,17 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupEdit : Base
+    public class PhonebookGroupEdit : Base<SMSApi.Api.Response.Group>
     {
         public PhonebookGroupEdit() : base() { }
+
+        protected override string Uri() { return "phonebook.do"; }
 
         protected string oldName;
         protected string newName;
         protected string info;
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -26,25 +28,6 @@ namespace SMSApi.Api.Action
             collection.Add("info", info);
 
             return collection;
-        }
-
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.Base Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("phonebook.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Base));
-            SMSApi.Api.Response.Base response = (SMSApi.Api.Response.Base)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
 
         public PhonebookGroupEdit Name(string name)

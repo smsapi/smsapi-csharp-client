@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : Base
+    public class HLRCheckNumber : BaseDeprecated
     {
         public HLRCheckNumber() { }
 
