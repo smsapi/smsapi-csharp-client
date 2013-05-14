@@ -11,7 +11,7 @@ namespace SMSApi
 
 //            o.test_sms();
 //            o.test_mms();
-//            o.test_vms();
+            o.test_vms();
 //            o.test_hlr();
 //            o.test_sender();
 //            o.test_phonebookgroup();
@@ -26,12 +26,7 @@ namespace SMSApi
             return client;
         }
 
-        protected SMSApi.Api.VMSFactory VMSFactory;
-
-        public Test()
-        {
-            VMSFactory = new SMSApi.Api.VMSFactory(client());
-        }
+        public Test() { }
 
         public void test_phonebookgroup()
         {
@@ -219,8 +214,10 @@ namespace SMSApi
         {
             Stream file = System.IO.File.OpenRead("tts.wav");
 
+            var vmsApi = new SMSApi.Api.VMSFactory(client());
+
             var result =
-                VMSFactory.ActionSend()
+                vmsApi.ActionSend()
                     .SetFile(file)
                     .SetTo("694562829")
                     .SetDateSent(DateTime.Now.AddHours(2))
@@ -238,8 +235,8 @@ namespace SMSApi
 
             System.Console.WriteLine("Get:");
             result =
-                VMSFactory.ActionGet()
-                    .Id(ids)
+                vmsApi.ActionGet()
+                    .Ids(ids)
                     .Execute();
 
             foreach (var status in result.List)
@@ -248,9 +245,9 @@ namespace SMSApi
             }
 
             var deleted =
-                VMSFactory
+                vmsApi
                     .ActionDelete()
-                        .Id(ids)
+                        .Ids(ids)
                         .Execute();
 
             System.Console.WriteLine("Deleted: " + deleted.Count);

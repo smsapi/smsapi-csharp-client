@@ -114,7 +114,7 @@ namespace SMSApi.Api
 
             Stream stream;
 
-            if (files.Count > 0)
+            if (files != null && files.Count > 0)
             {
                 webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
                 stream = PrepareMultipartContent(boundary, data, files);

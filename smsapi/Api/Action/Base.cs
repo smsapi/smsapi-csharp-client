@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace SMSApi.Api.Action
 {
@@ -36,11 +37,16 @@ namespace SMSApi.Api.Action
         abstract protected NameValueCollection Values();
         protected virtual void Validate() { }
 
+        protected virtual Dictionary<string, Stream> Files()
+        {
+            return null;
+        }
+
         public T Execute()
         {
             Validate();
 
-            Stream data = proxy.Execute(Uri(), Values());
+            Stream data = proxy.Execute(Uri(), Values(), Files());
 
             T response = default(T);
 

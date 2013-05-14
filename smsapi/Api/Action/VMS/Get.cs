@@ -4,13 +4,15 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class VMSGet : BaseDeprecated
+    public class VMSGet : Base<SMSApi.Api.Response.Status>
     {
         public VMSGet() : base() { }
 
-        protected string[] _Id;
+        protected override string Uri() { return "vms.do"; }
 
-        private NameValueCollection Values()
+        protected string[] ids;
+
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -19,40 +21,21 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("status", string.Join("|", _Id));
+            collection.Add("status", string.Join("|", ids));
 
             return collection;
         }
 
-        private void Validate()
-        {
-        }
-
-        public SMSApi.Api.Response.Status Execute()
-        {
-            Validate();
-
-            Stream data = proxy.Execute("vms.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Status));
-            SMSApi.Api.Response.Status response = (SMSApi.Api.Response.Status)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
-        }
-
         public VMSGet Id(string id)
         {
-            this._Id = new string[] { id };
+            this.ids = new string[] { id };
             return this;
         }
 
 
-        public VMSGet Id(string[] ids)
+        public VMSGet Ids(string[] ids)
         {
-            this._Id = ids;
+            this.ids = ids;
             return this;
         }
     }

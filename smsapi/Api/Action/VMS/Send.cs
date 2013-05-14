@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
@@ -11,27 +11,18 @@ namespace SMSApi.Api.Action
 
         protected override string Uri() { return "vms.do"; }
 
-/*        public SMSApi.Api.Response.Status Execute()
+        protected override Dictionary<string, Stream> Files()
         {
-            Validate();
-
-            Stream data;
+            Dictionary<string, Stream> files = null;
 
             if (File != null && File.Length > 0)
             {
-                data = proxy.Execute("vms.do", Values(), File);
-            }
-            else
-            {
-                data = proxy.Execute("vms.do", Values());
+                files = new Dictionary<string, Stream>();
+                files.Add("file", File);
             }
 
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Status));
-            SMSApi.Api.Response.Status response = (SMSApi.Api.Response.Status)serializer.ReadObject(data);
-            data.Close();
-
-            return response;
-        }*/
+            return files;
+        }
 
         protected override NameValueCollection Values()
         {
