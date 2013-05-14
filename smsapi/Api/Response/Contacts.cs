@@ -7,7 +7,7 @@ namespace SMSApi.Api.Response
     {
         private Contacts() : base() { }
 
-        [DataMember(Name = "list", IsRequired = true)]
+        [DataMember(Name = "list", IsRequired = false)]
         private System.Collections.Generic.List<Contact> list;
 
         public System.Collections.Generic.List<Contact> List
