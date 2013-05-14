@@ -3,7 +3,7 @@
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Groups : List
+    public class Groups : Countable
     {
         private Groups() : base() { }
 

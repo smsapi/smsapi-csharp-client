@@ -76,7 +76,7 @@
     <Compile Include="Api\Response\Groups.cs" />
     <Compile Include="Api\Response\Error.cs" />
     <Compile Include="Api\Response\Group.cs" />
-    <Compile Include="Api\Response\List.cs" />
+    <Compile Include="Api\Response\Countable.cs" />
     <Compile Include="Api\Response\Sender.cs" />
     <Compile Include="Api\Response\Senders.cs" />
     <Compile Include="Api\Response\NumberStatus.cs" />

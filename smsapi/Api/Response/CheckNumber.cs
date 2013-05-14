@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class CheckNumber : List
+    public class CheckNumber : Countable
     {
         protected CheckNumber() : base() { }
 

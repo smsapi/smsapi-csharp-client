@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class VMSDelete : Base<SMSApi.Api.Response.List>
+    public class VMSDelete : Base<SMSApi.Api.Response.Countable>
     {
         public VMSDelete() : base() { }
 

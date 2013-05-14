@@ -9,13 +9,13 @@ namespace SMSApi
         {
             var o = new Test();
 
-//            o.test_sms();
-//            o.test_mms();
+            o.test_sms();
+            o.test_mms();
             o.test_vms();
-//            o.test_hlr();
-//            o.test_sender();
-//            o.test_phonebookgroup();
-//            o.test_phonebookcontact();
+            o.test_hlr();
+            o.test_sender();
+            o.test_phonebookgroup();
+            o.test_phonebookcontact();
         }
 
         public SMSApi.Api.Client client()

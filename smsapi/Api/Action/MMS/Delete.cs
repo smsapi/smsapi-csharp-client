@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class MMSDelete : Base<SMSApi.Api.Response.List>
+    public class MMSDelete : Base<SMSApi.Api.Response.Countable>
     {
         public MMSDelete() : base() { }
 

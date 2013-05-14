@@ -3,15 +3,15 @@
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class List : Base
+    public class Countable : Base
     {
-        protected List()
+        protected Countable()
             : base()
         {
             Count = 0;
         }
 
-        [DataMember(Name = "count", IsRequired = false)]
+        [DataMember(Name = "count", IsRequired = true)]
         public readonly int Count;
     }
 }
