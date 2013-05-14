@@ -14,7 +14,7 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 

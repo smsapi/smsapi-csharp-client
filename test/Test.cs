@@ -13,9 +13,9 @@ namespace SMSApi
 //            o.test_mms();
 //            o.test_vms();
 //            o.test_hlr();
-//            o.test_sender();
+            o.test_sender();
 //            o.test_phonebookgroup();
-            o.test_phonebookcontact();
+//            o.test_phonebookcontact();
         }
 
         public SMSApi.Api.Client client()
@@ -39,105 +39,82 @@ namespace SMSApi
 
         public void test_phonebookgroup()
         {
-            var phonebook = new SMSApi.Api.PhonebookFactory(client());
+            var phonebookApi = new SMSApi.Api.PhonebookFactory(client());
 
             string groupName = "new group123" + DateTime.Now.ToString("his");
 
-            phonebook.ActionGroupAdd()
+            phonebookApi.ActionGroupAdd()
                 .SetInfo("ooo info")
                 .SetName(groupName)
                 .Execute();
 
             var group = 
-                phonebook.ActionGroupEdit(groupName)
+                phonebookApi.ActionGroupEdit(groupName)
                     .SetName(groupName + "#edit")
                     .SetInfo("edited info")
                     .Execute();
 
             group = 
-                phonebook.ActionGroupGet(group.Name)
+                phonebookApi.ActionGroupGet(group.Name)
                     .Execute();
 
-            var groups = phonebook.ActionGroupList().Execute();
+            var groups = phonebookApi.ActionGroupList().Execute();
 
             foreach (var g in groups.List)
             {
                 System.Console.WriteLine(g.Name + " " + g.NumbersCount + " " + g.Info);
             }
 
-            phonebook.ActionGroupDelete(group.Name)
+            phonebookApi.ActionGroupDelete(group.Name)
                 .Contacts(false)
                 .Execute();
         }
 
         public void test_phonebookcontact() {
 
-            var phonebook = new SMSApi.Api.PhonebookFactory(client());
+            var phonebookApi = new SMSApi.Api.PhonebookFactory(client());
 
             var number = "694562821";
 
             var contact = 
-                phonebook.ActionContactAdd(number)
+                phonebookApi.ActionContactAdd(number)
                     .SetFirstName("Test contact" + DateTime.Now.ToString("his"))
                     .Execute();
 
             contact =
-                phonebook.ActionContactEdit(contact.Number)
+                phonebookApi.ActionContactEdit(contact.Number)
                     .SetFirstName("Test contact" + DateTime.Now.ToString("his") +"#edited")
                     .SetNumber("694562810")
                     .Execute();
 
-            var contacts = phonebook.ActionContactList().Execute();
+            var contacts = phonebookApi.ActionContactList().Execute();
             foreach (var c in contacts.List)
             {
                 System.Console.WriteLine(c.Number + " " + c.FirstName + " " + c.LastName + " " + c.Gender);
             }
 
-            contact = phonebook.ActionContactGet(contact.Number).Execute();
+            contact = phonebookApi.ActionContactGet(contact.Number).Execute();
 
-            phonebook.ActionContactDelete(contact.Number).Execute();
+            phonebookApi.ActionContactDelete(contact.Number).Execute();
         }
 
         public void test_sender()
         {
-            var proxy = new SMSApi.Api.ProxyHTTP("http://smsapi.local/api/");
+            var senderApi = new SMSApi.Api.SenderFactory(client());
 
-            var act = new SMSApi.Api.Action.SenderAdd();
+            string name = "testName";
 
-            act.Client(client());
-            act.Proxy(proxy);
+            senderApi.ActionAdd(name).Execute();
 
-            act.SetName("asdddggga");
-            System.Console.WriteLine(act.Execute().Count);
+//            senderApi.ActionSetDefault("SMSAPI").Execute();
 
-
-            SMSApi.Api.Action.SenderList senders =
-                new SMSApi.Api.Action.SenderList();
-
-            senders.Client(client());
-            senders.Proxy(proxy);
-
-            var response = senders.Execute();
-            System.Console.WriteLine(response.Count);
-            foreach (var a in response)
+            var senders = senderApi.ActionList().Execute();
+            foreach (var sender in senders)
             {
-                System.Console.WriteLine("Name: " + a.Name + " " + a.Status + " " + a.Default);
+                System.Console.WriteLine("Name: " + sender.Name + " " + sender.Status + " " + sender.Default);
             }
 
-
-            var actDel = new SMSApi.Api.Action.SenderDelete();
-            actDel.Client(client());
-            actDel.Proxy(proxy);
-            actDel.Name("asdddggaga");
-            var dr = actDel.Execute();
-
-            System.Console.WriteLine("Delete name " + dr.ErrorCode + " " + dr.ErrorMessage);
-
-            var actDef = new SMSApi.Api.Action.SenderSetDefault();
-            actDef.Client(client());
-            actDef.Proxy(proxy);
-            actDef.Name("UWAGA");
-            var dfr = actDef.Execute();
+            senderApi.ActionDelete(name).Execute();
         }
 
         public void test_hlr()
