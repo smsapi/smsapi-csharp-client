@@ -8,7 +8,7 @@ namespace SMSApi.Api.Response
     {
         protected CheckNumber() : base() { }
 
-        [DataMember(Name = "list", IsRequired = false)]
+        [DataMember(Name = "list", IsRequired = true)]
         private List<NumberStatus> list;
 
         public List<NumberStatus> List
