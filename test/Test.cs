@@ -10,7 +10,7 @@ namespace SMSApi
             var o = new Test();
 
 //            o.test_sms();
-            o.test_mms();
+//            o.test_mms();
 //            o.test_vms();
 //            o.test_hlr();
 //            o.test_sender();
