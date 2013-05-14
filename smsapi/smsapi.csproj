@@ -69,6 +69,7 @@
     <Compile Include="Api\Action\VMS\Get.cs" />
     <Compile Include="Api\Action\VMS\Send.cs" />
     <Compile Include="ApiException.cs" />
+    <Compile Include="Api\HLRFactory.cs" />
     <Compile Include="Api\PhonebookFactory.cs" />
     <Compile Include="Api\Response\CheckNumber.cs" />
     <Compile Include="Api\Response\Contact.cs" />

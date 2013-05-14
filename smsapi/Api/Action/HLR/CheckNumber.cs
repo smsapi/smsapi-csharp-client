@@ -4,40 +4,29 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : BaseDeprecated
+    public class HLRCheckNumber : Base<SMSApi.Api.Response.CheckNumber>
     {
-        public HLRCheckNumber() { }
+        public HLRCheckNumber() : base() { }
 
-        protected string[] Numbers;
+        protected override string Uri() { return "hlrsync.do"; }
+
+        protected string[] numbers;
 
         public HLRCheckNumber SetNumber(string number)
         {
-            this.Numbers = new string[] { number };
+            this.numbers = new string[] { number };
             return this;
         }
 
-/*        public HLRCheckNumber SetNumber(string[] numbers)
+/*
+        public HLRCheckNumber SetNumber(string[] numbers)
         {
-            this.Numbers = numbers;
+            this.numbers = numbers;
             return this;
-        }*/
-
-        public SMSApi.Api.Response.CheckNumber Execute() 
-        {
-            Validate();
-
-            Stream data = proxy.Execute("hlrsync.do", Values());
-
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.CheckNumber));
-            SMSApi.Api.Response.CheckNumber response = (SMSApi.Api.Response.CheckNumber)serializer.ReadObject(data);
-            data.Close();
-
-            this.ValidateResponse(response);
-
-            return response;
         }
+*/
 
-        private NameValueCollection Values()
+        protected override NameValueCollection Values()
         {
             NameValueCollection collection = new NameValueCollection();
 
@@ -46,13 +35,9 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("number", string.Join(",", Numbers));
+            collection.Add("number", string.Join(",", numbers));
 
             return collection;
-        }
-
-        private void Validate()
-        {
         }
     }   
 }

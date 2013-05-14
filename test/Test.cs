@@ -12,8 +12,8 @@ namespace SMSApi
 //            o.test_sms();
 //            o.test_mms();
 //            o.test_vms();
-//            o.test_hlr();
-            o.test_sender();
+            o.test_hlr();
+//            o.test_sender();
 //            o.test_phonebookgroup();
 //            o.test_phonebookcontact();
         }
@@ -119,20 +119,13 @@ namespace SMSApi
 
         public void test_hlr()
         {
-            SMSApi.Api.Action.HLRCheckNumber hlr =
-                new SMSApi.Api.Action.HLRCheckNumber();
+            var hlrApi = new SMSApi.Api.HLRFactory(client());
 
-            var proxy = new SMSApi.Api.ProxyHTTP("http://smsapi.local/api/");
+            var hlrs = hlrApi.ActionCheckNumber("694562829").Execute();
 
-            hlr.Client(client());
-            hlr.Proxy(proxy);
-
-            hlr.SetNumber("694562829");
-            var r = hlr.Execute();
-
-            foreach (var a in r.List)
+            foreach (var nrinfo in hlrs.List)
             {
-                System.Console.WriteLine("ID: " + a.ID + " Number: " + a.Number + " Status: " + a.Status + " " + a.Info);
+                System.Console.WriteLine("ID: " + nrinfo.ID + " Number: " + nrinfo.Number + " Status: " + nrinfo.Status + " " + nrinfo.Info);
             }
         }
 
