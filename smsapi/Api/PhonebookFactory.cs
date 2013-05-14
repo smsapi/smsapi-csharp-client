@@ -34,6 +34,18 @@ namespace SMSApi.Api
             return action;
         }
 
+        public SMSApi.Api.Action.PhonebookContactEdit ActionContactEdit(string number = null)
+        {
+            var action = new SMSApi.Api.Action.PhonebookContactEdit();
+
+            action.Client(client);
+            action.Proxy(proxy);
+
+            action.Number(number);
+
+            return action;
+        }
+
         public SMSApi.Api.Action.PhonebookContactDelete ActionContactDelete(string number = null)
         {
             var action = new SMSApi.Api.Action.PhonebookContactDelete();

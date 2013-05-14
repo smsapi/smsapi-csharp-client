@@ -53,7 +53,7 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public PhonebookContactList Groups(string group)
+        public PhonebookContactList Group(string group)
         {
             this.groups = new string[] { group };
             return this;

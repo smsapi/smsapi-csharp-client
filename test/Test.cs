@@ -81,6 +81,12 @@ namespace SMSApi
                     .SetFirstName("Test contact" + DateTime.Now.ToString("his"))
                     .Execute();
 
+            contact =
+                phonebook.ActionContactEdit(contact.Number)
+                    .SetFirstName("Test contact" + DateTime.Now.ToString("his") +"#edited")
+                    .SetNumber("694562810")
+                    .Execute();
+
             var contacts = phonebook.ActionContactList().Execute();
             foreach (var c in contacts.List)
             {

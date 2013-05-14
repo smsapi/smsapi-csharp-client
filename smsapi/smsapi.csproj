@@ -47,6 +47,7 @@
     <Compile Include="Api\Action\Phonebook\ContactList.cs" />
     <Compile Include="Api\Action\Phonebook\ContactAdd.cs" />
     <Compile Include="Api\Action\Phonebook\ContactDelete.cs" />
+    <Compile Include="Api\Action\Phonebook\ContactEdit.cs" />
     <Compile Include="Api\Action\Phonebook\GroupDelete.cs" />
     <Compile Include="Api\Action\Phonebook\GroupEdit.cs" />
     <Compile Include="Api\Action\Phonebook\GroupAdd.cs" />
