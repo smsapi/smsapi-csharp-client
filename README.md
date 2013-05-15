@@ -1,9 +1,9 @@
 csharp-client
 ===========
 
-Klient napisany w jêzyku C#, pozwalaj¹cy na wysy³anie wiadomoœci SMS, MMS, VMS oraz zarz¹dzanie kontem w serwisie SMSAPI.pl
+Klient napisany w jÄ™zyku C#, pozwalajÄ…cy na wysyÅ‚anie wiadomoÅ›ci SMS, MMS, VMS oraz zarzÄ…dzanie kontem w serwisie SMSAPI.pl
 
-Przyk³ad wysy³ki sms:
+PrzykÅ‚ad wysyÅ‚ki sms:
 ```c#
 try
 {
@@ -55,7 +55,7 @@ try
 catch (SMSApi.Api.ActionException e)
 {
 	/**
-	 * B³êdy zwi¹zane z akcj¹ (z wy³¹czeniem b³êdów 101,102,103,105,110,1000,1001 i 8,666,999,201)
+	 * BÅ‚Ä™dy zwiÄ…zane z akcjÄ… (z wyÅ‚Ä…czeniem bÅ‚Ä™dÃ³w 101,102,103,105,110,1000,1001 i 8,666,999,201)
 	 * http://www.smsapi.pl/sms-api/kody-bledow
 	 */
 	System.Console.WriteLine(e.Message);
@@ -64,30 +64,30 @@ catch (SMSApi.Api.ClientException e)
 {
 	/**
 	 * 101 Niepoprawne lub brak danych autoryzacji.
-	 * 102 Nieprawid³owy login lub has³o
-	 * 103 Brak punków dla tego u¿ytkownika
-	 * 105 B³êdny adres IP
-	 * 110 Us³uga nie jest dostêpna na danym koncie
-	 * 1000 Akcja dostêpna tylko dla u¿ytkownika g³ównego
-	 * 1001 Nieprawid³owa akcja
+	 * 102 NieprawidÅ‚owy login lub hasÅ‚o
+	 * 103 Brak punkÃ³w dla tego uÅ¼ytkownika
+	 * 105 BÅ‚Ä™dny adres IP
+	 * 110 UsÅ‚uga nie jest dostÄ™pna na danym koncie
+	 * 1000 Akcja dostÄ™pna tylko dla uÅ¼ytkownika gÅ‚Ã³wnego
+	 * 1001 NieprawidÅ‚owa akcja
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.HostException e)
 {
-	/* b³¹d po stronie servera lub problem z parsowaniem danych
+	/* bÅ‚Ä…d po stronie servera lub problem z parsowaniem danych
 	 * 
-	 * 8 - B³¹d w odwo³aniu
-	 * 666 - Wewnêtrzny b³¹d systemu
-	 * 999 - Wewnêtrzny b³¹d systemu
-	 * 201 - Wewnêtrzny b³¹d systemu
+	 * 8 - BÅ‚Ä…d w odwoÅ‚aniu
+	 * 666 - WewnÄ™trzny bÅ‚Ä…d systemu
+	 * 999 - WewnÄ™trzny bÅ‚Ä…d systemu
+	 * 201 - WewnÄ™trzny bÅ‚Ä…d systemu
 	 * SMSApi.Api.HostException.E_JSON_DECODE - problem z parsowaniem danych
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.ProxyException e)
 {
-	// b³¹d w komunikacji pomiedzy klientem i serverem
+	// bÅ‚Ä…d w komunikacji pomiedzy klientem i serverem
 	System.Console.WriteLine(e.Message);
 }
 ```
