@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : Base<SMSApi.Api.Response.CheckNumber>
+    public class HLRCheckNumber : BaseSimple<SMSApi.Api.Response.CheckNumber>
     {
         public HLRCheckNumber() : base() { }
 

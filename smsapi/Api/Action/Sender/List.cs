@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderList : Base<List<SMSApi.Api.Response.Sender>>
+    public class SenderList : BaseArray<SMSApi.Api.Response.Sender>
     {
         protected override string Uri() { return "sender.do"; }
 

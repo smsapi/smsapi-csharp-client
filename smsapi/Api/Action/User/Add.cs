@@ -14,7 +14,7 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserEdit : Base<SMSApi.Api.Response.User>
+    public class UserEdit : BaseSimple<SMSApi.Api.Response.User>
     {
         public UserEdit()
             : base() 

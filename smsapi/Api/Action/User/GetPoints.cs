@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class UserGetCredits : Base<SMSApi.Api.Response.Credits>
+    public class UserGetCredits : BaseSimple<SMSApi.Api.Response.Credits>
     {
         public UserGetCredits() : base() { }
 

@@ -11,13 +11,13 @@ namespace SMSApi
 
             o.test_user();
 
-/*            o.test_sms();
+            o.test_sms();
             o.test_mms();
             o.test_vms();
             o.test_hlr();
             o.test_sender();
             o.test_phonebookgroup();
-            o.test_phonebookcontact();*/
+            o.test_phonebookcontact();
         }
 
         public SMSApi.Api.Client client()
@@ -52,7 +52,7 @@ namespace SMSApi
 
             var users = userApi.ActionList().Execute();
 
-            foreach (var u in users) {
+            foreach (var u in users.List) {
                 System.Console.WriteLine(u.Username);
             }
         }
@@ -145,7 +145,7 @@ namespace SMSApi
                 //            senderApi.ActionSetDefault("SMSAPI").Execute();
 
                 var senders = senderApi.ActionList().Execute();
-                foreach (var sender in senders)
+                foreach (var sender in senders.List)
                 {
                     System.Console.WriteLine("Name: " + sender.Name + " " + sender.Status + " " + sender.Default);
                 }

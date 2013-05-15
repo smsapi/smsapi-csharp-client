@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SMSApi.Api.Action
 {
-    public class UserList : Base<List<SMSApi.Api.Response.User>>
+    public class UserList : BaseArray<SMSApi.Api.Response.User>
     {
         public UserList() : base() { }
 

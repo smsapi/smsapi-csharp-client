@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : Base<SMSApi.Api.Response.Base>
+    public class SenderDelete : BaseSimple<SMSApi.Api.Response.Base>
     {
         protected override string Uri() { return "sender.do"; }
 

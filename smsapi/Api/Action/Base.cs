@@ -2,10 +2,11 @@
 using System.Runtime.Serialization.Json;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using System;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Base<T>
+    public abstract class Base<T,TResult>
     {
         protected Client client;
         protected Proxy proxy;
@@ -42,19 +43,27 @@ namespace SMSApi.Api.Action
             return null;
         }
 
-        public T Execute()
+        protected abstract TResult ConvertResponse(T response);
+
+/*        protected virtual TResult ConvertResponse(T response)
+        {
+            return (TResult)Convert.ChangeType(response, typeof(TResult));
+        }*/
+
+        public TResult Execute()
         {
             Validate();
 
             Stream data = proxy.Execute(Uri(), Values(), Files());
 
-            T response = default(T);
+            TResult result = default(TResult);
 
             HandleError(data);
 
             try
             {
-                response = ResponseToObject<T>(data);
+                T response = ResponseToObject<T>(data);
+                result = ConvertResponse(response);
             }
             catch (System.Runtime.Serialization.SerializationException e)
             {
@@ -63,7 +72,7 @@ namespace SMSApi.Api.Action
 
             data.Close();
 
-            return response;
+            return result;
         }
 
         protected void HandleError(Stream data) {

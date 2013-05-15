@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Action\Base.cs" />
+    <Compile Include="Api\Action\Base.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Api\Action\BaseSimple.cs" />
+    <Compile Include="Api\Action\BaseArray.cs" />
     <Compile Include="Api\Action\Phonebook\ContactGet.cs" />
     <Compile Include="Api\Action\Phonebook\ContactList.cs" />
     <Compile Include="Api\Action\Phonebook\ContactAdd.cs" />
@@ -73,6 +77,7 @@
     <Compile Include="Api\Action\VMS\Get.cs" />
     <Compile Include="Api\Action\VMS\Send.cs" />
     <Compile Include="ApiException.cs" />
+    <Compile Include="Api\Response\Array.cs" />
     <Compile Include="Api\Response\User.cs" />
     <Compile Include="Api\UserFactory.cs" />
     <Compile Include="Api\HLRFactory.cs" />

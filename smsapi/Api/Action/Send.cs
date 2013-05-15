@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Send : Base<SMSApi.Api.Response.Status>
+    public abstract class Send : BaseSimple<SMSApi.Api.Response.Status>
     {
         protected Send() : base() {}
 

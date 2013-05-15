@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupAdd : Base<SMSApi.Api.Response.Group>
+    public class PhonebookGroupAdd : BaseSimple<SMSApi.Api.Response.Group>
     {
         public PhonebookGroupAdd() : base() { }
 

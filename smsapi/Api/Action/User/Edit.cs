@@ -14,7 +14,7 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserAdd : Base<SMSApi.Api.Response.User>
+    public class UserAdd : BaseSimple<SMSApi.Api.Response.User>
     {
         public UserAdd() : base() 
         {

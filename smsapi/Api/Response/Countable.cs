@@ -5,10 +5,10 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Countable : Base
     {
-        protected Countable()
+        protected Countable(int count = 0)
             : base()
         {
-            Count = 0;
+            Count = count;
         }
 
         [DataMember(Name = "count", IsRequired = true)]

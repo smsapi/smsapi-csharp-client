@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : Base<SMSApi.Api.Response.Base>
+    public class SenderSetDefault : BaseSimple<SMSApi.Api.Response.Base>
     {
         protected override string Uri() { return "sender.do"; }
 

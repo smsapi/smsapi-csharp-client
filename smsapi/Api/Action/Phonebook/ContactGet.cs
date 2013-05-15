@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactGet : Base<SMSApi.Api.Response.Contact>
+    public class PhonebookContactGet : BaseSimple<SMSApi.Api.Response.Contact>
     {
         public PhonebookContactGet() : base() { }
 

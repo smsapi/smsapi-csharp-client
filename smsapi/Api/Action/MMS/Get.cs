@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class MMSGet : Base<SMSApi.Api.Response.Status>
+    public class MMSGet : BaseSimple<SMSApi.Api.Response.Status>
     {
         public MMSGet() : base() { }
 
