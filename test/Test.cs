@@ -9,13 +9,15 @@ namespace SMSApi
         {
             var o = new Test();
 
-            o.test_sms();
+            o.test_user();
+
+/*            o.test_sms();
             o.test_mms();
             o.test_vms();
             o.test_hlr();
             o.test_sender();
             o.test_phonebookgroup();
-            o.test_phonebookcontact();
+            o.test_phonebookcontact();*/
         }
 
         public SMSApi.Api.Client client()
@@ -27,6 +29,33 @@ namespace SMSApi
         }
 
         public Test() { }
+
+        public void test_user()
+        {
+            var userApi = new SMSApi.Api.UserFactory(client());
+
+            var points = userApi.ActionGetCredits().Execute();
+            System.Console.WriteLine(points.Points);
+
+            string usernName = "test_" + DateTime.Now.ToString("his");
+
+            var user = 
+                userApi.ActionAdd()
+                    .SetUsername(usernName)
+                    .SetPassword("7815696ecbf1c96e6894b779456d330e")
+                    .Execute();
+
+            user =
+                userApi.ActionEdit(usernName)
+                    .SetInfo("edited info")
+                    .Execute();
+
+            var users = userApi.ActionList().Execute();
+
+            foreach (var u in users) {
+                System.Console.WriteLine(u.Username);
+            }
+        }
 
         public void test_phonebookgroup()
         {
