@@ -3,7 +3,7 @@ csharp-client
 
 Klient napisany w języku C#, pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
 
-Przykład wysyłki sms:
+Przykład wysyłki:
 ```c#
 try
 {
@@ -87,7 +87,7 @@ catch (SMSApi.Api.HostException e)
 }
 catch (SMSApi.Api.ProxyException e)
 {
-	// błąd w komunikacji pomiedzy klientem i serverem
+	// błąd w komunikacji pomiedzy klientem a serverem
 	System.Console.WriteLine(e.Message);
 }
 ```
