@@ -67,7 +67,8 @@ namespace SMSApi.Api.Action
             }
             catch (System.Runtime.Serialization.SerializationException e)
             {
-                throw new ApiException(e.Message, 999);
+                //Problem z prasowaniem json'a
+                throw new HostException(e.Message, HostException.E_JSONDECODE);
             }
 
             data.Close();
@@ -85,9 +86,13 @@ namespace SMSApi.Api.Action
 
                 if (error.Code != 0)
                 {
-                    if (isApiError(error.Code))
+                    if (isHostError(error.Code))
                     {
-                        throw new ApiException(error.Message, error.Code);
+                        throw new HostException(error.Message, error.Code);
+                    }
+                    if (isClientError(error.Code))
+                    {
+                        throw new ClientException(error.Message, error.Code);
                     }
                     else
                     {
@@ -100,7 +105,16 @@ namespace SMSApi.Api.Action
             data.Position = 0;
         }
 
-        private bool isApiError(int code)
+        /**
+         * 101 Niepoprawne lub brak danych autoryzacji.
+         * 102 Nieprawidłowy login lub hasło
+         * 103 Brak punków dla tego użytkownika
+         * 105 Błędny adres IP
+         * 110 Usługa nie jest dostępna na danym koncie
+         * 1000 Akcja dostępna tylko dla użytkownika głównego
+         * 1001 Nieprawidłowa akcja
+         */
+        private bool isClientError(int code)
         {
             if (code == 101) return true;
             if (code == 102) return true;
@@ -109,6 +123,22 @@ namespace SMSApi.Api.Action
             if (code == 110) return true;
             if (code == 1000) return true;
             if (code == 1001) return true;
+
+            return false;
+        }
+
+        /**
+         * 8 Błąd w odwołaniu
+         * 666 Wewnętrzny błąd systemu
+         * 999 Wewnętrzny błąd systemu
+         * 201 Wewnętrzny błąd systemu
+         */
+        private bool isHostError(int code)
+        {
+            if (code == 8) return true;
+            if (code == 201) return true;
+            if (code == 666) return true;
+            if (code == 999) return true;
 
             return false;
         }

@@ -149,30 +149,8 @@ namespace SMSApi.Api
                 throw new ProxyException(e.Message, e);
             }
 
-//            response.Position = 0;
-//            System.Console.WriteLine( new StreamReader(response).ReadToEnd() );
-
             response.Position = 0;
             return response;
-        }
-
-        private void CheckError(Stream resource) 
-        {
-            var serializer = new DataContractJsonSerializer(typeof(SMSApi.Api.Response.Error));
-            SMSApi.Api.Response.Error error = (SMSApi.Api.Response.Error)serializer.ReadObject(resource);
-            resource.Position = 0;
-
-            if (error.isError())
-            {
-                switch (error.Code)
-                {
-                    case 8:
-                    case 201:
-                    case 666:
-                    case 999:
-                        throw new ProxyException(error.Message);
-                }
-            }
         }
     }
 }
