@@ -76,7 +76,9 @@
     <Compile Include="Api\Action\VMS\Delete.cs" />
     <Compile Include="Api\Action\VMS\Get.cs" />
     <Compile Include="Api\Action\VMS\Send.cs" />
-    <Compile Include="ApiException.cs" />
+    <Compile Include="ClientException.cs" />
+    <Compile Include="HostException.cs" />
+    <Compile Include="Exception.cs" />
     <Compile Include="Api\Response\Array.cs" />
     <Compile Include="Api\Response\User.cs" />
     <Compile Include="Api\UserFactory.cs" />

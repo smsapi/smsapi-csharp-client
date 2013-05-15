@@ -68,7 +68,7 @@ namespace SMSApi.Api.Action
             catch (System.Runtime.Serialization.SerializationException e)
             {
                 //Problem z prasowaniem json'a
-                throw new HostException(e.Message, HostException.E_JSONDECODE);
+                throw new HostException(e.Message, HostException.E_JSON_DECODE);
             }
 
             data.Close();

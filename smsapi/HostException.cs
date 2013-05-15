@@ -3,7 +3,7 @@ namespace SMSApi.Api
 {
     public class HostException : SMSApi.Api.Exception
     {
-        public static const int E_JSON_DECODE = -1;
+        public static readonly int E_JSON_DECODE = -1;
 
         private int Code;
 

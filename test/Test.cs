@@ -9,8 +9,6 @@ namespace SMSApi
         {
             var o = new Test();
 
-            o.test_user();
-
             o.test_sms();
             o.test_mms();
             o.test_vms();
@@ -18,6 +16,7 @@ namespace SMSApi
             o.test_sender();
             o.test_phonebookgroup();
             o.test_phonebookcontact();
+            o.test_user();
         }
 
         public SMSApi.Api.Client client()
