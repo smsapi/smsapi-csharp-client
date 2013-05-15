@@ -199,8 +199,10 @@ namespace SMSApi
                 {
                     if (!result.List[i].isError())
                     {
+                        //Nie wystąpił błąd podczas wysyłki (numer|treść|parametry... prawidłowe)
                         if (!result.List[i].isFinal())
                         {
+                            //Status nie jest koncowy, może ulec zmianie
                             ids[l] = result.List[i].ID;
                             l++;
                         }
@@ -261,7 +263,7 @@ namespace SMSApi
             }
             catch (SMSApi.Api.ProxyException e)
             {
-                // błąd w komunikacji pomiedzy klientem i serverem
+                // błąd w komunikacji pomiedzy klientem a serverem
                 System.Console.WriteLine(e.Message);
             }
         }
