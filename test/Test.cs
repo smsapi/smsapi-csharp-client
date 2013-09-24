@@ -10,6 +10,7 @@ namespace SMSApi
             var o = new Test();
 
             o.test_sms();
+            o.test_smsParams();
             o.test_mms();
             o.test_vms();
             o.test_hlr();
@@ -102,7 +103,7 @@ namespace SMSApi
             {
                 var phonebookApi = new SMSApi.Api.PhonebookFactory(client());
 
-                var number = "694562821";
+                var number = "xxxyyyzzz";
 
                 var contact =
                     phonebookApi.ActionContactAdd(number)
@@ -112,7 +113,7 @@ namespace SMSApi
                 contact =
                     phonebookApi.ActionContactEdit(contact.Number)
                         .SetFirstName("Test contact" + DateTime.Now.ToString("his") + "#edited")
-                        .SetNumber("694562810")
+                        .SetNumber("xxxyyyzzz")
                         .Execute();
 
                 var contacts = phonebookApi.ActionContactList().Execute();
@@ -141,7 +142,7 @@ namespace SMSApi
 
                 senderApi.ActionAdd(name).Execute();
 
-                //            senderApi.ActionSetDefault("SMSAPI").Execute();
+                senderApi.ActionSetDefault("SMSAPI").Execute();
 
                 var senders = senderApi.ActionList().Execute();
                 foreach (var sender in senders.List)
@@ -163,7 +164,7 @@ namespace SMSApi
             {
                 var hlrApi = new SMSApi.Api.HLRFactory(client());
 
-                var hlrs = hlrApi.ActionCheckNumber("694562829").Execute();
+                var hlrs = hlrApi.ActionCheckNumber("xxxyyyzzz").Execute();
 
                 foreach (var nrinfo in hlrs.List)
                 {
@@ -182,11 +183,10 @@ namespace SMSApi
             {
                 var smsApi = new SMSApi.Api.SMSFactory(client());
 
-
                 var result =
                     smsApi.ActionSend()
                         .SetText("test message")
-                        .SetTo("694562829")
+                        .SetTo("xxxyyyzzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
                         .Execute();
 
@@ -267,6 +267,63 @@ namespace SMSApi
             }
         }
 
+        public void test_smsParams()
+        {
+            try
+            {
+                var smsApi = new SMSApi.Api.SMSFactory(client());
+
+                var result =
+                    smsApi.ActionSend()
+                        .SetText("test [%1%] message [%2%]")
+                        .SetTo("xxxyyyzzz")
+                        .SetParam(0, "par1")
+                        .SetParam(1, "par2")
+                        .SetTest(true)
+                        .Execute();
+
+                System.Console.WriteLine("Send: " + result.Count);
+            }
+            catch (SMSApi.Api.ActionException e)
+            {
+                /**
+                 * Błędy związane z akcją (z wyłączeniem błędów 101,102,103,105,110,1000,1001 i 8,666,999,201)
+                 * http://www.smsapi.pl/sms-api/kody-bledow
+                 */
+                System.Console.WriteLine(e.Message);
+            }
+            catch (SMSApi.Api.ClientException e)
+            {
+                /**
+                 * 101 Niepoprawne lub brak danych autoryzacji.
+                 * 102 Nieprawidłowy login lub hasło
+                 * 103 Brak punków dla tego użytkownika
+                 * 105 Błędny adres IP
+                 * 110 Usługa nie jest dostępna na danym koncie
+                 * 1000 Akcja dostępna tylko dla użytkownika głównego
+                 * 1001 Nieprawidłowa akcja
+                 */
+                System.Console.WriteLine(e.Message);
+            }
+            catch (SMSApi.Api.HostException e)
+            {
+                /* błąd po stronie servera lub problem z parsowaniem danych
+                 * 
+                 * 8 - Błąd w odwołaniu
+                 * 666 - Wewnętrzny błąd systemu
+                 * 999 - Wewnętrzny błąd systemu
+                 * 201 - Wewnętrzny błąd systemu
+                 * SMSApi.Api.HostException.E_JSON_DECODE - problem z parsowaniem danych
+                 */
+                System.Console.WriteLine(e.Message);
+            }
+            catch (SMSApi.Api.ProxyException e)
+            {
+                // błąd w komunikacji pomiedzy klientem a serverem
+                System.Console.WriteLine(e.Message);
+            }
+        }
+
         public void test_mms()
         {
             try
@@ -277,7 +334,7 @@ namespace SMSApi
                     mmsApi.ActionSend()
                         .SetSubject("test subject")
                         .SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"http://www.smsapi.pl/media/mms.jpg\" region=\"Image\"></img></par></body></smil>")
-                        .SetTo("694562829")
+                        .SetTo("xxxyyyzzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
                         .Execute();
 
@@ -327,7 +384,7 @@ namespace SMSApi
                 var result =
                     vmsApi.ActionSend()
                         .SetFile(file)
-                        .SetTo("694562829")
+                        .SetTo("xxxyyyzzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
                         .Execute();
 

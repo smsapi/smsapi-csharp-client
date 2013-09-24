@@ -60,6 +60,17 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
+            if (this.Params != null)
+            {
+                for (int i = 0; i < this.Params.Length; i++)
+                {
+                    if (this.Params[i] != null)
+                    {
+                        collection.Add("param" + ((i + 1).ToString()), this.Params[i]);
+                    }
+                }
+            }
+
             return collection;
         }
 
@@ -87,6 +98,7 @@ namespace SMSApi.Api.Action
         private string Encoding = "UTF-8";
         private bool Fast = false;
         private int MaxParts = 0;
+        private string[] Params = null;
 
         public SMSSend SetTo(string to)
         {
@@ -215,5 +227,28 @@ namespace SMSApi.Api.Action
             this.Test = test;
             return this;
         }
+
+        public SMSSend SetParam(int i, string[] text)
+        {
+            return this.SetParam(i, string.Join("|", text));
+        }
+
+        public SMSSend SetParam(int i, string text)
+        {
+            if (i > 3 || i < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (this.Params == null)
+            {
+                this.Params = new string[4];
+            }
+
+            this.Params[i] = text;
+
+            return this;
+        }
+
     }
 }
