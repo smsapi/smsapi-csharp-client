@@ -386,6 +386,8 @@ namespace SMSApi
                         .SetFile(file)
                         .SetTo("xxxyyyzzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
+                        .SetTry(3)
+                        .SetTryInterval(300)
                         .Execute();
 
                 System.Console.WriteLine("Send: " + result.Count);

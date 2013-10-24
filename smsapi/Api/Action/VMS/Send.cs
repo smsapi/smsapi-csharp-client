@@ -45,6 +45,12 @@ namespace SMSApi.Api.Action
             if (DateSent != null)
                 collection.Add("date", DateSent);
 
+            if (Try > 0)
+                collection.Add("try", Try.ToString());
+
+            if (Interval > 0)
+                collection.Add("interval", Interval.ToString());
+
             if (Partner != null)
                 collection.Add("partner_id", Partner);
 
@@ -80,6 +86,8 @@ namespace SMSApi.Api.Action
 
         private Stream File;
         private string TTS;
+        private int Try = 0;
+        private int Interval = 0;
 
         public VMSSend SetTo(string to)
         {
@@ -150,6 +158,18 @@ namespace SMSApi.Api.Action
         public VMSSend SetTest(bool test = true)
         {
             this.Test = test;
+            return this;
+        }
+
+        public VMSSend SetTry(int retry)
+        {
+            this.Try = retry;
+            return this;
+        }
+
+        public VMSSend SetTryInterval(int sec)
+        {
+            this.Interval = sec;
             return this;
         }
     }
