@@ -54,6 +54,12 @@ namespace SMSApi.Api.Action
             if (Partner != null)
                 collection.Add("partner_id", Partner);
 
+            if (SkipGSM == true)
+                collection.Add("skip_gsm", "1");
+
+            if (TTSLector != null)
+                collection.Add("tts_lector", TTSLector);
+
             if (Test == true)
                 collection.Add("test", "1");
 
@@ -86,8 +92,10 @@ namespace SMSApi.Api.Action
 
         private Stream File;
         private string TTS;
+        private string TTSLector;
         private int Try = 0;
         private int Interval = 0;
+        private bool SkipGSM = false;
 
         public VMSSend SetTo(string to)
         {
@@ -149,6 +157,12 @@ namespace SMSApi.Api.Action
             return this;
         }
 
+        public VMSSend SetTTSLector(string lector)
+        {
+            this.TTSLector = lector;
+            return this;
+        }
+
         public VMSSend SetPartner(string partner)
         {
             this.Partner = partner;
@@ -172,5 +186,13 @@ namespace SMSApi.Api.Action
             this.Interval = sec;
             return this;
         }
+
+        public VMSSend SetSkipGSM(bool flag)
+        {
+            this.SkipGSM = flag;
+            return this;
+        }
+
+        
     }
 }
