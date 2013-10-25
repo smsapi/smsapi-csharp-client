@@ -36,6 +36,9 @@ namespace SMSApi.Api.Action
             if (To != null)
                 collection.Add("to", string.Join(",", To));
 
+            if (From != null)
+                collection.Add("from", From);
+            
 //            if (Group != null)
 //                collection.Add("group", Group);
 
@@ -90,6 +93,7 @@ namespace SMSApi.Api.Action
             }
         }
 
+        private string From;
         private Stream File;
         private string TTS;
         private string TTSLector;
@@ -106,6 +110,12 @@ namespace SMSApi.Api.Action
         public VMSSend SetTo(string[] to)
         {
             this.To = to;
+            return this;
+        }
+
+        public VMSSend SetFrom(string from)
+        {
+            this.From = from;
             return this;
         }
 

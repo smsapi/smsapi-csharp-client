@@ -22,8 +22,8 @@ namespace SMSApi
 
         public SMSApi.Api.Client client()
         {
-            SMSApi.Api.Client client = new SMSApi.Api.Client("test");
-            client.SetPasswordRAW("test");
+            SMSApi.Api.Client client = new SMSApi.Api.Client("login");
+            client.SetPasswordRAW("password");
 
             return client;
         }
@@ -377,17 +377,19 @@ namespace SMSApi
         {
             try
             {
-                Stream file = System.IO.File.OpenRead("tts.wav");
+//                Stream file = System.IO.File.OpenRead("tts.wav");
 
                 var vmsApi = new SMSApi.Api.VMSFactory(client());
 
                 var result =
                     vmsApi.ActionSend()
-                        .SetFile(file)
-                        .SetTo("xxxyyyzzz")
+//                        .SetFile(file)
+                        .SetTTS("test message")
+                        .SetTo("xxxyyzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
                         .SetTry(3)
                         .SetTryInterval(300)
+                        .SetFrom("xxxyyzz")
                         .Execute();
 
                 System.Console.WriteLine("Send: " + result.Count);
