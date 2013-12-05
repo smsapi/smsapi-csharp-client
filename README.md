@@ -7,8 +7,10 @@ Przykład wysyłki:
 ```c#
 try
 {
-	var smsApi = new SMSApi.Api.SMSFactory(client());
+	SMSApi.Api.Client client = new SMSApi.Api.Client("login");
+	client.SetPasswordRAW("md5password");
 
+	var smsApi = new SMSApi.Api.SMSFactory(client);
 
 	var result =
 		smsApi.ActionSend()
