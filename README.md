@@ -8,7 +8,7 @@ Przykład wysyłki:
 try
 {
 	SMSApi.Api.Client client = new SMSApi.Api.Client("login");
-	client.SetPasswordRAW("md5password");
+	client.SetPasswordHash("md5password");
 
 	var smsApi = new SMSApi.Api.SMSFactory(client);
 
