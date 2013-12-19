@@ -51,6 +51,9 @@ namespace SMSApi.Api.Action
 
             collection.Add("encoding", Encoding);
 
+			if (Normalize == true)
+				collection.Add("normalize", "1");
+
             if (Test == true)
                 collection.Add("test", "1");
 
@@ -97,6 +100,7 @@ namespace SMSApi.Api.Action
         private bool Flash = false;
         private string Encoding = "UTF-8";
         private bool Fast = false;
+		private bool Normalize = false;
         private int MaxParts = 0;
         private string[] Params = null;
 
@@ -249,6 +253,12 @@ namespace SMSApi.Api.Action
 
             return this;
         }
+
+		public SMSSend SetNormalize(bool flag = true)
+		{
+			this.Normalize = flag;
+			return this;
+		}
 
     }
 }
