@@ -95,3 +95,6 @@ catch (SMSApi.Api.ProxyException e)
 	System.Console.WriteLine(e.Message);
 }
 ```
+
+## LICENSE
+[Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
