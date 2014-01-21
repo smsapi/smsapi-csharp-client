@@ -14,14 +14,13 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserEdit : BaseSimple<SMSApi.Api.Response.User>
+    public class UserAdd : BaseSimple<SMSApi.Api.Response.User>
     {
-        public UserEdit()
-            : base() 
+        public UserAdd() : base() 
         {
             limit = -1;
             monthLimit = -1;
-            active = -1;
+            active = false;
             phonebook = -1;
             senders = -1;
         }
@@ -34,14 +33,14 @@ namespace SMSApi.Api.Action
         const int PHONEBOOK_NOSHARE = 0;
         const int PHONEBOOK_SHARE = 1;
 
-        protected string username;
+        protected string newUsername;
         protected string password;
         protected string passwordApi;
         protected double limit;
         protected double monthLimit;
         protected int senders;
         protected int phonebook;
-        protected int active;
+        protected bool active;
         protected string info;
 
         protected override NameValueCollection Values()
@@ -53,68 +52,68 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("set_user", username);
+            collection.Add("add_user", newUsername);
             if (password != null) collection.Add("pass", password);
             if (passwordApi != null) collection.Add("pass_api", passwordApi);
             if (limit >= 0) collection.Add("limit", limit.ToString());
             if (monthLimit >= 0) collection.Add("month_limit", monthLimit.ToString());
             if (senders >= 0) collection.Add("senders", senders.ToString());
             if (phonebook >= 0) collection.Add("phonebook", phonebook.ToString());
-            if (active >= 0) collection.Add("active", (active > 0 ? "1" : "0"));
+            collection.Add("active", (active == true ? "1" : "0") );
             if (info != null) collection.Add("info", info);
 
             return collection;
         }
 
-        public UserEdit Username(string username)
+        public UserAdd SetUsername(string username)
         {
-            this.username = username;
+            this.newUsername = username;
             return this;
         }
 
-        public UserEdit SetPassword(string password)
+        public UserAdd SetPassword(string password)
         {
             this.password = password;
             return this;
         }
 
-        public UserEdit SetPasswordApi(string password)
+        public UserAdd SetPasswordApi(string password)
         {
             this.passwordApi = password;
             return this;
         }
 
-        public UserEdit SetLimit(double limit)
+        public UserAdd SetLimit(double limit)
         {
             this.limit = limit;
             return this;
         }
 
-        public UserEdit SetMonthLimit(double limit)
+        public UserAdd SetMonthLimit(double limit)
         {
             this.monthLimit = limit;
             return this;
         }
 
-        public UserEdit SetSenders(int flag)
+        public UserAdd SetSenders(int flag)
         {
             this.senders = flag;
             return this;
         }
 
-        public UserEdit SetPhonebook(int flag)
+        public UserAdd SetPhonebook(int flag)
         {
             this.phonebook = flag;
             return this;
         }
 
-        public UserEdit SetActive(bool flag)
+        public UserAdd SetActive(bool flag)
         {
-            this.active = (flag ? 1 : 0);
+            this.active = flag;
             return this;
         }
 
-        public UserEdit SetInfo(string text)
+        public UserAdd SetInfo(string text)
         {
             this.info = text;
             return this;
