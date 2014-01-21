@@ -56,7 +56,7 @@ namespace SMSApi.Api.Action
             if (password != null) collection.Add("pass", password);
             if (passwordApi != null) collection.Add("pass_api", passwordApi);
             if (limit >= 0) collection.Add("limit", limit.ToString());
-            if (monthLimit >= 0) collection.Add("password", monthLimit.ToString());
+            if (monthLimit >= 0) collection.Add("month_limit", monthLimit.ToString());
             if (senders >= 0) collection.Add("senders", senders.ToString());
             if (phonebook >= 0) collection.Add("phonebook", phonebook.ToString());
             collection.Add("active", (active == true ? "1" : "0") );
