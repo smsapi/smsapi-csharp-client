@@ -96,5 +96,12 @@ catch (SMSApi.Api.ProxyException e)
 }
 ```
 
+## Wymagania
+
+* C# >= 3.5
+** System.Runtime.Serialization
+** System.WerviceModel.Web
+* C# >= 4.0
+
 ## LICENSE
 [Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)

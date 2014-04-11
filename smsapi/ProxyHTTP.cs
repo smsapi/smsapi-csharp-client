@@ -130,7 +130,7 @@ namespace SMSApi.Api
             try
             {
                 stream.Position = 0;
-                stream.CopyTo(webRequest.GetRequestStream());
+                CopyStream(stream, webRequest.GetRequestStream());
                 stream.Close();
             }
             catch (System.Net.WebException e)
@@ -142,7 +142,7 @@ namespace SMSApi.Api
 
             try
             {
-                webRequest.GetResponse().GetResponseStream().CopyTo(response);
+                CopyStream(webRequest.GetResponse().GetResponseStream(), response);
             }
             catch (System.Net.WebException e)
             {
@@ -151,6 +151,16 @@ namespace SMSApi.Api
 
             response.Position = 0;
             return response;
+        }
+
+        private void CopyStream(Stream input, Stream output)
+        {
+            byte[] buffer = new byte[2048];
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, read);
+            }
         }
     }
 }

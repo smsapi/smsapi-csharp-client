@@ -33,27 +33,33 @@ namespace SMSApi
         public void test_user()
         {
             var userApi = new SMSApi.Api.UserFactory(client());
+            try
+            {
+                var points = userApi.ActionGetCredits().Execute();
+                System.Console.WriteLine(points.Points);
 
-            var points = userApi.ActionGetCredits().Execute();
-            System.Console.WriteLine(points.Points);
+                string usernName = "test_" + DateTime.Now.ToString("his");
 
-            string usernName = "test_" + DateTime.Now.ToString("his");
+                var user =
+                    userApi.ActionAdd()
+                        .SetUsername(usernName)
+                        .SetPassword("7815696ecbf1c96e6894b779456d330e")
+                        .Execute();
 
-            var user = 
-                userApi.ActionAdd()
-                    .SetUsername(usernName)
-                    .SetPassword("7815696ecbf1c96e6894b779456d330e")
-                    .Execute();
+                user =
+                    userApi.ActionEdit(usernName)
+                        .SetInfo("edited info")
+                        .Execute();
 
-            user =
-                userApi.ActionEdit(usernName)
-                    .SetInfo("edited info")
-                    .Execute();
+                var users = userApi.ActionList().Execute();
 
-            var users = userApi.ActionList().Execute();
-
-            foreach (var u in users.List) {
-                System.Console.WriteLine(u.Username);
+                foreach (var u in users.List) {
+                    System.Console.WriteLine(u.Username);
+                }
+            }
+            catch (SMSApi.Api.ClientException e)
+            {
+                System.Console.WriteLine(e.Message);
             }
         }
 
