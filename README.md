@@ -98,7 +98,7 @@ catch (SMSApi.Api.ProxyException e)
 
 ## Wymagania
 
-* C# >= 3.5 + System.Runtime.Serialization, System.WerviceModel.Web
+* C# >= 3.5 + System.Runtime.Serialization, System.ServiceModel.Web
 * C# >= 4.0
 
 ## LICENSE
