@@ -16,7 +16,7 @@ try
 		smsApi.ActionSend()
 			.SetText("test message")
 			.SetTo("694562829")
-			.SetDateSent(DateTime.Now.AddHours(2))
+			.SetSender("Info") //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
 			.Execute();
 
 	System.Console.WriteLine("Send: " + result.Count);
