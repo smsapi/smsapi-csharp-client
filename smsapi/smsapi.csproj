@@ -110,6 +110,7 @@
     <Compile Include="Api\Response\Status.cs" />
     <Compile Include="Api\SMSFactory.cs" />
     <Compile Include="Api\VMSFactory.cs" />
+    <Compile Include="SmsapiException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,14 +1,11 @@
 ﻿
 namespace SMSApi.Api
 {
-    public class ClientException : SMSApi.Api.Exception
+    public class ClientException : SMSApi.Api.SmsapiException
     {
-        private int Code;
-
         public ClientException(string message, int code)
-            : base(message)
+            : base(message, code)
         {
-            Code = code;
         }
     }
 }
