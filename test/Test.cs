@@ -228,7 +228,7 @@ namespace SMSApi
                 var deleted =
                     smsApi
                         .ActionDelete()
-                            .Id(ids)
+                            .Id(ids[0])
                             .Execute();
 
                 System.Console.WriteLine("Deleted: " + deleted.Count);

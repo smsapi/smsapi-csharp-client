@@ -26,7 +26,7 @@ namespace SMSApi.Api.Action
 
         public SMSDelete Id(string id)
         {
-            this.id = new string { id };
+            this.id = id;
             return this;
         }
     }
