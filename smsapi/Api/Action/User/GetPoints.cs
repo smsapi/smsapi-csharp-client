@@ -18,6 +18,7 @@ namespace SMSApi.Api.Action
             collection.Add("password", client.GetPassword());
 
             collection.Add("credits", "1");
+            collection.Add("details", "1");
 
             return collection;
         }
