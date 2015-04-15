@@ -42,6 +42,7 @@ namespace SMSApi.Api.Action
         protected int phonebook;
         protected bool active;
         protected string info;
+        protected bool withoutPrefix = false;
 
         protected override NameValueCollection Values()
         {
@@ -61,6 +62,7 @@ namespace SMSApi.Api.Action
             if (phonebook >= 0) collection.Add("phonebook", phonebook.ToString());
             collection.Add("active", (active == true ? "1" : "0") );
             if (info != null) collection.Add("info", info);
+            if (withoutPrefix) collection.Add("without_prefix", "1");
 
             return collection;
         }
@@ -116,6 +118,12 @@ namespace SMSApi.Api.Action
         public UserAdd SetInfo(string text)
         {
             this.info = text;
+            return this;
+        }
+
+        public UserAdd SetWithoutPrefix(bool flag)
+        {
+            this.withoutPrefix = flag;
             return this;
         }
     }
