@@ -49,7 +49,7 @@ try
 	}
 
 	for (int i = 0, l = 0; i < result.List.Count; i++)
-    	{
+    {
         	if (!result.List[i].isError())
         	{
 			var deleted = 
