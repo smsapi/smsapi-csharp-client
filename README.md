@@ -48,13 +48,17 @@ try
 		System.Console.WriteLine("ID: " + status.ID + " NUmber: " + status.Number + " Points:" + status.Points + " Status:" + status.Status + " IDx: " + status.IDx);
 	}
 
-	var deleted =
-		smsApi
-			.ActionDelete()
-				.Id(ids)
-				.Execute();
-
-	System.Console.WriteLine("Deleted: " + deleted.Count);
+	for (int i = 0, l = 0; i < result.List.Count; i++)
+    	{
+        	if (!result.List[i].isError())
+        	{
+			var deleted = 
+				smsApi.ActionDelete()
+					.Id(result.List[i].ID)
+					.Execute();
+			System.Console.WriteLine("Deleted: " + deleted.Count);
+		}
+	}
 }
 catch (SMSApi.Api.ActionException e)
 {
