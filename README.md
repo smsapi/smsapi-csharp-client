@@ -50,8 +50,8 @@ try
 
 	for (int i = 0, l = 0; i < result.List.Count; i++)
     {
-        	if (!result.List[i].isError())
-        	{
+        if (!result.List[i].isError())
+        {
 			var deleted = 
 				smsApi.ActionDelete()
 					.Id(result.List[i].ID)
