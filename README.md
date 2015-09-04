@@ -1,9 +1,9 @@
 csharp-client
 ===========
 
-Klient SMSAPI napisany w języku C#, pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
+C# client which allows you to send SMS messages and manage your account in SMSAPI.com
 
-Przykład wysyłki:
+Example of use:
 ```c#
 try
 {
@@ -15,8 +15,8 @@ try
 	var result =
 		smsApi.ActionSend()
 			.SetText("test message")
-			.SetTo("694562829")
-			.SetSender("Info") //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
+			.SetTo("44xxxxxxxxxxxx")
+			.SetSender("Info")
 			.Execute();
 
 	System.Console.WriteLine("Send: " + result.Count);
@@ -27,10 +27,8 @@ try
 	{
 		if (!result.List[i].isError())
 		{
-			//Nie wystąpił błąd podczas wysyłki (numer|treść|parametry... prawidłowe)
 			if (!result.List[i].isFinal())
 			{
-				//Status nie jest koncowy, może ulec zmianie
 				ids[l] = result.List[i].ID;
 				l++;
 			}
@@ -63,47 +61,47 @@ try
 catch (SMSApi.Api.ActionException e)
 {
 	/**
-	 * Błędy związane z akcją (z wyłączeniem błędów 101,102,103,105,110,1000,1001 i 8,666,999,201)
-	 * http://www.smsapi.pl/sms-api/kody-bledow
+	 * Errors associated with the action (excluding errors 101,102,103,105,110,1000,1001,8,666,999,201)
+	 * https://www.smsapi.com/resp
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.ClientException e)
 {
 	/**
-	 * 101 Niepoprawne lub brak danych autoryzacji.
-	 * 102 Nieprawidłowy login lub hasło
-	 * 103 Brak punków dla tego użytkownika
-	 * 105 Błędny adres IP
-	 * 110 Usługa nie jest dostępna na danym koncie
-	 * 1000 Akcja dostępna tylko dla użytkownika głównego
-	 * 1001 Nieprawidłowa akcja
+	 * 101 Invalid authorization info. ATTENTION! API password ma be different than web panel password.
+	 * 102 Invalid username or password.
+	 * 103 Insufficient credits on Your account.
+	 * 105 Wrong IP address (for IP filter turned on).
+	 * 110 Action not allowed on your account
+	 * 1000 Action allowed only on main account
+	 * 1001 Wrong action
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.HostException e)
 {
-	/* błąd po stronie servera lub problem z parsowaniem danych
+	/* other errors
 	 * 
-	 * 8 - Błąd w odwołaniu
-	 * 666 - Wewnętrzny błąd systemu
-	 * 999 - Wewnętrzny błąd systemu
-	 * 201 - Wewnętrzny błąd systemu
-	 * SMSApi.Api.HostException.E_JSON_DECODE - problem z parsowaniem danych
+	 * 8 - Error in request
+	 * 666 - Internal system error
+	 * 999 - Internal system error
+	 * 201 - Internal system error
+	 * SMSApi.Api.HostException.E_JSON_DECODE - problem with data parsing
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.ProxyException e)
 {
-	// błąd w komunikacji pomiedzy klientem a serverem
+	// problem with connection between server and client
 	System.Console.WriteLine(e.Message);
 }
 ```
 
-## Wymagania
+## Requirements
 
 * C# >= 3.5 + System.Runtime.Serialization, System.ServiceModel.Web
 * C# >= 4.0
 
 ## LICENSE
-[Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
+[Apache 2.0 License](https://github.com/smsapicom/smsapicom-php-client/blob/master/LICENSE)

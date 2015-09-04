@@ -8,13 +8,13 @@ namespace SMSApi.Api
 
         public Factory()
         {
-            proxy = new ProxyHTTP("https://api.smsapi.pl/api/");
+            proxy = new ProxyHTTP("https://api.smsapi.com/api/");
         }
 
         public Factory(Client client)
         {
             Client(client);
-            proxy = new ProxyHTTP("https://api.smsapi.pl/api/");
+            proxy = new ProxyHTTP("https://api.smsapi.com/api/");
         }
 
         public void Client(Client client)
