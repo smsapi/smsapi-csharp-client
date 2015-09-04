@@ -1,4 +1,4 @@
-csharp-client
+SMSAPI.com (International) csharp client
 ===========
 
 C# client which allows you to send SMS messages and manage your account in SMSAPI.com
