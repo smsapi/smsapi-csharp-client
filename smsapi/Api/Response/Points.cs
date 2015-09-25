@@ -14,11 +14,6 @@ namespace SMSApi.Api.Response
         public readonly int ProCount;
         [DataMember(Name = "ecoCount", IsRequired = false)]
         public readonly int EcoCount;
-        [DataMember(Name = "mmsCount", IsRequired = false)]
-        public readonly int MmsCount;
-        [DataMember(Name = "vmsGsmCount", IsRequired = false)]
-        public readonly int VmsGsmCount;
-        [DataMember(Name = "vmsLandCount", IsRequired = false)]
-        public readonly int VmsLandCount;
+        
     }
 }

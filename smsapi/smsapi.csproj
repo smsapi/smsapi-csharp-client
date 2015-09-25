@@ -60,9 +60,6 @@
     <Compile Include="Api\Action\Sender\SetDefault.cs" />
     <Compile Include="Api\Action\Sender\Delete.cs" />
     <Compile Include="Api\Action\HLR\CheckNumber.cs" />
-    <Compile Include="Api\Action\MMS\Delete.cs" />
-    <Compile Include="Api\Action\MMS\Get.cs" />
-    <Compile Include="Api\Action\MMS\Send.cs" />
     <Compile Include="Api\Action\Send.cs" />
     <Compile Include="Api\Action\Sender\Add.cs" />
     <Compile Include="Api\Action\Sender\List.cs" />
@@ -74,9 +71,6 @@
     <Compile Include="Api\Action\User\Get.cs" />
     <Compile Include="Api\Action\User\Edit.cs" />
     <Compile Include="Api\Action\User\GetPoints.cs" />
-    <Compile Include="Api\Action\VMS\Delete.cs" />
-    <Compile Include="Api\Action\VMS\Get.cs" />
-    <Compile Include="Api\Action\VMS\Send.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="HostException.cs" />
     <Compile Include="Exception.cs" />
@@ -99,7 +93,6 @@
     <Compile Include="Api\SenderFactory.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Api\Factory.cs" />
-    <Compile Include="Api\MMSFactory.cs" />
     <Compile Include="ActionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
@@ -109,7 +102,6 @@
     <Compile Include="Api\Response\MessageStatus.cs" />
     <Compile Include="Api\Response\Status.cs" />
     <Compile Include="Api\SMSFactory.cs" />
-    <Compile Include="Api\VMSFactory.cs" />
     <Compile Include="SmsapiException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
