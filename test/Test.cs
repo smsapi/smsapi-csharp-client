@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using SMSApi.Api.Response;
+using SMSApi.Api;
 
 namespace SMSApi
 {
@@ -18,9 +20,11 @@ namespace SMSApi
             o.test_phonebookgroup();
             o.test_phonebookcontact();
             o.test_user();
+            //To test contacts You need to migrate your database via https://ssl.smsapi.pl/contacts/migrate
+            o.test_contacts();
         }
 
-        public SMSApi.Api.Client client()
+        static public SMSApi.Api.Client client()
         {
             SMSApi.Api.Client client = new SMSApi.Api.Client("login");
             client.SetPasswordRAW("password");
@@ -432,5 +436,381 @@ namespace SMSApi
                 System.Console.WriteLine(e.Message);
             }
         }
+
+		class ContactsTest
+		{
+			protected ContactsFactory api = null;
+
+			public void SetApi(ContactsFactory api)
+			{
+				this.api = api;
+			}
+
+			private ContactsTest nested = null;
+
+			public void SetNested(ContactsTest nested)
+			{
+				this.nested = nested;
+				if (api == null)
+				{
+					api = new SMSApi.Api.ContactsFactory(client());
+				}
+				nested.SetApi(api);
+			}
+
+			public virtual void Setup() {}
+
+			public virtual void Cleanup() {}
+
+			public void Test()
+			{
+				Setup();
+				try
+				{
+					if (nested != null)
+					{
+						nested.contact = contact;
+						nested.group = group;
+						nested.field = field;
+						nested.Test();
+					}
+				}
+				catch (SMSApi.Api.Exception e)
+				{
+					Cleanup();
+					throw;
+				}
+				Cleanup();
+			}
+
+			protected Contact contact = null;
+			protected Group group = null;
+			protected Field field = null;
+		}
+
+		class CreateContactTest : ContactsTest
+		{
+			private Contact createdContact;
+			public override void Setup()
+			{
+				createdContact = api.CreateContact()
+					.SetPhoneNumber("xxxyyyzzz")
+						.Execute();
+				contact = createdContact;
+			}
+			public override void Cleanup()
+			{
+				api.DeleteContact(createdContact.Id)
+					.Execute();
+			}
+		}
+
+		class ListContactsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var contacts =  api.ListContacts()
+					.Execute();
+
+				System.Console.WriteLine("Contacts size: " + contacts.Size);
+				foreach (var contact in contacts.Collection)
+				{
+					System.Console.WriteLine("Id: " + contact.Id +
+					                         " Idx: " + contact.Idx +
+					                         " FirstName: " + contact.FirstName +
+					                         " LastName: " + contact.LastName +
+					                         " BirthdayDate: " + contact.BirthdayDate +
+					                         " PhoneNumber: " + contact.PhoneNumber +
+					                         " Email: " + contact.Email +
+					                         " Gender: " + contact.Gender +
+					                         " City: " + contact.City +
+					                         " Source: " + contact.Source +
+					                         " DateCreated: " + contact.DateCreated +
+					                         " DateUpdated: " + contact.DateUpdated +
+					                         " Description: " + contact.Description);
+				}
+			}
+		}
+
+		class GetContactTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				contact = api.GetContact(contact.Id)
+					.Execute();
+			}
+		}
+
+		class EditContactTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				contact = api.EditContact(contact.Id)
+					.SetFirstName("Tester")
+					.Execute();
+			}
+		}
+
+		class CreateGroupTest : ContactsTest
+		{
+			private Group createdGroup;
+			public override void Setup()
+			{
+				createdGroup = api.CreateGroup()
+					.SetName("GroupX")
+					.Execute();
+				group = createdGroup;
+			}
+			public override void Cleanup()
+			{
+				api.DeleteGroup(createdGroup.Id)
+					.Execute();
+			}
+		}
+
+		class ListGroupsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var groups = api.ListGroups()
+					.Execute();
+
+				System.Console.WriteLine("Groups size: " + groups.Size);
+				foreach (var group in groups.Collection)
+				{
+					System.Console.WriteLine("Id: " + group.Id +
+					                         " Name: " + group.Name +
+					                         " ContactsCount: " + group.ContactsCount +
+					                         " DateCreated: " + group.DateCreated +
+					                         " DateUpdated: " + group.DateUpdated +
+					                         " Description: " + group.Description +
+					                         " CreatedBy: " + group.CreatedBy +
+					                         " Idx: " + group.Idx);
+					foreach (var groupPermission in group.Permissions)
+					{
+						System.Console.WriteLine("GroupId: " + groupPermission.GroupId +
+						                         " Username: " + groupPermission.Username +
+						                         " Write: " + groupPermission.Write +
+						                         " Read: " + groupPermission.Read +
+						                         " Send: " + groupPermission.Send);
+					}
+				}
+			}
+		}
+
+		class GetGroupTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				group = api.GetGroup(group.Id)
+					.Execute();
+			}
+		}
+
+		class EditGroupTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				group = api.EditGroup(group.Id)
+					.SetName("GroupY")
+					.Execute();
+			}
+		}
+
+		class ListGroupPermissionsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var groupPermissions = api.ListGroupPermissions(group.Id)
+					.Execute();
+
+				System.Console.WriteLine("Group permissions size: " + groupPermissions.Size);
+				foreach (var groupPermission in groupPermissions.Collection)
+				{
+					System.Console.WriteLine("GroupId: " + groupPermission.GroupId +
+					                         " Username: " + groupPermission.Username +
+					                         " Read: " + groupPermission.Read +
+					                         " Write: " + groupPermission.Write +
+					                         " Send: " + groupPermission.Send);
+				}
+			}
+		}
+
+		class CreateFieldTest : ContactsTest
+		{
+			private Field createdField;
+			public override void Setup()
+			{
+				createdField = api.CreateField()
+					.SetName("FieldX")
+					.SetType(Field.TextType)
+					.Execute();
+				field = createdField;
+			}
+			public override void Cleanup()
+			{
+				api.DeleteField(createdField.Id)
+					.Execute();
+			}
+		}
+
+		class ListFieldsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var fields = api.ListFields()
+					.Execute();
+
+				System.Console.WriteLine("Fields size: " + fields.Size);
+				foreach (var field in fields.Collection)
+				{
+					System.Console.WriteLine("Name: " + field.Name +
+					                         " Type: " + field.Type);
+				}
+			}
+		}
+
+		class EditFieldTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				api.EditField(field.Id)
+					.SetName("FieldY")
+					.Execute();
+			}
+		}
+
+		class ListFieldOptionsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var fieldOptions = api.ListFieldOptions(field.Id)
+					.Execute();
+
+				System.Console.WriteLine("Field options size: " + fieldOptions.Size);
+				foreach (var fieldOption in fieldOptions.Collection)
+				{
+					System.Console.WriteLine("Name: " + fieldOption.Name +
+					                         " Value: " + fieldOption.Value);
+				}
+			}
+		}
+
+		class BindContactToGroupTest : ContactsTest
+		{
+			private Contact bindedContact;
+			private Group bindedGroup;
+			public override void Setup()
+			{
+				api.BindContactToGroup(contact.Id, group.Id)
+					.Execute();
+				bindedContact = contact;
+				bindedGroup = group;
+			}
+			public override void Cleanup()
+			{
+				api.UnbindContactFromGroup(bindedContact.Id, bindedGroup.Id)
+					.Execute();
+			}
+		}
+
+		class GetContactGroupTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				group = api.GetContactGroup(contact.Id, group.Id)
+					.Execute();
+			}
+		}
+
+		class ListContactGroupsTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				var groups = api.ListContactGroups(contact.Id)
+					.Execute();
+
+				System.Console.WriteLine("Contact groups size: " + groups.Size);
+			}
+		}
+
+		class CreateGroupPermissionTest : ContactsTest
+		{
+			private Group permissionedGroup;
+			public override void Setup()
+			{
+				api.CreateGroupPermission(group.Id)
+					.SetUsername("username")
+					.SetRead(true)
+					.SetWrite(false)
+					.SetSend(false)
+					.Execute();
+				permissionedGroup = group;
+			}
+			public override void Cleanup()
+			{
+				api.DeleteGroupPermission(permissionedGroup.Id, "username")
+					.Execute();
+			}
+		}
+
+		class GetGroupPermissionTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				api.GetGroupPermission(group.Id, "username")
+					.Execute();
+			}
+		}
+
+		class EditGroupPermissionTest : ContactsTest
+		{
+			public override void Setup()
+			{
+				api.EditGroupPermission(group.Id, "username")
+					.SetRead(true)
+					.SetWrite(true)
+					.SetSend(true)
+					.Execute();
+			}
+		}
+
+		public void test_contacts()
+		{
+			var tests = new[] {
+				new ContactsTest(), //dummy
+
+				new CreateContactTest(),
+				new GetContactTest(),
+				new EditContactTest(),
+				new ListContactsTest(),
+
+				new CreateGroupTest(),
+				new GetGroupTest(),
+				new EditGroupTest(),
+				new ListGroupsTest(),
+
+				new BindContactToGroupTest(),
+				new GetContactGroupTest(),
+				new ListContactGroupsTest(),
+
+				new CreateGroupPermissionTest(),
+				new GetGroupPermissionTest(),
+				new EditGroupPermissionTest(),
+				new ListGroupPermissionsTest(),
+
+				new CreateFieldTest(),
+				new EditFieldTest(),
+				new ListFieldsTest(),
+				//new ListFieldOptionsTest(),
+			};
+
+			for (int i = 1; i < tests.Length; ++i)
+			{
+				tests[i-1].SetNested(tests[i]);
+			}
+
+			tests[0].Test();
+		}
     }
 }

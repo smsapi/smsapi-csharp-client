@@ -5,6 +5,7 @@ using System.Text;
 
 namespace SMSApi.Api
 {
+    [Obsolete("use ContactsFactory instead")]
     public class PhonebookFactory : Factory
     {
         public PhonebookFactory() : base() { }

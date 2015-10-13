@@ -5,12 +5,14 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
+using System.Linq;
 
 namespace SMSApi.Api
 {
     public class ProxyHTTP : Proxy
     {
         protected string baseUrl;
+		Client basicAuthentication;
 
         public ProxyHTTP(string baseUrl) 
         {
@@ -92,66 +94,74 @@ namespace SMSApi.Api
             return stream;
         }
 
-        public Stream Execute(string uri, NameValueCollection data)
+        public Stream Execute(string uri, NameValueCollection data, string method = "POST")
         {
             Dictionary<string, Stream> files = new Dictionary<string, Stream>();
-            return Execute(uri, data, files);
+            return Execute(uri, data, files, method);
         }
 
-        public Stream Execute(string uri, NameValueCollection data, System.IO.Stream file)
+        public Stream Execute(string uri, NameValueCollection data, System.IO.Stream file, string method = "POST")
         {
             Dictionary<string, Stream> files = new Dictionary<string, Stream>();
             files.Add("file", file);
-            return Execute(uri, data, files);
+            return Execute(uri, data, files, method);
         }
 
-        public Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files)
-        {
-            String boundary = "SMSAPI-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + (new Random()).Next(int.MinValue, int.MaxValue).ToString() + "-boundary";
+		public Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, string method = "POST")
+		{
+			String boundary = "SMSAPI-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + (new Random()).Next(int.MinValue, int.MaxValue).ToString() + "-boundary";
 
-            WebRequest webRequest = WebRequest.Create(baseUrl + uri);
-            webRequest.Method = "POST";
+			WebRequest webRequest = WebRequest.Create(baseUrl + uri);
+			webRequest.Method = method;
 
-            Stream stream;
+			if (basicAuthentication != null)
+			{
+				webRequest.Headers.Add("Authorization", "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(basicAuthentication.GetUsername() + ":" + basicAuthentication.GetPassword())));
+			}
 
-            if (files != null && files.Count > 0)
-            {
-                webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
-                stream = PrepareMultipartContent(boundary, data, files);
-            }
-            else
-            {
-                webRequest.ContentType = "application/x-www-form-urlencoded";
-                stream = PrepareContent(data);
-            }
+			if (method == "POST" || method == "PUT")
+			{
+				Stream stream;
 
-            webRequest.ContentLength = stream.Length;
+				if (files != null && files.Count > 0)
+				{
+					webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
+					stream = PrepareMultipartContent(boundary, data, files);
+				}
+				else
+				{
+					webRequest.ContentType = "application/x-www-form-urlencoded";
+					stream = PrepareContent(data);
+				}
 
-            try
-            {
-                stream.Position = 0;
-                CopyStream(stream, webRequest.GetRequestStream());
-                stream.Close();
-            }
-            catch (System.Net.WebException e)
-            {
-                throw new ProxyException(e.Message, e);
-            }
+				webRequest.ContentLength = stream.Length;
 
-            MemoryStream response = new MemoryStream();
+				try
+				{
+					stream.Position = 0;
+					CopyStream(stream, webRequest.GetRequestStream());
+					stream.Close();
+				}
+				catch (System.Net.WebException e)
+				{
+					throw new ProxyException(e.Message, e);
+				}
+			}
 
-            try
-            {
-                CopyStream(webRequest.GetResponse().GetResponseStream(), response);
-            }
-            catch (System.Net.WebException e)
-            {
-                throw new ProxyException(e.Message, e);
-            }
+			MemoryStream response = new MemoryStream();
 
-            response.Position = 0;
-            return response;
-        }
+			try
+			{
+				CopyStream(webRequest.GetResponse().GetResponseStream(), response);
+			}
+			catch (System.Net.WebException e)
+			{
+				throw new ProxyException(e.Message, e);
+			}
+
+			response.Position = 0;
+			return response;
+		}
 
         private void CopyStream(Stream input, Stream output)
         {
@@ -162,5 +172,10 @@ namespace SMSApi.Api
                 output.Write(buffer, 0, read);
             }
         }
+
+		public void BasicAuthentication(Client client)
+		{
+			basicAuthentication = client;
+		}
     }
 }

@@ -13,6 +13,8 @@ namespace SMSApi.Api.Action
 
         abstract protected string Uri();
 
+		protected virtual string Method { get { return "POST"; } }
+
         public void Client(Client client)
         {
             this.client = client;
@@ -25,13 +27,18 @@ namespace SMSApi.Api.Action
 
         protected TT ResponseToObject<TT>(Stream data)
         {
-            data.Position = 0;
-
-            var serializer = new DataContractJsonSerializer(typeof(TT));
-            TT result = (TT)serializer.ReadObject(data);
-
-            data.Position = 0;
-
+			TT result;
+			if (data.Length > 0)
+			{
+				data.Position = 0;
+				var serializer = new DataContractJsonSerializer(typeof(TT));
+				result = (TT)serializer.ReadObject(data);
+				data.Position = 0;
+			}
+			else
+			{
+				result = Activator.CreateInstance<TT>();
+			}
             return result;
         }
 
@@ -54,7 +61,7 @@ namespace SMSApi.Api.Action
         {
             Validate();
 
-            Stream data = proxy.Execute(Uri(), Values(), Files());
+            Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
 
             TResult result = default(TResult);
 
