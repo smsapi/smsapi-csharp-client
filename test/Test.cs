@@ -194,9 +194,11 @@ namespace SMSApi
                         .SetText("test message")
                         .SetTo("xxxyyyzzz")
                         .SetDateSent(DateTime.Now.AddHours(2))
+                        .SetDetails()
                         .Execute();
 
                 System.Console.WriteLine("Send: " + result.Count);
+                System.Console.WriteLine((result.Length.HasValue ? ("Length: " + result.Length.Value) : "") + (result.Parts.HasValue ? (" Parts: " + result.Parts.Value) : "") + (result.Message != null ? (" Message: " + result.Message) : ""));
 
                 string[] ids = new string[result.Count];
 
