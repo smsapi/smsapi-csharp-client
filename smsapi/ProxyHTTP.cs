@@ -146,7 +146,7 @@ namespace SMSApi.Api
             }
             catch (System.Net.WebException e)
             {
-                throw new ProxyException(e.Message, e);
+                throw new ProxyException("Failed to get response from " + webRequest.RequestUri.ToString(), e);
             }
 
             response.Position = 0;

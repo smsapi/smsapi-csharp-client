@@ -10,6 +10,10 @@ namespace SMSApi.Api
         public HLRFactory() : base() { }
         public HLRFactory(Client client) : base(client) { }
 
+        public HLRFactory(Client client, Proxy proxy) : base(client, proxy)
+        {
+        }
+
         public SMSApi.Api.Action.HLRCheckNumber ActionCheckNumber(string number = null)
         {
             var action = new SMSApi.Api.Action.HLRCheckNumber();

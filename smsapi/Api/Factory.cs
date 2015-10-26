@@ -17,6 +17,11 @@ namespace SMSApi.Api
             proxy = new ProxyHTTP("https://api.smsapi.pl/api/");
         }
 
+        public Factory(Client client, Proxy proxy) : this(client)
+        {
+            this.proxy = proxy;
+        }
+
         public void Client(Client client)
         {
             this.client = client;

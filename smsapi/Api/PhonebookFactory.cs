@@ -9,6 +9,7 @@ namespace SMSApi.Api
     {
         public PhonebookFactory() : base() { }
         public PhonebookFactory(Client client) : base(client) { }
+        public PhonebookFactory(Client client, Proxy proxy) : base(client, proxy) { }
 
         public SMSApi.Api.Action.PhonebookContactAdd ActionContactAdd(string number = null)
         {

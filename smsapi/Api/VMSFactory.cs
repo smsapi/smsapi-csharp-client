@@ -6,6 +6,10 @@ namespace SMSApi.Api
         public VMSFactory() : base() { }
         public VMSFactory(Client client) : base(client) { }
 
+        public VMSFactory(Client client, Proxy proxy) : base(client, proxy)
+        {
+        }
+
         public SMSApi.Api.Action.VMSDelete ActionDelete(string id = null)
         {
             SMSApi.Api.Action.VMSDelete action = new SMSApi.Api.Action.VMSDelete();

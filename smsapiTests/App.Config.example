@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="username" value="username"/>
+    <add key="password" value="md5 hash"/>
+    <add key="baseUrl" value="https://api.smsapi.pl"/>
+    <add key="validTestNumber" value="48xxyyyzzz"/>
+  </appSettings>
+</configuration>
