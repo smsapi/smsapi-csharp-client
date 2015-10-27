@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Json;
 
 namespace SMSApi.Api.Action
 {
-    public class VMSGet : BaseSimple<SMSApi.Api.Response.Status>
+    public class VMSGet : BaseSimple<Response.Status>
     {
         public VMSGet() : base() { }
 
