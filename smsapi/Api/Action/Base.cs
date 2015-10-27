@@ -89,7 +89,7 @@ namespace SMSApi.Api.Action
 
             try
             {
-                var error = ResponseToObject<SMSApi.Api.Response.Error>(data);
+                var error = ResponseToObject<Response.Error>(data);
 
                 if (error.Code != 0)
                 {

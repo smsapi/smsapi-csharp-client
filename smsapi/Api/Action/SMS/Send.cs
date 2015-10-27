@@ -63,6 +63,11 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
+            if (Details == true)
+            {
+                collection.Add("details", "1");
+            }
+
             if (this.Params != null)
             {
                 for (int i = 0; i < this.Params.Length; i++)
@@ -103,6 +108,7 @@ namespace SMSApi.Api.Action
 		private bool Normalize = false;
         private int MaxParts = 0;
         private string[] Params = null;
+        private bool Details = true;
 
         public SMSSend SetTo(string to)
         {
@@ -259,6 +265,5 @@ namespace SMSApi.Api.Action
 			this.Normalize = flag;
 			return this;
 		}
-
     }
 }

@@ -11,7 +11,6 @@ namespace smsapiTests.Contacts
         {
             var fields = contactsFactory.ListFields().Execute();
 
-            Assert.IsFalse(fields.isError());
             foreach (var field in fields.Collection)
             {
                 Assert.IsNotNull("", field.Name);

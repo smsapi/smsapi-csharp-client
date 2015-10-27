@@ -18,6 +18,8 @@ namespace smsapiTests
 
             Assert.AreEqual(1, sendResponse.Count);
             Assert.IsTrue(sendResponse.List[0].Points > 0, "Points must be greather then 0");
+            Assert.IsNotNull(sendResponse.Message);
+            Assert.IsNotNull(sendResponse.Parts);
 
             string[] ids = new string[sendResponse.Count];
 
