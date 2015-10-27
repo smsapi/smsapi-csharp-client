@@ -40,6 +40,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Action\Base.cs">
@@ -111,6 +113,39 @@
     <Compile Include="Api\SMSFactory.cs" />
     <Compile Include="Api\VMSFactory.cs" />
     <Compile Include="SmsapiException.cs" />
+    <Compile Include="Api\ContactsFactory.cs" />
+    <Compile Include="Api\Action\Contacts\ListContacts.cs" />
+    <Compile Include="Api\Action\Contacts\CreateContact.cs" />
+    <Compile Include="Api\Action\Contacts\DeleteContact.cs" />
+    <Compile Include="Api\Action\Contacts\GetContact.cs" />
+    <Compile Include="Api\Action\Contacts\EditContact.cs" />
+    <Compile Include="Api\Action\Contacts\ListContactGroups.cs" />
+    <Compile Include="Api\Action\Rest.cs" />
+    <Compile Include="Api\Action\Contacts\ListGroups.cs" />
+    <Compile Include="Api\Action\Contacts\CreateGroup.cs" />
+    <Compile Include="Api\Action\Contacts\DeleteGroup.cs" />
+    <Compile Include="Api\Response\BasicCollection.cs" />
+    <Compile Include="Api\Action\Contacts\EditGroup.cs" />
+    <Compile Include="Api\Action\Contacts\ListGroupPermissions.cs" />
+    <Compile Include="Api\Action\Contacts\GetGroup.cs" />
+    <Compile Include="Api\Response\GroupPermission.cs" />
+    <Compile Include="Api\Response\GroupPermissions.cs" />
+    <Compile Include="Api\Action\Contacts\CreateGroupPermission.cs" />
+    <Compile Include="Api\Action\Contacts\ListFields.cs" />
+    <Compile Include="Api\Response\Fields.cs" />
+    <Compile Include="Api\Response\Field.cs" />
+    <Compile Include="Api\Action\Contacts\CreateField.cs" />
+    <Compile Include="Api\Action\Contacts\DeleteField.cs" />
+    <Compile Include="Api\Action\Contacts\EditField.cs" />
+    <Compile Include="Api\Response\FieldOptions.cs" />
+    <Compile Include="Api\Response\FieldOption.cs" />
+    <Compile Include="Api\Action\Contacts\ListFieldOptions.cs" />
+    <Compile Include="Api\Action\Contacts\BindContactToGroup.cs" />
+    <Compile Include="Api\Action\Contacts\UnbindContactFromGroup.cs" />
+    <Compile Include="Api\Action\Contacts\GetContactGroup.cs" />
+    <Compile Include="Api\Action\Contacts\DeleteGroupPermission.cs" />
+    <Compile Include="Api\Action\Contacts\GetGroupPermission.cs" />
+    <Compile Include="Api\Action\Contacts\EditGroupPermission.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -120,4 +155,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Api\Action\Contacts\" />
+  </ItemGroup>
 </Project>

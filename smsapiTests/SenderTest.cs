@@ -28,13 +28,10 @@ namespace smsapiTests
         [TestMethod]
         public void TestAdd_Delete()
         {
-            var deleteResponse = senderFactory.ActionDelete(testName).Execute();
-            Assert.IsFalse(deleteResponse.isError(), deleteResponse.ErrorMessage);
-
             var addResponse = senderFactory.ActionAdd(testName).Execute();
-            Assert.IsFalse(addResponse.isError(), deleteResponse.ErrorMessage);
+            Assert.IsFalse(addResponse.isError(), addResponse.ErrorMessage);
 
-            deleteResponse = senderFactory.ActionDelete(testName).Execute();
+            var deleteResponse = senderFactory.ActionDelete(testName).Execute();
             Assert.IsFalse(deleteResponse.isError(), deleteResponse.ErrorMessage);
         }
 

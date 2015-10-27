@@ -57,6 +57,25 @@
     <Compile Include="ConfigurationTest.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Contacts\EditGroupPermissionTest.cs" />
+    <Compile Include="Contacts\GetGroupPermissionTest.cs" />
+    <Compile Include="Contacts\CreateGroupPermissionTest.cs" />
+    <Compile Include="Contacts\ListContactGroupsTest.cs" />
+    <Compile Include="Contacts\GetContactGroupTest.cs" />
+    <Compile Include="Contacts\BindContactToGroupTest.cs" />
+    <Compile Include="Contacts\ListFieldOptionsTest.cs" />
+    <Compile Include="Contacts\EditFieldTest.cs" />
+    <Compile Include="Contacts\ListFieldsTest.cs" />
+    <Compile Include="Contacts\CreateFieldTest.cs" />
+    <Compile Include="Contacts\ListGroupPermissionsTest.cs" />
+    <Compile Include="Contacts\EditGroupTest.cs" />
+    <Compile Include="Contacts\GetGroupTest.cs" />
+    <Compile Include="Contacts\ListGroupsTest.cs" />
+    <Compile Include="Contacts\CreateGroupTest.cs" />
+    <Compile Include="Contacts\GetContactTest.cs" />
+    <Compile Include="Contacts\EditContactTest.cs" />
+    <Compile Include="Contacts\ListContactsTest.cs" />
+    <Compile Include="Contacts\CreateContactTest.cs" />
     <Compile Include="SenderTest.cs" />
     <Compile Include="HlrTest.cs" />
     <Compile Include="TestBase.cs" />
