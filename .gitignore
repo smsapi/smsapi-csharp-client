@@ -5,3 +5,4 @@
 */obj
 *.csproj.user
 !.gitkeep
+/smsapiTests/App.Config

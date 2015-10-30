@@ -4,10 +4,14 @@ using System.IO;
 
 namespace SMSApi.Api 
 {
+    public enum RequestMethod { GET, POST, PUT, DELETE };
+
     public interface Proxy
-    {
-        Stream Execute(string uri, NameValueCollection data);
-        Stream Execute(string uri, NameValueCollection data, System.IO.Stream file);
-        Stream Execute(string uri, NameValueCollection data, Dictionary<string, System.IO.Stream> files);
+	{
+        Stream Execute(string uri, NameValueCollection data, RequestMethod method = RequestMethod.POST);
+		Stream Execute(string uri, NameValueCollection data, Stream file, RequestMethod method = RequestMethod.POST);
+		Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method = RequestMethod.POST);
+
+        void BasicAuthentication(Client client);
     }
 }

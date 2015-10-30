@@ -23,5 +23,14 @@ namespace SMSApi.Api.Response
 
             set { }
         }
+
+		[DataMember(Name = "message", IsRequired = false)]
+		public readonly string Message;
+
+		[DataMember(Name = "length", IsRequired = false)]
+		public readonly int? Length;
+
+		[DataMember(Name = "parts", IsRequired = false)]
+		public readonly int? Parts;
     }
 }
