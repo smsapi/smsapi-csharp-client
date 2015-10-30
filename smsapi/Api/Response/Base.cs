@@ -5,7 +5,7 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Base
     {
-        protected Base()
+        public Base()
         {
             ErrorCode = 0;
             ErrorMessage = "";

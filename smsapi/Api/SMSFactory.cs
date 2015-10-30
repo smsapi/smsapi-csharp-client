@@ -6,6 +6,8 @@ namespace SMSApi.Api
         public SMSFactory() : base() { }
         public SMSFactory(Client client) : base(client) { }
 
+        public SMSFactory(Client client, Proxy proxy) : base(client, proxy) { }
+
         public SMSApi.Api.Action.SMSDelete ActionDelete(string id = null)
         {
             SMSApi.Api.Action.SMSDelete action = new SMSApi.Api.Action.SMSDelete();
