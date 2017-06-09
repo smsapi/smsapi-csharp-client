@@ -15,6 +15,8 @@ namespace SMSApi.Api
         public ProxyHTTP(string baseUrl) 
         {
             this.baseUrl = baseUrl;
+            if (!this.baseUrl.EndsWith(@"/"))
+                this.baseUrl += @"/";
         }
 
         protected Stream PrepareContent(NameValueCollection data)
