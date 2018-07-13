@@ -24,7 +24,7 @@ namespace SMSApi.Api
             var md5 = MD5.Create();
             var hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            foreach (byte h in hashbin)
+            foreach (var h in hashbin)
             {
                 hash.Append(h.ToString("x2"));
             }

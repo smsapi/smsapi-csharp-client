@@ -11,15 +11,17 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()}
+            };
 
-            collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
 
-            if (Sender != null) 
-                collection.Add("from", Sender);
+            if (_sender != null) 
+                collection.Add("from", _sender);
 
             if (To != null)
                 collection.Add("to", string.Join(",", To));
@@ -27,15 +29,15 @@ namespace SMSApi.Api.Action
             if (Group != null)
                 collection.Add("group", Group);
 
-            collection.Add("message", Text);
+            collection.Add("message", _text);
 
-            collection.Add("single", (Single ? "1" : "0") );
-            collection.Add("nounicode", (NoUnicode ? "1" : "0") );
-            collection.Add("flash", (Flash ? "1" : "0") );
-            collection.Add("fast", (Fast ? "1" : "0") );
+            collection.Add("single", (_single ? "1" : "0") );
+            collection.Add("nounicode", (_noUnicode ? "1" : "0") );
+            collection.Add("flash", (_flash ? "1" : "0") );
+            collection.Add("fast", (_fast ? "1" : "0") );
 
-            if (DataCoding != null)
-                collection.Add("datacoding", DataCoding);
+            if (_dataCoding != null)
+                collection.Add("datacoding", _dataCoding);
 
             if (MaxParts > 0)
                 collection.Add("max_parts", MaxParts.ToString());
@@ -43,18 +45,18 @@ namespace SMSApi.Api.Action
             if (DateSent != null)
                 collection.Add("date", DateSent);
 
-            if (DateExpire != null)
-                collection.Add("expiration_date", DateExpire);
+            if (_dateExpire != null)
+                collection.Add("expiration_date", _dateExpire);
 
             if (Partner != null)
                 collection.Add("partner_id", Partner);
 
-            collection.Add("encoding", Encoding);
+            collection.Add("encoding", _encoding);
 
-			if (Normalize == true)
+			if (_normalize)
 				collection.Add("normalize", "1");
 
-            if (Test == true)
+            if (Test)
                 collection.Add("test", "1");
 
             if (Idx != null && Idx.Length > 0)
@@ -63,18 +65,18 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
-            if (Details == true)
+            if (_details)
             {
                 collection.Add("details", "1");
             }
 
-            if (this.Params != null)
+            if (_params != null)
             {
-                for (int i = 0; i < this.Params.Length; i++)
+                for (var i = 0; i < _params.Length; i++)
                 {
-                    if (this.Params[i] != null)
+                    if (_params[i] != null)
                     {
-                        collection.Add("param" + ((i + 1).ToString()), this.Params[i]);
+                        collection.Add("param" + ((i + 1).ToString()), _params[i]);
                     }
                 }
             }
@@ -89,132 +91,132 @@ namespace SMSApi.Api.Action
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
 
-            if (Text == null)
+            if (_text == null)
             {
                 throw new ArgumentException("Cannot send message without text!");
             }
         }
 
-        private string Text;
-        private string DateExpire;
-        private string Sender;
-        private bool Single = false;
-        private bool NoUnicode = false;
-        private string DataCoding;
-        private string udh;
-        private bool Flash = false;
-        private string Encoding = "UTF-8";
-        private bool Fast = false;
-		private bool Normalize = false;
-        private int MaxParts = 0;
-        private string[] Params = null;
-        private bool Details = true;
+        private string _text;
+        private string _dateExpire;
+        private string _sender;
+        private bool _single;
+        private bool _noUnicode;
+        private string _dataCoding;
+        private string _udh;
+        private bool _flash;
+        private readonly string _encoding = "UTF-8";
+        private bool _fast;
+		private bool _normalize;
+        private readonly int MaxParts = 0;
+        private string[] _params;
+        private bool _details = true;
 
         public SMSSend SetTo(string to)
         {
-            this.To = new string[] { to };
+            To = new string[] { to };
             return this;
         }
 
         public SMSSend SetTo(string[] to)
         {
-            this.To = to;
+            To = to;
             return this;
         }
 
         public SMSSend SetGroup(string group)
         {
-            this.Group = group;
+            Group = group;
             return this;
         }
 
         public SMSSend SetDateSent(string data)
         {
-            this.DateSent = data;
+            DateSent = data;
             return this;
         }
 
         public SMSSend SetDateSent(DateTime data)
         {
-            this.DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
             return this;
         }
 
         public SMSSend SetIDx(string idx)
         {
-            this.Idx = new string[] { idx };
+            Idx = new string[] { idx };
             return this;
         }
 
         public SMSSend SetIDx(string[] idx)
         {
-            this.Idx = idx;
+            Idx = idx;
             return this;
         }
 
         public SMSSend SetCheckIDx(bool check = true)
         {
-            this.IdxCheck = check;
+            IdxCheck = check;
             return this;
         }
 
         public SMSSend SetPartner(string partner)
         {
-            this.Partner = partner;
+            Partner = partner;
             return this;
         }
 
         public SMSSend SetText(string text)
         {
-            this.Text = text;
+            _text = text;
             return this;
         }
 
         public SMSSend SetDateExpire(string data)
         {
-            this.DateExpire = data;
+            _dateExpire = data;
             return this;
         }
 
         public SMSSend SetDateExpire(DateTime data)
         {
-            this.DateExpire = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            _dateExpire = data.ToString("yyyy-MM-ddTHH:mm:ssK");
             return this;
         }
 
         public SMSSend SetSender(string sender)
         {
-            this.Sender = sender;
+            _sender = sender;
             return this;
         }
 
         public SMSSend SetSingle(bool single = true)
         {
-            this.Single = single;
+            _single = single;
             return this;
         }
 
         public SMSSend SetNoUnicode(bool noUnicode = true)
         {
-            this.NoUnicode = noUnicode;
+            _noUnicode = noUnicode;
             return this;
         }
 
         public SMSSend SetDataCoding(string dataCoding)
         {
-            this.DataCoding = dataCoding;
+            _dataCoding = dataCoding;
             return this;
         }
 
         public SMSSend SetUdh(string udh)
         {
-            this.udh = udh;
+            _udh = udh;
             return this;
         }
 
         public SMSSend SetFlash(bool flash = true)
         {
-            this.Flash = flash;
+            _flash = flash;
             return this;
         }
 
@@ -228,19 +230,19 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetFast(bool fast = true)
         {
-            this.Fast = fast;
+            _fast = fast;
             return this;
         }
 
         public SMSSend SetTest(bool test = true)
         {
-            this.Test = test;
+            Test = test;
             return this;
         }
 
         public SMSSend SetParam(int i, string[] text)
         {
-            return this.SetParam(i, string.Join("|", text));
+            return SetParam(i, string.Join("|", text));
         }
 
         public SMSSend SetParam(int i, string text)
@@ -250,19 +252,19 @@ namespace SMSApi.Api.Action
                 throw new IndexOutOfRangeException();
             }
 
-            if (this.Params == null)
+            if (_params == null)
             {
-                this.Params = new string[4];
+                _params = new string[4];
             }
 
-            this.Params[i] = text;
+            _params[i] = text;
 
             return this;
         }
 
 		public SMSSend SetNormalize(bool flag = true)
 		{
-			this.Normalize = flag;
+			_normalize = flag;
 			return this;
 		}
     }

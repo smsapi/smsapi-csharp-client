@@ -1,5 +1,4 @@
-﻿
-namespace SMSApi.Api
+﻿namespace SMSApi.Api
 {
     public class SMSFactory : Factory
     {
@@ -8,9 +7,9 @@ namespace SMSApi.Api
 
         public SMSFactory(Client client, Proxy proxy) : base(client, proxy) { }
 
-        public SMSApi.Api.Action.SMSDelete ActionDelete(string id = null)
+        public Action.SMSDelete ActionDelete(string id = null)
         {
-            SMSApi.Api.Action.SMSDelete action = new SMSApi.Api.Action.SMSDelete();
+            var action = new Action.SMSDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -19,9 +18,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SMSGet ActionGet(string id = null)
+        public Action.SMSGet ActionGet(string id = null)
         {
-            SMSApi.Api.Action.SMSGet action = new SMSApi.Api.Action.SMSGet();
+            var action = new Action.SMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -30,9 +29,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SMSGet ActionGet(string[] id)
+        public Action.SMSGet ActionGet(string[] id)
         {
-            SMSApi.Api.Action.SMSGet action = new SMSApi.Api.Action.SMSGet();
+            var action = new Action.SMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -41,15 +40,15 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SMSSend ActionSend(string to = null, string text = null)
+        public Action.SMSSend ActionSend(string to = null, string text = null)
         {
-            string[] tos = ( to == null ? null : new string[] { to } );
+            var tos = ( to == null ? null : new[] { to } );
             return ActionSend(tos, text);
         }
 
-        public SMSApi.Api.Action.SMSSend ActionSend(string[] to, string text = null)
+        public Action.SMSSend ActionSend(string[] to, string text = null)
         {
-            SMSApi.Api.Action.SMSSend action = new SMSApi.Api.Action.SMSSend();
+            var action = new Action.SMSSend();
             action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);
