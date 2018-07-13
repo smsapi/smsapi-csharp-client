@@ -8,8 +8,8 @@
     <ProjectGuid>{05C2A720-2CD1-401B-A832-9CE85313C248}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SMSApi</RootNamespace>
-    <AssemblyName>SMSApi</AssemblyName>
+    <RootNamespace>SMSAPI</RootNamespace>
+    <AssemblyName>SMSAPI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -155,7 +155,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Api\Action\Contacts\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -6,3 +6,4 @@
 *.csproj.user
 !.gitkeep
 /smsapiTests/App.Config
+/.vs
