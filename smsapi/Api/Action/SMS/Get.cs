@@ -32,7 +32,7 @@ namespace SMSApi.Api.Action
 
         public SMSGet Ids(string[] ids)
         {
-            this.id = ids;
+            id = ids;
             return this;
         }
     }

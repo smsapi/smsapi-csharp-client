@@ -11,9 +11,9 @@ namespace SMSApi.Api
         public UserFactory(Client client) : base(client) { }
         public UserFactory(Client client, Proxy proxy) : base(client, proxy) { }
 
-        public SMSApi.Api.Action.UserGetCredits ActionGetCredits()
+        public Action.UserGetCredits ActionGetCredits()
         {
-            var action = new SMSApi.Api.Action.UserGetCredits();
+            var action = new Action.UserGetCredits();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -21,9 +21,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.UserAdd ActionAdd()
+        public Action.UserAdd ActionAdd()
         {
-            var action = new SMSApi.Api.Action.UserAdd();
+            var action = new Action.UserAdd();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -31,21 +31,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.UserEdit ActionEdit(string username = null)
+        public Action.UserEdit ActionEdit(string username = null)
         {
-            var action = new SMSApi.Api.Action.UserEdit();
-
-            action.Client(client);
-            action.Proxy(proxy);
-
-            action.Username(username);
-
-            return action;
-        }
-
-        public SMSApi.Api.Action.UserGet ActionGet(string username = null)
-        {
-            var action = new SMSApi.Api.Action.UserGet();
+            var action = new Action.UserEdit();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -55,9 +43,21 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.UserList ActionList()
+        public Action.UserGet ActionGet(string username = null)
         {
-            var action = new SMSApi.Api.Action.UserList();
+            var action = new Action.UserGet();
+
+            action.Client(client);
+            action.Proxy(proxy);
+
+            action.Username(username);
+
+            return action;
+        }
+
+        public Action.UserList ActionList()
+        {
+            var action = new Action.UserList();
 
             action.Client(client);
             action.Proxy(proxy);

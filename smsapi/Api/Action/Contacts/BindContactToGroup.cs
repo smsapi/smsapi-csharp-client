@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class BindContactToGroup : Rest<SMSApi.Api.Response.Base>
+	public class BindContactToGroup : Rest<Response.Base>
 	{
 		public BindContactToGroup(string contactId, string groupId)
 			: base()

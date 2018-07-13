@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class DeleteGroupPermission : Rest<SMSApi.Api.Response.GroupPermission>
+	public class DeleteGroupPermission : Rest<Response.GroupPermission>
 	{
 		public DeleteGroupPermission(string groupId, string username)
 			: base()

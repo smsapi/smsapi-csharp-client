@@ -14,7 +14,7 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserAdd : BaseSimple<SMSApi.Api.Response.User>
+    public class UserAdd : BaseSimple<Response.User>
     {
         public UserAdd() : base() 
         {
@@ -69,7 +69,7 @@ namespace SMSApi.Api.Action
 
         public UserAdd SetUsername(string username)
         {
-            this.newUsername = username;
+            newUsername = username;
             return this;
         }
 
@@ -81,7 +81,7 @@ namespace SMSApi.Api.Action
 
         public UserAdd SetPasswordApi(string password)
         {
-            this.passwordApi = password;
+            passwordApi = password;
             return this;
         }
 
@@ -93,37 +93,37 @@ namespace SMSApi.Api.Action
 
         public UserAdd SetMonthLimit(double limit)
         {
-            this.monthLimit = limit;
+            monthLimit = limit;
             return this;
         }
 
         public UserAdd SetSenders(int flag)
         {
-            this.senders = flag;
+            senders = flag;
             return this;
         }
 
         public UserAdd SetPhonebook(int flag)
         {
-            this.phonebook = flag;
+            phonebook = flag;
             return this;
         }
 
         public UserAdd SetActive(bool flag)
         {
-            this.active = flag;
+            active = flag;
             return this;
         }
 
         public UserAdd SetInfo(string text)
         {
-            this.info = text;
+            info = text;
             return this;
         }
 
         public UserAdd SetWithoutPrefix(bool flag)
         {
-            this.withoutPrefix = flag;
+            withoutPrefix = flag;
             return this;
         }
     }

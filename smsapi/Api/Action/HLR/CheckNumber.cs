@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : BaseSimple<SMSApi.Api.Response.CheckNumber>
+    public class HLRCheckNumber : BaseSimple<Response.CheckNumber>
     {
         public HLRCheckNumber() : base() { }
 
@@ -12,7 +12,7 @@ namespace SMSApi.Api.Action
 
         public HLRCheckNumber SetNumber(string number)
         {
-            this.numbers = new string[] { number };
+            numbers = new string[] { number };
             return this;
         }
 

@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class MMSGet : BaseSimple<SMSApi.Api.Response.Status>
+    public class MMSGet : BaseSimple<Response.Status>
     {
         public MMSGet() : base() { }
 
@@ -26,7 +26,7 @@ namespace SMSApi.Api.Action
 
         public MMSGet Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new string[] { id };
             return this;
         }
 

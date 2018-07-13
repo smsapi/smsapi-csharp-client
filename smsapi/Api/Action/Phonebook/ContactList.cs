@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactList : BaseSimple<SMSApi.Api.Response.Contacts>
+    public class PhonebookContactList : BaseSimple<Response.Contacts>
     {
         public PhonebookContactList() 
             : base() 
@@ -53,7 +53,7 @@ namespace SMSApi.Api.Action
 
         public PhonebookContactList Group(string group)
         {
-            this.groups = new string[] { group };
+            groups = new string[] { group };
             return this;
         }
 
@@ -65,7 +65,7 @@ namespace SMSApi.Api.Action
 
         public PhonebookContactList Text(string text)
         {
-            this.searchText = text;
+            searchText = text;
             return this;
         }
 

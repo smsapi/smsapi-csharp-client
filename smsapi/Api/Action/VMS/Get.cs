@@ -28,7 +28,7 @@ namespace SMSApi.Api.Action
 
         public VMSGet Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new string[] { id };
             return this;
         }
 

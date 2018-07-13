@@ -1,7 +1,7 @@
 ﻿
 namespace SMSApi.Api
 {
-    public class ActionException : SMSApi.Api.SmsapiException
+    public class ActionException : SmsapiException
     {
         public ActionException(string message, int code)
             : base(message, code)

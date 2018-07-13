@@ -11,9 +11,9 @@ namespace SMSApi.Api
         public SenderFactory(Client client) : base(client) { }
         public SenderFactory(Client client, Proxy proxy) : base(client, proxy) { }
 
-        public SMSApi.Api.Action.SenderAdd ActionAdd(string name = null)
+        public Action.SenderAdd ActionAdd(string name = null)
         {
-            var action = new SMSApi.Api.Action.SenderAdd();
+            var action = new Action.SenderAdd();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -23,9 +23,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SenderDelete ActionDelete(string name = null)
+        public Action.SenderDelete ActionDelete(string name = null)
         {
-            var action = new SMSApi.Api.Action.SenderDelete();
+            var action = new Action.SenderDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -35,9 +35,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SenderSetDefault ActionSetDefault(string name = null)
+        public Action.SenderSetDefault ActionSetDefault(string name = null)
         {
-            var action = new SMSApi.Api.Action.SenderSetDefault();
+            var action = new Action.SenderSetDefault();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -47,9 +47,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SenderList ActionList()
+        public Action.SenderList ActionList()
         {
-            var action = new SMSApi.Api.Action.SenderList();
+            var action = new Action.SenderList();
 
             action.Client(client);
             action.Proxy(proxy);

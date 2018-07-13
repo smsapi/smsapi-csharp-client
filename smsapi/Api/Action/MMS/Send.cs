@@ -65,73 +65,73 @@ namespace SMSApi.Api.Action
 
         public MMSSend SetTo(string to)
         {
-            this.To = new string[] { to };
+            To = new string[] { to };
             return this;
         }
 
         public MMSSend SetTo(string[] to)
         {
-            this.To = to;
+            To = to;
             return this;
         }
 
         public MMSSend SetGroup(string group)
         {
-            this.Group = group;
+            Group = group;
             return this;
         }
 
         public MMSSend SetDateSent(string data)
         {
-            this.DateSent = data;
+            DateSent = data;
             return this;
         }
 
         public MMSSend SetDateSent(DateTime data)
         {
-            this.DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
             return this;
         }
 
         public MMSSend SetIDx(string idx)
         {
-            this.Idx = new string[] { idx };
+            Idx = new string[] { idx };
             return this;
         }
 
         public MMSSend SetIDx(string[] idx)
         {
-            this.Idx = idx;
+            Idx = idx;
             return this;
         }
 
         public MMSSend SetCheckIDx(bool check = true)
         {
-            this.IdxCheck = check;
+            IdxCheck = check;
             return this;
         }
 
         public MMSSend SetSubject(string subject)
         {
-            this.Subject = subject;
+            Subject = subject;
             return this;
         }
 
         public MMSSend SetSmil(string smil)
         {
-            this.Smil = smil;
+            Smil = smil;
             return this;
         }
 
         public MMSSend SetPartner(string partner)
         {
-            this.Partner = partner;
+            Partner = partner;
             return this;
         }
 
         public MMSSend SetTest(bool test = true)
         {
-            this.Test = test;
+            Test = test;
             return this;
         }
     }

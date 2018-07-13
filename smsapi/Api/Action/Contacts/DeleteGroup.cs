@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class DeleteGroup : Rest<SMSApi.Api.Response.Base>
+	public class DeleteGroup : Rest<Response.Base>
 	{
 		public DeleteGroup(string groupId)
 			: base()

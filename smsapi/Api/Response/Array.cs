@@ -10,7 +10,7 @@ namespace SMSApi.Api.Response
         public Array(System.Collections.Generic.List<T> list)
             : base(list.Count)
         {
-            this.List = list;
+            List = list;
         }
 
         [DataMember(Name = "list", IsRequired = true)]

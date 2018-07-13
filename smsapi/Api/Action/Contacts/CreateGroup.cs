@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateGroup : Rest<SMSApi.Api.Response.Group>
+	public class CreateGroup : Rest<Response.Group>
 	{
 		public CreateGroup()
 			: base()

@@ -1,7 +1,7 @@
 ﻿
 namespace SMSApi.Api
 {
-    public class HostException : SMSApi.Api.SmsapiException
+    public class HostException : SmsapiException
     {
         public static readonly int E_JSON_DECODE = -1;
 

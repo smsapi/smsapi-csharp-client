@@ -7,9 +7,9 @@ namespace SMSApi.Api
         public MMSFactory(Client client) : base(client) { }
         public MMSFactory(Client client, Proxy proxy) : base(client, proxy) { }
 
-        public SMSApi.Api.Action.MMSDelete ActionDelete(string id = null)
+        public Action.MMSDelete ActionDelete(string id = null)
         {
-            SMSApi.Api.Action.MMSDelete action = new SMSApi.Api.Action.MMSDelete();
+            Action.MMSDelete action = new Action.MMSDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -18,9 +18,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSGet ActionGet(string id = null)
+        public Action.MMSGet ActionGet(string id = null)
         {
-            SMSApi.Api.Action.MMSGet action = new SMSApi.Api.Action.MMSGet();
+            Action.MMSGet action = new Action.MMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -29,9 +29,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSGet ActionGet(string[] id)
+        public Action.MMSGet ActionGet(string[] id)
         {
-            SMSApi.Api.Action.MMSGet action = new SMSApi.Api.Action.MMSGet();
+            Action.MMSGet action = new Action.MMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -40,15 +40,15 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSSend ActionSend(string to = null)
+        public Action.MMSSend ActionSend(string to = null)
         {
             string[] tos = ( to == null ? null : new string[] { to } );
             return ActionSend(tos);
         }
 
-        public SMSApi.Api.Action.MMSSend ActionSend(string[] to)
+        public Action.MMSSend ActionSend(string[] to)
         {
-            SMSApi.Api.Action.MMSSend action = new SMSApi.Api.Action.MMSSend();
+            Action.MMSSend action = new Action.MMSSend();
             action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);

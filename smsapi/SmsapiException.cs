@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SMSApi.Api
 {
-    public class SmsapiException : SMSApi.Api.Exception
+    public class SmsapiException : Exception
     {
         private int Code;
 

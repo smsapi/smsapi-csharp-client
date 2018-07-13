@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class SenderAdd : BaseSimple<SMSApi.Api.Response.Base>
+    public class SenderAdd : BaseSimple<Response.Base>
     {
         private string name;
 

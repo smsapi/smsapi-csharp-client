@@ -14,7 +14,7 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserEdit : BaseSimple<SMSApi.Api.Response.User>
+    public class UserEdit : BaseSimple<Response.User>
     {
         public UserEdit()
             : base() 
@@ -82,7 +82,7 @@ namespace SMSApi.Api.Action
 
         public UserEdit SetPasswordApi(string password)
         {
-            this.passwordApi = password;
+            passwordApi = password;
             return this;
         }
 
@@ -94,37 +94,37 @@ namespace SMSApi.Api.Action
 
         public UserEdit SetMonthLimit(double limit)
         {
-            this.monthLimit = limit;
+            monthLimit = limit;
             return this;
         }
 
         public UserEdit SetSenders(int flag)
         {
-            this.senders = flag;
+            senders = flag;
             return this;
         }
 
         public UserEdit SetPhonebook(int flag)
         {
-            this.phonebook = flag;
+            phonebook = flag;
             return this;
         }
 
         public UserEdit SetActive(bool flag)
         {
-            this.active = (flag ? 1 : 0);
+            active = (flag ? 1 : 0);
             return this;
         }
 
         public UserEdit SetInfo(string text)
         {
-            this.info = text;
+            info = text;
             return this;
         }
 
         public UserEdit SetWithoutPrefix(bool flag)
         {
-            this.withoutPrefix = flag;
+            withoutPrefix = flag;
             return this;
         }
     }

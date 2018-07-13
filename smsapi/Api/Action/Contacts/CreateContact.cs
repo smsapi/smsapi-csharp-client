@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateContact : Rest<SMSApi.Api.Response.Contact>
+	public class CreateContact : Rest<Response.Contact>
 	{
 		public CreateContact()
 			: base()

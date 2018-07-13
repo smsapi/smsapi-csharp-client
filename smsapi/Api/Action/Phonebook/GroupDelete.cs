@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupDelete : BaseSimple<SMSApi.Api.Response.Base>
+    public class PhonebookGroupDelete : BaseSimple<Response.Base>
     {
         public PhonebookGroupDelete() : base() {
             removeContacts = false;
@@ -40,7 +40,7 @@ namespace SMSApi.Api.Action
 
         public PhonebookGroupDelete Contacts(bool flag)
         {
-            this.removeContacts = flag;
+            removeContacts = flag;
             return this;
         }
     }

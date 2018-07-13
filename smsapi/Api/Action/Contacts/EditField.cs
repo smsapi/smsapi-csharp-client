@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class EditField : Rest<SMSApi.Api.Response.Field>
+	public class EditField : Rest<Response.Field>
 	{
 		public EditField(string fieldId)
 			: base()

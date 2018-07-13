@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class MMSDelete : BaseSimple<SMSApi.Api.Response.Countable>
+    public class MMSDelete : BaseSimple<Response.Countable>
     {
         public MMSDelete() : base() { }
 
@@ -26,7 +26,7 @@ namespace SMSApi.Api.Action
 
         public MMSDelete Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new string[] { id };
             return this;
         }
 

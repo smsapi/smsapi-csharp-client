@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class UnbindContactFromGroup : Rest<SMSApi.Api.Response.Base>
+	public class UnbindContactFromGroup : Rest<Response.Base>
 	{
 		public UnbindContactFromGroup(string contactId, string groupId)
 			: base()

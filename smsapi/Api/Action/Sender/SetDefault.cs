@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : BaseSimple<SMSApi.Api.Response.Base>
+    public class SenderSetDefault : BaseSimple<Response.Base>
     {
         protected override string Uri() { return "sender.do"; }
 
@@ -23,7 +23,7 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("default", this.name);
+            collection.Add("default", name);
 
             return collection;
         }

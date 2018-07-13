@@ -42,13 +42,13 @@ namespace SMSApi.Api.Response
 		public readonly string Idx;
 
 		[DataMember(Name = "permissions", IsRequired = false)]
-		private System.Collections.Generic.List<GroupPermission> permissions;
-		public System.Collections.Generic.List<GroupPermission> Permissions
+		private List<GroupPermission> permissions;
+		public List<GroupPermission> Permissions
 		{
 			get
 			{
 				if (permissions == null)
-					permissions = new System.Collections.Generic.List<GroupPermission>();
+					permissions = new List<GroupPermission>();
 				return permissions;
 			}
 		}

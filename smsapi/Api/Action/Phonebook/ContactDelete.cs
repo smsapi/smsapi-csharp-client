@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactDelete : BaseSimple<SMSApi.Api.Response.Base>
+    public class PhonebookContactDelete : BaseSimple<Response.Base>
     {
         public PhonebookContactDelete() : base() { }
 

@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupEdit : BaseSimple<SMSApi.Api.Response.Group>
+    public class PhonebookGroupEdit : BaseSimple<Response.Group>
     {
         public PhonebookGroupEdit() : base() { }
 
@@ -30,13 +30,13 @@ namespace SMSApi.Api.Action
 
         public PhonebookGroupEdit Name(string name)
         {
-            this.oldName = name;
+            oldName = name;
             return this;
         }
 
         public PhonebookGroupEdit SetName(string name)
         {
-            this.newName = name;
+            newName = name;
             return this;
         }
 

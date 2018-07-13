@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : BaseSimple<SMSApi.Api.Response.Base>
+    public class SenderDelete : BaseSimple<Response.Base>
     {
         protected override string Uri() { return "sender.do"; }
 
@@ -23,7 +23,7 @@ namespace SMSApi.Api.Action
             collection.Add("username", client.GetUsername());
             collection.Add("password", client.GetPassword());
 
-            collection.Add("delete", this.name);
+            collection.Add("delete", name);
 
             return collection;
         }

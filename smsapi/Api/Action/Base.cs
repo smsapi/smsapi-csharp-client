@@ -9,11 +9,11 @@ namespace SMSApi.Api.Action
     public abstract class Base<T,TResult>
     {
         protected Client client;
-        protected Proxy proxy;
+        private Proxy _proxy;
 
-        abstract protected string Uri();
+        protected abstract string Uri();
 
-		protected virtual RequestMethod Method { get { return RequestMethod.POST; } }
+		protected virtual RequestMethod Method => RequestMethod.POST;
 
         public void Client(Client client)
         {
@@ -22,7 +22,7 @@ namespace SMSApi.Api.Action
 
         public void Proxy(Proxy proxy)
         {
-            this.proxy = proxy;
+            _proxy = proxy;
         }
 
         protected TT ResponseToObject<TT>(Stream data)
@@ -42,7 +42,7 @@ namespace SMSApi.Api.Action
             return result;
         }
 
-        abstract protected NameValueCollection Values();
+        protected abstract NameValueCollection Values();
         protected virtual void Validate() { }
 
         protected virtual Dictionary<string, Stream> Files()
@@ -61,7 +61,7 @@ namespace SMSApi.Api.Action
         {
             Validate();
 
-            Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
+            Stream data = _proxy.Execute(Uri(), Values(), Files(), Method);
 
             TResult result = default(TResult);
 
@@ -123,13 +123,17 @@ namespace SMSApi.Api.Action
          */
         private bool isClientError(int code)
         {
-            if (code == 101) return true;
-            if (code == 102) return true;
-            if (code == 103) return true;
-            if (code == 105) return true;
-            if (code == 110) return true;
-            if (code == 1000) return true;
-            if (code == 1001) return true;
+            switch (code)
+            {
+                case 101:
+                case 102:
+                case 103:
+                case 105:
+                case 110:
+                case 1000:
+                case 1001:
+                    return true;
+            }
 
             return false;
         }
@@ -142,10 +146,14 @@ namespace SMSApi.Api.Action
          */
         private bool isHostError(int code)
         {
-            if (code == 8) return true;
-            if (code == 201) return true;
-            if (code == 666) return true;
-            if (code == 999) return true;
+            switch (code)
+            {
+                case 8:
+                case 201:
+                case 666:
+                case 999:
+                    return true;
+            }
 
             return false;
         }

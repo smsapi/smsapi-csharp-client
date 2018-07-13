@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactEdit : BaseSimple<SMSApi.Api.Response.Contact>
+    public class PhonebookContactEdit : BaseSimple<Response.Contact>
     {
         public PhonebookContactEdit() : base() { }
 
@@ -43,13 +43,13 @@ namespace SMSApi.Api.Action
 
         public PhonebookContactEdit Number(string number)
         {
-            this.oldNumber = number;
+            oldNumber = number;
             return this;
         }
 
         public PhonebookContactEdit SetNumber(string number)
         {
-            this.newNumber = number;
+            newNumber = number;
             return this;
         }
 
@@ -91,7 +91,7 @@ namespace SMSApi.Api.Action
 
         public PhonebookContactEdit SetGroup(string group)
         {
-            this.groups = new string[] {group};
+            groups = new string[] {group};
             return this;
         }
 

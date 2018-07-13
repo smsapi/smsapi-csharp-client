@@ -103,103 +103,103 @@ namespace SMSApi.Api.Action
 
         public VMSSend SetTo(string to)
         {
-            this.To = new string[] { to };
+            To = new string[] { to };
             return this;
         }
 
         public VMSSend SetTo(string[] to)
         {
-            this.To = to;
+            To = to;
             return this;
         }
 
         public VMSSend SetFrom(string from)
         {
-            this.From = from;
+            From = from;
             return this;
         }
 
         public VMSSend SetGroup(string group)
         {
-            this.Group = group;
+            Group = group;
             return this;
         }
 
         public VMSSend SetDateSent(string data)
         {
-            this.DateSent = data;
+            DateSent = data;
             return this;
         }
 
         public VMSSend SetDateSent(DateTime data)
         {
-            this.DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
             return this;
         }
 
         public VMSSend SetIDx(string idx)
         {
-            this.Idx = new string[] { idx };
+            Idx = new string[] { idx };
             return this;
         }
 
         public VMSSend SetIDx(string[] idx)
         {
-            this.Idx = idx;
+            Idx = idx;
             return this;
         }
 
         public VMSSend SetCheckIDx(bool check = true)
         {
-            this.IdxCheck = check;
+            IdxCheck = check;
             return this;
         }
 
         public VMSSend SetFile(Stream file)
         {
-            this.File = file;
+            File = file;
             return this;
         }
 
         public VMSSend SetTTS(string tts)
         {
-            this.TTS = tts;
+            TTS = tts;
             return this;
         }
 
         public VMSSend SetTTSLector(string lector)
         {
-            this.TTSLector = lector;
+            TTSLector = lector;
             return this;
         }
 
         public VMSSend SetPartner(string partner)
         {
-            this.Partner = partner;
+            Partner = partner;
             return this;
         }
 
         public VMSSend SetTest(bool test = true)
         {
-            this.Test = test;
+            Test = test;
             return this;
         }
 
         public VMSSend SetTry(int retry)
         {
-            this.Try = retry;
+            Try = retry;
             return this;
         }
 
         public VMSSend SetTryInterval(int sec)
         {
-            this.Interval = sec;
+            Interval = sec;
             return this;
         }
 
         public VMSSend SetSkipGSM(bool flag)
         {
-            this.SkipGSM = flag;
+            SkipGSM = flag;
             return this;
         }
 

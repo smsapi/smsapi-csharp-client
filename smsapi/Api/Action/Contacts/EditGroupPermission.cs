@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class EditGroupPermission : Rest<SMSApi.Api.Response.GroupPermission>
+	public class EditGroupPermission : Rest<Response.GroupPermission>
 	{
 		public EditGroupPermission(string groupId, string username)
 			: base()

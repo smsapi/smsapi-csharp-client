@@ -100,7 +100,7 @@ namespace SMSApi.Api
             return Execute(uri, data, files, method);
         }
 
-        public Stream Execute(string uri, NameValueCollection data, System.IO.Stream file, RequestMethod method = RequestMethod.POST)
+        public Stream Execute(string uri, NameValueCollection data, Stream file, RequestMethod method = RequestMethod.POST)
         {
             Dictionary<string, Stream> files = new Dictionary<string, Stream>();
             files.Add("file", file);
@@ -116,7 +116,7 @@ namespace SMSApi.Api
 
 			if (basicAuthentication != null)
 			{
-				webRequest.Headers.Add("Authorization", "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(basicAuthentication.GetUsername() + ":" + basicAuthentication.GetPassword())));
+				webRequest.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(basicAuthentication.GetUsername() + ":" + basicAuthentication.GetPassword())));
 			}
 
 			if (RequestMethod.POST.Equals(method) || RequestMethod.PUT.Equals(method))
@@ -142,7 +142,7 @@ namespace SMSApi.Api
 					CopyStream(stream, webRequest.GetRequestStream());
 					stream.Close();
 				}
-				catch (System.Net.WebException e)
+				catch (WebException e)
 				{
 					throw new ProxyException(e.Message, e);
 				}
@@ -154,7 +154,7 @@ namespace SMSApi.Api
 			{
 				CopyStream(webRequest.GetResponse().GetResponseStream(), response);
 			}
-			catch (System.Net.WebException e)
+			catch (WebException e)
 			{
 				throw new ProxyException("Failed to get response from " + webRequest.RequestUri.ToString(), e);
 			}

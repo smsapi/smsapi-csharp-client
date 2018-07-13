@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateField : Rest<SMSApi.Api.Response.Field>
+	public class CreateField : Rest<Response.Field>
 	{
 		public CreateField()
 			: base()

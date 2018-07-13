@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class ListFieldOptions : Rest<SMSApi.Api.Response.FieldOptions>
+	public class ListFieldOptions : Rest<Response.FieldOptions>
 	{
 		public ListFieldOptions(string fieldId)
 			: base()

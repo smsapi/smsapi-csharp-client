@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
 {
-	public class DeleteField : Rest<SMSApi.Api.Response.Base>
+	public class DeleteField : Rest<Response.Base>
 	{
 		public DeleteField(string fieldId)
 			: base()
