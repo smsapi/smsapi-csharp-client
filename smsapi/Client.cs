@@ -5,47 +5,35 @@ namespace SMSApi.Api
 {
     public class Client
     {
-        protected string username;
-        protected string password;
+        private string _username;
+        private string _password;
 
         public Client(string username)
         {
             SetUsername(username);
         }
 
-        public void SetUsername(string username)
-        {
-            this.username = username;
-        }
+        public void SetUsername(string username) => _username = username;
 
-        public void SetPasswordHash(string password)
-        {
-            this.password = password;
-        }
+        public void SetPasswordHash(string password) => _password = password;
 
         public void SetPasswordRAW(string password)
         {
-            StringBuilder hash = new StringBuilder();
+            var hash = new StringBuilder();
 
-            MD5 md5 = MD5.Create();
-            byte[] hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var md5 = MD5.Create();
+            var hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            for (int i = 0; i < hashbin.Length; i++)
+            foreach (byte h in hashbin)
             {
-                hash.Append(hashbin[i].ToString("x2"));
+                hash.Append(h.ToString("x2"));
             }
 
             SetPasswordHash(hash.ToString());
         }
 
-        public string GetUsername()
-        {
-            return username;
-        }
+        public string GetUsername() => _username;
 
-        public string GetPassword()
-        {
-            return password;
-        }
+        public string GetPassword() => _password;
     }
 }

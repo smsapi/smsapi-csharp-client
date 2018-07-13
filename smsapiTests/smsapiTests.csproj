@@ -87,9 +87,9 @@
     <Compile Include="SmsTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\smsapi\smsapi.csproj">
+    <ProjectReference Include="..\smsapi\SMSAPI.csproj">
       <Project>{05C2A720-2CD1-401B-A832-9CE85313C248}</Project>
-      <Name>smsapi</Name>
+      <Name>SMSAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
