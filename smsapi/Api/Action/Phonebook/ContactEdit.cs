@@ -4,9 +4,6 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactEdit : BaseSimple<Response.Contact>
     {
-        public PhonebookContactEdit()
-        { }
-
         protected override string Uri() { return "phonebook.do"; }
 
         protected string oldNumber;

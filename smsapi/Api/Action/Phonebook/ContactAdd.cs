@@ -4,10 +4,10 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactAdd : BaseSimple<Response.Contact>
     {
-        public PhonebookContactAdd()
-        { }
-
-        protected override string Uri() { return "phonebook.do"; }
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
 
         protected string number;
         protected string firstName;
@@ -20,22 +20,21 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"add_contact", number}
+            };
 
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("add_contact", number);
-
-            if (firstName != null)  collection.Add("first_name", firstName);
-            if (lastName != null)   collection.Add("last_name", lastName);
-            if (info != null)       collection.Add("info", info);
-            if (birthday != 0)      collection.Add("birthday", birthday.ToString());
-            if (city != null)       collection.Add("city", city);
-            if (gender != null)     collection.Add("gender", gender);
-            if (groups != null)     collection.Add("groups", string.Join(",", groups));
+            if (firstName != null) collection.Add("first_name", firstName);
+            if (lastName != null) collection.Add("last_name", lastName);
+            if (info != null) collection.Add("info", info);
+            if (birthday != 0) collection.Add("birthday", birthday.ToString());
+            if (city != null) collection.Add("city", city);
+            if (gender != null) collection.Add("gender", gender);
+            if (groups != null) collection.Add("groups", string.Join(",", groups));
 
             return collection;
         }

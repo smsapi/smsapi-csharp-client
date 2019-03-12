@@ -4,10 +4,6 @@ namespace SMSApi.Api.Action
 {
     public class SMSDelete : BaseSimple<Response.Countable>
     {
-        public SMSDelete()
-        {
-        }
-
         protected override string Uri()
         {
             return "sms.do";

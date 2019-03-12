@@ -7,10 +7,10 @@ namespace SMSApi.Api.Action
 {
     public class VMSSend : Send
     {
-        public VMSSend()
-        { }
-
-        protected override string Uri() { return "vms.do"; }
+        protected override string Uri()
+        {
+            return "vms.do";
+        }
 
         protected override Dictionary<string, Stream> Files()
         {
@@ -18,8 +18,7 @@ namespace SMSApi.Api.Action
 
             if (File != null && File.Length > 0)
             {
-                files = new Dictionary<string, Stream>();
-                files.Add("file", File);
+                files = new Dictionary<string, Stream> {{"file", File}};
             }
 
             return files;
@@ -27,19 +26,19 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()}
+            };
 
             if (To != null)
                 collection.Add("to", string.Join(",", To));
 
             if (From != null)
                 collection.Add("from", From);
-            
+
 //            if (Group != null)
 //                collection.Add("group", Group);
 
@@ -58,13 +57,13 @@ namespace SMSApi.Api.Action
             if (Partner != null)
                 collection.Add("partner_id", Partner);
 
-            if (SkipGSM == true)
+            if (SkipGSM)
                 collection.Add("skip_gsm", "1");
 
             if (TTSLector != null)
                 collection.Add("tts_lector", TTSLector);
 
-            if (Test == true)
+            if (Test)
                 collection.Add("test", "1");
 
             if (Idx != null && Idx.Length > 0)
@@ -78,17 +77,17 @@ namespace SMSApi.Api.Action
 
         protected override void Validate()
         {
-            if( To != null && Group != null )
+            if (To != null && Group != null)
             {
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
 
-            if ( (TTS == null || TTS.Length < 1) && (File == null || File.Length == 0) )
+            if ((TTS == null || TTS.Length < 1) && (File == null || File.Length == 0))
             {
                 throw new ArgumentException("Cannot send message without content!");
             }
 
-            if (TTS != null  && File != null)
+            if (TTS != null && File != null)
             {
                 throw new ArgumentException("Cannot send TTS and file at the same time");
             }
@@ -104,7 +103,7 @@ namespace SMSApi.Api.Action
 
         public VMSSend SetTo(string to)
         {
-            To = new string[] { to };
+            To = new string[] {to};
             return this;
         }
 
@@ -140,7 +139,7 @@ namespace SMSApi.Api.Action
 
         public VMSSend SetIDx(string idx)
         {
-            Idx = new string[] { idx };
+            Idx = new string[] {idx};
             return this;
         }
 
@@ -203,7 +202,5 @@ namespace SMSApi.Api.Action
             SkipGSM = flag;
             return this;
         }
-
-        
     }
 }

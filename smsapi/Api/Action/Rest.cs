@@ -7,11 +7,7 @@ namespace SMSApi.Api.Action
 {
 	public abstract class Rest<T> : BaseSimple<T>
 	{
-		public Rest()
-        {
-		}
-
-		protected override string Uri()
+        protected override string Uri()
 		{
 			string uri = Resource;
 			if (RequestMethod.GET.Equals(Method))

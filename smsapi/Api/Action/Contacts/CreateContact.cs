@@ -5,11 +5,7 @@ namespace SMSApi.Api.Action
 {
 	public class CreateContact : Rest<Response.Contact>
 	{
-		public CreateContact()
-        {
-		}
-
-		protected override string Resource { get { return "contacts"; } }
+        protected override string Resource { get { return "contacts"; } }
 
 		protected override RequestMethod Method { get { return RequestMethod.POST; } }
 

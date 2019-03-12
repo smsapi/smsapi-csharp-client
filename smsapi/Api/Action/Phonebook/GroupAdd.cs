@@ -4,9 +4,6 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookGroupAdd : BaseSimple<Response.Group>
     {
-        public PhonebookGroupAdd()
-        { }
-
         protected override string Uri() { return "phonebook.do"; }
 
         protected string name;

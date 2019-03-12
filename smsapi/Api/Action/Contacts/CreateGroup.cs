@@ -5,11 +5,7 @@ namespace SMSApi.Api.Action
 {
 	public class CreateGroup : Rest<Response.Group>
 	{
-		public CreateGroup()
-        {
-		}
-
-		protected override string Resource { get { return "contacts/groups"; } }
+        protected override string Resource { get { return "contacts/groups"; } }
 
 		protected override RequestMethod Method { get { return RequestMethod.POST; } }
 

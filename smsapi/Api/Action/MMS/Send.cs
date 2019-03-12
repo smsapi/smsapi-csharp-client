@@ -5,19 +5,19 @@ namespace SMSApi.Api.Action
 {
     public class MMSSend : Send
     {
-        public MMSSend()
-        { }
-
-        protected override string Uri() { return "mms.do"; }
+        protected override string Uri()
+        {
+            return "mms.do";
+        }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()}
+            };
 
             if (To != null)
                 collection.Add("to", string.Join(",", To));
@@ -50,7 +50,7 @@ namespace SMSApi.Api.Action
 
         protected override void Validate()
         {
-            if( To != null && Group != null )
+            if (To != null && Group != null)
             {
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
@@ -66,7 +66,7 @@ namespace SMSApi.Api.Action
 
         public MMSSend SetTo(string to)
         {
-            To = new string[] { to };
+            To = new string[] {to};
             return this;
         }
 
@@ -96,7 +96,7 @@ namespace SMSApi.Api.Action
 
         public MMSSend SetIDx(string idx)
         {
-            Idx = new string[] { idx };
+            Idx = new string[] {idx};
             return this;
         }
 

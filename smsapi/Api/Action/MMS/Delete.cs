@@ -4,36 +4,38 @@ namespace SMSApi.Api.Action
 {
     public class MMSDelete : BaseSimple<Response.Countable>
     {
-        public MMSDelete()
-        { }
+        protected override string Uri()
+        {
+            return "mms.do";
+        }
 
-        protected override string Uri() { return "mms.do"; }
-
-        protected string[] ids;
+        private string[] _ids;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            NameValueCollection collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"sch_del", string.Join("|", _ids)}
+            };
 
-            collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
 
-            collection.Add("sch_del", string.Join("|", ids));
 
             return collection;
         }
 
         public MMSDelete Id(string id)
         {
-            ids = new string[] { id };
+            _ids = new[] {id};
             return this;
         }
 
         public MMSDelete Ids(string[] ids)
         {
-            this.ids = ids;
+            _ids = ids;
             return this;
         }
     }

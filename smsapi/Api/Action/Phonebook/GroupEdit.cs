@@ -4,46 +4,45 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookGroupEdit : BaseSimple<Response.Group>
     {
-        public PhonebookGroupEdit()
-        { }
-
         protected override string Uri() { return "phonebook.do"; }
 
-        protected string oldName;
-        protected string newName;
-        protected string info;
+        private string _oldName;
+        private string _newName;
+        private string _info;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"edit_group", _oldName},
+                {"name", _newName},
+                {"info", _info}
+            };
 
-            collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
 
-            collection.Add("edit_group", oldName);
-            collection.Add("name", newName);
-            collection.Add("info", info);
 
             return collection;
         }
 
         public PhonebookGroupEdit Name(string name)
         {
-            oldName = name;
+            _oldName = name;
             return this;
         }
 
         public PhonebookGroupEdit SetName(string name)
         {
-            newName = name;
+            _newName = name;
             return this;
         }
 
         public PhonebookGroupEdit SetInfo(string info)
         {
-            this.info = info;
+            _info = info;
             return this;
         }
     }

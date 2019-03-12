@@ -5,11 +5,7 @@ namespace SMSApi.Api.Action
 {
 	public class CreateField : Rest<Response.Field>
 	{
-		public CreateField()
-        {
-		}
-
-		protected override string Resource { get { return "contacts/fields"; } }
+        protected override string Resource { get { return "contacts/fields"; } }
 
 		protected override RequestMethod Method { get { return RequestMethod.POST; } }
 
