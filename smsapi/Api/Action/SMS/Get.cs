@@ -4,35 +4,38 @@ namespace SMSApi.Api.Action
 {
     public class SMSGet : BaseSimple<Response.Status>
     {
-        public SMSGet() : base() { }
+        protected override string Uri()
+        {
+            return "sms.do";
+        }
 
-        protected override string Uri() { return "sms.do"; }
-
-        protected string[] id;
+        private string[] _id;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            NameValueCollection collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"status", string.Join("|", _id)}
+            };
 
-            collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
 
-            collection.Add("status", string.Join("|", id));
 
             return collection;
         }
 
         public SMSGet Id(string id)
         {
-            this.id = new string[] { id };
+            this._id = new[] {id};
             return this;
         }
 
         public SMSGet Ids(string[] ids)
         {
-            id = ids;
+            _id = ids;
             return this;
         }
     }

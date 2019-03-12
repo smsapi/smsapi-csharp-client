@@ -5,7 +5,8 @@ namespace SMSApi.Api.Action
 {
     public class MMSSend : Send
     {
-        public MMSSend() : base() { }
+        public MMSSend()
+        { }
 
         protected override string Uri() { return "mms.do"; }
 

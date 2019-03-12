@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace SMSApi.Api
 {
-    public class ProxyHTTP : Proxy
+    public class ProxyHTTP : IProxy
     {
-        protected string baseUrl;
-		Client basicAuthentication;
+        private readonly string _baseUrl;
+        private Client _basicAuthentication;
 
         public ProxyHTTP(string baseUrl) 
         {
-            this.baseUrl = baseUrl;
-            if (!this.baseUrl.EndsWith(@"/"))
-                this.baseUrl += @"/";
+            _baseUrl = baseUrl;
+            if (!_baseUrl.EndsWith(@"/"))
+                _baseUrl += @"/";
         }
 
         protected Stream PrepareContent(NameValueCollection data)
@@ -102,21 +103,20 @@ namespace SMSApi.Api
 
         public Stream Execute(string uri, NameValueCollection data, Stream file, RequestMethod method = RequestMethod.POST)
         {
-            Dictionary<string, Stream> files = new Dictionary<string, Stream>();
-            files.Add("file", file);
+            var files = new Dictionary<string, Stream> {{"file", file}};
             return Execute(uri, data, files, method);
         }
 
 		public Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method = RequestMethod.POST)
 		{
-			String boundary = "SMSAPI-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + (new Random()).Next(int.MinValue, int.MaxValue).ToString() + "-boundary";
+			var boundary = $"SMSAPI-{DateTime.Now:yyyy-MM-dd_HH:mm:ss}{new Random().Next(int.MinValue, int.MaxValue)}-boundary";
 
-			WebRequest webRequest = WebRequest.Create(baseUrl + uri);
+			WebRequest webRequest = WebRequest.Create(_baseUrl + uri);
 			webRequest.Method = RequestMethodToString(method);
 
-			if (basicAuthentication != null)
+			if (_basicAuthentication != null)
 			{
-				webRequest.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(basicAuthentication.GetUsername() + ":" + basicAuthentication.GetPassword())));
+				webRequest.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(_basicAuthentication.GetUsername() + ":" + _basicAuthentication.GetPassword())));
 			}
 
 			if (RequestMethod.POST.Equals(method) || RequestMethod.PUT.Equals(method))
@@ -156,12 +156,87 @@ namespace SMSApi.Api
 			}
 			catch (WebException e)
 			{
-				throw new ProxyException("Failed to get response from " + webRequest.RequestUri.ToString(), e);
+				throw new ProxyException("Failed to get response from " + webRequest.RequestUri, e);
 			}
 
 			response.Position = 0;
 			return response;
 		}
+
+#if !NET40
+        public async Task<Stream> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method = RequestMethod.POST)
+        {
+            Dictionary<string, Stream> files = new Dictionary<string, Stream>();
+            return await ExecuteAsync(uri, data, files, method);
+        }
+
+        public async Task<Stream> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method = RequestMethod.POST)
+        {
+            var files = new Dictionary<string, Stream> { { "file", file } };
+            return await ExecuteAsync(uri, data, files, method);
+        }
+
+        public async Task<Stream> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method = RequestMethod.POST)
+        {
+            var boundary = $"SMSAPI-{DateTime.Now:yyyy-MM-dd_HH:mm:ss}{new Random().Next(int.MinValue, int.MaxValue)}-boundary";
+
+            var webRequest = WebRequest.Create(_baseUrl + uri);
+            webRequest.Method = RequestMethodToString(method);
+
+            if (_basicAuthentication != null)
+            {
+                webRequest.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(_basicAuthentication.GetUsername() + ":" + _basicAuthentication.GetPassword())));
+            }
+
+            if (RequestMethod.POST.Equals(method) || RequestMethod.PUT.Equals(method))
+            {
+                Stream stream;
+
+                if (files != null && files.Count > 0)
+                {
+                    webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
+                    stream = PrepareMultipartContent(boundary, data, files);
+                }
+                else
+                {
+                    webRequest.ContentType = "application/x-www-form-urlencoded";
+                    stream = PrepareContent(data);
+                }
+
+                webRequest.ContentLength = stream.Length;
+
+                try
+                {
+                    stream.Position = 0;
+                    var webRequestStream = await webRequest.GetRequestStreamAsync();
+                    CopyStream(stream, webRequestStream);
+                    stream.Close();
+                }
+                catch (WebException e)
+                {
+                    throw new ProxyException(e.Message, e);
+                }
+            }
+
+            var response = new MemoryStream();
+
+            try
+            {
+                var webResponse = await webRequest.GetResponseAsync();
+                var webResponseStream = webResponse.GetResponseStream();
+
+                CopyStream(webResponseStream, response);
+            }
+            catch (WebException e)
+            {
+                throw new ProxyException("Failed to get response from " + webRequest.RequestUri, e);
+            }
+
+            response.Position = 0;
+            return response;
+        }
+
+#endif
 
         private void CopyStream(Stream input, Stream output)
         {
@@ -175,10 +250,11 @@ namespace SMSApi.Api
 
 		public void BasicAuthentication(Client client)
 		{
-			basicAuthentication = client;
+			_basicAuthentication = client;
 		}
 
-        public static string RequestMethodToString(RequestMethod method)
+
+        private static string RequestMethodToString(RequestMethod method)
         {
             switch(method)
             {

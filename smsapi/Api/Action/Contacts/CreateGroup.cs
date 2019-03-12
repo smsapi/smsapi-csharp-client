@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class CreateGroup : Rest<Response.Group>
 	{
 		public CreateGroup()
-			: base()
-		{
+        {
 		}
 
 		protected override string Resource { get { return "contacts/groups"; } }

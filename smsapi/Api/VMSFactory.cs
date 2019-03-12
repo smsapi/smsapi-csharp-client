@@ -3,10 +3,11 @@ namespace SMSApi.Api
 {
     public class VMSFactory : Factory
     {
-        public VMSFactory() : base() { }
+        public VMSFactory()
+        { }
         public VMSFactory(Client client) : base(client) { }
 
-        public VMSFactory(Client client, Proxy proxy) : base(client, proxy)
+        public VMSFactory(Client client, IProxy proxy) : base(client, proxy)
         {
         }
 

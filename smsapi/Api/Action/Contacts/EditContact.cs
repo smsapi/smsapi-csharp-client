@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class EditContact : Rest<Response.Contact>
 	{
 		public EditContact(string contactId)
-			: base()
-		{
+        {
 			ContactId = contactId;
 		}
 

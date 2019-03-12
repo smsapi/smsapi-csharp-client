@@ -5,7 +5,8 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Array<T> : Countable
     {
-        protected Array() : base() { }
+        protected Array()
+        { }
 
         public Array(System.Collections.Generic.List<T> list)
             : base(list.Count)

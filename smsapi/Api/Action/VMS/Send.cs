@@ -7,7 +7,8 @@ namespace SMSApi.Api.Action
 {
     public class VMSSend : Send
     {
-        public VMSSend() : base() { }
+        public VMSSend()
+        { }
 
         protected override string Uri() { return "vms.do"; }
 

@@ -6,7 +6,8 @@ namespace SMSApi.Api.Action
 {
     public class VMSDelete : BaseSimple<Response.Countable>
     {
-        public VMSDelete() : base() { }
+        public VMSDelete()
+        { }
 
         protected override string Uri() { return "vms.do"; }
 

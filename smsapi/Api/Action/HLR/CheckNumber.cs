@@ -4,15 +4,16 @@ namespace SMSApi.Api.Action
 {
     public class HLRCheckNumber : BaseSimple<Response.CheckNumber>
     {
-        public HLRCheckNumber() : base() { }
-
-        protected override string Uri() { return "hlrsync.do"; }
+        protected override string Uri()
+        {
+            return "hlrsync.do";
+        }
 
         protected string[] numbers;
 
         public HLRCheckNumber SetNumber(string number)
         {
-            numbers = new string[] { number };
+            numbers = new[] {number};
             return this;
         }
 
@@ -26,16 +27,15 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("number", string.Join(",", numbers));
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"number", string.Join(",", numbers)}
+            };
 
             return collection;
         }
-    }   
+    }
 }

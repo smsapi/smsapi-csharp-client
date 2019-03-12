@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class CreateGroupPermission : Rest<Response.GroupPermission>
 	{
 		public CreateGroupPermission(string groupId)
-			: base()
-		{
+        {
 			GroupId = groupId;
 		}
 

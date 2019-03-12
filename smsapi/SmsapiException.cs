@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SMSApi.Api
+﻿namespace SMSApi.Api
 {
     public class SmsapiException : Exception
     {
-        private int Code;
+        private readonly int _code;
 
-        public SmsapiException(string message, int code)
-            : base(message)
+        public SmsapiException(string message, int code) : base(message)
         {
-            Code = code;
+            _code = code;
         }
 
         public int GetCode()
         {
-            return Code;
+            return _code;
         }
     }
 }

@@ -6,7 +6,10 @@ namespace SMSApi.Api.Action
     {
         private string name;
 
-        protected override string Uri() { return "sender.do"; }
+        protected override string Uri()
+        {
+            return "sender.do";
+        }
 
         public SenderAdd SetName(string name)
         {
@@ -16,14 +19,13 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("add", name);
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"add", name}
+            };
 
             return collection;
         }

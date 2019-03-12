@@ -7,10 +7,11 @@ namespace SMSApi.Api
 {
     public class HLRFactory : Factory
     {
-        public HLRFactory() : base() { }
+        public HLRFactory()
+        { }
         public HLRFactory(Client client) : base(client) { }
 
-        public HLRFactory(Client client, Proxy proxy) : base(client, proxy)
+        public HLRFactory(Client client, IProxy proxy) : base(client, proxy)
         {
         }
 

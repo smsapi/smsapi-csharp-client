@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class UserGet : BaseSimple<Response.User>
     {
-        public UserGet() : base() { }
+        public UserGet()
+        { }
 
         protected override string Uri() { return "user.do"; }
 

@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class ListFields : Rest<Response.Fields>
 	{
 		public ListFields ()
-			: base()
-		{
+        {
 		}
 
 		protected override string Resource { get { return "contacts/fields"; } }

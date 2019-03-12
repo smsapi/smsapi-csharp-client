@@ -10,7 +10,8 @@ namespace SMSApi.Api.Response
 		public const string FemaleGender    = "female";
 		public const string UndefinedGender = "undefined";
 
-		public Contact() : base() { }
+		public Contact()
+        { }
 
 		[DataMember(Name = "id", IsRequired = false)]
 		public readonly string Id;

@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class DeleteField : Rest<Response.Base>
 	{
 		public DeleteField(string fieldId)
-			: base()
-		{
+        {
 			FieldId = fieldId;
 		}
 

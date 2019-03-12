@@ -6,7 +6,8 @@ namespace SMSApi.Api.Action
 {
     public class VMSGet : BaseSimple<Response.Status>
     {
-        public VMSGet() : base() { }
+        public VMSGet()
+        { }
 
         protected override string Uri() { return "vms.do"; }
 

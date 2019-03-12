@@ -4,8 +4,6 @@ namespace SMSApi.Api.Action
 {
     public abstract class Send : BaseSimple<Response.Status>
     {
-        protected Send() : base() {}
-
         protected string[] To;
         protected string Group;
         protected string DateSent;

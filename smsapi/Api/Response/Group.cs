@@ -9,7 +9,8 @@ namespace SMSApi.Api.Response
 	[DataContract]
 	public class Group : Base
 	{
-		private Group() : base() { }
+		private Group()
+        { }
 
 		[DataMember(Name = "id", IsRequired = false)]
 		public readonly string Id;

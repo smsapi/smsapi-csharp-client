@@ -9,7 +9,8 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class User : Base
     {
-        private User() : base() { }
+        private User()
+        { }
 
         [DataMember(Name = "username", IsRequired = true)]
         public readonly string Username;

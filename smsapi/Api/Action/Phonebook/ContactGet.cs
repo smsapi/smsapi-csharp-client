@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactGet : BaseSimple<Response.Contact>
     {
-        public PhonebookContactGet() : base() { }
+        public PhonebookContactGet()
+        { }
 
         protected override string Uri() { return "phonebook.do"; }
 

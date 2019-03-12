@@ -17,7 +17,6 @@ namespace SMSApi.Api.Action
     public class UserEdit : BaseSimple<Response.User>
     {
         public UserEdit()
-            : base() 
         {
             limit = -1;
             monthLimit = -1;

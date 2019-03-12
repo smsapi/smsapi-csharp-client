@@ -6,7 +6,8 @@ namespace SMSApi.Api.Response
 	[DataContract]
 	public class GroupPermission : Base
 	{
-		public GroupPermission() : base() { }
+		public GroupPermission()
+        { }
 
 		[DataMember(Name = "group_id", IsRequired = false)]
 		public readonly string GroupId;

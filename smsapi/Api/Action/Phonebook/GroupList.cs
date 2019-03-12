@@ -5,7 +5,6 @@ namespace SMSApi.Api.Action
     public class PhonebookGroupList : BaseSimple<Response.Groups>
     {
         public PhonebookGroupList()
-            : base()
         {
         }
 

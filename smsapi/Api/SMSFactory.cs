@@ -2,10 +2,11 @@
 {
     public class SMSFactory : Factory
     {
-        public SMSFactory() : base() { }
+        public SMSFactory()
+        { }
         public SMSFactory(Client client) : base(client) { }
 
-        public SMSFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public SMSFactory(Client client, IProxy proxy) : base(client, proxy) { }
 
         public Action.SMSDelete ActionDelete(string id = null)
         {

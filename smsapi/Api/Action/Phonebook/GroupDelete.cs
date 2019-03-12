@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookGroupDelete : BaseSimple<Response.Base>
     {
-        public PhonebookGroupDelete() : base() {
+        public PhonebookGroupDelete()
+        {
             removeContacts = false;
         }
 

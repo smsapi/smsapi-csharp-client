@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class UnbindContactFromGroup : Rest<Response.Base>
 	{
 		public UnbindContactFromGroup(string contactId, string groupId)
-			: base()
-		{
+        {
 			ContactId = contactId;
 			GroupId = groupId;
 		}

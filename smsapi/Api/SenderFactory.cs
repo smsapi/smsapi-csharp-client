@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SMSApi.Api
+﻿namespace SMSApi.Api
 {
     public class SenderFactory : Factory
     {
-        public SenderFactory() : base() { }
+        public SenderFactory()
+        { }
         public SenderFactory(Client client) : base(client) { }
-        public SenderFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public SenderFactory(Client client, IProxy proxy) : base(client, proxy) { }
 
         public Action.SenderAdd ActionAdd(string name = null)
         {

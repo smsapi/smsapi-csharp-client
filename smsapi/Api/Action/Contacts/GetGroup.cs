@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class GetGroup : Rest<Response.Group>
 	{
 		public GetGroup(string groupId)
-			: base()
-		{
+        {
 			GroupId = groupId;
 		}
 

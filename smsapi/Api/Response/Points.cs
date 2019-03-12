@@ -5,7 +5,8 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Credits : Base
     {
-        private Credits() : base() { }
+        private Credits()
+        { }
 
         [DataMember(Name = "points", IsRequired = true)]
         public readonly double Points;

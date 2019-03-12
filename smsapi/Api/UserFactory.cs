@@ -7,9 +7,10 @@ namespace SMSApi.Api
 {
     public class UserFactory : Factory
     {
-        public UserFactory() : base() { }
+        public UserFactory()
+        { }
         public UserFactory(Client client) : base(client) { }
-        public UserFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public UserFactory(Client client, IProxy proxy) : base(client, proxy) { }
 
         public Action.UserGetCredits ActionGetCredits()
         {

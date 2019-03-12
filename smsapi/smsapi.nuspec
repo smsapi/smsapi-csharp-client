@@ -7,12 +7,12 @@
     <authors>www.smsapi.pl</authors>
     <owners>www.smsapi.pl</owners>
     <licenseUrl>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://www.smsap.pl</projectUrl>
-    <iconUrl>https://www.smsap.pl/favicon.icn</iconUrl>
+    <projectUrl>https://www.smsapi.pl</projectUrl>
+    <iconUrl>https://www.smsapi.pl/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</description>
     <releaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <copyright>Copyright 2019</copyright>
     <tags>smsapi</tags>
   </metadata>
 </package>

@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class GetGroupPermission : Rest<Response.GroupPermission>
 	{
 		public GetGroupPermission(string groupId, string username)
-			: base()
-		{
+        {
 			GroupId = groupId;
 			Username = username;
 		}

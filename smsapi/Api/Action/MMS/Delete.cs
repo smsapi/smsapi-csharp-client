@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class MMSDelete : BaseSimple<Response.Countable>
     {
-        public MMSDelete() : base() { }
+        public MMSDelete()
+        { }
 
         protected override string Uri() { return "mms.do"; }
 

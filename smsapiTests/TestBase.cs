@@ -1,13 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
-using System;
 using System.Configuration;
 
 namespace smsapiTests
 {
     public abstract class TestBase
     {
-        protected Proxy proxy;
+        protected IProxy proxy;
         protected Client client;
         protected SMSFactory smsFactory;
         protected MMSFactory mmsFactory;

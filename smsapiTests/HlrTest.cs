@@ -8,7 +8,7 @@ namespace smsapiTests
     [TestClass]
     public class HlrTest
     {
-        Proxy proxy;
+        IProxy proxy;
         Client client;
         HLRFactory hlrFactory;
         String validTestNumber;

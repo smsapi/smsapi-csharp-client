@@ -6,7 +6,8 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Senders : Countable
     {
-        private Senders() : base() { }
+        private Senders()
+        { }
 
         [DataMember(Name = "list", IsRequired = false)]
         private List<Sender> list;

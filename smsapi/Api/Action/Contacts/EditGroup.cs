@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class EditGroup : Rest<Response.Group>
 	{
 		public EditGroup(string groupId)
-			: base()
-		{
+        {
 			GroupId = groupId;
 		}
 

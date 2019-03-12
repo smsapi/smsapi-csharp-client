@@ -4,22 +4,29 @@ namespace SMSApi.Api.Action
 {
     public class SMSDelete : BaseSimple<Response.Countable>
     {
-        public SMSDelete() : base() { }
+        public SMSDelete()
+        {
+        }
 
-        protected override string Uri() { return "sms.do"; }
+        protected override string Uri()
+        {
+            return "sms.do";
+        }
 
         protected string id;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            NameValueCollection collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"sch_del", id}
+            };
 
-            collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
 
-            collection.Add("sch_del", id);
 
             return collection;
         }

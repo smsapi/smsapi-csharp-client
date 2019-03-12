@@ -5,7 +5,8 @@ namespace SMSApi.Api.Action
 {
     public class UserList : BaseArray<Response.User>
     {
-        public UserList() : base() { }
+        public UserList()
+        { }
 
         protected override string Uri() { return "user.do"; }
 

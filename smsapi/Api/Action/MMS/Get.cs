@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class MMSGet : BaseSimple<Response.Status>
     {
-        public MMSGet() : base() { }
+        public MMSGet()
+        { }
 
         protected override string Uri() { return "mms.do"; }
 

@@ -3,9 +3,10 @@ namespace SMSApi.Api
 {
     public class MMSFactory : Factory
     {
-        public MMSFactory() : base() { }
+        public MMSFactory()
+        { }
         public MMSFactory(Client client) : base(client) { }
-        public MMSFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public MMSFactory(Client client, IProxy proxy) : base(client, proxy) { }
 
         public Action.MMSDelete ActionDelete(string id = null)
         {

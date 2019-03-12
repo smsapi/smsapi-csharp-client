@@ -4,7 +4,8 @@ namespace SMSApi.Api.Action
 {
     public class UserGetCredits : BaseSimple<Response.Credits>
     {
-        public UserGetCredits() : base() { }
+        public UserGetCredits()
+        { }
 
         protected override string Uri() { return "user.do"; }
 

@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class BindContactToGroup : Rest<Response.Base>
 	{
 		public BindContactToGroup(string contactId, string groupId)
-			: base()
-		{
+        {
 			ContactId = contactId;
 			GroupId = groupId;
 		}

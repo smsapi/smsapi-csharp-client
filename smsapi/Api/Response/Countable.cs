@@ -5,8 +5,8 @@ namespace SMSApi.Api.Response
 	[DataContract]
 	public class Countable /*: Base*/
 	{
-		protected Countable(int count = 0) : base()
-		{
+		protected Countable(int count = 0)
+        {
 		    this.count = count;
 		}
 

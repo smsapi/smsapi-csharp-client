@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class EditGroupPermission : Rest<Response.GroupPermission>
 	{
 		public EditGroupPermission(string groupId, string username)
-			: base()
-		{
+        {
 			GroupId = groupId;
 			Username = username;
 		}

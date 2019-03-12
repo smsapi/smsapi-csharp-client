@@ -16,7 +16,7 @@ namespace SMSApi.Api.Action
 {
     public class UserAdd : BaseSimple<Response.User>
     {
-        public UserAdd() : base() 
+        public UserAdd()
         {
             limit = -1;
             monthLimit = -1;

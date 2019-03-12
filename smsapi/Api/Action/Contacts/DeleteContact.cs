@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class DeleteContact : Rest<Response.Base>
 	{
 		public DeleteContact(string contactId)
-			: base()
-		{
+        {
 			ContactId = contactId;
 		}
 

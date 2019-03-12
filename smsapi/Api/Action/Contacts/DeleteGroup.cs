@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class DeleteGroup : Rest<Response.Base>
 	{
 		public DeleteGroup(string groupId)
-			: base()
-		{
+        {
 			GroupId = groupId;
 		}
 

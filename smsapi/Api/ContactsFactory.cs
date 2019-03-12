@@ -11,7 +11,7 @@ namespace SMSApi.Api
 			Proxy(proxyHttp);
 		}
 
-        public ContactsFactory(Client client, Proxy proxy) : base(client, proxy)
+        public ContactsFactory(Client client, IProxy proxy) : base(client, proxy)
         {
             proxy.BasicAuthentication(client);
             Proxy(proxy);

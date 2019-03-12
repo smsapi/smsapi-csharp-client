@@ -4,8 +4,7 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactList : BaseSimple<Response.Contacts>
     {
-        public PhonebookContactList() 
-            : base() 
+        public PhonebookContactList()
         {
             offset = 0;
             limit = 0;

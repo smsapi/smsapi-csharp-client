@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SMSApi.Api
 {
     [Obsolete("use ContactsFactory instead")]
     public class PhonebookFactory : Factory
     {
-        public PhonebookFactory() : base() { }
+        public PhonebookFactory()
+        { }
         public PhonebookFactory(Client client) : base(client) { }
-        public PhonebookFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public PhonebookFactory(Client client, IProxy proxy) : base(client, proxy) { }
 
         public Action.PhonebookContactAdd ActionContactAdd(string number = null)
         {

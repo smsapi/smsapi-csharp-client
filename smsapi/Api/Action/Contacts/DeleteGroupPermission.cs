@@ -6,8 +6,7 @@ namespace SMSApi.Api.Action
 	public class DeleteGroupPermission : Rest<Response.GroupPermission>
 	{
 		public DeleteGroupPermission(string groupId, string username)
-			: base()
-		{
+        {
 			GroupId = groupId;
 			Username = username;
 		}

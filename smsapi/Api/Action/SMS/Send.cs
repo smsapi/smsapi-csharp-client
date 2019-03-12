@@ -5,8 +5,6 @@ namespace SMSApi.Api.Action
 {
     public class SMSSend : Send
     {
-        public SMSSend() : base() { }
-
         protected override string Uri() { return "sms.do"; }
 
         protected override NameValueCollection Values()
@@ -76,7 +74,7 @@ namespace SMSApi.Api.Action
                 {
                     if (_params[i] != null)
                     {
-                        collection.Add("param" + ((i + 1).ToString()), _params[i]);
+                        collection.Add("param" + (i + 1), _params[i]);
                     }
                 }
             }
@@ -114,7 +112,7 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetTo(string to)
         {
-            To = new string[] { to };
+            To = new[] { to };
             return this;
         }
 
@@ -144,7 +142,7 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetIDx(string idx)
         {
-            Idx = new string[] { idx };
+            Idx = new[] { idx };
             return this;
         }
 

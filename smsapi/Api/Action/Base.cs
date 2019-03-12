@@ -3,13 +3,14 @@ using System.Runtime.Serialization.Json;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace SMSApi.Api.Action
 {
     public abstract class Base<T,TResult>
     {
         protected Client client;
-        private Proxy _proxy;
+        private IProxy _proxy;
 
         protected abstract string Uri();
 
@@ -20,12 +21,12 @@ namespace SMSApi.Api.Action
             this.client = client;
         }
 
-        public void Proxy(Proxy proxy)
+        public void Proxy(IProxy proxy)
         {
             _proxy = proxy;
         }
 
-        protected TT ResponseToObject<TT>(Stream data)
+        private TT ResponseToObject<TT>(Stream data)
         {
 			TT result;
 			if (data.Length > 0)
@@ -82,6 +83,32 @@ namespace SMSApi.Api.Action
 
             return result;
         }
+
+#if !NET40
+        public async Task<TResult> ExecuteAsync()
+        {
+            Validate();
+            var data = await _proxy.ExecuteAsync(Uri(), Values(), Files(), Method);
+            var result = default(TResult);
+
+            HandleError(data);
+
+            try
+            {
+                var response = ResponseToObject<T>(data);
+                result = ConvertResponse(response);
+            }
+            catch (System.Runtime.Serialization.SerializationException e)
+            {
+                //Problem z prasowaniem json'a
+                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
+            }
+
+            data.Close();
+
+            return result;
+        }
+#endif
 
         protected void HandleError(Stream data) {
 

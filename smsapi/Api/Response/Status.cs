@@ -6,7 +6,8 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Status : Countable
     {
-        private Status() : base() { }
+        private Status()
+        { }
 
         [DataMember(Name = "list", IsRequired = false)]
         private List<MessageStatus> list;
