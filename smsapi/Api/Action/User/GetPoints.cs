@@ -4,19 +4,18 @@ namespace SMSApi.Api.Action
 {
     public class UserGetCredits : BaseSimple<Response.Credits>
     {
-        protected override string Uri() { return "user.do"; }
+        protected override string Uri() => "user.do";
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("credits", "1");
-            collection.Add("details", "1");
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"credits", "1"},
+                {"details", "1"}
+            };
 
             return collection;
         }

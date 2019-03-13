@@ -6,34 +6,33 @@ namespace SMSApi.Api.Action
 {
     public class VMSGet : BaseSimple<Response.Status>
     {
-        protected override string Uri() { return "vms.do"; }
+        protected override string Uri() => "vms.do";
 
-        protected string[] ids;
+        private string[] _ids;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("status", string.Join("|", ids));
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"status", string.Join("|", _ids)}
+            };
 
             return collection;
         }
 
         public VMSGet Id(string id)
         {
-            ids = new string[] { id };
+            _ids = new[] {id};
             return this;
         }
 
 
         public VMSGet Ids(string[] ids)
         {
-            this.ids = ids;
+            _ids = ids;
             return this;
         }
     }

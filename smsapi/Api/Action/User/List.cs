@@ -5,27 +5,29 @@ namespace SMSApi.Api.Action
 {
     public class UserList : BaseArray<Response.User>
     {
-        protected override string Uri() { return "user.do"; }
+        protected override string Uri()
+        {
+            return "user.do";
+        }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("list", "1");
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"list", "1"}
+            };
 
             return collection;
         }
 
-        protected string username;
+        private string _username;
 
         public UserList Username(string username)
         {
-            this.username = username;
+            _username = username;
             return this;
         }
     }

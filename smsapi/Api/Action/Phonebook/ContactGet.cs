@@ -4,27 +4,29 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactGet : BaseSimple<Response.Contact>
     {
-        protected override string Uri() { return "phonebook.do"; }
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
 
-        protected string number;
+        private string _number;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("get_contact", number);
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"get_contact", _number}
+            };
 
             return collection;
         }
 
         public PhonebookContactGet Number(string number)
         {
-            this.number = number;
+            _number = number;
             return this;
         }
     }

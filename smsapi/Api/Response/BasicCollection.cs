@@ -13,14 +13,7 @@ namespace SMSApi.Api.Response
         [DataMember(Name = "size", IsRequired = false)]
         protected int size;
 
-        public int Size
-        {
-            get
-            {
-                if (size == 0) return base.Count;
-                return size;
-            }
-        }
+        public int Size => size == 0 ? base.Count : size;
 
         [DataMember(Name = "collection", IsRequired = false)]
         protected System.Collections.Generic.List<T> collection;
@@ -30,12 +23,7 @@ namespace SMSApi.Api.Response
 
         public System.Collections.Generic.List<T> Collection
         {
-            get
-            {
-                if (collection == null)
-                    collection = new System.Collections.Generic.List<T>();
-                return collection;
-            }
+            get => collection ?? (collection = new System.Collections.Generic.List<T>());
 
             set { }
         }

@@ -18,14 +18,14 @@ namespace SMSApi.Api.Action
     {
         public UserEdit()
         {
-            limit = -1;
-            monthLimit = -1;
-            active = -1;
-            phonebook = -1;
-            senders = -1;
+            _limit = -1;
+            _monthLimit = -1;
+            _active = -1;
+            _phonebook = -1;
+            _senders = -1;
         }
 
-        protected override string Uri() { return "user.do"; }
+        protected override string Uri() => "user.do";
 
         const int SENDERS_NOSHARE = 0;
         const int SENDERS_SHARE = 1;
@@ -33,97 +33,97 @@ namespace SMSApi.Api.Action
         const int PHONEBOOK_NOSHARE = 0;
         const int PHONEBOOK_SHARE = 1;
 
-        protected string username;
-        protected string password;
-        protected string passwordApi;
-        protected double limit;
-        protected double monthLimit;
-        protected int senders;
-        protected int phonebook;
-        protected int active;
-        protected string info;
-        protected bool withoutPrefix = false;
+        private string _username;
+        private string _password;
+        private string _passwordApi;
+        private double _limit;
+        private double _monthLimit;
+        private int _senders;
+        private int _phonebook;
+        private int _active;
+        private string _info;
+        private bool _withoutPrefix = false;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"set_user", _username}
+            };
 
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("set_user", username);
-            if (password != null) collection.Add("pass", password);
-            if (passwordApi != null) collection.Add("pass_api", passwordApi);
-            if (limit >= 0) collection.Add("limit", limit.ToString());
-            if (monthLimit >= 0) collection.Add("month_limit", monthLimit.ToString());
-            if (senders >= 0) collection.Add("senders", senders.ToString());
-            if (phonebook >= 0) collection.Add("phonebook", phonebook.ToString());
-            if (active >= 0) collection.Add("active", (active > 0 ? "1" : "0"));
-            if (info != null) collection.Add("info", info);
-            if (withoutPrefix) collection.Add("without_prefix", "1");
+            if (_password != null) collection.Add("pass", _password);
+            if (_passwordApi != null) collection.Add("pass_api", _passwordApi);
+            if (_limit >= 0) collection.Add("limit", _limit.ToString());
+            if (_monthLimit >= 0) collection.Add("month_limit", _monthLimit.ToString());
+            if (_senders >= 0) collection.Add("senders", _senders.ToString());
+            if (_phonebook >= 0) collection.Add("phonebook", _phonebook.ToString());
+            if (_active >= 0) collection.Add("active", (_active > 0 ? "1" : "0"));
+            if (_info != null) collection.Add("info", _info);
+            if (_withoutPrefix) collection.Add("without_prefix", "1");
 
             return collection;
         }
 
         public UserEdit Username(string username)
         {
-            this.username = username;
+            _username = username;
             return this;
         }
 
         public UserEdit SetPassword(string password)
         {
-            this.password = password;
+            _password = password;
             return this;
         }
 
         public UserEdit SetPasswordApi(string password)
         {
-            passwordApi = password;
+            _passwordApi = password;
             return this;
         }
 
         public UserEdit SetLimit(double limit)
         {
-            this.limit = limit;
+            _limit = limit;
             return this;
         }
 
         public UserEdit SetMonthLimit(double limit)
         {
-            monthLimit = limit;
+            _monthLimit = limit;
             return this;
         }
 
         public UserEdit SetSenders(int flag)
         {
-            senders = flag;
+            _senders = flag;
             return this;
         }
 
         public UserEdit SetPhonebook(int flag)
         {
-            phonebook = flag;
+            _phonebook = flag;
             return this;
         }
 
         public UserEdit SetActive(bool flag)
         {
-            active = (flag ? 1 : 0);
+            _active = (flag ? 1 : 0);
             return this;
         }
 
         public UserEdit SetInfo(string text)
         {
-            info = text;
+            _info = text;
             return this;
         }
 
         public UserEdit SetWithoutPrefix(bool flag)
         {
-            withoutPrefix = flag;
+            _withoutPrefix = flag;
             return this;
         }
     }

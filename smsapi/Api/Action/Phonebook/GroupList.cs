@@ -4,18 +4,17 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookGroupList : BaseSimple<Response.Groups>
     {
-        protected override string Uri() { return "phonebook.do"; }
+        protected override string Uri() => "phonebook.do";
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("list_groups", "");
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"list_groups", ""}
+            };
 
             return collection;
         }

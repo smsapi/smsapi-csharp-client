@@ -120,11 +120,11 @@ namespace SMSApi.Api.Action
 
                 if (error.Code != 0)
                 {
-                    if (isHostError(error.Code))
+                    if (IsHostError(error.Code))
                     {
                         throw new HostException(error.Message, error.Code);
                     }
-                    if (isClientError(error.Code))
+                    if (IsClientError(error.Code))
                     {
                         throw new ClientException(error.Message, error.Code);
                     }
@@ -148,7 +148,7 @@ namespace SMSApi.Api.Action
          * 1000 Akcja dostępna tylko dla użytkownika głównego
          * 1001 Nieprawidłowa akcja
          */
-        private bool isClientError(int code)
+        private static bool IsClientError(int code)
         {
             switch (code)
             {
@@ -171,7 +171,7 @@ namespace SMSApi.Api.Action
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private bool isHostError(int code)
+        private static bool IsHostError(int code)
         {
             switch (code)
             {

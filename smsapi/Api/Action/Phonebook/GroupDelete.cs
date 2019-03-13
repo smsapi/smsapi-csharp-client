@@ -6,26 +6,28 @@ namespace SMSApi.Api.Action
     {
         public PhonebookGroupDelete()
         {
-            removeContacts = false;
+            _removeContacts = false;
         }
 
-        protected override string Uri() { return "phonebook.do"; }
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
 
-        protected string name;
-        protected bool removeContacts;
+        private string _name;
+        private bool _removeContacts;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                {"format", "json"},
+                {"username", client.GetUsername()},
+                {"password", client.GetPassword()},
+                {"delete_group", _name}
+            };
 
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("delete_group", name);
-
-            if (removeContacts == true)
+            if (_removeContacts == true)
             {
                 collection.Add("remove_contacts", "1");
             }
@@ -35,13 +37,13 @@ namespace SMSApi.Api.Action
 
         public PhonebookGroupDelete Name(string name)
         {
-            this.name = name;
+            _name = name;
             return this;
         }
 
         public PhonebookGroupDelete Contacts(bool flag)
         {
-            removeContacts = flag;
+            _removeContacts = flag;
             return this;
         }
     }

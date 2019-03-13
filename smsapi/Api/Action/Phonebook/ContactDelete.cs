@@ -6,25 +6,24 @@ namespace SMSApi.Api.Action
     {
         protected override string Uri() { return "phonebook.do"; }
 
-        protected string number;
+        private string _number;
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
-            collection.Add("delete_contact", number);
+            NameValueCollection collection = new NameValueCollection
+            {
+                {"format", "json"},
+                { "username", client.GetUsername()},
+                { "password", client.GetPassword()},
+                { "delete_contact", _number}
+            };
 
             return collection;
         }
 
         public PhonebookContactDelete Number(string number)
         {
-            this.number = number;
+            _number = number;
             return this;
         }
     }
