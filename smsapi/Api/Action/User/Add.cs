@@ -3,7 +3,7 @@
 /**
  * add_user * Nazwa dodawanego podużytkownika bez prefiksu użytkownika głównego
  * pass * Hasło do panelu klienta SMSAPI dodawanego podużytkownika zakodowane w md5
- * pass_api Hasło do interfejsu API dla podużytkownika zakodowane w md5, brak tego parametru spowoduje ustawienie jako hasła do API kopii hasła do panelu klienta
+ * pass_api Hasło do interfejsu API dla podużytkownika zakodowane w md5
  * limit Limit punktów przydzielony podużytkownikowi
  * month_limit Ilość punktów która będzie przypisana do konta podużytkownika każdego pierwszego dnia 
  * senders Udostępnienie pól nadawców konta głównego (dostępne wartości: 1 – udostępniaj, 0 – nie udostępniaj, domyślnie wartość równa 0)
