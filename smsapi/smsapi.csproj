@@ -1,35 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{05C2A720-2CD1-401B-A832-9CE85313C248}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SMSApi</RootNamespace>
-    <AssemblyName>SMSApi</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFrameworks>net35;netcoreapp2.0;netcoreapp2.1;netcoreapp3.0;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,118 +17,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Web" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Api\Action\Base.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Api\Action\BaseSimple.cs" />
-    <Compile Include="Api\Action\BaseArray.cs" />
-    <Compile Include="Api\Action\Phonebook\ContactGet.cs" />
-    <Compile Include="Api\Action\Phonebook\ContactList.cs" />
-    <Compile Include="Api\Action\Phonebook\ContactAdd.cs" />
-    <Compile Include="Api\Action\Phonebook\ContactDelete.cs" />
-    <Compile Include="Api\Action\Phonebook\ContactEdit.cs" />
-    <Compile Include="Api\Action\Phonebook\GroupDelete.cs" />
-    <Compile Include="Api\Action\Phonebook\GroupEdit.cs" />
-    <Compile Include="Api\Action\Phonebook\GroupAdd.cs" />
-    <Compile Include="Api\Action\Phonebook\GroupGet.cs" />
-    <Compile Include="Api\Action\Phonebook\GroupList.cs" />
-    <Compile Include="Api\Action\Sender\SetDefault.cs" />
-    <Compile Include="Api\Action\Sender\Delete.cs" />
-    <Compile Include="Api\Action\HLR\CheckNumber.cs" />
-    <Compile Include="Api\Action\MMS\Delete.cs" />
-    <Compile Include="Api\Action\MMS\Get.cs" />
-    <Compile Include="Api\Action\MMS\Send.cs" />
-    <Compile Include="Api\Action\Send.cs" />
-    <Compile Include="Api\Action\Sender\Add.cs" />
-    <Compile Include="Api\Action\Sender\List.cs" />
-    <Compile Include="Api\Action\SMS\Delete.cs" />
-    <Compile Include="Api\Action\SMS\Get.cs" />
-    <Compile Include="Api\Action\SMS\Send.cs" />
-    <Compile Include="Api\Action\User\Add.cs" />
-    <Compile Include="Api\Action\User\List.cs" />
-    <Compile Include="Api\Action\User\Get.cs" />
-    <Compile Include="Api\Action\User\Edit.cs" />
-    <Compile Include="Api\Action\User\GetPoints.cs" />
-    <Compile Include="Api\Action\VMS\Delete.cs" />
-    <Compile Include="Api\Action\VMS\Get.cs" />
-    <Compile Include="Api\Action\VMS\Send.cs" />
-    <Compile Include="ClientException.cs" />
-    <Compile Include="HostException.cs" />
-    <Compile Include="Exception.cs" />
-    <Compile Include="Api\Response\Array.cs" />
-    <Compile Include="Api\Response\User.cs" />
-    <Compile Include="Api\UserFactory.cs" />
-    <Compile Include="Api\HLRFactory.cs" />
-    <Compile Include="Api\PhonebookFactory.cs" />
-    <Compile Include="Api\Response\CheckNumber.cs" />
-    <Compile Include="Api\Response\Contact.cs" />
-    <Compile Include="Api\Response\Contacts.cs" />
-    <Compile Include="Api\Response\Points.cs" />
-    <Compile Include="Api\Response\Groups.cs" />
-    <Compile Include="Api\Response\Error.cs" />
-    <Compile Include="Api\Response\Group.cs" />
-    <Compile Include="Api\Response\Countable.cs" />
-    <Compile Include="Api\Response\Sender.cs" />
-    <Compile Include="Api\Response\Senders.cs" />
-    <Compile Include="Api\Response\NumberStatus.cs" />
-    <Compile Include="Api\SenderFactory.cs" />
-    <Compile Include="Client.cs" />
-    <Compile Include="Api\Factory.cs" />
-    <Compile Include="Api\MMSFactory.cs" />
-    <Compile Include="ActionException.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proxy.cs" />
-    <Compile Include="ProxyException.cs" />
-    <Compile Include="ProxyHTTP.cs" />
-    <Compile Include="Api\Response\Base.cs" />
-    <Compile Include="Api\Response\MessageStatus.cs" />
-    <Compile Include="Api\Response\Status.cs" />
-    <Compile Include="Api\SMSFactory.cs" />
-    <Compile Include="Api\VMSFactory.cs" />
-    <Compile Include="SmsapiException.cs" />
-    <Compile Include="Api\ContactsFactory.cs" />
-    <Compile Include="Api\Action\Contacts\ListContacts.cs" />
-    <Compile Include="Api\Action\Contacts\CreateContact.cs" />
-    <Compile Include="Api\Action\Contacts\DeleteContact.cs" />
-    <Compile Include="Api\Action\Contacts\GetContact.cs" />
-    <Compile Include="Api\Action\Contacts\EditContact.cs" />
-    <Compile Include="Api\Action\Contacts\ListContactGroups.cs" />
-    <Compile Include="Api\Action\Rest.cs" />
-    <Compile Include="Api\Action\Contacts\ListGroups.cs" />
-    <Compile Include="Api\Action\Contacts\CreateGroup.cs" />
-    <Compile Include="Api\Action\Contacts\DeleteGroup.cs" />
-    <Compile Include="Api\Response\BasicCollection.cs" />
-    <Compile Include="Api\Action\Contacts\EditGroup.cs" />
-    <Compile Include="Api\Action\Contacts\ListGroupPermissions.cs" />
-    <Compile Include="Api\Action\Contacts\GetGroup.cs" />
-    <Compile Include="Api\Response\GroupPermission.cs" />
-    <Compile Include="Api\Response\GroupPermissions.cs" />
-    <Compile Include="Api\Action\Contacts\CreateGroupPermission.cs" />
-    <Compile Include="Api\Action\Contacts\ListFields.cs" />
-    <Compile Include="Api\Response\Fields.cs" />
-    <Compile Include="Api\Response\Field.cs" />
-    <Compile Include="Api\Action\Contacts\CreateField.cs" />
-    <Compile Include="Api\Action\Contacts\DeleteField.cs" />
-    <Compile Include="Api\Action\Contacts\EditField.cs" />
-    <Compile Include="Api\Response\FieldOptions.cs" />
-    <Compile Include="Api\Response\FieldOption.cs" />
-    <Compile Include="Api\Action\Contacts\ListFieldOptions.cs" />
-    <Compile Include="Api\Action\Contacts\BindContactToGroup.cs" />
-    <Compile Include="Api\Action\Contacts\UnbindContactFromGroup.cs" />
-    <Compile Include="Api\Action\Contacts\GetContactGroup.cs" />
-    <Compile Include="Api\Action\Contacts\DeleteGroupPermission.cs" />
-    <Compile Include="Api\Action\Contacts\GetGroupPermission.cs" />
-    <Compile Include="Api\Action\Contacts\EditGroupPermission.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <ItemGroup>
     <Folder Include="Api\Action\Contacts\" />
   </ItemGroup>
