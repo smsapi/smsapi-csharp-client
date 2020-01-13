@@ -22,6 +22,9 @@
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>4.7.0</Version>
@@ -33,21 +36,25 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>4.7.0</Version>
     </PackageReference>
