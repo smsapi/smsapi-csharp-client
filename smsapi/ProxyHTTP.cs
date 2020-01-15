@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
+using System.Security.Authentication;
 
 namespace SMSApi.Api
 {
     public class ProxyHTTP : Proxy
     {
+        private const SecurityProtocolType _Tls11 = (SecurityProtocolType)0x00000300;
+        private const SecurityProtocolType _Tls12 = (SecurityProtocolType)0x00000C00;
+
         protected string baseUrl;
 		Client basicAuthentication;
 
@@ -109,6 +113,7 @@ namespace SMSApi.Api
 		{
 			String boundary = "SMSAPI-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + (new Random()).Next(int.MinValue, int.MaxValue).ToString() + "-boundary";
 
+            ServicePointManager.SecurityProtocol = _Tls11 | _Tls12;
 			WebRequest webRequest = WebRequest.Create(baseUrl + uri);
 			webRequest.Method = RequestMethodToString(method);
 
@@ -150,7 +155,7 @@ namespace SMSApi.Api
 
 			try
 			{
-				CopyStream(webRequest.GetResponse().GetResponseStream(), response);
+                CopyStream(webRequest.GetResponse().GetResponseStream(), response);
 			}
 			catch (System.Net.WebException e)
 			{
