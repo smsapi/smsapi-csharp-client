@@ -12,7 +12,7 @@ namespace smsapiTests
             var sendResponse =
                 mmsFactory.ActionSend()
                     .SetSubject("test subject")
-                    .SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"https://www.smsapi.pl/assets/img/mms.jpg\" region=\"Image\"></img></par></body></smil>")
+                    .SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"https://assets.smsapi.pl/img/mms.jpg\" region=\"Image\"></img></par></body></smil>")
                     .SetTo(validTestNumber)
                     .SetDateSent(DateTime.Now.AddHours(2))
                     .Execute();
