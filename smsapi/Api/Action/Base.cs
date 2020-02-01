@@ -8,14 +8,14 @@ namespace SMSApi.Api.Action
 {
     public abstract class Base<T,TResult>
     {
-        protected Client client;
+        protected IClient client;
         protected Proxy proxy;
 
         abstract protected string Uri();
 
 		protected virtual RequestMethod Method { get { return RequestMethod.POST; } }
 
-        public void Client(Client client)
+        public void Client(IClient client)
         {
             this.client = client;
         }

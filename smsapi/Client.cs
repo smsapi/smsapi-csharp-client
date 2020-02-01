@@ -3,7 +3,7 @@ using System.Text;
 
 namespace SMSApi.Api
 {
-    public class Client
+    public class Client : IClient
     {
         protected string username;
         protected string password;
@@ -36,6 +36,11 @@ namespace SMSApi.Api
             }
 
             SetPasswordHash(hash.ToString());
+        }
+
+        public string GetAuthenticationHeader()
+        {
+            return "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(username + ":" + password));
         }
 
         public string GetUsername()

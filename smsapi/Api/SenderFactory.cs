@@ -8,8 +8,8 @@ namespace SMSApi.Api
     public class SenderFactory : Factory
     {
         public SenderFactory() : base() { }
-        public SenderFactory(Client client) : base(client) { }
-        public SenderFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public SenderFactory(IClient client) : base(client) { }
+        public SenderFactory(IClient client, Proxy proxy) : base(client, proxy) { }
 
         public SMSApi.Api.Action.SenderAdd ActionAdd(string name = null)
         {

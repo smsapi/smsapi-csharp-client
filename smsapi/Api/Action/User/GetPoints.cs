@@ -13,10 +13,6 @@ namespace SMSApi.Api.Action
             NameValueCollection collection = new NameValueCollection();
 
             collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
             collection.Add("credits", "1");
             collection.Add("details", "1");
 

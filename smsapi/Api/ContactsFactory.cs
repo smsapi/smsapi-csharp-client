@@ -4,16 +4,16 @@ namespace SMSApi.Api
 {
 	public class ContactsFactory : Factory
 	{
-		public ContactsFactory(Client client) : base(client)
+		public ContactsFactory(IClient client) : base(client)
 		{
 			ProxyHTTP proxyHttp = new ProxyHTTP("http://api.smsapi.pl/");
-			proxyHttp.BasicAuthentication(client);
+			proxyHttp.Authentication(client);
 			Proxy(proxyHttp);
 		}
 
-        public ContactsFactory(Client client, Proxy proxy) : base(client, proxy)
+        public ContactsFactory(IClient client, Proxy proxy) : base(client, proxy)
         {
-            proxy.BasicAuthentication(client);
+            proxy.Authentication(client);
             Proxy(proxy);
         }
 

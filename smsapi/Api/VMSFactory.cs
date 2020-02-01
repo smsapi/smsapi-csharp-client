@@ -4,9 +4,9 @@ namespace SMSApi.Api
     public class VMSFactory : Factory
     {
         public VMSFactory() : base() { }
-        public VMSFactory(Client client) : base(client) { }
+        public VMSFactory(IClient client) : base(client) { }
 
-        public VMSFactory(Client client, Proxy proxy) : base(client, proxy)
+        public VMSFactory(IClient client, Proxy proxy) : base(client, proxy)
         {
         }
 
