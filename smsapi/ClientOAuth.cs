@@ -19,7 +19,7 @@ namespace SMSApi.Api
 
         public string GetAuthenticationHeader()
         {
-            return "Bearer " + Convert.ToBase64String(Encoding.UTF8.GetBytes(Token));
+            return "Bearer " + Token;
         }
     }
 }

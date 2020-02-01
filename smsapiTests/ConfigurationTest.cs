@@ -15,14 +15,24 @@ namespace SMSApi.Api.Tests
         [TestMethod()]
         public void VerifyConfiguration()
         {
-            string username = ConfigurationManager.AppSettings["username"];
-            string password = ConfigurationManager.AppSettings["password"];
+            var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
+            if (authorizationType == AuthorizationType.basic.ToString())
+            {
+                string username = ConfigurationManager.AppSettings["username"];
+                string password = ConfigurationManager.AppSettings["password"];
+                Assert.IsNotNull(username);
+                Assert.AreNotEqual("", username);
+                Assert.IsNotNull(password);
+                Assert.AreNotEqual("", password);
+            }
+            else if (authorizationType == AuthorizationType.oauth.ToString())
+            {
+                string token = ConfigurationManager.AppSettings["oauthToken"];
+                Assert.IsNotNull(token);
+                Assert.AreNotEqual("", token);
+            }
+            
             string baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-
-            Assert.IsNotNull(username);
-            Assert.AreNotEqual("", username);
-            Assert.IsNotNull(password);
-            Assert.AreNotEqual("", password);
             Assert.IsNotNull(baseUrl);
             Assert.AreNotEqual("", baseUrl);
         }
