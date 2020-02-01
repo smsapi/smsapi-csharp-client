@@ -9,6 +9,11 @@ namespace SMSApi.Api
 
         public ClientOAuth(string token)
         {
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
             Token = token;
         }
 
