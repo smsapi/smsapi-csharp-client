@@ -7,8 +7,7 @@ Przykład wysyłki:
 ```c#
 try
 {
-	SMSApi.Api.Client client = new SMSApi.Api.Client("login");
-	client.SetPasswordHash("md5password");
+	SMSApi.Api.IClient client = new SMSApi.Api.ClientOAuth("token");
 
 	var smsApi = new SMSApi.Api.SMSFactory(client);
 
