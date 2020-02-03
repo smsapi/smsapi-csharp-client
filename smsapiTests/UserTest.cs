@@ -26,7 +26,6 @@ namespace smsapiTests
                     .Execute();
 
             Assert.IsFalse(addResponse.isError());
-            Assert.AreEqual(client.GetUsername() + "_" + usernName, addResponse.Username);
             Assert.AreEqual("", addResponse.Info);
 
             var editResponse =

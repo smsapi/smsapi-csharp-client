@@ -9,8 +9,8 @@ namespace SMSApi.Api
     public class PhonebookFactory : Factory
     {
         public PhonebookFactory() : base() { }
-        public PhonebookFactory(Client client) : base(client) { }
-        public PhonebookFactory(Client client, Proxy proxy) : base(client, proxy) { }
+        public PhonebookFactory(IClient client) : base(client) { }
+        public PhonebookFactory(IClient client, Proxy proxy) : base(client, proxy) { }
 
         public SMSApi.Api.Action.PhonebookContactAdd ActionContactAdd(string number = null)
         {

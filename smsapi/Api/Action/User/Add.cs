@@ -49,10 +49,6 @@ namespace SMSApi.Api.Action
             NameValueCollection collection = new NameValueCollection();
 
             collection.Add("format", "json");
-
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
             collection.Add("add_user", newUsername);
             if (password != null) collection.Add("pass", password);
             if (passwordApi != null) collection.Add("pass_api", passwordApi);

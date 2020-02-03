@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
+using SMSApi.Api.Tests;
 using System;
 using System.Configuration;
 
@@ -9,15 +10,24 @@ namespace smsapiTests
     public class HlrTest
     {
         Proxy proxy;
-        Client client;
+        IClient client;
         HLRFactory hlrFactory;
         String validTestNumber;
 
         [TestInitialize]
         public void SetUp()
         {
-            client = new Client(ConfigurationManager.AppSettings["username"]);
-            client.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
+            var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
+            if (authorizationType == AuthorizationType.basic.ToString())
+            {
+                var basicClient = new Client(ConfigurationManager.AppSettings["username"]);
+                basicClient.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
+                client = basicClient;
+            }
+            else if (authorizationType == AuthorizationType.oauth.ToString())
+            {
+                client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
+            }
 
             proxy = new ProxyHTTP(ConfigurationManager.AppSettings["baseUrl"]);
 

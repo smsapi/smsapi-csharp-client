@@ -14,7 +14,7 @@ namespace SMSApi.Api
         private const SecurityProtocolType _Tls12 = (SecurityProtocolType)0x00000C00;
 
         protected string baseUrl;
-		Client basicAuthentication;
+		IClient authentication;
 
         public ProxyHTTP(string baseUrl) 
         {
@@ -117,9 +117,9 @@ namespace SMSApi.Api
 			WebRequest webRequest = WebRequest.Create(baseUrl + uri);
 			webRequest.Method = RequestMethodToString(method);
 
-			if (basicAuthentication != null)
+			if (authentication != null)
 			{
-				webRequest.Headers.Add("Authorization", "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(basicAuthentication.GetUsername() + ":" + basicAuthentication.GetPassword())));
+				webRequest.Headers.Add("Authorization", authentication.GetAuthenticationHeader());
 			}
 
 			if (RequestMethod.POST.Equals(method) || RequestMethod.PUT.Equals(method))
@@ -176,9 +176,9 @@ namespace SMSApi.Api
             }
         }
 
-		public void BasicAuthentication(Client client)
+		public void Authentication(IClient client)
 		{
-			basicAuthentication = client;
+			authentication = client;
 		}
 
         public static string RequestMethodToString(RequestMethod method)

@@ -12,7 +12,7 @@
     <PackageVersion>1.0.0</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
 	<PackageLicense>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</PackageLicense>
-    <PackageProjectUrl>https://www.smsap.pl</PackageProjectUrl>
+    <PackageProjectUrl>https://www.smsapi.pl</PackageProjectUrl>
 	<PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
     <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
 	<PackageTags>smsapi</PackageTags>

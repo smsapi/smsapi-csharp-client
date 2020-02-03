@@ -12,6 +12,6 @@ namespace SMSApi.Api
 		Stream Execute(string uri, NameValueCollection data, Stream file, RequestMethod method = RequestMethod.POST);
 		Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method = RequestMethod.POST);
 
-        void BasicAuthentication(Client client);
+        void Authentication(IClient client);
     }
 }

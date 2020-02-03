@@ -15,9 +15,6 @@ namespace SMSApi.Api.Action
 
             collection.Add("format", "json");
 
-            collection.Add("username", client.GetUsername());
-            collection.Add("password", client.GetPassword());
-
             if (Sender != null) 
                 collection.Add("from", Sender);
 
