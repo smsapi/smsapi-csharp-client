@@ -43,12 +43,7 @@ namespace smsapiTests
             vmsFactory = new VMSFactory(client, proxy);
             senderFactory = new SenderFactory(client, proxy);
             userFactory = new UserFactory(client, proxy);
-            
             contactsFactory = new ContactsFactory(client, proxy);
-
-            var clientLegacy = new Client(ConfigurationManager.AppSettings["usernameOldPhonebook"]);
-            clientLegacy.SetPasswordHash(ConfigurationManager.AppSettings["passwordOldPhonebook"]);
-            phonebookFactory = new PhonebookFactory(clientLegacy, proxy);
 
             subUserName = ConfigurationManager.AppSettings["subUserName"];
             validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
