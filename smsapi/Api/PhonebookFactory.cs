@@ -8,9 +8,20 @@ namespace SMSApi.Api
     [Obsolete("use ContactsFactory instead")]
     public class PhonebookFactory : Factory
     {
-        public PhonebookFactory() : base() { }
-        public PhonebookFactory(IClient client) : base(client) { }
-        public PhonebookFactory(IClient client, Proxy proxy) : base(client, proxy) { }
+        public PhonebookFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(address) 
+        { 
+        }
+
+        public PhonebookFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(client, address) 
+        { 
+        }
+
+        public PhonebookFactory(IClient client, Proxy proxy) 
+            : base(client, proxy) 
+        { 
+        }
 
         public SMSApi.Api.Action.PhonebookContactAdd ActionContactAdd(string number = null)
         {

@@ -7,10 +7,18 @@ namespace SMSApi.Api
 {
     public class HLRFactory : Factory
     {
-        public HLRFactory() : base() { }
-        public HLRFactory(IClient client) : base(client) { }
+        public HLRFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(address) 
+        { 
+        }
 
-        public HLRFactory(IClient client, Proxy proxy) : base(client, proxy)
+        public HLRFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(client, address) 
+        { 
+        }
+
+        public HLRFactory(IClient client, Proxy proxy) 
+            : base(client, proxy)
         {
         }
 

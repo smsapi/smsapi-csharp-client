@@ -20,13 +20,15 @@ namespace SMSApi.Api
             Proxy(new ProxyHTTP(_addresses[address]));
         }
 
-        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) : this(address)
+        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : this(address)
         {
             Client(client);
         }
 
-        public Factory(IClient client, Proxy proxy) : this(client)
+        public Factory(IClient client, Proxy proxy) 
         {
+            Client(client);
             Proxy(proxy);
         }
 
