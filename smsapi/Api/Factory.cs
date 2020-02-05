@@ -8,8 +8,8 @@ namespace SMSApi.Api
         private static Dictionary<ProxyAddress, string> _addresses =
             new Dictionary<ProxyAddress, string>
             {
-                { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/api/" },
-                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/api/" }
+                { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/" },
+                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/" }
             };
 
         protected IClient client;
