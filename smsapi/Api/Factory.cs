@@ -1,20 +1,28 @@
 ﻿
+using System.Collections.Generic;
+
 namespace SMSApi.Api 
 {
     public abstract class Factory
     {
+        private static Dictionary<ProxyAddress, string> _addresses =
+            new Dictionary<ProxyAddress, string>
+            {
+                { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/api/" },
+                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/api/" }
+            };
+
         protected IClient client;
         protected Proxy proxy;
 
-        public Factory()
+        public Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
         {
-            Proxy(new ProxyHTTP("https://api.smsapi.pl/api/"));
+            Proxy(new ProxyHTTP(_addresses[address]));
         }
 
-        public Factory(IClient client)
+        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) : this(address)
         {
             Client(client);
-            Proxy(new ProxyHTTP("https://api.smsapi.pl/api/"));
         }
 
         public Factory(IClient client, Proxy proxy) : this(client)
