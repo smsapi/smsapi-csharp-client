@@ -1,43 +1,45 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class EditGroupTest : TestBase
+    public class EditGroupTest : ContactsTestBase
     {
-        Group group;
-
-        [TestMethod]
-        public void TestGroupGetById()
-        {
-            var response = contactsFactory.EditGroup(group.Id).SetName("GroupY").Execute();
-
-            Assert.AreEqual(group.Id, response.Id);
-            Assert.AreNotEqual(group.Name, response.Name);
-            Assert.AreEqual("GroupY", response.Name);
-            Assert.AreEqual(group.Idx, response.Idx);
-            Assert.AreEqual(group.Description, response.Description);
-        }
+        private Group _group;
 
         [TestInitialize]
-        public void Initialize()
+        public override void SetUp()
         {
-            var groups = contactsFactory.ListGroups().SetName("GroupY").Execute();
-            if (groups.List.Count > 0)
-                contactsFactory.DeleteGroup(groups.List[0].Id).Execute();
+            base.SetUp();
+            var groups = _factory.ListGroups().SetName("GroupY").Execute();
+            if (groups.Collection.Count > 0)
+                _factory.DeleteGroup(groups.Collection[0].Id).Execute();
 
-            groups = contactsFactory.ListGroups().SetName("exampleGroup").Execute();
-            if (groups.List.Count > 0)
-                group = groups.List[0];
+            groups = _factory.ListGroups().SetName("exampleGroup").Execute();
+            if (groups.Collection.Count > 0)
+                _group = groups.Collection[0];
             else
-                group = contactsFactory.CreateGroup().SetName("exampleGroup").Execute();
+                _group = _factory.CreateGroup().SetName("exampleGroup").Execute();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            if (group != null) contactsFactory.DeleteGroup(group.Id).Execute();
+            if (_group != null) _factory.DeleteGroup(_group.Id).Execute();
+        }
+
+        [TestMethod]
+        public void TestGroupGetById()
+        {
+            var response = _factory.EditGroup(_group.Id).SetName("GroupY").Execute();
+
+            Assert.AreEqual(_group.Id, response.Id);
+            Assert.AreNotEqual(_group.Name, response.Name);
+            Assert.AreEqual("GroupY", response.Name);
+            Assert.AreEqual(_group.Idx, response.Idx);
+            Assert.AreEqual(_group.Description, response.Description);
         }
     }
 }

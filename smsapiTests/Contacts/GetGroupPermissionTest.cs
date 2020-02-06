@@ -1,38 +1,26 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class GetGroupPermissionTest : TestBase
+    public class GetGroupPermissionTest : ContactsTestBase
     {
-        Group group;
-
-        [TestMethod]
-        public void TestGetGroupPermission()
-        {
-            var groupPermission = contactsFactory.EditGroupPermission(group.Id, subUserName)
-                                .SetRead(true)
-                                .SetWrite(true)
-                                .SetSend(true)
-                                .Execute();
-
-            Assert.IsTrue(groupPermission.Read);
-            Assert.IsTrue(groupPermission.Write);
-            Assert.IsTrue(groupPermission.Send);
-        }
+        private Group _group;
 
         [TestInitialize]
-        public void Initialize()
+        public override void SetUp()
         {
-            var groupsResponse = contactsFactory.ListGroups().SetName("example group").Execute();
-            if (groupsResponse.List.Count > 0)
-                contactsFactory.DeleteGroup(groupsResponse.List[0].Id).Execute();
+            base.SetUp();
+            var groupsResponse = _factory.ListGroups().SetName("example group").Execute();
+            if (groupsResponse.Collection.Count > 0)
+                _factory.DeleteGroup(groupsResponse.Collection[0].Id).Execute();
 
-            group = contactsFactory.CreateGroup().SetName("example group").Execute();
+            _group = _factory.CreateGroup().SetName("example group").Execute();
 
-            contactsFactory.CreateGroupPermission(group.Id)
-                                .SetUsername(subUserName)
+            _factory.CreateGroupPermission(_group.Id)
+                                .SetUsername(_subUserName)
                                 .SetRead(true)
                                 .SetWrite(false)
                                 .SetSend(false)
@@ -42,7 +30,21 @@ namespace smsapiTests.Contacts
         [TestCleanup]
         public void Cleanup()
         {
-            contactsFactory.DeleteGroup(group.Id).Execute();
+            _factory.DeleteGroup(_group.Id).Execute();
+        }
+
+        [TestMethod]
+        public void TestGetGroupPermission()
+        {
+            var groupPermission = _factory.EditGroupPermission(_group.Id, _subUserName)
+                                .SetRead(true)
+                                .SetWrite(true)
+                                .SetSend(true)
+                                .Execute();
+
+            Assert.IsTrue(groupPermission.Read);
+            Assert.IsTrue(groupPermission.Write);
+            Assert.IsTrue(groupPermission.Send);
         }
     }
 }

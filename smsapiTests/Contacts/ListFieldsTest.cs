@@ -1,15 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class ListFieldsTest : TestBase
+    public class ListFieldsTest : ContactsTestBase
     {
         [TestMethod]
         public void TestListFields()
         {
-            var fields = contactsFactory.ListFields().Execute();
+            var fields = _factory.ListFields().Execute();
 
             foreach (var field in fields.Collection)
             {

@@ -1,18 +1,28 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
 namespace smsapiTests
 {
     [TestClass]
     public class SmsTest : TestBase
     {
+        private SMSFactory _factory;
+
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            _factory = new SMSFactory(_client, _proxyAddress);
+        }
+
         [TestMethod]
         public void TestSendGetDelete()
         {
             var sendResponse =
-                smsFactory.ActionSend()
+                _factory.ActionSend()
                     .SetText("test message")
-                    .SetTo(validTestNumber)
+                    .SetTo(_validTestNumber)
                     .SetDateSent(DateTime.Now.AddHours(2))
                     .Execute();
 
@@ -38,19 +48,19 @@ namespace smsapiTests
             }
 
             var getResponse =
-                smsFactory.ActionGet()
+                _factory.ActionGet()
                     .Ids(ids)
                     .Execute();
 
             Assert.AreEqual(sendResponse.Count, getResponse.Count);
-            Assert.AreEqual(validTestNumber, getResponse.List[0].Number);
+            Assert.AreEqual(_validTestNumber, getResponse.List[0].Number);
             Assert.AreEqual(sendResponse.List[0].ID, getResponse.List[0].ID);
             Assert.AreEqual(sendResponse.List[0].IDx, getResponse.List[0].IDx);
             Assert.AreEqual(sendResponse.List[0].Points, getResponse.List[0].Points);
             Assert.AreEqual(sendResponse.List[0].Status, getResponse.List[0].Status);
             
             var deletedResponse =
-                smsFactory
+                _factory
                     .ActionDelete()
                         .Id(ids[0])
                         .Execute();
@@ -62,9 +72,9 @@ namespace smsapiTests
         public void TestSendMessageWithParams()
         {
             var sendResponse =
-                smsFactory.ActionSend()
+                _factory.ActionSend()
                     .SetText("test [%1%] message [%2%]")
-                    .SetTo(validTestNumber)
+                    .SetTo(_validTestNumber)
                     .SetParam(0, "par1")
                     .SetParam(1, "par2")
                     .SetTest(true)

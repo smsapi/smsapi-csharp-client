@@ -8,20 +8,13 @@ namespace smsapiTests
 {
     public abstract class TestBase
     {
-        protected Proxy proxy;
-        protected IClient client;
-        protected SMSFactory smsFactory;
-        protected MMSFactory mmsFactory;
-        protected VMSFactory vmsFactory;
-        protected SenderFactory senderFactory;
-        protected UserFactory userFactory;
-        protected PhonebookFactory phonebookFactory;
-        protected ContactsFactory contactsFactory;
-        protected string validTestNumber;
-        protected string subUserName;
+        protected IClient _client;
+        protected ProxyAddress _proxyAddress;
+        protected string _validTestNumber;
+        protected string _subUserName;
 
         [TestInitialize]
-        public void SetUp()
+        public virtual void SetUp()
         {
             var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
 
@@ -29,24 +22,17 @@ namespace smsapiTests
             {
                 var basicClient = new Client(ConfigurationManager.AppSettings["username"]);
                 basicClient.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
-                client = basicClient;
+                _client = basicClient;
             }
             else if (authorizationType == AuthorizationType.oauth.ToString())
             {
-                client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
+                _client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
             }
 
-            proxy = new ProxyHTTP(ConfigurationManager.AppSettings["baseUrl"]);
+            _proxyAddress = (ProxyAddress)Enum.Parse(typeof(ProxyAddress), ConfigurationManager.AppSettings["addressType"]);
 
-            smsFactory = new SMSFactory(client, proxy);
-            mmsFactory = new MMSFactory(client, proxy);
-            vmsFactory = new VMSFactory(client, proxy);
-            senderFactory = new SenderFactory(client, proxy);
-            userFactory = new UserFactory(client, proxy);
-            contactsFactory = new ContactsFactory(client, proxy);
-
-            subUserName = ConfigurationManager.AppSettings["subUserName"];
-            validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+            _subUserName = ConfigurationManager.AppSettings["subUserName"];
+            _validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
         }
     }
 }

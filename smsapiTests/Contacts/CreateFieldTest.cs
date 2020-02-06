@@ -1,43 +1,45 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class CreateFieldTest : TestBase
+    public class CreateFieldTest : ContactsTestBase
     {
-        Field createdField;
-
-        [TestMethod]
-        public void TestCreateField()
-        {
-            createdField = contactsFactory.CreateField()
-                                .SetName("FieldX")
-                                .SetType(Field.TextType)
-                                .Execute();
-
-            Assert.IsNotNull(createdField.Id);
-            Assert.AreEqual("FieldX", createdField.Name);
-        }
+        private Field _createdField;
 
         [TestInitialize]
-        public void Initialize()
+        public override void SetUp()
         {
-            var fields = contactsFactory.ListFields().Execute();
-            foreach (var field in fields.List)
+            base.SetUp();
+            var fields = _factory.ListFields().Execute();
+            foreach (var field in fields.Collection)
             {
                 if ("FieldX".Equals(field.Name))
-                    contactsFactory.DeleteField(field.Id).Execute();
+                    _factory.DeleteField(field.Id).Execute();
             }
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            if (createdField != null)
+            if (_createdField != null)
             {
-                contactsFactory.DeleteField(createdField.Id).Execute();
+                _factory.DeleteField(_createdField.Id).Execute();
             }
+        }
+
+        [TestMethod]
+        public void TestCreateField()
+        {
+            _createdField = _factory.CreateField()
+                                .SetName("FieldX")
+                                .SetType(Field.TextType)
+                                .Execute();
+
+            Assert.IsNotNull(_createdField.Id);
+            Assert.AreEqual("FieldX", _createdField.Name);
         }
     }
 }

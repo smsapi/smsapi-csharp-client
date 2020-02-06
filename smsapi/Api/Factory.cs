@@ -17,7 +17,7 @@ namespace SMSApi.Api
 
         public Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
         {
-            Proxy(new ProxyHTTP(_addresses[address]));
+            Proxy(address);
         }
 
         public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
@@ -48,6 +48,11 @@ namespace SMSApi.Api
             {
                 proxy.Authentication(client);
             }
+        }
+
+        public void Proxy(ProxyAddress address)
+        {
+            Proxy(new ProxyHTTP(_addresses[address]));
         }
     }
 }

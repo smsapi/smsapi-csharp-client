@@ -1,17 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class ListFieldOptionsTest : TestBase
+    public class ListFieldOptionsTest : ContactsTestBase
     {
-        Field field;
-
         [TestMethod]
         public void TestListFieldOptions()
         {
-            var fieldOptions = contactsFactory.ListFieldOptions("city").Execute();
+            var fieldOptions = _factory.ListFieldOptions("city").Execute();
 
             System.Console.WriteLine("Field options size: " + fieldOptions.Size);
             foreach (var fieldOption in fieldOptions.Collection)

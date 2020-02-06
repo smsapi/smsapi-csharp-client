@@ -31,10 +31,17 @@ namespace SMSApi.Api.Tests
                 Assert.IsNotNull(token);
                 Assert.AreNotEqual("", token);
             }
-            
-            string baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            Assert.IsNotNull(baseUrl);
-            Assert.AreNotEqual("", baseUrl);
+
+            var subUserName = ConfigurationManager.AppSettings["subUserName"];
+            Assert.IsNotNull(subUserName);
+            Assert.AreNotEqual("", subUserName);
+
+            var validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+            Assert.IsNotNull(validTestNumber);
+            Assert.AreNotEqual("", validTestNumber);
+
+            ProxyAddress proxy;
+            Assert.IsTrue(Enum.TryParse(ConfigurationManager.AppSettings["addressType"], out proxy));
         }
     }
 }

@@ -2,12 +2,11 @@
 <configuration>
   <appSettings>
     <add key="authorizationType" value="basic or oauth"/>
+    <add key="addressType" value="SmsApiPl or SmsApiCom"/>
     <add key="username" value="username"/>
     <add key="password" value="md5 hash"/>
     <add key="oauthToken" value="oauth token"/>
-    <add key="baseUrl" value="https://api.smsapi.pl"/>
     <add key="validTestNumber" value="48xxyyyzzz"/>
-    <add key="validTestNumber2" value="48xxyyyzff"/>
     <add key="subUserName" value="username_sub"/>
 
     <add key="usernameOldPhonebook" value="username"/>

@@ -7,39 +7,21 @@ using System.Configuration;
 namespace smsapiTests
 {
     [TestClass]
-    public class HlrTest
+    public class HlrTest : TestBase
     {
-        Proxy proxy;
-        IClient client;
-        HLRFactory hlrFactory;
-        String validTestNumber;
+        private HLRFactory _factory;
 
         [TestInitialize]
-        public void SetUp()
+        public override void SetUp()
         {
-            var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
-            if (authorizationType == AuthorizationType.basic.ToString())
-            {
-                var basicClient = new Client(ConfigurationManager.AppSettings["username"]);
-                basicClient.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
-                client = basicClient;
-            }
-            else if (authorizationType == AuthorizationType.oauth.ToString())
-            {
-                client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
-            }
-
-            proxy = new ProxyHTTP(ConfigurationManager.AppSettings["baseUrl"]);
-
-            hlrFactory = new HLRFactory(client, proxy);
-
-            validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+            base.SetUp();
+            _factory = new HLRFactory(_client, _proxyAddress);
         }
 
         [TestMethod]
         public void TestCheckNumber()
         {
-            var response = hlrFactory.ActionCheckNumber(validTestNumber).Execute();
+            var response = _factory.ActionCheckNumber(_validTestNumber).Execute();
 
             Assert.AreEqual(1, response.List.Count);
             Assert.IsNotNull(response.List[0].ID);

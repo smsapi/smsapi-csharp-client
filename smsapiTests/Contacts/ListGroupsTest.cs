@@ -1,14 +1,38 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class ListGroupsTest : TestBase
+    public class ListGroupsTest : ContactsTestBase
     {
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            var response = _factory.ListGroups().SetName("example group 1").Execute();
+            if (response.Collection.Count == 0)
+            {
+                _factory.CreateGroup().SetName("example group 1").Execute();
+            }
+
+            response = _factory.ListGroups().SetName("example group 2").Execute();
+            if (response.Collection.Count == 0)
+            {
+                _factory.CreateGroup().SetName("example group 2").Execute();
+            }
+
+            response = _factory.ListGroups().SetName("example group not found").Execute();
+            if (response.Collection.Count > 0)
+            {
+                _factory.DeleteGroup(response.Collection[0].Id).Execute();
+            }
+        }
+
         [TestMethod]
         public void TestList()
         {
-            var groups = contactsFactory.ListGroups()
+            var groups = _factory.ListGroups()
                                 .Execute();
 
             System.Console.WriteLine("Groups size: " + groups.Size);
@@ -36,39 +60,17 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void TestListWithFilterByName()
         {
-            var listResponse = contactsFactory.ListGroups().SetName("example group 1").Execute();
+            var listResponse = _factory.ListGroups().SetName("example group 1").Execute();
 
-            Assert.AreEqual(1, listResponse.List.Count);
+            Assert.AreEqual(1, listResponse.Collection.Count);
         }
 
         [TestMethod]
         public void TestShouldNotFound_ListWithFilterByName()
         {
-            var listResponse = contactsFactory.ListGroups().SetName("example group not found").Execute();
+            var listResponse = _factory.ListGroups().SetName("example group not found").Execute();
 
-            Assert.AreEqual(0, listResponse.List.Count);
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            var response = contactsFactory.ListGroups().SetName("example group 1").Execute();
-            if (response.List.Count == 0)
-            {
-                contactsFactory.CreateGroup().SetName("example group 1").Execute();
-            }
-
-            response = contactsFactory.ListGroups().SetName("example group 2").Execute();
-            if (response.List.Count == 0)
-            {
-                contactsFactory.CreateGroup().SetName("example group 2").Execute();
-            }
-
-            response = contactsFactory.ListGroups().SetName("example group not found").Execute();
-            if (response.List.Count > 0)
-            {
-                contactsFactory.DeleteGroup(response.List[0].Id).Execute();
-            }
+            Assert.AreEqual(0, listResponse.Collection.Count);
         }
     }
 }

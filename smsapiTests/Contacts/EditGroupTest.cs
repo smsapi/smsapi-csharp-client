@@ -1,35 +1,38 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class GetGroupTest : TestBase
+    public class GetGroupTest : ContactsTestBase
     {
-        Group group;
+        private Group _group;
+
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            var groups = _factory.ListGroups().SetName("exampleGroup").Execute();
+            if (groups.Collection.Count > 0)
+            {
+                _group = groups.Collection[0];
+            }
+            else
+            {
+                _group = _factory.CreateGroup().SetName("exampleGroup").Execute();
+            }
+        }
 
         [TestMethod]
         public void TestGroupGetById()
         {
-            var response = contactsFactory.GetGroup(group.Id).Execute();
+            var response = _factory.GetGroup(_group.Id).Execute();
 
-            Assert.AreEqual(group.Id, response.Id);
-            Assert.AreEqual(group.Name, response.Name);
-            Assert.AreEqual(group.Idx, response.Idx);
-            Assert.AreEqual(group.Description, response.Description);
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            var groups = contactsFactory.ListGroups().SetName("exampleGroup").Execute();
-            if (groups.List.Count > 0)
-            {
-                group = groups.List[0];
-            } else
-            {
-                group = contactsFactory.CreateGroup().SetName("exampleGroup").Execute();
-            }
+            Assert.AreEqual(_group.Id, response.Id);
+            Assert.AreEqual(_group.Name, response.Name);
+            Assert.AreEqual(_group.Idx, response.Idx);
+            Assert.AreEqual(_group.Description, response.Description);
         }
     }
 }

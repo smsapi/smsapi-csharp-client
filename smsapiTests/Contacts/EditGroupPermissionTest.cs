@@ -1,42 +1,43 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class EditGroupPermissionTest : TestBase
+    public class EditGroupPermissionTest : ContactsTestBase
     {
-        Group group;
-        GroupPermission groupPermission;
-
-        [TestMethod]
-        public void TestListContactGroups()
-        {
-            groupPermission = contactsFactory.CreateGroupPermission(group.Id)
-                                .SetUsername(subUserName)
-                                .SetRead(true)
-                                .SetWrite(false)
-                                .SetSend(false)
-                                .Execute();
-
-            Assert.AreEqual(subUserName, groupPermission.Username);
-        }
+        private Group group;
+        private GroupPermission groupPermission;
 
         [TestInitialize]
-        public void Initialize()
+        public override void SetUp()
         {
-            var groupsResponse = contactsFactory.ListGroups().SetName("example group").Execute();
-            if (groupsResponse.List.Count > 0)
-                contactsFactory.DeleteGroup(groupsResponse.List[0].Id).Execute();
+            base.SetUp();
+            var groupsResponse = _factory.ListGroups().SetName("example group").Execute();
+            if (groupsResponse.Collection.Count > 0)
+                _factory.DeleteGroup(groupsResponse.Collection[0].Id).Execute();
 
-            group = contactsFactory.CreateGroup().SetName("example group").Execute();
+            group = _factory.CreateGroup().SetName("example group").Execute();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            //contactsFactory.DeleteGroupPermission(subUserName, group.Id).Execute();
-            contactsFactory.DeleteGroup(group.Id).Execute();
+            _factory.DeleteGroup(group.Id).Execute();
+        }
+
+        [TestMethod]
+        public void TestListContactGroups()
+        {
+            groupPermission = _factory.CreateGroupPermission(group.Id)
+                                .SetUsername(_subUserName)
+                                .SetRead(true)
+                                .SetWrite(false)
+                                .SetSend(false)
+                                .Execute();
+
+            Assert.AreEqual(_subUserName, groupPermission.Username);
         }
     }
 }

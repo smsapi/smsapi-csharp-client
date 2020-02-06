@@ -1,37 +1,38 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using SMSApi.Api.Response;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class EditContactTest : TestBase
+    public class EditContactTest : ContactsTestBase
     {
-        Contact contact;
+        private Contact _contact;
+
+        [TestInitialize]
+        [TestCleanup]
+        public void Cleanup()
+        {
+            var contactsResponse = _factory.ListContacts().SetPhoneNumber(_validTestNumber).Execute();
+            if (contactsResponse.Collection.Count > 0)
+            {
+                _contact = contactsResponse.Collection[0];
+            }
+            else
+            {
+                _contact = _factory.CreateContact().SetPhoneNumber(_validTestNumber).Execute();
+            }
+        }
 
         [TestMethod]
         public void TestEditContact()
         {
-            var editContact = contactsFactory.EditContact(contact.Id)
+            var editContact = _factory.EditContact(_contact.Id)
                                 .SetFirstName("Tester")
                                 .Execute();
 
-            Assert.AreEqual(contact.Id, editContact.Id);
+            Assert.AreEqual(_contact.Id, editContact.Id);
             Assert.AreEqual("Tester", editContact.FirstName);
-        }
-
-        [TestInitialize]
-        [TestCleanup]
-        public void Initialize()
-        {
-            var contactsResponse = contactsFactory.ListContacts().SetPhoneNumber(validTestNumber).Execute();
-            if (contactsResponse.List.Count > 0)
-            {
-                contact = contactsResponse.List[0];
-            }
-            else
-            {
-                contact = contactsFactory.CreateContact().SetPhoneNumber(validTestNumber).Execute();
-            }
         }
     }
 }

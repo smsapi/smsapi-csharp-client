@@ -1,14 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
 namespace smsapiTests.Contacts
 {
     [TestClass]
-    public class ListContactsTest : TestBase
+    public class ListContactsTest : ContactsTestBase
     {
         [TestMethod]
         public void TestListContacts()
         {
-            var contacts = contactsFactory.ListContacts()
+            var contacts = _factory.ListContacts()
                                 .Execute();
 
             System.Console.WriteLine("Contacts size: " + contacts.Size);
