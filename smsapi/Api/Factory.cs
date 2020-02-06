@@ -10,7 +10,7 @@ namespace SMSApi.Api
             {
                 { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/" },
                 { ProxyAddress.BackupSmsApiPl, "https://api2.smsapi.pl/" },
-                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/" }
+                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/" },
                 { ProxyAddress.BackupSmsApiCom, "https://api2.smsapi.com/" }
             };
 
