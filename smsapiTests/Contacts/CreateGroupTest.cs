@@ -11,7 +11,7 @@ namespace smsapiTests.Contacts
         [TestCleanup]
         public void Cleanup()
         {
-            var groups = _factory.ListGroups().SetId("0").Execute();
+            var groups = _factory.ListGroups().Execute();
             foreach (var group in groups.Collection)
             {
                 _factory.DeleteGroup(group.Id).Execute();
@@ -21,7 +21,7 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void TestCreateGroup()
         {
-            var group = _factory.CreateGroup().SetIdx("testGroup").SetName("exampleGroup").Execute();
+            var group = _factory.CreateGroup().SetName("exampleGroup").Execute();
 
             Assert.AreEqual("exampleGroup", group.Name);
             Assert.IsNotNull(group.Id);

@@ -8,6 +8,8 @@ namespace SMSApi.Api
     public enum ProxyAddress
     {
         SmsApiPl,
-        SmsApiCom
+        BackupSmsApiPl,
+        SmsApiCom,
+        BackupSmsApiCom
     }
 }

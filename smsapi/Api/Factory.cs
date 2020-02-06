@@ -9,7 +9,9 @@ namespace SMSApi.Api
             new Dictionary<ProxyAddress, string>
             {
                 { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/" },
+                { ProxyAddress.BackupSmsApiPl, "https://api2.smsapi.pl/" },
                 { ProxyAddress.SmsApiCom, "https://api.smsapi.com/" }
+                { ProxyAddress.BackupSmsApiCom, "https://api2.smsapi.com/" }
             };
 
         protected IClient client;

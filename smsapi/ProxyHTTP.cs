@@ -10,7 +10,7 @@ namespace SMSApi.Api
 {
     public class ProxyHTTP : Proxy
     {
-        private const SecurityProtocolType _Tls11 = (SecurityProtocolType)0x00000300;
+        //private const SecurityProtocolType _Tls11 = (SecurityProtocolType)0x00000300;
         private const SecurityProtocolType _Tls12 = (SecurityProtocolType)0x00000C00;
 
         protected string baseUrl;
@@ -113,7 +113,7 @@ namespace SMSApi.Api
 		{
 			String boundary = "SMSAPI-" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss") + (new Random()).Next(int.MinValue, int.MaxValue).ToString() + "-boundary";
 
-            ServicePointManager.SecurityProtocol = _Tls11 | _Tls12;
+            ServicePointManager.SecurityProtocol = _Tls12;
 			WebRequest webRequest = WebRequest.Create(baseUrl + uri);
 			webRequest.Method = RequestMethodToString(method);
 

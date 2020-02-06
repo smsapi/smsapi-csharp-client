@@ -19,6 +19,7 @@ namespace SMSApi.Api.Action
 			get
 			{
 				NameValueCollection parameters = base.Parameters;
+				parameters.Add("with", "contacts_count");
 				if (Id   != null) parameters.Add("id",   Id);
 				if (Name != null) parameters.Add("name", Name);
 				return parameters;
