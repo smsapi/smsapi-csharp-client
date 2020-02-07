@@ -31,7 +31,7 @@ namespace smsapiTests
 
             var addResponse =
                 _factory.ActionAdd()
-                    .SetUsername(usernName)
+                    .SetUsername(_subUserName)
                     .SetPassword("7815696ecbf1c96e6894b779456d330e")
                     .Execute();
 
@@ -39,7 +39,7 @@ namespace smsapiTests
             Assert.AreEqual("", addResponse.Info);
 
             var editResponse =
-                _factory.ActionEdit(usernName)
+                _factory.ActionEdit(_subUserName)
                     .SetInfo("edited info")
                     .Execute();
 

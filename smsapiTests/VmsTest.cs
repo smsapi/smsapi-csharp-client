@@ -19,13 +19,18 @@ namespace smsapiTests
         [TestMethod]
         public void TestSendGetDelete()
         {
+            DateTime date = DateTime.Now;
+            if (date.Hour > 21 || date.Hour < 8)
+            {
+                date = date.AddHours(12);
+            }
+
             var sendResponse =
                 _factory.ActionSend()
-                    //.SetFile(file)
                     .SetTTS("test message")
                     .SetTo(_validTestNumber)
-                    .SetDateSent(DateTime.Now.AddHours(2))
-                    .SetTry(3)
+                    .SetDateSent(date)
+                    .SetTry(4)
                     .SetTryInterval(300)
                     .Execute();
 

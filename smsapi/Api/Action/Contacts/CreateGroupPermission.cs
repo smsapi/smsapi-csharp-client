@@ -21,9 +21,9 @@ namespace SMSApi.Api.Action
 			{
 				NameValueCollection parameters = base.Parameters;
 				if (Username != null) parameters.Add("username", Username);
-				if (Read     != null) parameters.Add("read",     Convert.ToInt32(Read.Value).ToString());
-				if (Write    != null) parameters.Add("write",    Convert.ToInt32(Write.Value).ToString());
-				if (Send     != null) parameters.Add("send",     Convert.ToInt32(Send.Value).ToString());
+				if (Read != null) parameters.Add("read", Convert.ToInt32(Read.Value).ToString());
+				if (Write != null) parameters.Add("write", Convert.ToInt32(Write.Value).ToString());
+				if (Send != null) parameters.Add("send", Convert.ToInt32(Send.Value).ToString());
 				return parameters;
 			}
 		}

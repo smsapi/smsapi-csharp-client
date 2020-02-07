@@ -35,9 +35,6 @@ namespace SMSApi.Api.Action
 
             if (From != null)
                 collection.Add("from", From);
-            
-//            if (Group != null)
-//                collection.Add("group", Group);
 
             if (TTS != null)
                 collection.Add("tts", TTS);

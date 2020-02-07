@@ -49,7 +49,7 @@ namespace smsapiTests
             var senders = _factory.ActionList().Execute();
             foreach (var sender in senders.List)
             {
-                if ("ACTIVE".Equals(sender.Status))
+                if ("ACTIVE".Equals(sender.Status) && !"Test".Equals(sender.Name))
                 {
                     _factory.ActionSetDefault(sender.Name).Execute();
                 }
