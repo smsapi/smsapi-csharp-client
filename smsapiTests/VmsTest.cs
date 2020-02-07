@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using System;
 
 namespace smsapiTests
@@ -6,16 +7,30 @@ namespace smsapiTests
     [TestClass]
     public class VmsTest : TestBase
     {
-        [TestMethod]
-        public void TestSendGetDelete()
+        private VMSFactory _factory;
+
+        [TestInitialize]
+        public override void SetUp()
         {
+            base.SetUp();
+            _factory = new VMSFactory(_client, _proxyAddress);
+        }
+
+        [TestMethod]
+        public void Send_Get_Delete()
+        {
+            DateTime date = DateTime.Now;
+            if (date.Hour > 21 || date.Hour < 8)
+            {
+                date = date.AddHours(12);
+            }
+
             var sendResponse =
-                vmsFactory.ActionSend()
-                    //.SetFile(file)
+                _factory.ActionSend()
                     .SetTTS("test message")
-                    .SetTo(validTestNumber)
-                    .SetDateSent(DateTime.Now.AddHours(2))
-                    .SetTry(3)
+                    .SetTo(_validTestNumber)
+                    .SetDateSent(date)
+                    .SetTry(4)
                     .SetTryInterval(300)
                     .Execute();
 
@@ -32,19 +47,19 @@ namespace smsapiTests
 
             System.Console.WriteLine("Get:");
             var getResponse =
-                vmsFactory.ActionGet()
+                _factory.ActionGet()
                     .Ids(ids)
                     .Execute();
 
             Assert.AreEqual(sendResponse.Count, getResponse.Count);
-            Assert.AreEqual(validTestNumber, getResponse.List[0].Number);
+            Assert.AreEqual(_validTestNumber, getResponse.List[0].Number);
             Assert.AreEqual(sendResponse.List[0].ID, getResponse.List[0].ID);
             Assert.AreEqual(sendResponse.List[0].IDx, getResponse.List[0].IDx);
             Assert.AreEqual(sendResponse.List[0].Points, getResponse.List[0].Points);
             Assert.AreEqual(sendResponse.List[0].Status, getResponse.List[0].Status);
 
             var deletedResponse =
-                vmsFactory
+                _factory
                     .ActionDelete()
                         .Ids(ids)
                         .Execute();

@@ -1,21 +1,41 @@
 csharp-client
 ===========
 
-Klient SMSAPI napisany w języku C#, pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
+SMSAPI C# client may be used by *SMSAPI.pl* and *SMSAPI.com* clients.
 
-Przykład wysyłki:
+## How to pick a service?
+
+### *SMSAPI.PL* (default)
+
+```c#
+var smsApi = new SMSApi.Api.SMSFactory(client);
+//or
+var smsApi = new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiPl);
+```
+
+### *SMSAPI.COM*
+
+```c#
+var smsApi = new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiCom);
+```
+
+
+### Example
+
 ```c#
 try
 {
 	SMSApi.Api.IClient client = new SMSApi.Api.ClientOAuth("token");
 
 	var smsApi = new SMSApi.Api.SMSFactory(client);
+	// for SMSAPI.com clients:
+	// var smsApi = new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiCom);
 
 	var result =
 		smsApi.ActionSend()
 			.SetText("test message")
 			.SetTo("694562829")
-			.SetSender("Test") //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
+			.SetSender("Test") //Sender name
 			.Execute();
 
 	System.Console.WriteLine("Send: " + result.Count);
@@ -26,10 +46,8 @@ try
 	{
 		if (!result.List[i].isError())
 		{
-			//Nie wystąpił błąd podczas wysyłki (numer|treść|parametry... prawidłowe)
 			if (!result.List[i].isFinal())
 			{
-				//Status nie jest koncowy, może ulec zmianie
 				ids[l] = result.List[i].ID;
 				l++;
 			}
@@ -62,39 +80,34 @@ try
 catch (SMSApi.Api.ActionException e)
 {
 	/**
-	 * Błędy związane z akcją (z wyłączeniem błędów 101,102,103,105,110,1000,1001 i 8,666,999,201)
-	 * http://www.smsapi.pl/sms-api/kody-bledow
+	 * Action error
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.ClientException e)
 {
 	/**
-	 * 101 Niepoprawne lub brak danych autoryzacji.
-	 * 102 Nieprawidłowy login lub hasło
-	 * 103 Brak punków dla tego użytkownika
-	 * 105 Błędny adres IP
-	 * 110 Usługa nie jest dostępna na danym koncie
-	 * 1000 Akcja dostępna tylko dla użytkownika głównego
-	 * 1001 Nieprawidłowa akcja
+	 * Error codes (list available in smsapi docs). Example:
+	 * 101 	Invalid authorization info
+	 * 102 	Invalid username or password
+	 * 103 	Insufficient credits on Your account
+	 * 104 	No such template
+	 * 105 	Wrong IP address (for IP filter turned on)
+	 * 110	Action not allowed for your account
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.HostException e)
 {
-	/* błąd po stronie servera lub problem z parsowaniem danych
-	 * 
-	 * 8 - Błąd w odwołaniu
-	 * 666 - Wewnętrzny błąd systemu
-	 * 999 - Wewnętrzny błąd systemu
-	 * 201 - Wewnętrzny błąd systemu
-	 * SMSApi.Api.HostException.E_JSON_DECODE - problem z parsowaniem danych
+	/* 
+	 * Server errors
+	 * SMSApi.Api.HostException.E_JSON_DECODE - problem with parsing data
 	 */
 	System.Console.WriteLine(e.Message);
 }
 catch (SMSApi.Api.ProxyException e)
 {
-	// błąd w komunikacji pomiedzy klientem a serverem
+	// communication problem between client and sever
 	System.Console.WriteLine(e.Message);
 }
 ```

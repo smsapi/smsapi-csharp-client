@@ -7,9 +7,20 @@ namespace SMSApi.Api
 {
     public class SenderFactory : Factory
     {
-        public SenderFactory() : base() { }
-        public SenderFactory(IClient client) : base(client) { }
-        public SenderFactory(IClient client, Proxy proxy) : base(client, proxy) { }
+        public SenderFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(address) 
+        { 
+        }
+
+        public SenderFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(client, address) 
+        { 
+        }
+
+        public SenderFactory(IClient client, Proxy proxy) 
+            : base(client, proxy) 
+        { 
+        }
 
         public SMSApi.Api.Action.SenderAdd ActionAdd(string name = null)
         {

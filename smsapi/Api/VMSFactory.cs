@@ -3,10 +3,18 @@ namespace SMSApi.Api
 {
     public class VMSFactory : Factory
     {
-        public VMSFactory() : base() { }
-        public VMSFactory(IClient client) : base(client) { }
+        public VMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(address) 
+        { 
+        }
 
-        public VMSFactory(IClient client, Proxy proxy) : base(client, proxy)
+        public VMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(client, address) 
+        { 
+        }
+
+        public VMSFactory(IClient client, Proxy proxy) 
+            : base(client, proxy)
         {
         }
 

@@ -18,10 +18,7 @@ namespace SMSApi.Api.Tests
             var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
             if (authorizationType == AuthorizationType.basic.ToString())
             {
-                string username = ConfigurationManager.AppSettings["username"];
                 string password = ConfigurationManager.AppSettings["password"];
-                Assert.IsNotNull(username);
-                Assert.AreNotEqual("", username);
                 Assert.IsNotNull(password);
                 Assert.AreNotEqual("", password);
             }
@@ -31,10 +28,17 @@ namespace SMSApi.Api.Tests
                 Assert.IsNotNull(token);
                 Assert.AreNotEqual("", token);
             }
-            
-            string baseUrl = ConfigurationManager.AppSettings["baseUrl"];
-            Assert.IsNotNull(baseUrl);
-            Assert.AreNotEqual("", baseUrl);
+
+            string username = ConfigurationManager.AppSettings["username"];
+            Assert.IsNotNull(username);
+            Assert.AreNotEqual("", username);
+
+            var validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+            Assert.IsNotNull(validTestNumber);
+            Assert.AreNotEqual("", validTestNumber);
+
+            ProxyAddress proxy;
+            Assert.IsTrue(Enum.TryParse(ConfigurationManager.AppSettings["addressType"], out proxy));
         }
     }
 }

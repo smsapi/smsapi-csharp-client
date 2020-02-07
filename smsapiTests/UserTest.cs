@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using System;
 
 namespace smsapiTests
@@ -6,21 +7,30 @@ namespace smsapiTests
     [TestClass]
     public class UserTest : TestBase
     {
-        [TestMethod]
-        public void TestPoints()
+        private UserFactory _factory;
+
+        [TestInitialize]
+        public override void SetUp()
         {
-            var pointsResponse = userFactory.ActionGetCredits().Execute();
+            base.SetUp();
+            _factory = new UserFactory(_client);
+        }
+
+        [TestMethod]
+        public void GetCredits()
+        {
+            var pointsResponse = _factory.ActionGetCredits().Execute();
             Assert.IsNotNull(pointsResponse.Points);
             Assert.IsFalse(pointsResponse.isError());
         }
 
         [TestMethod]
-        public void TestAddEditList()
+        public void Add_Edit_List()
         {
             string usernName = "test_" + DateTime.Now.ToString("his");
 
             var addResponse =
-                userFactory.ActionAdd()
+                _factory.ActionAdd()
                     .SetUsername(usernName)
                     .SetPassword("7815696ecbf1c96e6894b779456d330e")
                     .Execute();
@@ -29,7 +39,7 @@ namespace smsapiTests
             Assert.AreEqual("", addResponse.Info);
 
             var editResponse =
-                userFactory.ActionEdit(usernName)
+                _factory.ActionEdit(usernName)
                     .SetInfo("edited info")
                     .Execute();
 
@@ -37,7 +47,7 @@ namespace smsapiTests
             Assert.AreEqual(addResponse.Username, editResponse.Username);
             Assert.AreEqual("edited info", editResponse.Info);
 
-            var users = userFactory.ActionList().Execute();
+            var users = _factory.ActionList().Execute();
 
             Assert.IsTrue(users.List.Count > 0);
         }

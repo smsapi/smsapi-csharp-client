@@ -3,10 +3,20 @@ namespace SMSApi.Api
 {
     public class SMSFactory : Factory
     {
-        public SMSFactory() : base() { }
-        public SMSFactory(IClient client) : base(client) { }
+        public SMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(address) 
+        { 
+        }
 
-        public SMSFactory(IClient client, Proxy proxy) : base(client, proxy) { }
+        public SMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+            : base(client, address) 
+        { 
+        }
+
+        public SMSFactory(IClient client, Proxy proxy) 
+            : base(client, proxy) 
+        { 
+        }
 
         public SMSApi.Api.Action.SMSDelete ActionDelete(string id = null)
         {

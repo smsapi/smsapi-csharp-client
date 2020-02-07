@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 using System;
 
 namespace smsapiTests
@@ -6,14 +7,23 @@ namespace smsapiTests
     [TestClass]
     public class MmsTest : TestBase
     {
+        private MMSFactory _factory;
+
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            _factory = new MMSFactory(_client, _proxyAddress);
+        }
+
         [TestMethod]
-        public void TestSendGetDelete()
+        public void Send_Get_Delete()
         {
             var sendResponse =
-                mmsFactory.ActionSend()
+                _factory.ActionSend()
                     .SetSubject("test subject")
                     .SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"https://assets.smsapi.pl/img/mms.jpg\" region=\"Image\"></img></par></body></smil>")
-                    .SetTo(validTestNumber)
+                    .SetTo(_validTestNumber)
                     .SetDateSent(DateTime.Now.AddHours(2))
                     .Execute();
 
@@ -30,19 +40,19 @@ namespace smsapiTests
 
             System.Console.WriteLine("Get:");
             var getResponse =
-                mmsFactory.ActionGet()
+                _factory.ActionGet()
                     .Ids(ids)
                     .Execute();
 
             Assert.AreEqual(sendResponse.Count, getResponse.Count);
-            Assert.AreEqual(validTestNumber, getResponse.List[0].Number);
+            Assert.AreEqual(_validTestNumber, getResponse.List[0].Number);
             Assert.AreEqual(sendResponse.List[0].ID, getResponse.List[0].ID);
             Assert.AreEqual(sendResponse.List[0].IDx, getResponse.List[0].IDx);
             Assert.AreEqual(sendResponse.List[0].Points, getResponse.List[0].Points);
             Assert.AreEqual(sendResponse.List[0].Status, getResponse.List[0].Status);
 
             var deletedResponse =
-                mmsFactory
+                _factory
                     .ActionDelete()
                         .Ids(ids)
                         .Execute();

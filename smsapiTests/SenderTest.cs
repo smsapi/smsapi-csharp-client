@@ -8,42 +8,50 @@ namespace smsapiTests
     [TestClass]
     public class SenderTest : TestBase
     {
-        String testName = "testName";
+        private SenderFactory _factory;
+        private string _testName = "testName";
+
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            _factory = new SenderFactory(_client, _proxyAddress);
+        }
 
         [TestMethod]
-        public void TestList_Delete()
+        public void List_Delete()
         {
-            var senders = senderFactory.ActionList().Execute();
+            var senders = _factory.ActionList().Execute();
             foreach (var sender in senders.List)
             {
                 Assert.IsTrue(sender.Name.Length > 0);
 
-                if (testName.Equals(sender.Name))
+                if (_testName.Equals(sender.Name))
                 {
-                    senderFactory.ActionDelete(sender.Name).Execute();
+                    _factory.ActionDelete(sender.Name).Execute();
                 }
             }
         }
 
         [TestMethod]
-        public void TestAdd_Delete()
+        public void Add_Delete()
         {
-            var addResponse = senderFactory.ActionAdd(testName).Execute();
+            var addResponse = _factory.ActionAdd(_testName).Execute();
             Assert.IsFalse(addResponse.isError(), addResponse.ErrorMessage);
 
-            var deleteResponse = senderFactory.ActionDelete(testName).Execute();
+            var deleteResponse = _factory.ActionDelete(_testName).Execute();
             Assert.IsFalse(deleteResponse.isError(), deleteResponse.ErrorMessage);
         }
 
         [TestMethod]
-        public void TestSetDefault()
+        public void SetDefault()
         {
-            var senders = senderFactory.ActionList().Execute();
+            var senders = _factory.ActionList().Execute();
             foreach (var sender in senders.List)
             {
-                if ("ACTIVE".Equals(sender.Status))
+                if ("ACTIVE".Equals(sender.Status) && !"Test".Equals(sender.Name))
                 {
-                    senderFactory.ActionSetDefault(sender.Name).Execute();
+                    _factory.ActionSetDefault(sender.Name).Execute();
                 }
             }
         }
