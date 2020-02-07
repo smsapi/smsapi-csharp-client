@@ -34,7 +34,7 @@ try
 	var result =
 		smsApi.ActionSend()
 			.SetText("test message")
-			.SetTo("694562829")
+			.SetTo("0000000000")
 			.SetSender("Test") //Sender name
 			.Execute();
 
