@@ -9,6 +9,9 @@ try
 {
 	SMSApi.Api.IClient client = new SMSApi.Api.ClientOAuth("token");
 
+	// Fabryka domyślnie uruchamia się adresem API w domenie .pl
+	// Poniższy zapis jest równoznaczny z new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiPl)
+	// W celu zmiany na api w domenie .com należy użyć ProxyAddress.SmsApiCom
 	var smsApi = new SMSApi.Api.SMSFactory(client);
 
 	var result =
