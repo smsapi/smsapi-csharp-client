@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestSendGetDelete()
+        public void Send_Get_Delete()
         {
             var sendResponse =
                 _factory.ActionSend()

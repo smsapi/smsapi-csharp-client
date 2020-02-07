@@ -19,7 +19,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestCheckNumber()
+        public void CheckNumber()
         {
             var response = _factory.ActionCheckNumber(_validTestNumber).Execute();
 

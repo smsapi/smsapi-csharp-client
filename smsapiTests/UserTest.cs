@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestPoints()
+        public void GetCredits()
         {
             var pointsResponse = _factory.ActionGetCredits().Execute();
             Assert.IsNotNull(pointsResponse.Points);
@@ -25,7 +25,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestAddEditList()
+        public void Add_Edit_List()
         {
             string usernName = "test_" + DateTime.Now.ToString("his");
 

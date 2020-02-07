@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestSendGetDelete()
+        public void Send_Get_Delete()
         {
             DateTime date = DateTime.Now;
             if (date.Hour > 21 || date.Hour < 8)

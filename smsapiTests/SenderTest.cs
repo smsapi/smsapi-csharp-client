@@ -19,7 +19,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestList_Delete()
+        public void List_Delete()
         {
             var senders = _factory.ActionList().Execute();
             foreach (var sender in senders.List)
@@ -34,7 +34,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestAdd_Delete()
+        public void Add_Delete()
         {
             var addResponse = _factory.ActionAdd(_testName).Execute();
             Assert.IsFalse(addResponse.isError(), addResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void TestSetDefault()
+        public void SetDefault()
         {
             var senders = _factory.ActionList().Execute();
             foreach (var sender in senders.List)
