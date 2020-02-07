@@ -11,16 +11,17 @@ namespace smsapiTests
         protected IClient _client;
         protected ProxyAddress _proxyAddress;
         protected string _validTestNumber;
-        protected string _subUserName;
+        protected string _username;
 
         [TestInitialize]
         public virtual void SetUp()
         {
             var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
+            _username = ConfigurationManager.AppSettings["username"];
 
             if (authorizationType == AuthorizationType.basic.ToString())
             {
-                var basicClient = new Client(ConfigurationManager.AppSettings["username"]);
+                var basicClient = new Client(_username);
                 basicClient.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
                 _client = basicClient;
             }
@@ -30,8 +31,6 @@ namespace smsapiTests
             }
 
             _proxyAddress = (ProxyAddress)Enum.Parse(typeof(ProxyAddress), ConfigurationManager.AppSettings["addressType"]);
-
-            _subUserName = ConfigurationManager.AppSettings["subUserName"];
             _validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
         }
     }

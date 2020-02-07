@@ -20,7 +20,7 @@ namespace smsapiTests.Contacts
             _group = _factory.CreateGroup().SetName("example group").Execute();
 
             _factory.CreateGroupPermission(_group.Id)
-                                .SetUsername(_subUserName)
+                                .SetUsername(_username)
                                 .SetRead(true)
                                 .SetWrite(false)
                                 .SetSend(false)
@@ -36,7 +36,7 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void TestGetGroupPermission()
         {
-            var groupPermission = _factory.EditGroupPermission(_group.Id, _subUserName)
+            var groupPermission = _factory.EditGroupPermission(_group.Id, _username)
                                 .SetRead(true)
                                 .SetWrite(true)
                                 .SetSend(true)

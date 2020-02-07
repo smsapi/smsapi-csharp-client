@@ -31,13 +31,13 @@ namespace smsapiTests.Contacts
         public void TestListContactGroups()
         {
             _groupPermission = _factory.CreateGroupPermission(_group.Id)
-                                .SetUsername(_subUserName)
+                                .SetUsername(_username)
                                 .SetRead(true)
                                 .SetWrite(false)
                                 .SetSend(false)
                                 .Execute();
 
-            Assert.AreEqual(_subUserName, _groupPermission.Username);
+            Assert.AreEqual(_username, _groupPermission.Username);
         }
     }
 }

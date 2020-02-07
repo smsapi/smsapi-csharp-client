@@ -7,6 +7,5 @@
     <add key="password" value="md5 hash"/>
     <add key="oauthToken" value="oauth token"/>
     <add key="validTestNumber" value="48xxyyyzzz"/>
-    <add key="subUserName" value="username_sub"/>
   </appSettings>
 </configuration>

@@ -18,10 +18,7 @@ namespace SMSApi.Api.Tests
             var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
             if (authorizationType == AuthorizationType.basic.ToString())
             {
-                string username = ConfigurationManager.AppSettings["username"];
                 string password = ConfigurationManager.AppSettings["password"];
-                Assert.IsNotNull(username);
-                Assert.AreNotEqual("", username);
                 Assert.IsNotNull(password);
                 Assert.AreNotEqual("", password);
             }
@@ -32,9 +29,9 @@ namespace SMSApi.Api.Tests
                 Assert.AreNotEqual("", token);
             }
 
-            var subUserName = ConfigurationManager.AppSettings["subUserName"];
-            Assert.IsNotNull(subUserName);
-            Assert.AreNotEqual("", subUserName);
+            string username = ConfigurationManager.AppSettings["username"];
+            Assert.IsNotNull(username);
+            Assert.AreNotEqual("", username);
 
             var validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
             Assert.IsNotNull(validTestNumber);
