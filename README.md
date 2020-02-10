@@ -112,7 +112,7 @@ catch (SMSApi.Api.ProxyException e)
 }
 ```
 
-## Wymagania
+## Requirements
 
 * C# >= 3.5 + System.Runtime.Serialization, System.ServiceModel.Web
 * C# >= 4.0
