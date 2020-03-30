@@ -7,19 +7,19 @@ namespace SMSApi.Api.Response
     {
         public Error()
         {
-            Code = 0;
+            Code = "0";
             Message = "";
         }
 
-        [DataMember(Name = "error", IsRequired = true)]
-        public readonly int Code;
+        [DataMember(Name = "error", IsRequired = false)]
+        public readonly string Code;
 
         [DataMember(Name = "message", IsRequired = true)]
         public readonly string Message;
 
         public bool isError()
         {
-            return (Code != 0);
+            return !string.IsNullOrEmpty(Code) && (Code != "0");
         }
     }
 }

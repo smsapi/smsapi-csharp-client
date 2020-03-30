@@ -91,7 +91,7 @@ namespace SMSApi.Api.Action
             {
                 var error = ResponseToObject<Response.Error>(data);
 
-                if (error.Code != 0)
+                if (error.isError())
                 {
                     if (isHostError(error.Code))
                     {
@@ -107,7 +107,9 @@ namespace SMSApi.Api.Action
                     }
                 }
             }
-            catch (System.Runtime.Serialization.SerializationException) { }
+            catch (System.Runtime.Serialization.SerializationException e) 
+            { 
+            }
 
             data.Position = 0;
         }
@@ -121,15 +123,15 @@ namespace SMSApi.Api.Action
          * 1000 Akcja dostępna tylko dla użytkownika głównego
          * 1001 Nieprawidłowa akcja
          */
-        private bool isClientError(int code)
+        private bool isClientError(string code)
         {
-            if (code == 101) return true;
-            if (code == 102) return true;
-            if (code == 103) return true;
-            if (code == 105) return true;
-            if (code == 110) return true;
-            if (code == 1000) return true;
-            if (code == 1001) return true;
+            if (code == "101") return true;
+            if (code == "102") return true;
+            if (code == "103") return true;
+            if (code == "105") return true;
+            if (code == "110") return true;
+            if (code == "1000") return true;
+            if (code == "1001") return true;
 
             return false;
         }
@@ -140,12 +142,12 @@ namespace SMSApi.Api.Action
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private bool isHostError(int code)
+        private bool isHostError(string code)
         {
-            if (code == 8) return true;
-            if (code == 201) return true;
-            if (code == 666) return true;
-            if (code == 999) return true;
+            if (code == "8") return true;
+            if (code == "201") return true;
+            if (code == "666") return true;
+            if (code == "999") return true;
 
             return false;
         }

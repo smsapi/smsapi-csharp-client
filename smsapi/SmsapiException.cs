@@ -7,15 +7,15 @@ namespace SMSApi.Api
 {
     public class SmsapiException : SMSApi.Api.Exception
     {
-        private int Code;
+        private string Code;
 
-        public SmsapiException(string message, int code)
+        public SmsapiException(string message, string code)
             : base(message)
         {
             Code = code;
         }
 
-        public int GetCode()
+        public string GetCode()
         {
             return Code;
         }
