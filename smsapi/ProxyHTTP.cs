@@ -120,7 +120,13 @@ namespace SMSApi.Api
 			if (authentication != null)
 			{
 				webRequest.Headers.Add("Authorization", authentication.GetAuthenticationHeader());
-			}
+                
+                var httpRequest = webRequest as HttpWebRequest;
+                if (httpRequest != null)
+                {
+                    httpRequest.UserAgent = authentication.GetClientAgentHeader();
+                }
+            }
 
 			if (RequestMethod.POST.Equals(method) || RequestMethod.PUT.Equals(method))
 			{
