@@ -19,11 +19,8 @@ namespace smsapiTests
         [TestMethod]
         public void Send_Get_Delete()
         {
-            DateTime date = DateTime.Now;
-            if (date.Hour > 21 || date.Hour < 8)
-            {
-                date = date.AddHours(12);
-            }
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+            DateTime date = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 12, 0, 0);
 
             var sendResponse =
                 _factory.ActionSend()
