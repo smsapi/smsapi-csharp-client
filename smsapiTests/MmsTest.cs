@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void Send_Get_Delete()
+        public void ScheduledSend_Get_Delete()
         {
             var sendResponse =
                 _factory.ActionSend()
@@ -32,10 +32,9 @@ namespace smsapiTests
 
             string[] ids = new string[sendResponse.Count];
 
-            for (int i = 0, l = 0; i < sendResponse.List.Count; i++)
+            for (int i = 0; i < sendResponse.List.Count; i++)
             {
-                ids[l] = sendResponse.List[i].ID;
-                l++;
+                ids[i] = sendResponse.List[i].ID;
             }
 
             System.Console.WriteLine("Get:");
@@ -58,6 +57,28 @@ namespace smsapiTests
                         .Execute();
 
             Assert.AreEqual(sendResponse.Count, deletedResponse.Count);
+        }
+
+        [TestMethod]
+        public void DeletingSentMessage_EmptyResponse()
+        {
+            var sendResponse =
+                _factory.ActionSend().
+                    SetSubject("test subject").
+                    SetSmil("<smil><head><layout><root-layout height=\"600\" width=\"425\"/><region id=\"Image\" top=\"0\" left=\"0\" height=\"100%\" width=\"100%\" fit=\"meet\"/></layout></head><body><par dur=\"5000ms\"><img src=\"https://assets.smsapi.pl/img/mms.jpg\" region=\"Image\"></img></par></body></smil>").
+                    SetTo(_validTestNumber).
+                    Execute();
+
+            string[] ids = new string[sendResponse.Count];
+
+            for (int i = 0; i < sendResponse.List.Count; i++)
+            {
+                ids[i] = sendResponse.List[i].ID;
+            }
+
+            var deletedResponse = _factory.ActionDelete().Ids(ids).Execute();
+
+            Assert.AreEqual(0, deletedResponse.Count);
         }
     }
 }
