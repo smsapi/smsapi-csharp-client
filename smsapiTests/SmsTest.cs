@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void Send_Get_Delete()
+        public void ScheduledSend_Get_Delete()
         {
             var sendResponse =
                 _factory.ActionSend()
@@ -66,6 +66,25 @@ namespace smsapiTests
                         .Execute();
 
             Assert.AreEqual(sendResponse.Count, deletedResponse.Count);
+        }
+
+        [TestMethod]
+        public void DeletingSentMessage_ExceptionThrown()
+        {
+            var sendResponse =
+                _factory.ActionSend()
+                    .SetText("test message")
+                    .SetTo(_validTestNumber)
+                    .Execute();
+
+            string[] ids = new string[sendResponse.Count];
+
+            for (int i = 0; i < sendResponse.List.Count; i++)
+            {
+                ids[i] = sendResponse.List[i].ID;
+            }
+
+            Assert.ThrowsException<ActionException>(() => _factory.ActionDelete().Id(ids[0]).Execute());
         }
 
         [TestMethod]

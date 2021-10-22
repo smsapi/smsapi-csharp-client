@@ -17,7 +17,7 @@ namespace smsapiTests
         }
 
         [TestMethod]
-        public void Send_Get_Delete()
+        public void ScheduledSend_Get_Delete()
         {
             DateTime tomorrow = DateTime.Now.AddDays(1);
             DateTime date = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 12, 0, 0);
@@ -36,10 +36,9 @@ namespace smsapiTests
 
             string[] ids = new string[sendResponse.Count];
 
-            for (int i = 0, l = 0; i < sendResponse.List.Count; i++)
+            for (int i = 0; i < sendResponse.List.Count; i++)
             {
-                ids[l] = sendResponse.List[i].ID;
-                l++;
+                ids[i] = sendResponse.List[i].ID;
             }
 
             System.Console.WriteLine("Get:");
@@ -62,6 +61,29 @@ namespace smsapiTests
                         .Execute();
 
             Assert.AreEqual(sendResponse.Count, deletedResponse.Count);
+        }
+
+        [TestMethod]
+        public void DeletingSentMessage_EmptyResponse()
+        {
+            var sendResponse =
+                _factory.ActionSend().
+                    SetTTS("test message").
+                    SetTo(_validTestNumber).
+                    SetTry(4).
+                    SetTryInterval(300).
+                    Execute();
+
+            string[] ids = new string[sendResponse.Count];
+
+            for (int i = 0; i < sendResponse.List.Count; i++)
+            {
+                ids[i] = sendResponse.List[i].ID;
+            }
+
+            var deletedResponse = _factory.ActionDelete().Ids(ids).Execute();
+
+            Assert.AreEqual(0, deletedResponse.Count);
         }
     }
 }
