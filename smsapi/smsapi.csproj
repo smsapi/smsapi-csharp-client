@@ -30,4 +30,7 @@
   <ItemGroup>
     <Folder Include="Api\Action\Contacts\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.13.0" />
+  </ItemGroup>
 </Project>
