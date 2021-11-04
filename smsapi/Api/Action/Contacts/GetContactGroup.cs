@@ -1,25 +1,21 @@
-using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class GetContactGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public GetContactGroup(string contactId, string groupId)
-			: base()
-		{
-			ContactId = contactId;
-			GroupId = groupId;
-		}
+    public class GetContactGroup : Rest<Group>
+    {
+        public GetContactGroup(string contactId, string groupId)
+        {
+            ContactId = contactId;
+            GroupId = groupId;
+        }
 
-		protected override string Resource { get { return "contacts/" + contactId + "/groups/" + groupId; } }
+        public string ContactId { get; private set; }
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        public string GroupId { get; private set; }
 
-		private string contactId;
-		public string ContactId { get { return contactId; } private set { contactId = value; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
-	}
+        protected override string Resource => "contacts/" + ContactId + "/groups/" + GroupId;
+    }
 }

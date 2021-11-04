@@ -1,11 +1,10 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : BaseSimple<SMSApi.Api.Response.Base>
+    public class SenderSetDefault : BaseSimple<Base>
     {
-        protected override string Uri() { return "sender.do"; }
-
         private string name;
 
         public SenderSetDefault Name(string name)
@@ -14,12 +13,17 @@ namespace SMSApi.Api.Action
             return this;
         }
 
+        protected override string Uri()
+        {
+            return "sender.do";
+        }
+
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
 
             collection.Add("format", "json");
-            collection.Add("default", this.name);
+            collection.Add("default", name);
 
             return collection;
         }

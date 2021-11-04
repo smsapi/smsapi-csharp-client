@@ -2,17 +2,21 @@
 
 namespace SMSApi.Api.Response
 {
-	[DataContract]
-	public class Countable /*: Base*/
-	{
-		protected Countable(int count = 0) : base()
-		{
-		    this.count = count;
-		}
+    [DataContract]
+    public class Countable /*: Base*/
+    {
+        private int count;
 
-		private int count;
+        protected Countable(int count = 0)
+        {
+            this.count = count;
+        }
 
-		[DataMember(Name = "count", IsRequired = false)]
-		public virtual int Count { get { return count; } private set { count = value; } }
-	}
+        [DataMember(Name = "count", IsRequired = false)]
+        public virtual int Count
+        {
+            get => count;
+            private set => count = value;
+        }
+    }
 }

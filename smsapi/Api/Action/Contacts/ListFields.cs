@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class ListFields : Rest<SMSApi.Api.Response.Fields>
-	{
-		public ListFields ()
-			: base()
-		{
-		}
+    public class ListFields : Rest<Fields>
+    {
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		protected override string Resource { get { return "contacts/fields"; } }
-
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
-	}
+        protected override string Resource => "contacts/fields";
+    }
 }

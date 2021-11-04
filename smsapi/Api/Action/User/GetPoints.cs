@@ -1,16 +1,18 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGetCredits : BaseSimple<SMSApi.Api.Response.Credits>
+    public class UserGetCredits : BaseSimple<Credits>
     {
-        public UserGetCredits() : base() { }
-
-        protected override string Uri() { return "user.do"; }
+        protected override string Uri()
+        {
+            return "user.do";
+        }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
 
             collection.Add("format", "json");
             collection.Add("credits", "1");

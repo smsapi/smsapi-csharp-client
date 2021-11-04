@@ -1,38 +1,41 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class EditField : Rest<SMSApi.Api.Response.Field>
-	{
-		public EditField(string fieldId)
-			: base()
-		{
-			FieldId = fieldId;
-		}
+    public class EditField : Rest<Field>
+    {
+        public string Name;
 
-		protected override string Resource { get { return "contacts/fields/" + FieldId; } }
+        public EditField(string fieldId)
+        {
+            FieldId = fieldId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        public string FieldId { get; }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name != null) parameters.Add("name", Name);
-				return parameters;
-			}
-		}
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		private string fieldId;
-		public string FieldId { get { return fieldId; } private set { fieldId = value; } }
+        protected override NameValueCollection Parameters
+        {
+            get
+            {
+                NameValueCollection parameters = base.Parameters;
+                if (Name != null)
+                {
+                    parameters.Add("name", Name);
+                }
 
-		public string Name;
-		public EditField SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
-	}
+                return parameters;
+            }
+        }
+
+        protected override string Resource => "contacts/fields/" + FieldId;
+
+        public EditField SetName(string name)
+        {
+            Name = name;
+            return this;
+        }
+    }
 }

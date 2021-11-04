@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class BaseArray<T> : Base<List<T>, SMSApi.Api.Response.Array<T>>
+    public abstract class BaseArray<T> : Base<List<T>, Array<T>>
     {
-        protected override SMSApi.Api.Response.Array<T> ConvertResponse(List<T> response)
+        protected override Array<T> ConvertResponse(List<T> response)
         {
-            return new SMSApi.Api.Response.Array<T>(response);
+            return new Array<T>(response);
         }
     }
 }

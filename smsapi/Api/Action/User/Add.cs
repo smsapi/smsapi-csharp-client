@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 /**
  * add_user * Nazwa dodawanego podużytkownika bez prefiksu użytkownika głównego
@@ -14,9 +15,26 @@
  */
 namespace SMSApi.Api.Action
 {
-    public class UserAdd : BaseSimple<SMSApi.Api.Response.User>
+    public class UserAdd : BaseSimple<User>
     {
-        public UserAdd() : base() 
+        private const int PHONEBOOK_NOSHARE = 0;
+        private const int PHONEBOOK_SHARE = 1;
+
+        private const int SENDERS_NOSHARE = 0;
+        private const int SENDERS_SHARE = 1;
+        protected bool active;
+        protected string info;
+        protected double limit;
+        protected double monthLimit;
+
+        protected string newUsername;
+        protected string password;
+        protected string passwordApi;
+        protected int phonebook;
+        protected int senders;
+        protected bool withoutPrefix;
+
+        public UserAdd()
         {
             limit = -1;
             monthLimit = -1;
@@ -25,59 +43,15 @@ namespace SMSApi.Api.Action
             senders = -1;
         }
 
-        protected override string Uri() { return "user.do"; }
-
-        const int SENDERS_NOSHARE = 0;
-        const int SENDERS_SHARE = 1;
-
-        const int PHONEBOOK_NOSHARE = 0;
-        const int PHONEBOOK_SHARE = 1;
-
-        protected string newUsername;
-        protected string password;
-        protected string passwordApi;
-        protected double limit;
-        protected double monthLimit;
-        protected int senders;
-        protected int phonebook;
-        protected bool active;
-        protected string info;
-        protected bool withoutPrefix = false;
-
-        protected override NameValueCollection Values()
+        public UserAdd SetActive(bool flag)
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("add_user", newUsername);
-            if (password != null) collection.Add("pass", password);
-            if (passwordApi != null) collection.Add("pass_api", passwordApi);
-            if (limit >= 0) collection.Add("limit", limit.ToString());
-            if (monthLimit >= 0) collection.Add("month_limit", monthLimit.ToString());
-            if (senders >= 0) collection.Add("senders", senders.ToString());
-            if (phonebook >= 0) collection.Add("phonebook", phonebook.ToString());
-            collection.Add("active", (active == true ? "1" : "0") );
-            if (info != null) collection.Add("info", info);
-            if (withoutPrefix) collection.Add("without_prefix", "1");
-
-            return collection;
-        }
-
-        public UserAdd SetUsername(string username)
-        {
-            this.newUsername = username;
+            active = flag;
             return this;
         }
 
-        public UserAdd SetPassword(string password)
+        public UserAdd SetInfo(string text)
         {
-            this.password = password;
-            return this;
-        }
-
-        public UserAdd SetPasswordApi(string password)
-        {
-            this.passwordApi = password;
+            info = text;
             return this;
         }
 
@@ -89,38 +63,99 @@ namespace SMSApi.Api.Action
 
         public UserAdd SetMonthLimit(double limit)
         {
-            this.monthLimit = limit;
+            monthLimit = limit;
             return this;
         }
 
-        public UserAdd SetSenders(int flag)
+        public UserAdd SetPassword(string password)
         {
-            this.senders = flag;
+            this.password = password;
+            return this;
+        }
+
+        public UserAdd SetPasswordApi(string password)
+        {
+            passwordApi = password;
             return this;
         }
 
         public UserAdd SetPhonebook(int flag)
         {
-            this.phonebook = flag;
+            phonebook = flag;
             return this;
         }
 
-        public UserAdd SetActive(bool flag)
+        public UserAdd SetSenders(int flag)
         {
-            this.active = flag;
+            senders = flag;
             return this;
         }
 
-        public UserAdd SetInfo(string text)
+        public UserAdd SetUsername(string username)
         {
-            this.info = text;
+            newUsername = username;
             return this;
         }
 
         public UserAdd SetWithoutPrefix(bool flag)
         {
-            this.withoutPrefix = flag;
+            withoutPrefix = flag;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "user.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection();
+
+            collection.Add("format", "json");
+            collection.Add("add_user", newUsername);
+            if (password != null)
+            {
+                collection.Add("pass", password);
+            }
+
+            if (passwordApi != null)
+            {
+                collection.Add("pass_api", passwordApi);
+            }
+
+            if (limit >= 0)
+            {
+                collection.Add("limit", limit.ToString());
+            }
+
+            if (monthLimit >= 0)
+            {
+                collection.Add("month_limit", monthLimit.ToString());
+            }
+
+            if (senders >= 0)
+            {
+                collection.Add("senders", senders.ToString());
+            }
+
+            if (phonebook >= 0)
+            {
+                collection.Add("phonebook", phonebook.ToString());
+            }
+
+            collection.Add("active", active ? "1" : "0");
+            if (info != null)
+            {
+                collection.Add("info", info);
+            }
+
+            if (withoutPrefix)
+            {
+                collection.Add("without_prefix", "1");
+            }
+
+            return collection;
         }
     }
 }

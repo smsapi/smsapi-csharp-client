@@ -1,54 +1,67 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class EditGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public EditGroup(string groupId)
-			: base()
-		{
-			GroupId = groupId;
-		}
+    public class EditGroup : Rest<Group>
+    {
+        public string Description;
 
-		protected override string Resource { get { return "contacts/groups/" + GroupId; } }
+        public string Idx;
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        public string Name;
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name        != null) parameters.Add("name",       Name);
-				if (Description != null) parameters.Add("desciption", Description);
-				if (Idx         != null) parameters.Add("idx",        Idx);
-				return parameters;
-			}
-		}
+        public EditGroup(string groupId)
+        {
+            GroupId = groupId;
+        }
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
+        public string GroupId { get; }
 
-		public string Name;
-		public EditGroup SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		public string Description;
-		public EditGroup SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+        protected override NameValueCollection Parameters
+        {
+            get
+            {
+                NameValueCollection parameters = base.Parameters;
+                if (Name != null)
+                {
+                    parameters.Add("name", Name);
+                }
 
-		public string Idx;
-		public EditGroup SetIdx(string idx)
-		{
-			Idx = idx;
-			return this;
-		}
-	}
+                if (Description != null)
+                {
+                    parameters.Add("desciption", Description);
+                }
+
+                if (Idx != null)
+                {
+                    parameters.Add("idx", Idx);
+                }
+
+                return parameters;
+            }
+        }
+
+        protected override string Resource => "contacts/groups/" + GroupId;
+
+        public EditGroup SetDescription(string description)
+        {
+            Description = description;
+            return this;
+        }
+
+        public EditGroup SetIdx(string idx)
+        {
+            Idx = idx;
+            return this;
+        }
+
+        public EditGroup SetName(string name)
+        {
+            Name = name;
+            return this;
+        }
+    }
 }

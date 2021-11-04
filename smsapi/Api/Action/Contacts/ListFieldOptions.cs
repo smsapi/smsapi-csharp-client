@@ -1,21 +1,18 @@
-using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class ListFieldOptions : Rest<SMSApi.Api.Response.FieldOptions>
-	{
-		public ListFieldOptions(string fieldId)
-			: base()
-		{
-			FieldId = fieldId;
-		}
+    public class ListFieldOptions : Rest<FieldOptions>
+    {
+        public ListFieldOptions(string fieldId)
+        {
+            FieldId = fieldId;
+        }
 
-		protected override string Resource { get { return "contacts/fields/" + FieldId + "/options"; } }
+        public string FieldId { get; private set; }
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		private string fieldId;
-		public string FieldId { get { return fieldId; } private set { fieldId = value; } }
-	}
+        protected override string Resource => "contacts/fields/" + FieldId + "/options";
+    }
 }

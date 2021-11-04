@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
     public class SenderFactory : Factory
     {
-        public SenderFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(address) 
-        { 
-        }
+        public SenderFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(address)
+        { }
 
-        public SenderFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(client, address) 
-        { 
-        }
+        public SenderFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(client, address)
+        { }
 
-        public SenderFactory(IClient client, Proxy proxy) 
-            : base(client, proxy) 
-        { 
-        }
+        public SenderFactory(IClient client, Proxy proxy)
+            : base(client, proxy)
+        { }
 
-        public SMSApi.Api.Action.SenderAdd ActionAdd(string name = null)
+        public SenderAdd ActionAdd(string name = null)
         {
-            var action = new SMSApi.Api.Action.SenderAdd();
+            var action = new SenderAdd();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -34,9 +28,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SenderDelete ActionDelete(string name = null)
+        public SenderDelete ActionDelete(string name = null)
         {
-            var action = new SMSApi.Api.Action.SenderDelete();
+            var action = new SenderDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -46,24 +40,24 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.SenderSetDefault ActionSetDefault(string name = null)
+        public SenderList ActionList()
         {
-            var action = new SMSApi.Api.Action.SenderSetDefault();
+            var action = new SenderList();
+
+            action.Client(client);
+            action.Proxy(proxy);
+
+            return action;
+        }
+
+        public SenderSetDefault ActionSetDefault(string name = null)
+        {
+            var action = new SenderSetDefault();
 
             action.Client(client);
             action.Proxy(proxy);
 
             action.Name(name);
-
-            return action;
-        }
-
-        public SMSApi.Api.Action.SenderList ActionList()
-        {
-            var action = new SMSApi.Api.Action.SenderList();
-
-            action.Client(client);
-            action.Proxy(proxy);
 
             return action;
         }

@@ -1,42 +1,47 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateField : Rest<SMSApi.Api.Response.Field>
-	{
-		public CreateField()
-			: base()
-		{
-		}
+    public class CreateField : Rest<Field>
+    {
+        public string Name;
 
-		protected override string Resource { get { return "contacts/fields"; } }
+        public string Type;
 
-		protected override RequestMethod Method { get { return RequestMethod.POST; } }
+        protected override RequestMethod Method => RequestMethod.POST;
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name != null) parameters.Add("name", Name);
-				if (Type != null) parameters.Add("type", Type);
-				return parameters;
-			}
-		}
+        protected override NameValueCollection Parameters
+        {
+            get
+            {
+                NameValueCollection parameters = base.Parameters;
+                if (Name != null)
+                {
+                    parameters.Add("name", Name);
+                }
 
-		public string Name;
-		public CreateField SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
+                if (Type != null)
+                {
+                    parameters.Add("type", Type);
+                }
 
-		public string Type;
-		public CreateField SetType(string type)
-		{
-			Type = type;
-			return this;
-		}
-	}
+                return parameters;
+            }
+        }
+
+        protected override string Resource => "contacts/fields";
+
+        public CreateField SetName(string name)
+        {
+            Name = name;
+            return this;
+        }
+
+        public CreateField SetType(string type)
+        {
+            Type = type;
+            return this;
+        }
+    }
 }
