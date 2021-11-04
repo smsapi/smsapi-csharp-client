@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <TargetFrameworks>net35;netcoreapp2.0;netcoreapp2.1;netcoreapp3.0;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
@@ -11,13 +11,13 @@
     <PackageId>SMSAPI.pl</PackageId>
     <PackageVersion>1.0.9</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
-	<PackageLicense>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</PackageLicense>
+    <PackageLicense>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</PackageLicense>
     <PackageProjectUrl>https://www.smsapi.pl</PackageProjectUrl>
-	<PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
+    <PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
     <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
-	<PackageTags>smsapi</PackageTags>
+    <PackageTags>smsapi</PackageTags>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
