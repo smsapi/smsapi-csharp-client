@@ -1,26 +1,24 @@
-﻿
+﻿using SMSApi.Api.Action;
+
 namespace SMSApi.Api
 {
     public class VMSFactory : Factory
     {
-        public VMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(address) 
-        { 
-        }
+        public VMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(address)
+        { }
 
-        public VMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(client, address) 
-        { 
-        }
+        public VMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(client, address)
+        { }
 
-        public VMSFactory(IClient client, Proxy proxy) 
+        public VMSFactory(IClient client, Proxy proxy)
             : base(client, proxy)
-        {
-        }
+        { }
 
-        public SMSApi.Api.Action.VMSDelete ActionDelete(string id = null)
+        public VMSDelete ActionDelete(string id = null)
         {
-            SMSApi.Api.Action.VMSDelete action = new SMSApi.Api.Action.VMSDelete();
+            var action = new VMSDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -29,9 +27,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.VMSGet ActionGet(string id = null)
+        public VMSGet ActionGet(string id = null)
         {
-            SMSApi.Api.Action.VMSGet action = new SMSApi.Api.Action.VMSGet();
+            var action = new VMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -40,9 +38,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.VMSGet ActionGet(string[] id)
+        public VMSGet ActionGet(string[] id)
         {
-            SMSApi.Api.Action.VMSGet action = new SMSApi.Api.Action.VMSGet();
+            var action = new VMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -51,15 +49,15 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.VMSSend ActionSend(string to = null)
+        public VMSSend ActionSend(string to = null)
         {
-            string[] tos = ( to == null ? null : new string[] { to } );
+            string[] tos = to == null ? null : new[] { to };
             return ActionSend(tos);
         }
 
-        public SMSApi.Api.Action.VMSSend ActionSend(string[] to)
+        public VMSSend ActionSend(string[] to)
         {
-            SMSApi.Api.Action.VMSSend action = new SMSApi.Api.Action.VMSSend();
+            var action = new VMSSend();
             action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);

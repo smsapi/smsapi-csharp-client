@@ -1,26 +1,24 @@
-﻿
+﻿using SMSApi.Api.Action;
+
 namespace SMSApi.Api
 {
     public class MMSFactory : Factory
     {
-        public MMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(address) 
-        { 
-        }
+        public MMSFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(address)
+        { }
 
-        public MMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(client, address) 
-        { 
-        }
+        public MMSFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(client, address)
+        { }
 
-        public MMSFactory(IClient client, Proxy proxy) 
-            : base(client, proxy) 
-        { 
-        }
+        public MMSFactory(IClient client, Proxy proxy)
+            : base(client, proxy)
+        { }
 
-        public SMSApi.Api.Action.MMSDelete ActionDelete(string id = null)
+        public MMSDelete ActionDelete(string id = null)
         {
-            SMSApi.Api.Action.MMSDelete action = new SMSApi.Api.Action.MMSDelete();
+            var action = new MMSDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -29,9 +27,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSGet ActionGet(string id = null)
+        public MMSGet ActionGet(string id = null)
         {
-            SMSApi.Api.Action.MMSGet action = new SMSApi.Api.Action.MMSGet();
+            var action = new MMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -40,9 +38,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSGet ActionGet(string[] id)
+        public MMSGet ActionGet(string[] id)
         {
-            SMSApi.Api.Action.MMSGet action = new SMSApi.Api.Action.MMSGet();
+            var action = new MMSGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -51,15 +49,15 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.MMSSend ActionSend(string to = null)
+        public MMSSend ActionSend(string to = null)
         {
-            string[] tos = ( to == null ? null : new string[] { to } );
+            string[] tos = to == null ? null : new[] { to };
             return ActionSend(tos);
         }
 
-        public SMSApi.Api.Action.MMSSend ActionSend(string[] to)
+        public MMSSend ActionSend(string[] to)
         {
-            SMSApi.Api.Action.MMSSend action = new SMSApi.Api.Action.MMSSend();
+            var action = new MMSSend();
             action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);

@@ -1,50 +1,60 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public CreateGroup()
-			: base()
-		{
-		}
+    public class CreateGroup : Rest<Group>
+    {
+        public string Description;
 
-		protected override string Resource { get { return "contacts/groups"; } }
+        public string Idx;
 
-		protected override RequestMethod Method { get { return RequestMethod.POST; } }
+        public string Name;
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name        != null) parameters.Add("name",       Name);
-				if (Description != null) parameters.Add("desciption", Description);
-				if (Idx         != null) parameters.Add("idx",        Idx);
-				return parameters;
-			}
-		}
+        protected override RequestMethod Method => RequestMethod.POST;
 
-		public string Name;
-		public CreateGroup SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
+        protected override NameValueCollection Parameters
+        {
+            get
+            {
+                NameValueCollection parameters = base.Parameters;
+                if (Name != null)
+                {
+                    parameters.Add("name", Name);
+                }
 
-		public string Description;
-		public CreateGroup SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+                if (Description != null)
+                {
+                    parameters.Add("desciption", Description);
+                }
 
-		public string Idx;
-		public CreateGroup SetIdx(string idx)
-		{
-			Idx = idx;
-			return this;
-		}
-	}
+                if (Idx != null)
+                {
+                    parameters.Add("idx", Idx);
+                }
+
+                return parameters;
+            }
+        }
+
+        protected override string Resource => "contacts/groups";
+
+        public CreateGroup SetDescription(string description)
+        {
+            Description = description;
+            return this;
+        }
+
+        public CreateGroup SetIdx(string idx)
+        {
+            Idx = idx;
+            return this;
+        }
+
+        public CreateGroup SetName(string name)
+        {
+            Name = name;
+            return this;
+        }
+    }
 }

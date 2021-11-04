@@ -1,39 +1,37 @@
-using System;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Web;
 
 namespace SMSApi.Api.Action
 {
-	public abstract class Rest<T> : BaseSimple<T>
-	{
-		public Rest()
-			: base()
-		{
-		}
+    public abstract class Rest<T> : BaseSimple<T>
+    {
+        protected virtual NameValueCollection Parameters => HttpUtility.ParseQueryString(string.Empty);
 
-		protected override string Uri()
-		{
-			string uri = Resource;
-			if (RequestMethod.GET.Equals(Method))
-			{
-				if (Parameters.Count > 0) uri += "?" + Parameters.ToString();
-			}
-			return uri;
-		}
+        protected abstract string Resource { get; }
 
-		protected override NameValueCollection Values()
-		{
-			NameValueCollection collection = new NameValueCollection();
-			if (RequestMethod.POST.Equals(Method) || RequestMethod.PUT.Equals(Method))
-			{
-				collection = Parameters;
-			}
-			return collection;
-		}
+        protected override string Uri()
+        {
+            string uri = Resource;
+            if (RequestMethod.GET.Equals(Method))
+            {
+                if (Parameters.Count > 0)
+                {
+                    uri += "?" + Parameters;
+                }
+            }
 
-		protected abstract string Resource { get; }
+            return uri;
+        }
 
-		protected virtual NameValueCollection Parameters { get { return HttpUtility.ParseQueryString(string.Empty); } }
-	}
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection();
+            if (RequestMethod.POST.Equals(Method) || RequestMethod.PUT.Equals(Method))
+            {
+                collection = Parameters;
+            }
+
+            return collection;
+        }
+    }
 }

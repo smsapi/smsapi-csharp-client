@@ -1,61 +1,29 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Collections.Specialized;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Collections.Specialized;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Base<T,TResult>
+    public abstract class Base<T, TResult>
     {
         protected IClient client;
         protected Proxy proxy;
 
-        abstract protected string Uri();
-
-		protected virtual RequestMethod Method { get { return RequestMethod.POST; } }
+        protected virtual RequestMethod Method => RequestMethod.POST;
 
         public void Client(IClient client)
         {
             this.client = client;
         }
 
-        public void Proxy(Proxy proxy)
-        {
-            this.proxy = proxy;
-        }
-
-        protected TT ResponseToObject<TT>(Stream data)
-        {
-			TT result;
-			if (data.Length > 0)
-			{
-				data.Position = 0;
-				var serializer = new DataContractJsonSerializer(typeof(TT));
-				result = (TT)serializer.ReadObject(data);
-				data.Position = 0;
-			}
-			else
-			{
-				result = Activator.CreateInstance<TT>();
-			}
-            return result;
-        }
-
-        abstract protected NameValueCollection Values();
-        protected virtual void Validate() { }
-
-        protected virtual Dictionary<string, Stream> Files()
-        {
-            return null;
-        }
-
-        protected abstract TResult ConvertResponse(T response);
-
-/*        protected virtual TResult ConvertResponse(T response)
-        {
-            return (TResult)Convert.ChangeType(response, typeof(TResult));
-        }*/
+        /*        protected virtual TResult ConvertResponse(T response)
+                {
+                    return (TResult)Convert.ChangeType(response, typeof(TResult));
+                }*/
 
         public TResult Execute()
         {
@@ -63,16 +31,16 @@ namespace SMSApi.Api.Action
 
             Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
 
-            TResult result = default(TResult);
+            var result = default(TResult);
 
             HandleError(data);
 
             try
             {
-                T response = ResponseToObject<T>(data);
+                var response = ResponseToObject<T>(data);
                 result = ConvertResponse(response);
             }
-            catch (System.Runtime.Serialization.SerializationException e)
+            catch (SerializationException e)
             {
                 //Problem z prasowaniem json'a
                 throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
@@ -83,13 +51,25 @@ namespace SMSApi.Api.Action
             return result;
         }
 
-        protected void HandleError(Stream data) {
+        public void Proxy(Proxy proxy)
+        {
+            this.proxy = proxy;
+        }
 
+        protected abstract TResult ConvertResponse(T response);
+
+        protected virtual Dictionary<string, Stream> Files()
+        {
+            return null;
+        }
+
+        protected void HandleError(Stream data)
+        {
             data.Position = 0;
 
             try
             {
-                var error = ResponseToObject<Response.Error>(data);
+                var error = ResponseToObject<Error>(data);
 
                 if (error.isError())
                 {
@@ -97,22 +77,45 @@ namespace SMSApi.Api.Action
                     {
                         throw new HostException(error.Message, error.Code);
                     }
+
                     if (isClientError(error.Code))
                     {
                         throw new ClientException(error.Message, error.Code);
                     }
-                    else
-                    {
-                        throw new ActionException(error.Message, error.Code);
-                    }
+
+                    throw new ActionException(error.Message, error.Code);
                 }
             }
-            catch (System.Runtime.Serialization.SerializationException e) 
-            { 
-            }
+            catch (SerializationException e)
+            { }
 
             data.Position = 0;
         }
+
+        protected TT ResponseToObject<TT>(Stream data)
+        {
+            TT result;
+            if (data.Length > 0)
+            {
+                data.Position = 0;
+                var serializer = new DataContractJsonSerializer(typeof(TT));
+                result = (TT)serializer.ReadObject(data);
+                data.Position = 0;
+            }
+            else
+            {
+                result = Activator.CreateInstance<TT>();
+            }
+
+            return result;
+        }
+
+        protected abstract string Uri();
+
+        protected virtual void Validate()
+        { }
+
+        protected abstract NameValueCollection Values();
 
         /**
          * 101 Niepoprawne lub brak danych autoryzacji.
@@ -125,13 +128,40 @@ namespace SMSApi.Api.Action
          */
         private bool isClientError(string code)
         {
-            if (code == "101") return true;
-            if (code == "102") return true;
-            if (code == "103") return true;
-            if (code == "105") return true;
-            if (code == "110") return true;
-            if (code == "1000") return true;
-            if (code == "1001") return true;
+            if (code == "101")
+            {
+                return true;
+            }
+
+            if (code == "102")
+            {
+                return true;
+            }
+
+            if (code == "103")
+            {
+                return true;
+            }
+
+            if (code == "105")
+            {
+                return true;
+            }
+
+            if (code == "110")
+            {
+                return true;
+            }
+
+            if (code == "1000")
+            {
+                return true;
+            }
+
+            if (code == "1001")
+            {
+                return true;
+            }
 
             return false;
         }
@@ -144,10 +174,25 @@ namespace SMSApi.Api.Action
          */
         private bool isHostError(string code)
         {
-            if (code == "8") return true;
-            if (code == "201") return true;
-            if (code == "666") return true;
-            if (code == "999") return true;
+            if (code == "8")
+            {
+                return true;
+            }
+
+            if (code == "201")
+            {
+                return true;
+            }
+
+            if (code == "666")
+            {
+                return true;
+            }
+
+            if (code == "999")
+            {
+                return true;
+            }
 
             return false;
         }

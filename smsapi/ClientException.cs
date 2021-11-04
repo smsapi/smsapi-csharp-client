@@ -1,11 +1,9 @@
-﻿
-namespace SMSApi.Api
+﻿namespace SMSApi.Api
 {
-    public class ClientException : SMSApi.Api.SmsapiException
+    public class ClientException : SmsapiException
     {
         public ClientException(string message, string code)
             : base(message, code)
-        {
-        }
+        { }
     }
 }

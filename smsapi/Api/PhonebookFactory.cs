@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
     [Obsolete("use ContactsFactory instead")]
     public class PhonebookFactory : Factory
     {
-        public PhonebookFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(address) 
-        { 
-        }
+        public PhonebookFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(address)
+        { }
 
-        public PhonebookFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(client, address) 
-        { 
-        }
+        public PhonebookFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+            : base(client, address)
+        { }
 
-        public PhonebookFactory(IClient client, Proxy proxy) 
-            : base(client, proxy) 
-        { 
-        }
+        public PhonebookFactory(IClient client, Proxy proxy)
+            : base(client, proxy)
+        { }
 
-        public SMSApi.Api.Action.PhonebookContactAdd ActionContactAdd(string number = null)
+        public PhonebookContactAdd ActionContactAdd(string number = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookContactAdd();
+            var action = new PhonebookContactAdd();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -35,9 +30,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookContactGet ActionContactGet(string number = null)
+        public PhonebookContactDelete ActionContactDelete(string number = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookContactGet();
+            var action = new PhonebookContactDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -47,9 +42,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookContactEdit ActionContactEdit(string number = null)
+        public PhonebookContactEdit ActionContactEdit(string number = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookContactEdit();
+            var action = new PhonebookContactEdit();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -59,9 +54,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookContactDelete ActionContactDelete(string number = null)
+        public PhonebookContactGet ActionContactGet(string number = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookContactDelete();
+            var action = new PhonebookContactGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -71,9 +66,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookContactList ActionContactList()
+        public PhonebookContactList ActionContactList()
         {
-            var action = new SMSApi.Api.Action.PhonebookContactList();
+            var action = new PhonebookContactList();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -81,9 +76,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookGroupAdd ActionGroupAdd(string name = null)
+        public PhonebookGroupAdd ActionGroupAdd(string name = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookGroupAdd();
+            var action = new PhonebookGroupAdd();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -93,9 +88,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookGroupEdit ActionGroupEdit(string name = null)
+        public PhonebookGroupDelete ActionGroupDelete(string name = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookGroupEdit();
+            var action = new PhonebookGroupDelete();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -105,9 +100,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookGroupGet ActionGroupGet(string name = null)
+        public PhonebookGroupEdit ActionGroupEdit(string name = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookGroupGet();
+            var action = new PhonebookGroupEdit();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -117,9 +112,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookGroupDelete ActionGroupDelete(string name = null)
+        public PhonebookGroupGet ActionGroupGet(string name = null)
         {
-            var action = new SMSApi.Api.Action.PhonebookGroupDelete();
+            var action = new PhonebookGroupGet();
 
             action.Client(client);
             action.Proxy(proxy);
@@ -129,9 +124,9 @@ namespace SMSApi.Api
             return action;
         }
 
-        public SMSApi.Api.Action.PhonebookGroupList ActionGroupList()
+        public PhonebookGroupList ActionGroupList()
         {
-            var action = new SMSApi.Api.Action.PhonebookGroupList();
+            var action = new PhonebookGroupList();
 
             action.Client(client);
             action.Proxy(proxy);

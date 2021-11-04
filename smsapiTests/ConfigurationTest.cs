@@ -1,21 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SMSApi.Api;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SMSApi.Api.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ConfigurationTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void VerifyConfiguration()
         {
-            var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
+            string authorizationType = ConfigurationManager.AppSettings["authorizationType"];
             if (authorizationType == AuthorizationType.basic.ToString())
             {
                 string password = ConfigurationManager.AppSettings["password"];
@@ -33,7 +28,7 @@ namespace SMSApi.Api.Tests
             Assert.IsNotNull(username);
             Assert.AreNotEqual("", username);
 
-            var validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+            string validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
             Assert.IsNotNull(validTestNumber);
             Assert.AreNotEqual("", validTestNumber);
 

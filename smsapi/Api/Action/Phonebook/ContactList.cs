@@ -1,55 +1,35 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactList : BaseSimple<SMSApi.Api.Response.Contacts>
+    public class PhonebookContactList : BaseSimple<Contacts>
     {
-        public PhonebookContactList() 
-            : base() 
+        protected string gender;
+        protected string[] groups;
+        protected uint limit;
+
+        protected string number;
+        protected uint offset;
+        protected string orderBy;
+        protected string orderDir;
+        protected string searchText;
+
+        public PhonebookContactList()
         {
             offset = 0;
             limit = 0;
         }
 
-        protected override string Uri() { return "phonebook.do"; }
-
-        protected string number;
-        protected string[] groups;
-        protected string searchText;
-        protected string gender;
-        protected string orderBy;
-        protected string orderDir;
-        protected uint limit;
-        protected uint offset;
-
-        protected override NameValueCollection Values()
+        public PhonebookContactList Gender(string gender)
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("list_contacts", "");
-
-            if (number != null && number.Length > 0) collection.Add("number", number);
-            if (groups != null && groups.Length > 0) collection.Add("groups", string.Join(";", groups));
-            if (searchText != null && searchText.Length > 0) collection.Add("text_search", searchText);
-            if (gender != null && gender.Length > 0) collection.Add("gender", gender);
-            if (orderBy != null && orderBy.Length > 0) collection.Add("order_by", orderBy);
-            if (orderDir != null && orderDir.Length > 0) collection.Add("order_dir", orderDir);
-            if (limit > 0) collection.Add("limit", limit.ToString());
-            if (offset > 0) collection.Add("offset", offset.ToString());
-
-            return collection;
-        }
-
-        public PhonebookContactList Number(string number)
-        {
-            this.number = number;
+            this.gender = gender;
             return this;
         }
 
         public PhonebookContactList Group(string group)
         {
-            this.groups = new string[] { group };
+            groups = new[] { group };
             return this;
         }
 
@@ -59,15 +39,21 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public PhonebookContactList Text(string text)
+        public PhonebookContactList Limit(uint limit)
         {
-            this.searchText = text;
+            this.limit = limit;
             return this;
         }
 
-        public PhonebookContactList Gender(string gender)
+        public PhonebookContactList Number(string number)
         {
-            this.gender = gender;
+            this.number = number;
+            return this;
+        }
+
+        public PhonebookContactList Offset(uint offset)
+        {
+            this.offset = offset;
             return this;
         }
 
@@ -83,16 +69,65 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public PhonebookContactList Limit(uint limit)
+        public PhonebookContactList Text(string text)
         {
-            this.limit = limit;
+            searchText = text;
             return this;
         }
 
-        public PhonebookContactList Offset(uint offset)
+        protected override string Uri()
         {
-            this.offset = offset;
-            return this;
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection();
+
+            collection.Add("format", "json");
+            collection.Add("list_contacts", "");
+
+            if (number != null && number.Length > 0)
+            {
+                collection.Add("number", number);
+            }
+
+            if (groups != null && groups.Length > 0)
+            {
+                collection.Add("groups", string.Join(";", groups));
+            }
+
+            if (searchText != null && searchText.Length > 0)
+            {
+                collection.Add("text_search", searchText);
+            }
+
+            if (gender != null && gender.Length > 0)
+            {
+                collection.Add("gender", gender);
+            }
+
+            if (orderBy != null && orderBy.Length > 0)
+            {
+                collection.Add("order_by", orderBy);
+            }
+
+            if (orderDir != null && orderDir.Length > 0)
+            {
+                collection.Add("order_dir", orderDir);
+            }
+
+            if (limit > 0)
+            {
+                collection.Add("limit", limit.ToString());
+            }
+
+            if (offset > 0)
+            {
+                collection.Add("offset", offset.ToString());
+            }
+
+            return collection;
         }
     }
 }

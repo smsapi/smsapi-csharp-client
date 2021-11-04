@@ -5,6 +5,7 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class Groups : BasicCollection<Group>
     {
-        private Groups() : base() { }
+        private Groups()
+        { }
     }
 }

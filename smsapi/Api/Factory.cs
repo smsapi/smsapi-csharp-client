@@ -1,7 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SMSApi.Api 
+namespace SMSApi.Api
 {
     public abstract class Factory
     {
@@ -22,13 +21,13 @@ namespace SMSApi.Api
             Proxy(address);
         }
 
-        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
             : this(address)
         {
             Client(client);
         }
 
-        public Factory(IClient client, Proxy proxy) 
+        public Factory(IClient client, Proxy proxy)
         {
             Client(client);
             Proxy(proxy);

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace SMSApi.Api
 {
@@ -13,21 +10,21 @@ namespace SMSApi.Api
 
         public ClientBase()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            
-            _clientAgent = String.Format(
+
+            _clientAgent = string.Format(
                 "smsapi/csharp-client:{0};assemblyFile:{1};.net:{2}",
-                assembly.GetName().Version.ToString(),
+                assembly.GetName().Version,
                 fvi.FileVersion,
-                Environment.Version.ToString());
+                Environment.Version);
         }
+
+        public abstract string GetAuthenticationHeader();
 
         public string GetClientAgentHeader()
         {
             return _clientAgent;
         }
-
-        public abstract string GetAuthenticationHeader();
     }
 }

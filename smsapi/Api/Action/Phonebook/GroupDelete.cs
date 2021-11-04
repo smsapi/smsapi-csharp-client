@@ -1,31 +1,22 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupDelete : BaseSimple<SMSApi.Api.Response.Base>
+    public class PhonebookGroupDelete : BaseSimple<Base>
     {
-        public PhonebookGroupDelete() : base() {
-            removeContacts = false;
-        }
-
-        protected override string Uri() { return "phonebook.do"; }
-
         protected string name;
         protected bool removeContacts;
 
-        protected override NameValueCollection Values()
+        public PhonebookGroupDelete()
         {
-            NameValueCollection collection = new NameValueCollection();
+            removeContacts = false;
+        }
 
-            collection.Add("format", "json");
-            collection.Add("delete_group", name);
-
-            if (removeContacts == true)
-            {
-                collection.Add("remove_contacts", "1");
-            }
-
-            return collection;
+        public PhonebookGroupDelete Contacts(bool flag)
+        {
+            removeContacts = flag;
+            return this;
         }
 
         public PhonebookGroupDelete Name(string name)
@@ -34,10 +25,24 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public PhonebookGroupDelete Contacts(bool flag)
+        protected override string Uri()
         {
-            this.removeContacts = flag;
-            return this;
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection();
+
+            collection.Add("format", "json");
+            collection.Add("delete_group", name);
+
+            if (removeContacts)
+            {
+                collection.Add("remove_contacts", "1");
+            }
+
+            return collection;
         }
     }
 }
