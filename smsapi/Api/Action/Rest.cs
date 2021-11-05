@@ -3,7 +3,7 @@ using System.Web;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Rest<T> : BaseSimple<T>
+    public abstract class Rest<T> : Base<T>
     {
         protected virtual NameValueCollection Parameters => HttpUtility.ParseQueryString(string.Empty);
 
@@ -11,27 +11,12 @@ namespace SMSApi.Api.Action
 
         protected override string Uri()
         {
-            string uri = Resource;
-            if (RequestMethod.GET.Equals(Method))
-            {
-                if (Parameters.Count > 0)
-                {
-                    uri += "?" + Parameters;
-                }
-            }
-
-            return uri;
+            return Resource;
         }
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-            if (RequestMethod.POST.Equals(Method) || RequestMethod.PUT.Equals(Method))
-            {
-                collection = Parameters;
-            }
-
-            return collection;
+            return Parameters;
         }
     }
 }

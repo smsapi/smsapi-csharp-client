@@ -2,7 +2,7 @@
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Send : BaseSimple<Status>
+    public abstract class Send : Base<Status>
     {
         protected string DateSent;
         protected string Group;

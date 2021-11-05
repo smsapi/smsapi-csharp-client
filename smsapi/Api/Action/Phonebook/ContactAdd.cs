@@ -3,17 +3,16 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactAdd : BaseSimple<Contact>
+    public class PhonebookContactAdd : Base<Contact>
     {
-        protected int birthday;
-        protected string city;
-        protected string firstName;
-        protected string gender;
-        protected string[] groups;
-        protected string info;
-        protected string lastName;
-
-        protected string number;
+        private int birthday;
+        private string city;
+        private string firstName;
+        private string gender;
+        private string[] groups;
+        private string info;
+        private string lastName;
+        private string number;
 
         public PhonebookContactAdd SetBirthday(int birthday)
         {
@@ -76,10 +75,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("add_contact", number);
+            var collection = new NameValueCollection
+            {
+                { "format", "json" },
+                { "add_contact", number }
+            };
 
             if (firstName != null)
             {

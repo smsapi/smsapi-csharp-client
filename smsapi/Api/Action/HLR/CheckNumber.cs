@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : BaseSimple<CheckNumber>
+    public class HLRCheckNumber : Base<CheckNumber>
     {
         protected string[] numbers;
 
@@ -18,22 +18,13 @@ namespace SMSApi.Api.Action
             return "hlrsync.do";
         }
 
-        /*
-                public HLRCheckNumber SetNumber(string[] numbers)
-                {
-                    this.numbers = numbers;
-                    return this;
-                }
-        */
-
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("number", string.Join(",", numbers));
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "number", string.Join(",", numbers) }
+            };
         }
     }
 }

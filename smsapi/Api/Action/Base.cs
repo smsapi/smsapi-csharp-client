@@ -8,37 +8,27 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Base<T, TResult>
+    public abstract class Base<T>
     {
-        protected IClient client;
-        protected Proxy proxy;
+        private Proxy proxy;
 
         protected virtual RequestMethod Method => RequestMethod.POST;
 
         public void Client(IClient client)
-        {
-            this.client = client;
-        }
+        { }
 
-        /*        protected virtual TResult ConvertResponse(T response)
-                {
-                    return (TResult)Convert.ChangeType(response, typeof(TResult));
-                }*/
-
-        public TResult Execute()
+        public T Execute()
         {
             Validate();
 
+            T response;
             Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
-
-            var result = default(TResult);
 
             HandleError(data);
 
             try
             {
-                var response = ResponseToObject<T>(data);
-                result = ConvertResponse(response);
+                response = ResponseToObject(data);
             }
             catch (SerializationException e)
             {
@@ -48,7 +38,7 @@ namespace SMSApi.Api.Action
 
             data.Close();
 
-            return result;
+            return response;
         }
 
         public void Proxy(Proxy proxy)
@@ -56,20 +46,48 @@ namespace SMSApi.Api.Action
             this.proxy = proxy;
         }
 
-        protected abstract TResult ConvertResponse(T response);
+        protected TT Deserialize<TT>(Stream data)
+        {
+            TT result;
+            if (data.Length > 0)
+            {
+                data.Position = 0;
+                var serializer = new DataContractJsonSerializer(typeof(TT));
+                result = (TT)serializer.ReadObject(data);
+                data.Position = 0;
+            }
+            else
+            {
+                result = Activator.CreateInstance<TT>();
+            }
+
+            return result;
+        }
 
         protected virtual Dictionary<string, Stream> Files()
         {
             return null;
         }
 
-        protected void HandleError(Stream data)
+        protected virtual T ResponseToObject(Stream data)
+        {
+            return Deserialize<T>(data);
+        }
+
+        protected abstract string Uri();
+
+        protected virtual void Validate()
+        { }
+
+        protected abstract NameValueCollection Values();
+
+        private void HandleError(Stream data)
         {
             data.Position = 0;
 
             try
             {
-                var error = ResponseToObject<Error>(data);
+                var error = Deserialize<Error>(data);
 
                 if (error.isError())
                 {
@@ -91,31 +109,6 @@ namespace SMSApi.Api.Action
 
             data.Position = 0;
         }
-
-        protected TT ResponseToObject<TT>(Stream data)
-        {
-            TT result;
-            if (data.Length > 0)
-            {
-                data.Position = 0;
-                var serializer = new DataContractJsonSerializer(typeof(TT));
-                result = (TT)serializer.ReadObject(data);
-                data.Position = 0;
-            }
-            else
-            {
-                result = Activator.CreateInstance<TT>();
-            }
-
-            return result;
-        }
-
-        protected abstract string Uri();
-
-        protected virtual void Validate()
-        { }
-
-        protected abstract NameValueCollection Values();
 
         /**
          * 101 Niepoprawne lub brak danych autoryzacji.

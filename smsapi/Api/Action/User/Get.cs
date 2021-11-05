@@ -3,9 +3,9 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGet : BaseSimple<User>
+    public class UserGet : Base<User>
     {
-        protected string username;
+        private string username;
 
         public UserGet Username(string username)
         {
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("get_user", username);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "get_user", username }
+            };
         }
     }
 }

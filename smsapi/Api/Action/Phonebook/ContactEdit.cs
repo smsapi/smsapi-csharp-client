@@ -3,18 +3,17 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactEdit : BaseSimple<Contact>
+    public class PhonebookContactEdit : Base<Contact>
     {
-        protected int birthday;
-        protected string city;
-        protected string firstName;
-        protected string gender;
-        protected string[] groups;
-        protected string info;
-        protected string lastName;
-        protected string newNumber;
-
-        protected string oldNumber;
+        private int birthday;
+        private string city;
+        private string firstName;
+        private string gender;
+        private string[] groups;
+        private string info;
+        private string lastName;
+        private string newNumber;
+        private string oldNumber;
 
         public PhonebookContactEdit Number(string number)
         {
@@ -83,10 +82,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("edit_contact", oldNumber);
+            var collection = new NameValueCollection
+            {
+                { "format", "json" },
+                { "edit_contact", oldNumber }
+            };
 
             if (newNumber != null)
             {

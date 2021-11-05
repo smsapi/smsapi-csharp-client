@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGetCredits : BaseSimple<Credits>
+    public class UserGetCredits : Base<Credits>
     {
         protected override string Uri()
         {
@@ -12,13 +12,12 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("credits", "1");
-            collection.Add("details", "1");
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "credits", "1" },
+                { "details", "1" }
+            };
         }
     }
 }
