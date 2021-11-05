@@ -4,68 +4,64 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class EditGroupPermission : Rest<GroupPermission>
+    public class EditGroupPermission : Base<GroupPermission>
     {
-        public bool? Read;
-
-        public bool? Send;
-
-        public bool? Write;
+        private string groupId;
+        private bool? read;
+        private bool? send;
+        private string username;
+        private bool? write;
 
         public EditGroupPermission(string groupId, string username)
         {
-            GroupId = groupId;
-            Username = username;
+            this.groupId = groupId;
+            this.username = username;
         }
-
-        public string GroupId { get; private set; }
-
-        public string Username { get; private set; }
 
         protected override RequestMethod Method => RequestMethod.PUT;
 
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                if (Read != null)
-                {
-                    parameters.Add("read", Convert.ToInt32(Read.Value).ToString());
-                }
-
-                if (Write != null)
-                {
-                    parameters.Add("write", Convert.ToInt32(Write.Value).ToString());
-                }
-
-                if (Send != null)
-                {
-                    parameters.Add("send", Convert.ToInt32(Send.Value).ToString());
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts/groups/" + GroupId + "/permissions/" + Username;
-
         public EditGroupPermission SetRead(bool? read)
         {
-            Read = read;
+            this.read = read;
             return this;
         }
 
         public EditGroupPermission SetSend(bool? send)
         {
-            Send = send;
+            this.send = send;
             return this;
         }
 
         public EditGroupPermission SetWrite(bool? write)
         {
-            Write = write;
+            this.write = write;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId + "/permissions/" + username;
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection();
+            if (read != null)
+            {
+                parameters.Add("read", Convert.ToInt32(read.Value).ToString());
+            }
+
+            if (write != null)
+            {
+                parameters.Add("write", Convert.ToInt32(write.Value).ToString());
+            }
+
+            if (send != null)
+            {
+                parameters.Add("send", Convert.ToInt32(send.Value).ToString());
+            }
+
+            return parameters;
         }
     }
 }

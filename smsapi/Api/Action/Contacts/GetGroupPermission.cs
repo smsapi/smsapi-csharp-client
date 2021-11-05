@@ -2,20 +2,22 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class GetGroupPermission : Rest<GroupPermission>
+    public class GetGroupPermission : Base<GroupPermission>
     {
+        private readonly string groupId;
+        private readonly string username;
+
         public GetGroupPermission(string groupId, string username)
         {
-            GroupId = groupId;
-            Username = username;
+            this.groupId = groupId;
+            this.username = username;
         }
-
-        public string GroupId { get; private set; }
-
-        public string Username { get; private set; }
 
         protected override RequestMethod Method => RequestMethod.GET;
 
-        protected override string Resource => "contacts/groups/" + GroupId + "/permissions/" + Username;
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId + "/permissions/" + username;
+        }
     }
 }

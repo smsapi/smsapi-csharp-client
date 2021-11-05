@@ -2,20 +2,22 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteGroupPermission : Rest<GroupPermission>
+    public class DeleteGroupPermission : Base<GroupPermission>
     {
+        private readonly string groupId;
+        private readonly string username;
+
         public DeleteGroupPermission(string groupId, string username)
         {
-            GroupId = groupId;
-            Username = username;
+            this.groupId = groupId;
+            this.username = username;
         }
-
-        public string GroupId { get; }
-
-        public string Username { get; }
 
         protected override RequestMethod Method => RequestMethod.DELETE;
 
-        protected override string Resource => "contacts/groups/" + GroupId + "/permissions/" + Username;
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId + "/permissions/" + username;
+        }
     }
 }

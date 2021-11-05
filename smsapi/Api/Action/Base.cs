@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Web;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -66,7 +67,7 @@ namespace SMSApi.Api.Action
 
         protected virtual Dictionary<string, Stream> Files()
         {
-            return null;
+            return new Dictionary<string, Stream>();
         }
 
         protected virtual T ResponseToObject(Stream data)
@@ -79,35 +80,9 @@ namespace SMSApi.Api.Action
         protected virtual void Validate()
         { }
 
-        protected abstract NameValueCollection Values();
-
-        private void HandleError(Stream data)
+        protected virtual NameValueCollection Values()
         {
-            data.Position = 0;
-
-            try
-            {
-                var error = Deserialize<Error>(data);
-
-                if (error.isError())
-                {
-                    if (isHostError(error.Code))
-                    {
-                        throw new HostException(error.Message, error.Code);
-                    }
-
-                    if (isClientError(error.Code))
-                    {
-                        throw new ClientException(error.Message, error.Code);
-                    }
-
-                    throw new ActionException(error.Message, error.Code);
-                }
-            }
-            catch (SerializationException e)
-            { }
-
-            data.Position = 0;
+            return HttpUtility.ParseQueryString(string.Empty);
         }
 
         /**
@@ -119,44 +94,22 @@ namespace SMSApi.Api.Action
          * 1000 Akcja dostępna tylko dla użytkownika głównego
          * 1001 Nieprawidłowa akcja
          */
-        private bool isClientError(string code)
+        private static bool IsClientError(string code)
         {
-            if (code == "101")
+            switch (code)
             {
-                return true;
-            }
+                case "101":
+                case "102":
+                case "103":
+                case "105":
+                case "110":
+                case "1000":
+                case "1001":
+                    return true;
 
-            if (code == "102")
-            {
-                return true;
+                default:
+                    return false;
             }
-
-            if (code == "103")
-            {
-                return true;
-            }
-
-            if (code == "105")
-            {
-                return true;
-            }
-
-            if (code == "110")
-            {
-                return true;
-            }
-
-            if (code == "1000")
-            {
-                return true;
-            }
-
-            if (code == "1001")
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /**
@@ -165,29 +118,48 @@ namespace SMSApi.Api.Action
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private bool isHostError(string code)
+        private static bool IsHostError(string code)
         {
-            if (code == "8")
+            switch (code)
             {
-                return true;
-            }
+                case "8":
+                case "201":
+                case "666":
+                case "999":
+                    return true;
 
-            if (code == "201")
+                default:
+                    return false;
+            }
+        }
+
+        private void HandleError(Stream data)
+        {
+            data.Position = 0;
+
+            try
             {
-                return true;
-            }
+                var error = Deserialize<Error>(data);
 
-            if (code == "666")
-            {
-                return true;
-            }
+                if (error.isError())
+                {
+                    if (IsHostError(error.Code))
+                    {
+                        throw new HostException(error.Message, error.Code);
+                    }
 
-            if (code == "999")
-            {
-                return true;
-            }
+                    if (IsClientError(error.Code))
+                    {
+                        throw new ClientException(error.Message, error.Code);
+                    }
 
-            return false;
+                    throw new ActionException(error.Message, error.Code);
+                }
+            }
+            catch (SerializationException e)
+            { }
+
+            data.Position = 0;
         }
     }
 }

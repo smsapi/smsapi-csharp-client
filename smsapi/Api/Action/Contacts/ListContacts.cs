@@ -4,149 +4,140 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListContacts : Rest<Contacts>
+    public class ListContacts : Base<Contacts>
     {
-        public DateTime? BirthdayDate;
-
-        public string Email;
-
-        public string FirstName;
-
-        public string Gender;
-
-        public int? GroupId;
-
-        public string LastName;
-
-        public int? Limit;
-
-        public int? Offset;
-
-        public string PhoneNumber;
-
-        public string Search;
+        private DateTime? birthdayDate;
+        private string email;
+        private string firstName;
+        private string gender;
+        private int? groupId;
+        private string lastName;
+        private int? limit;
+        private int? offset;
+        private string phoneNumber;
+        private string search;
 
         protected override RequestMethod Method => RequestMethod.GET;
 
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                if (Search != null)
-                {
-                    parameters.Add("q", Search);
-                }
-
-                if (Offset != null)
-                {
-                    parameters.Add("offset", Offset.Value.ToString());
-                }
-
-                if (Limit != null)
-                {
-                    parameters.Add("limit", Limit.Value.ToString());
-                }
-
-                if (PhoneNumber != null)
-                {
-                    parameters.Add("phone_number", PhoneNumber);
-                }
-
-                if (Email != null)
-                {
-                    parameters.Add("email", Email);
-                }
-
-                if (FirstName != null)
-                {
-                    parameters.Add("first_name", FirstName);
-                }
-
-                if (LastName != null)
-                {
-                    parameters.Add("last_name", LastName);
-                }
-
-                if (GroupId != null)
-                {
-                    parameters.Add("group_id", GroupId.Value.ToString());
-                }
-
-                if (Gender != null)
-                {
-                    parameters.Add("gender", Gender);
-                }
-
-                if (BirthdayDate != null)
-                {
-                    parameters.Add("birthday_date", BirthdayDate.Value.ToString("Y-m-d"));
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts";
-
         public ListContacts SetBirthdayDate(DateTime? birthdayDate)
         {
-            BirthdayDate = birthdayDate;
+            this.birthdayDate = birthdayDate;
             return this;
         }
 
         public ListContacts SetEmail(string email)
         {
-            Email = email;
+            this.email = email;
             return this;
         }
 
         public ListContacts SetFirstName(string firstName)
         {
-            FirstName = firstName;
+            this.firstName = firstName;
             return this;
         }
 
         public ListContacts SetGender(string gender)
         {
-            Gender = gender;
+            this.gender = gender;
             return this;
         }
 
         public ListContacts SetGroupId(int? groupId)
         {
-            GroupId = groupId;
+            this.groupId = groupId;
             return this;
         }
 
         public ListContacts SetLastName(string lastName)
         {
-            LastName = lastName;
+            this.lastName = lastName;
             return this;
         }
 
         public ListContacts SetLimit(int? limit)
         {
-            Limit = limit;
+            this.limit = limit;
             return this;
         }
 
         public ListContacts SetOffset(int? offset)
         {
-            Offset = offset;
+            this.offset = offset;
             return this;
         }
 
         public ListContacts SetPhoneNumber(string phoneNumber)
         {
-            PhoneNumber = phoneNumber;
+            this.phoneNumber = phoneNumber;
             return this;
         }
 
         public ListContacts SetSearch(string search)
         {
-            Search = search;
+            this.search = search;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection();
+            if (search != null)
+            {
+                parameters.Add("q", search);
+            }
+
+            if (offset != null)
+            {
+                parameters.Add("offset", offset.Value.ToString());
+            }
+
+            if (limit != null)
+            {
+                parameters.Add("limit", limit.Value.ToString());
+            }
+
+            if (phoneNumber != null)
+            {
+                parameters.Add("phone_number", phoneNumber);
+            }
+
+            if (email != null)
+            {
+                parameters.Add("email", email);
+            }
+
+            if (firstName != null)
+            {
+                parameters.Add("first_name", firstName);
+            }
+
+            if (lastName != null)
+            {
+                parameters.Add("last_name", lastName);
+            }
+
+            if (groupId != null)
+            {
+                parameters.Add("group_id", groupId.Value.ToString());
+            }
+
+            if (gender != null)
+            {
+                parameters.Add("gender", gender);
+            }
+
+            if (birthdayDate != null)
+            {
+                parameters.Add("birthday_date", birthdayDate.Value.ToString("Y-m-d"));
+            }
+
+            return parameters;
         }
     }
 }

@@ -3,45 +3,42 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class CreateField : Rest<Field>
+    public class CreateField : Base<Field>
     {
-        public string Name;
-
-        public string Type;
-
-        protected override RequestMethod Method => RequestMethod.POST;
-
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                if (Name != null)
-                {
-                    parameters.Add("name", Name);
-                }
-
-                if (Type != null)
-                {
-                    parameters.Add("type", Type);
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts/fields";
+        private string name;
+        private string type;
 
         public CreateField SetName(string name)
         {
-            Name = name;
+            this.name = name;
             return this;
         }
 
         public CreateField SetType(string type)
         {
-            Type = type;
+            this.type = type;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts/fields";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var values = new NameValueCollection();
+            if (name != null)
+            {
+                values.Add("name", name);
+            }
+
+            if (type != null)
+            {
+                values.Add("type", type);
+            }
+
+            return values;
         }
     }
 }

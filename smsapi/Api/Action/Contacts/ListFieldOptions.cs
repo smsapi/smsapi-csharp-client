@@ -2,17 +2,20 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListFieldOptions : Rest<FieldOptions>
+    public class ListFieldOptions : Base<FieldOptions>
     {
+        private readonly string fieldId;
+
         public ListFieldOptions(string fieldId)
         {
-            FieldId = fieldId;
+            this.fieldId = fieldId;
         }
-
-        public string FieldId { get; private set; }
 
         protected override RequestMethod Method => RequestMethod.GET;
 
-        protected override string Resource => "contacts/fields/" + FieldId + "/options";
+        protected override string Uri()
+        {
+            return "contacts/fields/" + fieldId + "/options";
+        }
     }
 }

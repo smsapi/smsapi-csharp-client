@@ -2,17 +2,20 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteField : Rest<Base>
+    public class DeleteField : Base<Base>
     {
+        private readonly string fieldId;
+
         public DeleteField(string fieldId)
         {
-            FieldId = fieldId;
+            this.fieldId = fieldId;
         }
-
-        public string FieldId { get; }
 
         protected override RequestMethod Method => RequestMethod.DELETE;
 
-        protected override string Resource => "contacts/fields/" + FieldId;
+        protected override string Uri()
+        {
+            return "contacts/fields/" + fieldId;
+        }
     }
 }

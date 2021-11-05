@@ -4,78 +4,72 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class CreateGroupPermission : Rest<GroupPermission>
+    public class CreateGroupPermission : Base<GroupPermission>
     {
-        public bool? Read;
-
-        public bool? Send;
-
-        public string Username;
-
-        public bool? Write;
+        private string groupId;
+        private bool? read;
+        private bool? send;
+        private string username;
+        private bool? write;
 
         public CreateGroupPermission(string groupId)
         {
-            GroupId = groupId;
+            this.groupId = groupId;
         }
-
-        public string GroupId { get; }
-
-        protected override RequestMethod Method => RequestMethod.POST;
-
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                if (Username != null)
-                {
-                    parameters.Add("username", Username);
-                }
-
-                if (Read != null)
-                {
-                    parameters.Add("read", Convert.ToInt32(Read.Value).ToString());
-                }
-
-                if (Write != null)
-                {
-                    parameters.Add("write", Convert.ToInt32(Write.Value).ToString());
-                }
-
-                if (Send != null)
-                {
-                    parameters.Add("send", Convert.ToInt32(Send.Value).ToString());
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts/groups/" + GroupId + "/permissions";
 
         public CreateGroupPermission SetRead(bool? read)
         {
-            Read = read;
+            this.read = read;
             return this;
         }
 
         public CreateGroupPermission SetSend(bool? send)
         {
-            Send = send;
+            this.send = send;
             return this;
         }
 
         public CreateGroupPermission SetUsername(string username)
         {
-            Username = username;
+            this.username = username;
             return this;
         }
 
         public CreateGroupPermission SetWrite(bool? write)
         {
-            Write = write;
+            this.write = write;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId + "/permissions";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var values = new NameValueCollection();
+            if (username != null)
+            {
+                values.Add("username", username);
+            }
+
+            if (read != null)
+            {
+                values.Add("read", Convert.ToInt32(read.Value).ToString());
+            }
+
+            if (write != null)
+            {
+                values.Add("write", Convert.ToInt32(write.Value).ToString());
+            }
+
+            if (send != null)
+            {
+                values.Add("send", Convert.ToInt32(send.Value).ToString());
+            }
+
+            return values;
         }
     }
 }

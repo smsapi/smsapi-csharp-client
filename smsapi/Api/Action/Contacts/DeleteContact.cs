@@ -2,17 +2,20 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteContact : Rest<Base>
+    public class DeleteContact : Base<Base>
     {
+        private readonly string contactId;
+
         public DeleteContact(string contactId)
         {
-            ContactId = contactId;
+            this.contactId = contactId;
         }
-
-        public string ContactId { get; }
 
         protected override RequestMethod Method => RequestMethod.DELETE;
 
-        protected override string Resource => "contacts/" + ContactId;
+        protected override string Uri()
+        {
+            return "contacts/" + contactId;
+        }
     }
 }
