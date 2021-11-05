@@ -1,4 +1,4 @@
-﻿namespace SMSApi.Api.Tests
+﻿namespace smsapiTests
 {
     public enum AuthorizationType
     {
