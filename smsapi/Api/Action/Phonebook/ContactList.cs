@@ -3,17 +3,16 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactList : BaseSimple<Contacts>
+    public class PhonebookContactList : Base<Contacts>
     {
-        protected string gender;
-        protected string[] groups;
-        protected uint limit;
-
-        protected string number;
-        protected uint offset;
-        protected string orderBy;
-        protected string orderDir;
-        protected string searchText;
+        private string gender;
+        private string[] groups;
+        private uint limit;
+        private string number;
+        private uint offset;
+        private string orderBy;
+        private string orderDir;
+        private string searchText;
 
         public PhonebookContactList()
         {
@@ -82,37 +81,38 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
+            var collection = new NameValueCollection
+            {
+                { "format", "json" },
+                { "list_contacts", "" }
+            };
 
-            collection.Add("format", "json");
-            collection.Add("list_contacts", "");
-
-            if (number != null && number.Length > 0)
+            if (!string.IsNullOrEmpty(number))
             {
                 collection.Add("number", number);
             }
 
-            if (groups != null && groups.Length > 0)
+            if (groups?.Length > 0)
             {
                 collection.Add("groups", string.Join(";", groups));
             }
 
-            if (searchText != null && searchText.Length > 0)
+            if (!string.IsNullOrEmpty(searchText))
             {
                 collection.Add("text_search", searchText);
             }
 
-            if (gender != null && gender.Length > 0)
+            if (!string.IsNullOrEmpty(gender))
             {
                 collection.Add("gender", gender);
             }
 
-            if (orderBy != null && orderBy.Length > 0)
+            if (!string.IsNullOrEmpty(orderBy))
             {
                 collection.Add("order_by", orderBy);
             }
 
-            if (orderDir != null && orderDir.Length > 0)
+            if (!string.IsNullOrEmpty(orderDir))
             {
                 collection.Add("order_dir", orderDir);
             }

@@ -3,10 +3,10 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupDelete : BaseSimple<Base>
+    public class PhonebookGroupDelete : Base<Base>
     {
-        protected string name;
-        protected bool removeContacts;
+        private string name;
+        private bool removeContacts;
 
         public PhonebookGroupDelete()
         {
@@ -32,10 +32,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("delete_group", name);
+            var collection = new NameValueCollection
+            {
+                { "format", "json" },
+                { "delete_group", name }
+            };
 
             if (removeContacts)
             {

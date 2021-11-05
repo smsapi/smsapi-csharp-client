@@ -2,17 +2,20 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteGroup : Rest<Base>
+    public class DeleteGroup : Base<Base>
     {
+        private readonly string groupId;
+
         public DeleteGroup(string groupId)
         {
-            GroupId = groupId;
+            this.groupId = groupId;
         }
-
-        public string GroupId { get; }
 
         protected override RequestMethod Method => RequestMethod.DELETE;
 
-        protected override string Resource => "contacts/groups/" + GroupId;
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
     }
 }

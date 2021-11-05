@@ -3,9 +3,9 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSGet : BaseSimple<Status>
+    public class SMSGet : Base<Status>
     {
-        protected string[] id;
+        private string[] id;
 
         public SMSGet Id(string id)
         {
@@ -26,12 +26,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("status", string.Join("|", id));
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "status", string.Join("|", id) }
+            };
         }
     }
 }

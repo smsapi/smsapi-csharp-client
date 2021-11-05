@@ -3,9 +3,9 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupGet : BaseSimple<Group>
+    public class PhonebookGroupGet : Base<Group>
     {
-        protected string name;
+        private string name;
 
         public PhonebookGroupGet Name(string name)
         {
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("get_group", name);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "get_group", name }
+            };
         }
     }
 }

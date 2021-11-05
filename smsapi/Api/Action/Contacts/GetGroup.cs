@@ -2,17 +2,20 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class GetGroup : Rest<Group>
+    public class GetGroup : Base<Group>
     {
+        private string groupId;
+
         public GetGroup(string groupId)
         {
-            GroupId = groupId;
+            this.groupId = groupId;
         }
-
-        public string GroupId { get; private set; }
 
         protected override RequestMethod Method => RequestMethod.GET;
 
-        protected override string Resource => "contacts/groups/" + GroupId;
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
     }
 }

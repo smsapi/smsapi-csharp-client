@@ -3,7 +3,7 @@
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Countable /*: Base*/
+    public class Countable
     {
         private int count;
 

@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : BaseSimple<Base>
+    public class SenderDelete : Base<Base>
     {
         private string name;
 
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("delete", name);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "delete", name }
+            };
         }
     }
 }

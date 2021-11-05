@@ -4,41 +4,33 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
+using System.Web;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public abstract class Base<T, TResult>
+    public abstract class Base<T>
     {
-        protected IClient client;
-        protected Proxy proxy;
+        private Proxy proxy;
 
         protected virtual RequestMethod Method => RequestMethod.POST;
 
         public void Client(IClient client)
-        {
-            this.client = client;
-        }
+        { }
 
-        /*        protected virtual TResult ConvertResponse(T response)
-                {
-                    return (TResult)Convert.ChangeType(response, typeof(TResult));
-                }*/
-
-        public TResult Execute()
+        public T Execute()
         {
             Validate();
 
+            T response;
             Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
-
-            var result = default(TResult);
 
             HandleError(data);
 
             try
             {
-                var response = ResponseToObject<T>(data);
-                result = ConvertResponse(response);
+                response = ResponseToObject(data);
             }
             catch (SerializationException e)
             {
@@ -48,7 +40,31 @@ namespace SMSApi.Api.Action
 
             data.Close();
 
-            return result;
+            return response;
+        }
+
+        public async Task<T> ExecuteAsync()
+        {
+            Validate();
+
+            T response;
+            Stream data = await proxy.ExecuteAsync(Uri(), Values(), Files(), Method);
+
+            HandleError(data);
+
+            try
+            {
+                response = ResponseToObject(data);
+            }
+            catch (SerializationException e)
+            {
+                //Problem z prasowaniem json'a
+                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
+            }
+
+            data.Close();
+
+            return response;
         }
 
         public void Proxy(Proxy proxy)
@@ -56,43 +72,7 @@ namespace SMSApi.Api.Action
             this.proxy = proxy;
         }
 
-        protected abstract TResult ConvertResponse(T response);
-
-        protected virtual Dictionary<string, Stream> Files()
-        {
-            return null;
-        }
-
-        protected void HandleError(Stream data)
-        {
-            data.Position = 0;
-
-            try
-            {
-                var error = ResponseToObject<Error>(data);
-
-                if (error.isError())
-                {
-                    if (isHostError(error.Code))
-                    {
-                        throw new HostException(error.Message, error.Code);
-                    }
-
-                    if (isClientError(error.Code))
-                    {
-                        throw new ClientException(error.Message, error.Code);
-                    }
-
-                    throw new ActionException(error.Message, error.Code);
-                }
-            }
-            catch (SerializationException e)
-            { }
-
-            data.Position = 0;
-        }
-
-        protected TT ResponseToObject<TT>(Stream data)
+        protected TT Deserialize<TT>(Stream data)
         {
             TT result;
             if (data.Length > 0)
@@ -110,12 +90,25 @@ namespace SMSApi.Api.Action
             return result;
         }
 
+        protected virtual Dictionary<string, Stream> Files()
+        {
+            return new Dictionary<string, Stream>();
+        }
+
+        protected virtual T ResponseToObject(Stream data)
+        {
+            return Deserialize<T>(data);
+        }
+
         protected abstract string Uri();
 
         protected virtual void Validate()
         { }
 
-        protected abstract NameValueCollection Values();
+        protected virtual NameValueCollection Values()
+        {
+            return HttpUtility.ParseQueryString(string.Empty);
+        }
 
         /**
          * 101 Niepoprawne lub brak danych autoryzacji.
@@ -126,44 +119,22 @@ namespace SMSApi.Api.Action
          * 1000 Akcja dostępna tylko dla użytkownika głównego
          * 1001 Nieprawidłowa akcja
          */
-        private bool isClientError(string code)
+        private static bool IsClientError(string code)
         {
-            if (code == "101")
+            switch (code)
             {
-                return true;
-            }
+                case "101":
+                case "102":
+                case "103":
+                case "105":
+                case "110":
+                case "1000":
+                case "1001":
+                    return true;
 
-            if (code == "102")
-            {
-                return true;
+                default:
+                    return false;
             }
-
-            if (code == "103")
-            {
-                return true;
-            }
-
-            if (code == "105")
-            {
-                return true;
-            }
-
-            if (code == "110")
-            {
-                return true;
-            }
-
-            if (code == "1000")
-            {
-                return true;
-            }
-
-            if (code == "1001")
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /**
@@ -172,29 +143,48 @@ namespace SMSApi.Api.Action
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private bool isHostError(string code)
+        private static bool IsHostError(string code)
         {
-            if (code == "8")
+            switch (code)
             {
-                return true;
-            }
+                case "8":
+                case "201":
+                case "666":
+                case "999":
+                    return true;
 
-            if (code == "201")
+                default:
+                    return false;
+            }
+        }
+
+        private void HandleError(Stream data)
+        {
+            data.Position = 0;
+
+            try
             {
-                return true;
-            }
+                var error = Deserialize<Error>(data);
 
-            if (code == "666")
-            {
-                return true;
-            }
+                if (error.isError())
+                {
+                    if (IsHostError(error.Code))
+                    {
+                        throw new HostException(error.Message, error.Code);
+                    }
 
-            if (code == "999")
-            {
-                return true;
-            }
+                    if (IsClientError(error.Code))
+                    {
+                        throw new ClientException(error.Message, error.Code);
+                    }
 
-            return false;
+                    throw new ActionException(error.Message, error.Code);
+                }
+            }
+            catch (SerializationException e)
+            { }
+
+            data.Position = 0;
         }
     }
 }

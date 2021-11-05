@@ -3,46 +3,48 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListGroups : Rest<Groups>
+    public class ListGroups : Base<Groups>
     {
-        public string Id;
-
-        public string Name;
+        private string id;
+        private string name;
 
         protected override RequestMethod Method => RequestMethod.GET;
 
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                parameters.Add("with", "contacts_count");
-                if (Id != null)
-                {
-                    parameters.Add("id", Id);
-                }
-
-                if (Name != null)
-                {
-                    parameters.Add("name", Name);
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts/groups";
-
         public ListGroups SetId(string id)
         {
-            Id = id;
+            this.id = id;
             return this;
         }
 
         public ListGroups SetName(string name)
         {
-            Name = name;
+            this.name = name;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts/groups";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection
+            {
+                { "with", "contacts_count" }
+            };
+
+            if (id != null)
+            {
+                parameters.Add("id", id);
+            }
+
+            if (name != null)
+            {
+                parameters.Add("name", name);
+            }
+
+            return parameters;
         }
     }
 }

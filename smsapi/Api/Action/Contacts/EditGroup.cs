@@ -3,65 +3,62 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class EditGroup : Rest<Group>
+    public class EditGroup : Base<Group>
     {
-        public string Description;
-
-        public string Idx;
-
-        public string Name;
+        private string description;
+        private string groupId;
+        private string idx;
+        private string name;
 
         public EditGroup(string groupId)
         {
-            GroupId = groupId;
+            this.groupId = groupId;
         }
-
-        public string GroupId { get; }
 
         protected override RequestMethod Method => RequestMethod.PUT;
 
-        protected override NameValueCollection Parameters
-        {
-            get
-            {
-                NameValueCollection parameters = base.Parameters;
-                if (Name != null)
-                {
-                    parameters.Add("name", Name);
-                }
-
-                if (Description != null)
-                {
-                    parameters.Add("desciption", Description);
-                }
-
-                if (Idx != null)
-                {
-                    parameters.Add("idx", Idx);
-                }
-
-                return parameters;
-            }
-        }
-
-        protected override string Resource => "contacts/groups/" + GroupId;
-
         public EditGroup SetDescription(string description)
         {
-            Description = description;
+            this.description = description;
             return this;
         }
 
         public EditGroup SetIdx(string idx)
         {
-            Idx = idx;
+            this.idx = idx;
             return this;
         }
 
         public EditGroup SetName(string name)
         {
-            Name = name;
+            this.name = name;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection();
+            if (name != null)
+            {
+                parameters.Add("name", name);
+            }
+
+            if (description != null)
+            {
+                parameters.Add("description", description);
+            }
+
+            if (idx != null)
+            {
+                parameters.Add("idx", idx);
+            }
+
+            return parameters;
         }
     }
 }

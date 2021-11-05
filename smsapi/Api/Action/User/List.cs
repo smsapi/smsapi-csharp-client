@@ -1,16 +1,15 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserList : BaseArray<User>
+    public class UserList : Base<Array<User>>
     {
-        protected string username;
-
-        public UserList Username(string username)
+        protected override Array<User> ResponseToObject(Stream data)
         {
-            this.username = username;
-            return this;
+            return new Array<User>(Deserialize<List<User>>(data));
         }
 
         protected override string Uri()
@@ -20,12 +19,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("list", "1");
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "list", "1" }
+            };
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
-namespace SMSApi.Api.Tests
+namespace smsapiTests
 {
     [TestClass]
     public class ConfigurationTest

@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderAdd : BaseSimple<Base>
+    public class SenderAdd : Base<Base>
     {
         private string name;
 
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("add", name);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "add", name }
+            };
         }
     }
 }

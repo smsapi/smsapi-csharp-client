@@ -3,12 +3,11 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupEdit : BaseSimple<Group>
+    public class PhonebookGroupEdit : Base<Group>
     {
-        protected string info;
-        protected string newName;
-
-        protected string oldName;
+        private string info;
+        private string newName;
+        private string oldName;
 
         public PhonebookGroupEdit Name(string name)
         {
@@ -35,14 +34,13 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("edit_group", oldName);
-            collection.Add("name", newName);
-            collection.Add("info", info);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "edit_group", oldName },
+                { "name", newName },
+                { "info", info }
+            };
         }
     }
 }

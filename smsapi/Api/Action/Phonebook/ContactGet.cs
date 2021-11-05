@@ -3,9 +3,9 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactGet : BaseSimple<Contact>
+    public class PhonebookContactGet : Base<Contact>
     {
-        protected string number;
+        private string number;
 
         public PhonebookContactGet Number(string number)
         {
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("get_contact", number);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "get_contact", number }
+            };
         }
     }
 }

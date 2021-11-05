@@ -3,9 +3,9 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSDelete : BaseSimple<Countable>
+    public class SMSDelete : Base<Countable>
     {
-        protected string id;
+        private string id;
 
         public SMSDelete Id(string id)
         {
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("sch_del", id);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "sch_del", id }
+            };
         }
     }
 }

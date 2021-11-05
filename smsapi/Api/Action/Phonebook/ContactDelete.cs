@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactDelete : BaseSimple<Base>
+    public class PhonebookContactDelete : Base<Base>
     {
         protected string number;
 
@@ -20,12 +20,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("delete_contact", number);
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "delete_contact", number }
+            };
         }
     }
 }
