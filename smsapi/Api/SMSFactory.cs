@@ -19,33 +19,24 @@ namespace SMSApi.Api
         public SMSDelete ActionDelete(string id = null)
         {
             var action = new SMSDelete();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Id(id);
-
             return action;
         }
 
         public SMSGet ActionGet(string id = null)
         {
             var action = new SMSGet();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Id(id);
-
             return action;
         }
 
         public SMSGet ActionGet(string[] id)
         {
             var action = new SMSGet();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Ids(id);
-
             return action;
         }
 
@@ -58,11 +49,9 @@ namespace SMSApi.Api
         public SMSSend ActionSend(string[] to, string text = null)
         {
             var action = new SMSSend();
-            action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);
             action.SetText(text);
-
             return action;
         }
     }

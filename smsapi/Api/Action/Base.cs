@@ -16,9 +16,6 @@ namespace SMSApi.Api.Action
 
         protected virtual RequestMethod Method => RequestMethod.POST;
 
-        public void Client(IClient client)
-        { }
-
         public T Execute()
         {
             Validate();

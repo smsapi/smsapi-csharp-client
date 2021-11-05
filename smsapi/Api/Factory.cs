@@ -13,45 +13,40 @@ namespace SMSApi.Api
                 { ProxyAddress.BackupSmsApiCom, "https://api2.smsapi.com/" }
             };
 
-        protected IClient client;
         protected Proxy proxy;
 
-        public Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        private IClient client;
+
+        protected Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
         {
             Proxy(address);
         }
 
-        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+        protected Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
             : this(address)
         {
             Client(client);
         }
 
-        public Factory(IClient client, Proxy proxy)
+        protected Factory(IClient client, Proxy proxy)
         {
             Client(client);
             Proxy(proxy);
         }
 
-        public void Client(IClient client)
+        private void Client(IClient client)
         {
             this.client = client;
-            if (proxy != null)
-            {
-                proxy.Authentication(client);
-            }
+            proxy?.Authentication(client);
         }
 
-        public void Proxy(Proxy proxy)
+        private void Proxy(Proxy proxy)
         {
             this.proxy = proxy;
-            if (proxy != null)
-            {
-                proxy.Authentication(client);
-            }
+            proxy?.Authentication(client);
         }
 
-        public void Proxy(ProxyAddress address)
+        private void Proxy(ProxyAddress address)
         {
             Proxy(new ProxyHTTP(_addresses[address]));
         }

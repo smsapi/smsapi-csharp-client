@@ -19,54 +19,37 @@ namespace SMSApi.Api
         public UserAdd ActionAdd()
         {
             var action = new UserAdd();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             return action;
         }
 
         public UserEdit ActionEdit(string username = null)
         {
             var action = new UserEdit();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             action.Username(username);
-
             return action;
         }
 
         public UserGet ActionGet(string username = null)
         {
             var action = new UserGet();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             action.Username(username);
-
             return action;
         }
 
         public UserGetCredits ActionGetCredits()
         {
             var action = new UserGetCredits();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             return action;
         }
 
         public UserList ActionList()
         {
             var action = new UserList();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             return action;
         }
     }

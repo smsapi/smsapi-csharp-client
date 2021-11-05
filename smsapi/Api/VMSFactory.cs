@@ -19,33 +19,24 @@ namespace SMSApi.Api
         public VMSDelete ActionDelete(string id = null)
         {
             var action = new VMSDelete();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Id(id);
-
             return action;
         }
 
         public VMSGet ActionGet(string id = null)
         {
             var action = new VMSGet();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Id(id);
-
             return action;
         }
 
         public VMSGet ActionGet(string[] id)
         {
             var action = new VMSGet();
-
-            action.Client(client);
             action.Proxy(proxy);
             action.Ids(id);
-
             return action;
         }
 
@@ -58,10 +49,8 @@ namespace SMSApi.Api
         public VMSSend ActionSend(string[] to)
         {
             var action = new VMSSend();
-            action.Client(client);
             action.Proxy(proxy);
             action.SetTo(to);
-
             return action;
         }
     }

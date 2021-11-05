@@ -19,7 +19,6 @@ namespace SMSApi.Api
         public BindContactToGroup BindContactToGroup(string contactId, string groupId)
         {
             var action = new BindContactToGroup(contactId, groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -27,7 +26,6 @@ namespace SMSApi.Api
         public CreateContact CreateContact()
         {
             var action = new CreateContact();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -35,7 +33,6 @@ namespace SMSApi.Api
         public CreateField CreateField()
         {
             var action = new CreateField();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -43,7 +40,6 @@ namespace SMSApi.Api
         public CreateGroup CreateGroup()
         {
             var action = new CreateGroup();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -51,7 +47,6 @@ namespace SMSApi.Api
         public CreateGroupPermission CreateGroupPermission(string groupId)
         {
             var action = new CreateGroupPermission(groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -59,7 +54,6 @@ namespace SMSApi.Api
         public DeleteContact DeleteContact(string contactId)
         {
             var action = new DeleteContact(contactId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -67,7 +61,6 @@ namespace SMSApi.Api
         public DeleteField DeleteField(string fieldId)
         {
             var action = new DeleteField(fieldId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -75,7 +68,6 @@ namespace SMSApi.Api
         public DeleteGroup DeleteGroup(string groupId)
         {
             var action = new DeleteGroup(groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -83,7 +75,6 @@ namespace SMSApi.Api
         public DeleteGroupPermission DeleteGroupPermission(string groupId, string username)
         {
             var action = new DeleteGroupPermission(groupId, username);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -91,7 +82,6 @@ namespace SMSApi.Api
         public EditContact EditContact(string contactId)
         {
             var action = new EditContact(contactId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -99,7 +89,6 @@ namespace SMSApi.Api
         public EditField EditField(string fieldId)
         {
             var action = new EditField(fieldId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -107,7 +96,6 @@ namespace SMSApi.Api
         public EditGroup EditGroup(string groupId)
         {
             var action = new EditGroup(groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -115,7 +103,6 @@ namespace SMSApi.Api
         public EditGroupPermission EditGroupPermission(string groupId, string username)
         {
             var action = new EditGroupPermission(groupId, username);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -123,7 +110,6 @@ namespace SMSApi.Api
         public GetContact GetContact(string contactId)
         {
             var action = new GetContact(contactId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -131,7 +117,6 @@ namespace SMSApi.Api
         public GetContactGroup GetContactGroup(string contactId, string groupId)
         {
             var action = new GetContactGroup(contactId, groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -139,7 +124,6 @@ namespace SMSApi.Api
         public GetGroup GetGroup(string groupId)
         {
             var action = new GetGroup(groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -147,7 +131,6 @@ namespace SMSApi.Api
         public GetGroupPermission GetGroupPermission(string groupId, string username)
         {
             var action = new GetGroupPermission(groupId, username);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -155,7 +138,6 @@ namespace SMSApi.Api
         public ListContactGroups ListContactGroups(string contactId)
         {
             var action = new ListContactGroups(contactId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -163,7 +145,6 @@ namespace SMSApi.Api
         public ListContacts ListContacts()
         {
             var action = new ListContacts();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -171,7 +152,6 @@ namespace SMSApi.Api
         public ListFieldOptions ListFieldOptions(string fieldId)
         {
             var action = new ListFieldOptions(fieldId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -179,7 +159,6 @@ namespace SMSApi.Api
         public ListFields ListFields()
         {
             var action = new ListFields();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -187,7 +166,6 @@ namespace SMSApi.Api
         public ListGroupPermissions ListGroupPermissions(string groupId)
         {
             var action = new ListGroupPermissions(groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -195,7 +173,6 @@ namespace SMSApi.Api
         public ListGroups ListGroups()
         {
             var action = new ListGroups();
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }
@@ -203,7 +180,6 @@ namespace SMSApi.Api
         public UnbindContactFromGroup UnbindContactFromGroup(string contactId, string groupId)
         {
             var action = new UnbindContactFromGroup(contactId, groupId);
-            action.Client(client);
             action.Proxy(proxy);
             return action;
         }

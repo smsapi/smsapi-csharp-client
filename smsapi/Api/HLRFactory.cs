@@ -19,12 +19,8 @@ namespace SMSApi.Api
         public HLRCheckNumber ActionCheckNumber(string number = null)
         {
             var action = new HLRCheckNumber();
-
-            action.Client(client);
             action.Proxy(proxy);
-
             action.SetNumber(number);
-
             return action;
         }
     }
