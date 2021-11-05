@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
 using System.Web;
 using SMSApi.Api.Response;
 
@@ -24,6 +25,30 @@ namespace SMSApi.Api.Action
 
             T response;
             Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
+
+            HandleError(data);
+
+            try
+            {
+                response = ResponseToObject(data);
+            }
+            catch (SerializationException e)
+            {
+                //Problem z prasowaniem json'a
+                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
+            }
+
+            data.Close();
+
+            return response;
+        }
+
+        public async Task<T> ExecuteAsync()
+        {
+            Validate();
+
+            T response;
+            Stream data = await proxy.ExecuteAsync(Uri(), Values(), Files(), Method);
 
             HandleError(data);
 

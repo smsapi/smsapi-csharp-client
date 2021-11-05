@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -64,29 +65,11 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files,
             RequestMethod method = RequestMethod.POST)
         {
+            var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            var client = new RestClient(baseUrl + uri);
-
-            if (authentication != null)
-            {
-                client.UserAgent = authentication.GetClientAgentHeader();
-                client.Authenticator = GetAuthenticator();
-            }
-
-            var request = new RestRequest(ToMethod(method));
-            foreach (string key in data.Keys)
-            {
-                request.AddParameter(key, data[key]);
-            }
-
-            foreach (KeyValuePair<string, Stream> file in files)
-            {
-                request.AddFile(file.Key, s => file.Value.CopyTo(s), file.Key, file.Value.Length);
-            }
-
-            var responseStream = new MemoryStream();
-            request.ResponseWriter = s => s.CopyTo(responseStream);
+            RestClient client = CreateClient(uri);
+            IRestRequest request = CreateRequest(responseStream, data, files, method);
 
             try
             {
@@ -98,6 +81,69 @@ namespace SMSApi.Api
             }
 
             return responseStream;
+        }
+
+        public async Task<Stream> ExecuteAsync(
+            string uri,
+            NameValueCollection data,
+            RequestMethod method = RequestMethod.POST)
+        {
+            return await ExecuteAsync(uri, data, new Dictionary<string, Stream>(), method);
+        }
+
+        public async Task<Stream> ExecuteAsync(
+            string uri,
+            NameValueCollection data,
+            Stream file,
+            RequestMethod method = RequestMethod.POST)
+        {
+            return await ExecuteAsync(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
+        }
+
+        public async Task<Stream> ExecuteAsync(
+            string uri,
+            NameValueCollection data,
+            Dictionary<string, Stream> files,
+            RequestMethod method = RequestMethod.POST)
+        {
+            var responseStream = new MemoryStream();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            RestClient client = CreateClient(uri);
+            IRestRequest request = CreateRequest(responseStream, data, files, method);
+
+            try
+            {
+                await client.ExecuteAsync(request);
+            }
+            catch (System.Exception e)
+            {
+                throw new ProxyException("Failed to get response from " + client.BuildUri(request), e);
+            }
+
+            return responseStream;
+        }
+
+        private static IRestRequest CreateRequest(
+            Stream responseStream,
+            NameValueCollection data,
+            Dictionary<string, Stream> files,
+            RequestMethod method)
+        {
+            var request = new RestRequest(ToMethod(method));
+            foreach (string key in data.Keys)
+            {
+                request.AddParameter(key, data[key]);
+            }
+
+            foreach (KeyValuePair<string, Stream> file in files)
+            {
+                request.AddFile(file.Key, s => file.Value.CopyTo(s), file.Key, file.Value.Length);
+            }
+
+            request.ResponseWriter = s => s.CopyTo(responseStream);
+
+            return request;
         }
 
         private static Method ToMethod(RequestMethod method)
@@ -119,6 +165,19 @@ namespace SMSApi.Api
                 default:
                     throw new NotSupportedException();
             }
+        }
+
+        private RestClient CreateClient(string uri)
+        {
+            var client = new RestClient(baseUrl + uri);
+
+            if (authentication != null)
+            {
+                client.UserAgent = authentication.GetClientAgentHeader();
+                client.Authenticator = GetAuthenticator();
+            }
+
+            return client;
         }
 
         private IAuthenticator GetAuthenticator()
