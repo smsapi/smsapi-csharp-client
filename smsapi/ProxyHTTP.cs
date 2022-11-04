@@ -134,7 +134,7 @@ namespace SMSApi.Api
         {
             var request = new RestRequest(uri)
             {
-                Method = ToMethod(method),
+                Method = method.ToMethod(),
                 ResponseWriter = s =>
                 {
                     s.CopyTo(responseStream);
@@ -153,27 +153,6 @@ namespace SMSApi.Api
             }
 
             return request;
-        }
-
-        private static Method ToMethod(RequestMethod method)
-        {
-            switch (method)
-            {
-                case RequestMethod.DELETE:
-                    return Method.Delete;
-
-                case RequestMethod.GET:
-                    return Method.Get;
-
-                case RequestMethod.POST:
-                    return Method.Post;
-
-                case RequestMethod.PUT:
-                    return Method.Put;
-
-                default:
-                    throw new NotSupportedException();
-            }
         }
 
         private RestClient CreateClient()

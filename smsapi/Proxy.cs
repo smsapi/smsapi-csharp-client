@@ -5,14 +5,6 @@ using System.Threading.Tasks;
 
 namespace SMSApi.Api
 {
-    public enum RequestMethod
-    {
-        GET,
-        POST,
-        PUT,
-        DELETE
-    }
-
     public interface Proxy
     {
         void Authentication(IClient client);
