@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Authenticators.OAuth2;
 
 namespace SMSApi.Api
 {
@@ -69,7 +70,7 @@ namespace SMSApi.Api
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             RestClient client = CreateClient(uri);
-            IRestRequest request = CreateRequest(responseStream, data, files, method);
+            RestRequest request = CreateRequest(responseStream, data, files, method);
 
             try
             {
@@ -110,7 +111,7 @@ namespace SMSApi.Api
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             RestClient client = CreateClient(uri);
-            IRestRequest request = CreateRequest(responseStream, data, files, method);
+            RestRequest request = CreateRequest(responseStream, data, files, method);
 
             try
             {
@@ -124,13 +125,22 @@ namespace SMSApi.Api
             return responseStream;
         }
 
-        private static IRestRequest CreateRequest(
+        private static RestRequest CreateRequest(
             Stream responseStream,
             NameValueCollection data,
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var request = new RestRequest(ToMethod(method));
+            var request = new RestRequest()
+            {
+                Method = ToMethod(method),
+                ResponseWriter = s =>
+                {
+                    s.CopyTo(responseStream);
+                    return s;
+                }
+            };
+
             foreach (string key in data.Keys)
             {
                 request.AddParameter(key, data[key]);
@@ -138,10 +148,8 @@ namespace SMSApi.Api
 
             foreach (KeyValuePair<string, Stream> file in files)
             {
-                request.AddFile(file.Key, s => file.Value.CopyTo(s), file.Key, file.Value.Length);
+                request.AddFile(file.Key, () => file.Value, file.Key);
             }
-
-            request.ResponseWriter = s => s.CopyTo(responseStream);
 
             return request;
         }
@@ -151,16 +159,16 @@ namespace SMSApi.Api
             switch (method)
             {
                 case RequestMethod.DELETE:
-                    return Method.DELETE;
+                    return Method.Delete;
 
                 case RequestMethod.GET:
-                    return Method.GET;
+                    return Method.Get;
 
                 case RequestMethod.POST:
-                    return Method.POST;
+                    return Method.Post;
 
                 case RequestMethod.PUT:
-                    return Method.PUT;
+                    return Method.Put;
 
                 default:
                     throw new NotSupportedException();
@@ -169,11 +177,12 @@ namespace SMSApi.Api
 
         private RestClient CreateClient(string uri)
         {
-            var client = new RestClient(baseUrl + uri);
+            var options = new RestClientOptions(baseUrl + uri);
+            var client = new RestClient(options);
 
             if (authentication != null)
             {
-                client.UserAgent = authentication.GetClientAgentHeader();
+                options.UserAgent = authentication.GetClientAgentHeader();
                 client.Authenticator = GetAuthenticator();
             }
 

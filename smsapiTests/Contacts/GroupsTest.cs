@@ -48,8 +48,16 @@ namespace smsapiTests.Contacts
             Assert.AreEqual(_group.Id, response.Id);
             Assert.AreNotEqual(_group.Name, response.Name);
             Assert.AreEqual("GroupY", response.Name);
-            Assert.AreEqual(_group.Idx, response.Idx);
             Assert.AreEqual(_group.Description, response.Description);
+
+            if (string.IsNullOrEmpty(_group.Idx))
+            {
+                Assert.IsTrue(string.IsNullOrEmpty(response.Idx));
+            }
+            else
+            {
+                Assert.AreEqual(_group.Idx, response.Idx);
+            }
         }
 
         [TestMethod]
@@ -73,8 +81,16 @@ namespace smsapiTests.Contacts
 
             Assert.AreEqual(_group.Id, response.Id);
             Assert.AreEqual(_group.Name, response.Name);
-            Assert.AreEqual(_group.Idx, response.Idx);
             Assert.AreEqual(_group.Description, response.Description);
+
+            if (string.IsNullOrEmpty(_group.Idx))
+            {
+                Assert.IsTrue(string.IsNullOrEmpty(response.Idx));
+            }
+            else
+            {
+                Assert.AreEqual(_group.Idx, response.Idx);
+            }
         }
 
         [TestMethod]

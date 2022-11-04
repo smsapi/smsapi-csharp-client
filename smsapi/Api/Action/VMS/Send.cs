@@ -120,11 +120,10 @@ namespace SMSApi.Api.Action
 
         protected override Dictionary<string, Stream> Files()
         {
-            Dictionary<string, Stream> files = null;
+            Dictionary<string, Stream> files = new Dictionary<string, Stream>();
 
             if (File != null && File.Length > 0)
             {
-                files = new Dictionary<string, Stream>();
                 files.Add("file", File);
             }
 

@@ -3,9 +3,10 @@
   <PropertyGroup>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <TargetFrameworks>net452;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
     <Deterministic>false</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>SMSAPI.pl</PackageId>
@@ -16,6 +17,7 @@
     <PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
     <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
     <PackageTags>smsapi</PackageTags>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
@@ -31,6 +33,19 @@
     <Folder Include="Api\Action\Contacts\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="106.13.0" />
+    <PackageReference Include="RestSharp" Version="108.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
