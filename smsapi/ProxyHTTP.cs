@@ -69,8 +69,8 @@ namespace SMSApi.Api
             var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            RestClient client = CreateClient(uri);
-            RestRequest request = CreateRequest(responseStream, data, files, method);
+            RestClient client = CreateClient();
+            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
 
             try
             {
@@ -110,8 +110,8 @@ namespace SMSApi.Api
             var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            RestClient client = CreateClient(uri);
-            RestRequest request = CreateRequest(responseStream, data, files, method);
+            RestClient client = CreateClient();
+            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
 
             try
             {
@@ -126,12 +126,13 @@ namespace SMSApi.Api
         }
 
         private static RestRequest CreateRequest(
+            string uri,
             Stream responseStream,
             NameValueCollection data,
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var request = new RestRequest()
+            var request = new RestRequest(uri)
             {
                 Method = ToMethod(method),
                 ResponseWriter = s =>
@@ -175,9 +176,9 @@ namespace SMSApi.Api
             }
         }
 
-        private RestClient CreateClient(string uri)
+        private RestClient CreateClient()
         {
-            var options = new RestClientOptions(baseUrl + uri);
+            var options = new RestClientOptions(baseUrl);
             var client = new RestClient(options);
 
             if (authentication != null)
