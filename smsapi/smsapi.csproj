@@ -19,16 +19,6 @@
     <PackageTags>smsapi</PackageTags>
     <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Web" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Action\Contacts\" />
   </ItemGroup>
