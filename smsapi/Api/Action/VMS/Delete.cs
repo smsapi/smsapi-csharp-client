@@ -1,30 +1,15 @@
 ﻿using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization.Json;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class VMSDelete : BaseSimple<SMSApi.Api.Response.Countable>
+    public class VMSDelete : Base<Countable>
     {
-        public VMSDelete() : base() { }
-
-        protected override string Uri() { return "vms.do"; }
-
-        protected string[] ids;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("sch_del", string.Join("|", ids));
-
-            return collection;
-        }
+        private string[] ids;
 
         public VMSDelete Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new[] { id };
             return this;
         }
 
@@ -32,6 +17,20 @@ namespace SMSApi.Api.Action
         {
             this.ids = ids;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "vms.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "sch_del", string.Join("|", ids) }
+            };
         }
     }
 }

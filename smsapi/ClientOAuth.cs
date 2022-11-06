@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Text;
 
 namespace SMSApi.Api
 {
-    public class ClientOAuth : ClientBase, IClient
+    public class ClientOAuth : ClientBase,
+        IClient
     {
-        public string Token { get; private set; }
-
         public ClientOAuth(string token)
-            : base()
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -17,6 +14,8 @@ namespace SMSApi.Api
 
             Token = token;
         }
+
+        public string Token { get; }
 
         public override string GetAuthenticationHeader()
         {

@@ -1,43 +1,50 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class ListGroups : Rest<SMSApi.Api.Response.Groups>
-	{
-		public ListGroups ()
-			: base()
-		{
-		}
+    public class ListGroups : Base<Groups>
+    {
+        private string id;
+        private string name;
 
-		protected override string Resource { get { return "contacts/groups"; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        public ListGroups SetId(string id)
+        {
+            this.id = id;
+            return this;
+        }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				parameters.Add("with", "contacts_count");
-				if (Id   != null) parameters.Add("id",   Id);
-				if (Name != null) parameters.Add("name", Name);
-				return parameters;
-			}
-		}
+        public ListGroups SetName(string name)
+        {
+            this.name = name;
+            return this;
+        }
 
-		public string Id;
-		public ListGroups SetId(string id)
-		{
-			Id = id;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts/groups";
+        }
 
-		public string Name;
-		public ListGroups SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
-	}
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection
+            {
+                { "with", "contacts_count" }
+            };
+
+            if (id != null)
+            {
+                parameters.Add("id", id);
+            }
+
+            if (name != null)
+            {
+                parameters.Add("name", name);
+            }
+
+            return parameters;
+        }
+    }
 }

@@ -1,106 +1,143 @@
 using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class ListContacts : Rest<Response.Contacts>
-	{
-		public ListContacts ()
-			: base()
-		{
-		}
+    public class ListContacts : Base<Contacts>
+    {
+        private DateTime? birthdayDate;
+        private string email;
+        private string firstName;
+        private string gender;
+        private int? groupId;
+        private string lastName;
+        private int? limit;
+        private int? offset;
+        private string phoneNumber;
+        private string search;
 
-		protected override string Resource { get { return "contacts"; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        public ListContacts SetBirthdayDate(DateTime? birthdayDate)
+        {
+            this.birthdayDate = birthdayDate;
+            return this;
+        }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Search       != null) parameters.Add("q",             Search);
-				if (Offset       != null) parameters.Add("offset",        Offset.Value.ToString());
-				if (Limit        != null) parameters.Add("limit",         Limit.Value.ToString());
-				if (PhoneNumber  != null) parameters.Add("phone_number",  PhoneNumber);
-				if (Email        != null) parameters.Add("email",         Email);
-				if (FirstName    != null) parameters.Add("first_name",    FirstName);
-				if (LastName     != null) parameters.Add("last_name",     LastName);
-				if (GroupId      != null) parameters.Add("group_id",      GroupId.Value.ToString());
-				if (Gender       != null) parameters.Add("gender",        Gender);
-				if (BirthdayDate != null) parameters.Add("birthday_date", BirthdayDate.Value.ToString("Y-m-d"));
-				return parameters;
-			}
-		}
+        public ListContacts SetEmail(string email)
+        {
+            this.email = email;
+            return this;
+        }
 
-		public string Search;
-		public ListContacts SetSearch(string search)
-		{
-			Search = search;
-			return this;
-		}
+        public ListContacts SetFirstName(string firstName)
+        {
+            this.firstName = firstName;
+            return this;
+        }
 
-		public int? Offset;
-		public ListContacts SetOffset(int? offset)
-		{
-			Offset = offset;
-			return this;
-		}
+        public ListContacts SetGender(string gender)
+        {
+            this.gender = gender;
+            return this;
+        }
 
-		public int? Limit;
-		public ListContacts SetLimit(int? limit)
-		{
-			Limit = limit;
-			return this;
-		}
+        public ListContacts SetGroupId(int? groupId)
+        {
+            this.groupId = groupId;
+            return this;
+        }
 
-		public string PhoneNumber;
-		public ListContacts SetPhoneNumber(string phoneNumber)
-		{
-			PhoneNumber = phoneNumber;
-			return this;
-		}
+        public ListContacts SetLastName(string lastName)
+        {
+            this.lastName = lastName;
+            return this;
+        }
 
-		public string Email;
-		public ListContacts SetEmail(string email)
-		{
-			Email = email;
-			return this;
-		}
+        public ListContacts SetLimit(int? limit)
+        {
+            this.limit = limit;
+            return this;
+        }
 
-		public string FirstName;
-		public ListContacts SetFirstName(string firstName)
-		{
-			FirstName = firstName;
-			return this;
-		}
+        public ListContacts SetOffset(int? offset)
+        {
+            this.offset = offset;
+            return this;
+        }
 
-		public string LastName;
-		public ListContacts SetLastName(string lastName)
-		{
-			LastName = lastName;
-			return this;
-		}
+        public ListContacts SetPhoneNumber(string phoneNumber)
+        {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
 
-		public int? GroupId;
-		public ListContacts SetGroupId(int? groupId)
-		{
-			GroupId = groupId;
-			return this;
-		}
+        public ListContacts SetSearch(string search)
+        {
+            this.search = search;
+            return this;
+        }
 
-		public string Gender;
-		public ListContacts SetGender(string gender)
-		{
-			Gender = gender;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts";
+        }
 
-		public DateTime? BirthdayDate;
-		public ListContacts SetBirthdayDate(DateTime? birthdayDate)
-		{
-			BirthdayDate = birthdayDate;
-			return this;
-		}
-	}
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection();
+            if (search != null)
+            {
+                parameters.Add("q", search);
+            }
+
+            if (offset != null)
+            {
+                parameters.Add("offset", offset.Value.ToString());
+            }
+
+            if (limit != null)
+            {
+                parameters.Add("limit", limit.Value.ToString());
+            }
+
+            if (phoneNumber != null)
+            {
+                parameters.Add("phone_number", phoneNumber);
+            }
+
+            if (email != null)
+            {
+                parameters.Add("email", email);
+            }
+
+            if (firstName != null)
+            {
+                parameters.Add("first_name", firstName);
+            }
+
+            if (lastName != null)
+            {
+                parameters.Add("last_name", lastName);
+            }
+
+            if (groupId != null)
+            {
+                parameters.Add("group_id", groupId.Value.ToString());
+            }
+
+            if (gender != null)
+            {
+                parameters.Add("gender", gender);
+            }
+
+            if (birthdayDate != null)
+            {
+                parameters.Add("birthday_date", birthdayDate.Value.ToString("Y-m-d"));
+            }
+
+            return parameters;
+        }
+    }
 }

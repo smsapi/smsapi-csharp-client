@@ -1,29 +1,30 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGet : BaseSimple<SMSApi.Api.Response.User>
+    public class UserGet : Base<User>
     {
-        public UserGet() : base() { }
-
-        protected override string Uri() { return "user.do"; }
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("get_user", username);
-
-            return collection;
-        }
-
-        protected string username;
+        private string username;
 
         public UserGet Username(string username)
         {
             this.username = username;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "user.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "get_user", username }
+            };
         }
     }
 }

@@ -1,69 +1,23 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactEdit : BaseSimple<SMSApi.Api.Response.Contact>
+    public class PhonebookContactEdit : Base<Contact>
     {
-        public PhonebookContactEdit() : base() { }
-
-        protected override string Uri() { return "phonebook.do"; }
-
-        protected string oldNumber;
-        protected string newNumber;
-        protected string firstName;
-        protected string lastName;
-        protected string info;
-        protected int birthday;
-        protected string city;
-        protected string gender;
-        protected string[] groups;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("edit_contact", oldNumber);
-
-            if (newNumber != null)  collection.Add("new_number", newNumber);
-            if (firstName != null)  collection.Add("first_name", firstName);
-            if (lastName != null)   collection.Add("last_name", lastName);
-            if (info != null)       collection.Add("info", info);
-            if (birthday != 0)      collection.Add("birthday", birthday.ToString());
-            if (city != null)       collection.Add("city", city);
-            if (gender != null)     collection.Add("gender", gender);
-            if (groups != null)     collection.Add("groups", string.Join(",", groups));
-
-            return collection;
-        }
+        private int birthday;
+        private string city;
+        private string firstName;
+        private string gender;
+        private string[] groups;
+        private string info;
+        private string lastName;
+        private string newNumber;
+        private string oldNumber;
 
         public PhonebookContactEdit Number(string number)
         {
-            this.oldNumber = number;
-            return this;
-        }
-
-        public PhonebookContactEdit SetNumber(string number)
-        {
-            this.newNumber = number;
-            return this;
-        }
-
-        public PhonebookContactEdit SetFirstName(string firstName)
-        {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public PhonebookContactEdit SetLastName(string lastName)
-        {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public PhonebookContactEdit SetInfo(string info)
-        {
-            this.info = info;
+            oldNumber = number;
             return this;
         }
 
@@ -79,6 +33,12 @@ namespace SMSApi.Api.Action
             return this;
         }
 
+        public PhonebookContactEdit SetFirstName(string firstName)
+        {
+            this.firstName = firstName;
+            return this;
+        }
+
         public PhonebookContactEdit SetGender(string gender)
         {
             this.gender = gender;
@@ -87,7 +47,7 @@ namespace SMSApi.Api.Action
 
         public PhonebookContactEdit SetGroup(string group)
         {
-            this.groups = new string[] {group};
+            groups = new[] { group };
             return this;
         }
 
@@ -95,6 +55,80 @@ namespace SMSApi.Api.Action
         {
             this.groups = groups;
             return this;
+        }
+
+        public PhonebookContactEdit SetInfo(string info)
+        {
+            this.info = info;
+            return this;
+        }
+
+        public PhonebookContactEdit SetLastName(string lastName)
+        {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public PhonebookContactEdit SetNumber(string number)
+        {
+            newNumber = number;
+            return this;
+        }
+
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection
+            {
+                { "format", "json" },
+                { "edit_contact", oldNumber }
+            };
+
+            if (newNumber != null)
+            {
+                collection.Add("new_number", newNumber);
+            }
+
+            if (firstName != null)
+            {
+                collection.Add("first_name", firstName);
+            }
+
+            if (lastName != null)
+            {
+                collection.Add("last_name", lastName);
+            }
+
+            if (info != null)
+            {
+                collection.Add("info", info);
+            }
+
+            if (birthday != 0)
+            {
+                collection.Add("birthday", birthday.ToString());
+            }
+
+            if (city != null)
+            {
+                collection.Add("city", city);
+            }
+
+            if (gender != null)
+            {
+                collection.Add("gender", gender);
+            }
+
+            if (groups != null)
+            {
+                collection.Add("groups", string.Join(",", groups));
+            }
+
+            return collection;
         }
     }
 }

@@ -1,28 +1,15 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class MMSDelete : BaseSimple<SMSApi.Api.Response.Countable>
+    public class MMSDelete : Base<Countable>
     {
-        public MMSDelete() : base() { }
-
-        protected override string Uri() { return "mms.do"; }
-
-        protected string[] ids;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("sch_del", string.Join("|", ids));
-
-            return collection;
-        }
+        private string[] ids;
 
         public MMSDelete Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new[] { id };
             return this;
         }
 
@@ -30,6 +17,20 @@ namespace SMSApi.Api.Action
         {
             this.ids = ids;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "mms.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "sch_del", string.Join("|", ids) }
+            };
         }
     }
 }

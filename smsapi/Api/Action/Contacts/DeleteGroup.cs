@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class DeleteGroup : Rest<SMSApi.Api.Response.Base>
-	{
-		public DeleteGroup(string groupId)
-			: base()
-		{
-			GroupId = groupId;
-		}
+    public class DeleteGroup : Base<Base>
+    {
+        private readonly string groupId;
 
-		protected override string Resource { get { return "contacts/groups/" + GroupId; } }
+        public DeleteGroup(string groupId)
+        {
+            this.groupId = groupId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.DELETE; } }
+        protected override RequestMethod Method => RequestMethod.DELETE;
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
-	}
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
+    }
 }

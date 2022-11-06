@@ -1,24 +1,22 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupList : BaseSimple<SMSApi.Api.Response.Groups>
+    public class PhonebookGroupList : Base<Groups>
     {
-        public PhonebookGroupList()
-            : base()
+        protected override string Uri()
         {
+            return "phonebook.do";
         }
-
-        protected override string Uri() { return "phonebook.do"; }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("list_groups", "");
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "list_groups", "" }
+            };
         }
     }
 }

@@ -1,37 +1,30 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : BaseSimple<SMSApi.Api.Response.CheckNumber>
+    public class HLRCheckNumber : Base<CheckNumber>
     {
-        public HLRCheckNumber() : base() { }
-
-        protected override string Uri() { return "hlrsync.do"; }
-
         protected string[] numbers;
 
         public HLRCheckNumber SetNumber(string number)
         {
-            this.numbers = new string[] { number };
+            numbers = new[] { number };
             return this;
         }
 
-/*
-        public HLRCheckNumber SetNumber(string[] numbers)
+        protected override string Uri()
         {
-            this.numbers = numbers;
-            return this;
+            return "hlrsync.do";
         }
-*/
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("number", string.Join(",", numbers));
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "format", "json" },
+                { "number", string.Join(",", numbers) }
+            };
         }
-    }   
+    }
 }

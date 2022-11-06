@@ -1,54 +1,64 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class EditGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public EditGroup(string groupId)
-			: base()
-		{
-			GroupId = groupId;
-		}
+    public class EditGroup : Base<Group>
+    {
+        private string description;
+        private string groupId;
+        private string idx;
+        private string name;
 
-		protected override string Resource { get { return "contacts/groups/" + GroupId; } }
+        public EditGroup(string groupId)
+        {
+            this.groupId = groupId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name        != null) parameters.Add("name",       Name);
-				if (Description != null) parameters.Add("desciption", Description);
-				if (Idx         != null) parameters.Add("idx",        Idx);
-				return parameters;
-			}
-		}
+        public EditGroup SetDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
+        public EditGroup SetIdx(string idx)
+        {
+            this.idx = idx;
+            return this;
+        }
 
-		public string Name;
-		public EditGroup SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
+        public EditGroup SetName(string name)
+        {
+            this.name = name;
+            return this;
+        }
 
-		public string Description;
-		public EditGroup SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
 
-		public string Idx;
-		public EditGroup SetIdx(string idx)
-		{
-			Idx = idx;
-			return this;
-		}
-	}
+        protected override NameValueCollection Values()
+        {
+            var parameters = new NameValueCollection();
+            if (name != null)
+            {
+                parameters.Add("name", name);
+            }
+
+            if (description != null)
+            {
+                parameters.Add("description", description);
+            }
+
+            if (idx != null)
+            {
+                parameters.Add("idx", idx);
+            }
+
+            return parameters;
+        }
+    }
 }

@@ -1,98 +1,129 @@
 using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateContact : Rest<SMSApi.Api.Response.Contact>
-	{
-		public CreateContact()
-			: base()
-		{
-		}
+    public class CreateContact : Base<Contact>
+    {
+        private DateTime? birthdayDate;
+        private string city;
+        private string description;
+        private string email;
+        private string firstName;
+        private string gender;
+        private string lastName;
+        private string phoneNumber;
+        private string source;
 
-		protected override string Resource { get { return "contacts"; } }
+        public CreateContact SetBirthdayDate(DateTime? birthdayDate)
+        {
+            this.birthdayDate = birthdayDate;
+            return this;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.POST; } }
+        public CreateContact SetCity(string city)
+        {
+            this.city = city;
+            return this;
+        }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (PhoneNumber  != null) parameters.Add("phone_number",  PhoneNumber);
-				if (Email        != null) parameters.Add("email",         Email);
-				if (FirstName    != null) parameters.Add("first_name",    FirstName);
-				if (LastName     != null) parameters.Add("last_name",     LastName);
-				if (Gender       != null) parameters.Add("gender",        Gender);
-				if (BirthdayDate != null) parameters.Add("birthday_date", BirthdayDate.Value.ToString("Y-m-d"));
-				if (Description  != null) parameters.Add("description",   Description);
-				if (City         != null) parameters.Add("city",          City);
-				if (Source       != null) parameters.Add("source",        Source);
-				return parameters;
-			}
-		}
+        public CreateContact SetDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
 
-		public string PhoneNumber;
-		public CreateContact SetPhoneNumber(string phoneNumber)
-		{
-			PhoneNumber = phoneNumber;
-			return this;
-		}
+        public CreateContact SetEmail(string email)
+        {
+            this.email = email;
+            return this;
+        }
 
-		public string Email;
-		public CreateContact SetEmail(string email)
-		{
-			Email = email;
-			return this;
-		}
+        public CreateContact SetFirstName(string firstName)
+        {
+            this.firstName = firstName;
+            return this;
+        }
 
-		public string FirstName;
-		public CreateContact SetFirstName(string firstName)
-		{
-			FirstName = firstName;
-			return this;
-		}
+        public CreateContact SetGender(string gender)
+        {
+            this.gender = gender;
+            return this;
+        }
 
-		public string LastName;
-		public CreateContact SetLastName(string lastName)
-		{
-			LastName = lastName;
-			return this;
-		}
+        public CreateContact SetLastName(string lastName)
+        {
+            this.lastName = lastName;
+            return this;
+        }
 
-		public string Gender;
-		public CreateContact SetGender(string gender)
-		{
-			Gender = gender;
-			return this;
-		}
+        public CreateContact SetPhoneNumber(string phoneNumber)
+        {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
 
-		public DateTime? BirthdayDate;
-		public CreateContact SetBirthdayDate(DateTime? birthdayDate)
-		{
-			BirthdayDate = birthdayDate;
-			return this;
-		}
+        public CreateContact SetSource(string source)
+        {
+            this.source = source;
+            return this;
+        }
 
-		public string Description;
-		public CreateContact SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts";
+        }
 
-		public string City;
-		public CreateContact SetCity(string city)
-		{
-			City = city;
-			return this;
-		}
+        protected override NameValueCollection Values()
+        {
+            var values = new NameValueCollection();
+            if (phoneNumber != null)
+            {
+                values.Add("phone_number", phoneNumber);
+            }
 
-		public string Source;
-		public CreateContact SetSource(string source)
-		{
-			Source = source;
-			return this;
-		}
-	}
+            if (email != null)
+            {
+                values.Add("email", email);
+            }
+
+            if (firstName != null)
+            {
+                values.Add("first_name", firstName);
+            }
+
+            if (lastName != null)
+            {
+                values.Add("last_name", lastName);
+            }
+
+            if (gender != null)
+            {
+                values.Add("gender", gender);
+            }
+
+            if (birthdayDate != null)
+            {
+                values.Add("birthday_date", birthdayDate.Value.ToString("Y-m-d"));
+            }
+
+            if (description != null)
+            {
+                values.Add("description", description);
+            }
+
+            if (city != null)
+            {
+                values.Add("city", city);
+            }
+
+            if (source != null)
+            {
+                values.Add("source", source);
+            }
+
+            return values;
+        }
+    }
 }
