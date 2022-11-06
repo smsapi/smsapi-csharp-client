@@ -10,7 +10,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>SMSAPI.pl</PackageId>
-    <PackageVersion>1.0.9</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
     <PackageLicense>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</PackageLicense>
     <PackageProjectUrl>https://www.smsapi.pl</PackageProjectUrl>
@@ -18,6 +18,7 @@
     <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
     <PackageTags>smsapi</PackageTags>
     <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Api\Action\Contacts\" />
