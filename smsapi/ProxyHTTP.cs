@@ -20,27 +20,6 @@ namespace SMSApi.Api
             this.baseUrl = baseUrl;
         }
 
-        public static string RequestMethodToString(RequestMethod method)
-        {
-            switch (method)
-            {
-                case RequestMethod.GET:
-                    return "GET";
-
-                case RequestMethod.PUT:
-                    return "PUT";
-
-                case RequestMethod.POST:
-                    return "POST";
-
-                case RequestMethod.DELETE:
-                    return "DELETE";
-
-                default:
-                    throw new ProxyException("Invalid request method");
-            }
-        }
-
         public void Authentication(IClient client)
         {
             authentication = client;
