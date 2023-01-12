@@ -24,7 +24,7 @@
     <Folder Include="Api\Action\Contacts\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="108.0.2" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
