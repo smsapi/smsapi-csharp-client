@@ -12,35 +12,35 @@ namespace SMSApi.Api
         Stream Execute(
             string uri,
             NameValueCollection data,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
 
         Stream Execute(
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
 
         Stream Execute(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
 
         Task<Stream> ExecuteAsync(
             string uri,
             NameValueCollection data,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
 
         Task<Stream> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
 
         Task<Stream> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method = RequestMethod.POST);
+            RequestMethod method);
     }
 }

@@ -25,7 +25,7 @@ namespace SMSApi.Api
             authentication = client;
         }
 
-        public Stream Execute(string uri, NameValueCollection data, RequestMethod method = RequestMethod.POST)
+        public Stream Execute(string uri, NameValueCollection data, RequestMethod method)
         {
             return Execute(uri, data, new Dictionary<string, Stream>(), method);
         }
@@ -34,7 +34,7 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method = RequestMethod.POST)
+            RequestMethod method)
         {
             return Execute(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
@@ -43,7 +43,7 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method = RequestMethod.POST)
+            RequestMethod method)
         {
             var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -66,7 +66,7 @@ namespace SMSApi.Api
         public async Task<Stream> ExecuteAsync(
             string uri,
             NameValueCollection data,
-            RequestMethod method = RequestMethod.POST)
+            RequestMethod method)
         {
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream>(), method);
         }
@@ -75,7 +75,7 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method = RequestMethod.POST)
+            RequestMethod method)
         {
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
@@ -84,7 +84,7 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method = RequestMethod.POST)
+            RequestMethod method)
         {
             var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
