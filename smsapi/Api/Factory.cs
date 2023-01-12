@@ -6,12 +6,12 @@
 
         private IClient client;
 
-        protected Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        protected Factory(ProxyAddress address = ProxyAddress.SmsApiIo)
         {
             Proxy(address);
         }
 
-        protected Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+        protected Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
             : this(address)
         {
             Client(client);
