@@ -5,7 +5,7 @@ namespace SMSApi.Api.Action
 {
     public class HLRCheckNumber : Base<CheckNumber>
     {
-        protected string number;
+        private string number;
 
         protected override RequestMethod Method => RequestMethod.POST;
 
