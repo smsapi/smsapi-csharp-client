@@ -5,13 +5,13 @@ namespace SMSApi.Api.Action
 {
     public class HLRCheckNumber : Base<CheckNumber>
     {
-        protected string[] numbers;
+        protected string number;
 
         protected override RequestMethod Method => RequestMethod.POST;
 
         public HLRCheckNumber SetNumber(string number)
         {
-            numbers = new[] { number };
+            this.number = number;
             return this;
         }
 
@@ -24,7 +24,7 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "number", string.Join(",", numbers) }
+                { "number", this.number }
             };
         }
     }
