@@ -17,9 +17,7 @@ namespace SMSApi.Api.Action
         private string[] Params;
         private string Sender;
         private bool Single;
-
         private string Text;
-        private string udh;
 
         protected override RequestMethod Method => RequestMethod.POST;
 
@@ -170,12 +168,6 @@ namespace SMSApi.Api.Action
         public SMSSend SetTo(string[] to)
         {
             To = to;
-            return this;
-        }
-
-        public SMSSend SetUdh(string udh)
-        {
-            this.udh = udh;
             return this;
         }
 
