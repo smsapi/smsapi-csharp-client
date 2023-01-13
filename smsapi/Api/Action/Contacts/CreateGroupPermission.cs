@@ -7,10 +7,10 @@ namespace SMSApi.Api.Action
     public class CreateGroupPermission : Base<GroupPermission>
     {
         private string groupId;
-        private bool? read;
-        private bool? send;
+        private bool read;
+        private bool send;
         private string username;
-        private bool? write;
+        private bool write;
 
         protected override RequestMethod Method => RequestMethod.POST;
 
@@ -19,13 +19,13 @@ namespace SMSApi.Api.Action
             this.groupId = groupId;
         }
 
-        public CreateGroupPermission SetRead(bool? read)
+        public CreateGroupPermission SetRead(bool read)
         {
             this.read = read;
             return this;
         }
 
-        public CreateGroupPermission SetSend(bool? send)
+        public CreateGroupPermission SetSend(bool send)
         {
             this.send = send;
             return this;
@@ -37,7 +37,7 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public CreateGroupPermission SetWrite(bool? write)
+        public CreateGroupPermission SetWrite(bool write)
         {
             this.write = write;
             return this;
@@ -50,25 +50,16 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var values = new NameValueCollection();
+            var values = new NameValueCollection
+            {
+                { "read", Convert.ToInt32(read).ToString() },
+                { "write", Convert.ToInt32(write).ToString() },
+                { "send", Convert.ToInt32(send).ToString() }
+            };
+
             if (username != null)
             {
                 values.Add("username", username);
-            }
-
-            if (read != null)
-            {
-                values.Add("read", Convert.ToInt32(read.Value).ToString());
-            }
-
-            if (write != null)
-            {
-                values.Add("write", Convert.ToInt32(write.Value).ToString());
-            }
-
-            if (send != null)
-            {
-                values.Add("send", Convert.ToInt32(send.Value).ToString());
             }
 
             return values;

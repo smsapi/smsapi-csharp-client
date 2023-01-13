@@ -7,10 +7,10 @@ namespace SMSApi.Api.Action
     public class EditGroupPermission : Base<GroupPermission>
     {
         private string groupId;
-        private bool? read;
-        private bool? send;
+        private bool read;
+        private bool send;
         private string username;
-        private bool? write;
+        private bool write;
 
         public EditGroupPermission(string groupId, string username)
         {
@@ -20,19 +20,19 @@ namespace SMSApi.Api.Action
 
         protected override RequestMethod Method => RequestMethod.PUT;
 
-        public EditGroupPermission SetRead(bool? read)
+        public EditGroupPermission SetRead(bool read)
         {
             this.read = read;
             return this;
         }
 
-        public EditGroupPermission SetSend(bool? send)
+        public EditGroupPermission SetSend(bool send)
         {
             this.send = send;
             return this;
         }
 
-        public EditGroupPermission SetWrite(bool? write)
+        public EditGroupPermission SetWrite(bool write)
         {
             this.write = write;
             return this;
@@ -45,23 +45,12 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var parameters = new NameValueCollection();
-            if (read != null)
+            return new NameValueCollection
             {
-                parameters.Add("read", Convert.ToInt32(read.Value).ToString());
-            }
-
-            if (write != null)
-            {
-                parameters.Add("write", Convert.ToInt32(write.Value).ToString());
-            }
-
-            if (send != null)
-            {
-                parameters.Add("send", Convert.ToInt32(send.Value).ToString());
-            }
-
-            return parameters;
+                { "read", Convert.ToInt32(read).ToString() },
+                { "write", Convert.ToInt32(write).ToString() },
+                { "send", Convert.ToInt32(send).ToString() }
+            };
         }
     }
 }

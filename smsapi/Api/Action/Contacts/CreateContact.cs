@@ -6,7 +6,7 @@ namespace SMSApi.Api.Action
 {
     public class CreateContact : Base<Contact>
     {
-        private DateTime? birthdayDate;
+        private DateTime birthdayDate;
         private string city;
         private string description;
         private string email;
@@ -18,7 +18,7 @@ namespace SMSApi.Api.Action
 
         protected override RequestMethod Method => RequestMethod.POST;
 
-        public CreateContact SetBirthdayDate(DateTime? birthdayDate)
+        public CreateContact SetBirthdayDate(DateTime birthdayDate)
         {
             this.birthdayDate = birthdayDate;
             return this;
@@ -79,7 +79,11 @@ namespace SMSApi.Api.Action
 
         protected override NameValueCollection Values()
         {
-            var values = new NameValueCollection();
+            var values = new NameValueCollection
+            {
+                { "birthday_date", birthdayDate.ToString("Y-m-d") }
+            };
+
             if (phoneNumber != null)
             {
                 values.Add("phone_number", phoneNumber);
@@ -103,11 +107,6 @@ namespace SMSApi.Api.Action
             if (gender != null)
             {
                 values.Add("gender", gender);
-            }
-
-            if (birthdayDate != null)
-            {
-                values.Add("birthday_date", birthdayDate.Value.ToString("Y-m-d"));
             }
 
             if (description != null)
