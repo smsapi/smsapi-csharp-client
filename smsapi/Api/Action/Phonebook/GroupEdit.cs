@@ -1,8 +1,10 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
+    [Obsolete("Use EditGroup")]
     public class PhonebookGroupEdit : Base<Group>
     {
         private string info;

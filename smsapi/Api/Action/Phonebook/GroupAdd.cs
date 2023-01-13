@@ -1,8 +1,10 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
+    [Obsolete("Use CreateGroup")]
     public class PhonebookGroupAdd : Base<Group>
     {
         private string info;
