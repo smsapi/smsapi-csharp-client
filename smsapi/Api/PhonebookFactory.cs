@@ -6,11 +6,11 @@ namespace SMSApi.Api
     [Obsolete("use ContactsFactory instead")]
     public class PhonebookFactory : Factory
     {
-        public PhonebookFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        public PhonebookFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(address)
         { }
 
-        public PhonebookFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+        public PhonebookFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(client, address)
         { }
 

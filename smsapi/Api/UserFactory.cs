@@ -4,11 +4,11 @@ namespace SMSApi.Api
 {
     public class UserFactory : Factory
     {
-        public UserFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        public UserFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(address)
         { }
 
-        public UserFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+        public UserFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(client, address)
         { }
 

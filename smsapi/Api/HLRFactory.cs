@@ -4,11 +4,11 @@ namespace SMSApi.Api
 {
     public class HLRFactory : Factory
     {
-        public HLRFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        public HLRFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(address)
         { }
 
-        public HLRFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl)
+        public HLRFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
             : base(client, address)
         { }
 
