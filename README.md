@@ -5,11 +5,17 @@ SMSAPI C# client may be used by *SMSAPI.pl* and *SMSAPI.com* clients.
 
 ## How to pick a service?
 
-### *SMSAPI.PL* (default)
+### *SMSAPI.IO* (default)
 
 ```c#
 var smsApi = new SMSApi.Api.SMSFactory(client);
 //or
+var smsApi = new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiIo);
+```
+
+### *SMSAPI.PL*
+
+```c#
 var smsApi = new SMSApi.Api.SMSFactory(client, ProxyAddress.SmsApiPl);
 ```
 
@@ -62,7 +68,7 @@ try
 
 	foreach (var status in result.List)
 	{
-		System.Console.WriteLine("ID: " + status.ID + " NUmber: " + status.Number + " Points:" + status.Points + " Status:" + status.Status + " IDx: " + status.IDx);
+		System.Console.WriteLine("ID: " + status.ID + " Number: " + status.Number + " Points:" + status.Points + " Status:" + status.Status + " IDx: " + status.IDx);
 	}
 }
 catch (SMSApi.Api.ActionException e)

@@ -8,7 +8,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config.example" />
     <None Include="App.Config" />
   </ItemGroup>
   <ItemGroup>

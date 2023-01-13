@@ -10,7 +10,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>SMSAPI.pl</PackageId>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
     <PackageLicense>https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE</PackageLicense>
     <PackageProjectUrl>https://www.smsapi.pl</PackageProjectUrl>
