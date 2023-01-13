@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     [Obsolete("Use ListGroups")]
     public class PhonebookGroupList : Base<Groups>
     {
+        protected override RequestMethod Method => RequestMethod.POST;
+
         protected override string Uri()
         {
             return "phonebook.do";

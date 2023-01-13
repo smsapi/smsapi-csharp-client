@@ -12,6 +12,8 @@ namespace SMSApi.Api.Action
         private string username;
         private bool? write;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public CreateGroupPermission(string groupId)
         {
             this.groupId = groupId;

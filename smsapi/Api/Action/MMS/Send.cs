@@ -9,6 +9,8 @@ namespace SMSApi.Api.Action
 
         private string Subject;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public MMSSend SetCheckIDx(bool check = true)
         {
             IdxCheck = check;

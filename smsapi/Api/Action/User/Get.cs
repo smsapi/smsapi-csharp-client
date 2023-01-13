@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     {
         private string username;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public UserGet Username(string username)
         {
             this.username = username;

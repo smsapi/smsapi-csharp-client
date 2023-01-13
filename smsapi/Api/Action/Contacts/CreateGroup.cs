@@ -9,6 +9,8 @@ namespace SMSApi.Api.Action
         private string idx;
         private string name;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public CreateGroup SetDescription(string description)
         {
             this.description = description;

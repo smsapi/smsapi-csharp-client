@@ -10,6 +10,8 @@ namespace SMSApi.Api.Action
         private string info;
         private string name;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookGroupAdd SetInfo(string info)
         {
             this.info = info;

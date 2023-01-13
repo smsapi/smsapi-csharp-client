@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     {
         private string[] id;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public SMSGet Id(string id)
         {
             this.id = new[] { id };

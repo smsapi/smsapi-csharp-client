@@ -9,6 +9,8 @@ namespace SMSApi.Api.Action
     {
         private string name;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookGroupGet Name(string name)
         {
             this.name = name;

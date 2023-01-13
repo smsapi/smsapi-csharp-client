@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
 {
     public class UserList : Base<Array<User>>
     {
+        protected override RequestMethod Method => RequestMethod.POST;
+
         protected override Array<User> ResponseToObject(Stream data)
         {
             return new Array<User>(Deserialize<List<User>>(data));

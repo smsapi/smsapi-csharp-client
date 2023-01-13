@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     {
         protected string[] numbers;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public HLRCheckNumber SetNumber(string number)
         {
             numbers = new[] { number };

@@ -17,6 +17,8 @@ namespace SMSApi.Api.Action
         private string username;
         private bool withoutPrefix;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public UserEdit()
         {
             limit = -1;

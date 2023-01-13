@@ -9,6 +9,8 @@ namespace SMSApi.Api.Action
     {
         private string number;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookContactGet Number(string number)
         {
             this.number = number;

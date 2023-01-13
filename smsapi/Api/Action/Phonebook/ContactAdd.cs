@@ -16,6 +16,8 @@ namespace SMSApi.Api.Action
         private string lastName;
         private string number;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookContactAdd SetBirthday(int birthday)
         {
             this.birthday = birthday;

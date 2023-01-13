@@ -11,6 +11,8 @@ namespace SMSApi.Api.Action
         private string newName;
         private string oldName;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookGroupEdit Name(string name)
         {
             oldName = name;

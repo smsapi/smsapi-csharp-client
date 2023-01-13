@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     {
         private string name;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public SenderAdd SetName(string name)
         {
             this.name = name;

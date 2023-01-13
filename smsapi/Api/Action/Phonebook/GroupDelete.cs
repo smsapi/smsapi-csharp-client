@@ -10,6 +10,8 @@ namespace SMSApi.Api.Action
         private string name;
         private bool removeContacts;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookGroupDelete()
         {
             removeContacts = false;

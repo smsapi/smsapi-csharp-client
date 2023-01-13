@@ -5,6 +5,8 @@ namespace SMSApi.Api.Action
 {
     public class UserGetCredits : Base<Credits>
     {
+        protected override RequestMethod Method => RequestMethod.POST;
+
         protected override string Uri()
         {
             return "user.do";

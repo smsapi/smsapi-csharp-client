@@ -14,7 +14,7 @@ namespace SMSApi.Api.Action
     {
         private Proxy proxy;
 
-        protected virtual RequestMethod Method => RequestMethod.POST;
+        protected abstract RequestMethod Method { get; }
 
         public T Execute()
         {

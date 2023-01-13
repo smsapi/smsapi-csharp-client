@@ -16,6 +16,8 @@ namespace SMSApi.Api.Action
         private string phoneNumber;
         private string source;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public CreateContact SetBirthdayDate(DateTime? birthdayDate)
         {
             this.birthdayDate = birthdayDate;

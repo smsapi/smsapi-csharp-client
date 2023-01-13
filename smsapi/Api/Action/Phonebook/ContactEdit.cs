@@ -17,6 +17,8 @@ namespace SMSApi.Api.Action
         private string newNumber;
         private string oldNumber;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookContactEdit Number(string number)
         {
             oldNumber = number;

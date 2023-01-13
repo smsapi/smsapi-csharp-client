@@ -16,6 +16,8 @@ namespace SMSApi.Api.Action
         private string orderDir;
         private string searchText;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public PhonebookContactList()
         {
             offset = 0;

@@ -17,6 +17,8 @@ namespace SMSApi.Api.Action
         private int senders;
         private bool withoutPrefix;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public UserAdd()
         {
             limit = -1;

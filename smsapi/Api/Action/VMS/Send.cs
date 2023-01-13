@@ -8,13 +8,14 @@ namespace SMSApi.Api.Action
     public class VMSSend : Send
     {
         private Stream File;
-
         private string From;
         private int Interval;
         private bool SkipGSM;
         private int Try;
         private string TTS;
         private string TTSLector;
+
+        protected override RequestMethod Method => RequestMethod.POST;
 
         public VMSSend SetCheckIDx(bool check = true)
         {

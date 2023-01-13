@@ -7,6 +7,8 @@ namespace SMSApi.Api.Action
     {
         private string[] ids;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public VMSGet Id(string id)
         {
             ids = new[] { id };

@@ -21,6 +21,8 @@ namespace SMSApi.Api.Action
         private string Text;
         private string udh;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public SMSSend SetCheckIDx(bool check = true)
         {
             IdxCheck = check;

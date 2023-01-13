@@ -8,6 +8,8 @@ namespace SMSApi.Api.Action
         private string name;
         private string type;
 
+        protected override RequestMethod Method => RequestMethod.POST;
+
         public CreateField SetName(string name)
         {
             this.name = name;
