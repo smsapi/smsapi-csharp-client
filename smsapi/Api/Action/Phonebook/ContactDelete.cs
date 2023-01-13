@@ -5,7 +5,7 @@ namespace SMSApi.Api.Action
 {
     public class PhonebookContactDelete : Base<Base>
     {
-        protected string number;
+        private string number;
 
         public PhonebookContactDelete Number(string number)
         {
