@@ -19,49 +19,13 @@ namespace SMSApi.Api.Action
         public T Execute()
         {
             Validate();
-
-            T response;
-            Stream data = proxy.Execute(Uri(), GetValues(), Files(), Method);
-
-            HandleError(data);
-
-            try
-            {
-                response = ResponseToObject(data);
-            }
-            catch (SerializationException e)
-            {
-                //Problem z prasowaniem json'a
-                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
-            }
-
-            data.Close();
-
-            return response;
+            return ProcessResponse(proxy.Execute(Uri(), GetValues(), Files(), Method));
         }
 
         public async Task<T> ExecuteAsync()
         {
             Validate();
-
-            T response;
-            Stream data = await proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method);
-
-            HandleError(data);
-
-            try
-            {
-                response = ResponseToObject(data);
-            }
-            catch (SerializationException e)
-            {
-                //Problem z prasowaniem json'a
-                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
-            }
-
-            data.Close();
-
-            return response;
+            return ProcessResponse(await proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method));
         }
 
         public void Proxy(Proxy proxy)
@@ -105,6 +69,32 @@ namespace SMSApi.Api.Action
         protected virtual NameValueCollection Values()
         {
             return new NameValueCollection();
+        }
+
+        private T ProcessResponse(Stream data)
+        {
+            T response;
+
+            try
+            {
+                HandleError(data);
+                response = ResponseToObject(data);
+            }
+            catch (SerializationException e)
+            {
+                //Problem z prasowaniem json'a
+                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                data?.Close();
+            }
+
+            return response;
         }
 
         private NameValueCollection GetValues()
