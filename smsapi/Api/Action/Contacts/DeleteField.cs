@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -16,6 +17,14 @@ namespace SMSApi.Api.Action
         protected override string Uri()
         {
             return "contacts/fields/" + fieldId;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(fieldId))
+            {
+                throw new ArgumentException("FieldId cannot be empty");
+            }
         }
     }
 }

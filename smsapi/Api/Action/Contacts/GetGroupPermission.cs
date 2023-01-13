@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -18,6 +19,19 @@ namespace SMSApi.Api.Action
         protected override string Uri()
         {
             return "contacts/groups/" + groupId + "/permissions/" + username;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentException("Username cannot be empty");
+            }
+
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
         }
     }
 }

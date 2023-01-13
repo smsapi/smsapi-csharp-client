@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
@@ -59,6 +60,14 @@ namespace SMSApi.Api.Action
             }
 
             return parameters;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
         }
     }
 }

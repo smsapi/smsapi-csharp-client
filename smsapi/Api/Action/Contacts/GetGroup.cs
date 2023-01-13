@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -16,6 +17,14 @@ namespace SMSApi.Api.Action
         protected override string Uri()
         {
             return "contacts/groups/" + groupId;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
         }
     }
 }

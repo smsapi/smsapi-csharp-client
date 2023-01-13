@@ -52,5 +52,18 @@ namespace SMSApi.Api.Action
                 { "send", Convert.ToInt32(send).ToString() }
             };
         }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentException("Username cannot be empty");
+            }
+
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
+        }
     }
 }

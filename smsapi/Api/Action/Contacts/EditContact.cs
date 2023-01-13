@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Specialized;
+using System.Text.RegularExpressions;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -132,6 +133,14 @@ namespace SMSApi.Api.Action
             }
 
             return values;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(ContactId))
+            {
+                throw new ArgumentException("ContactId cannot be empty");
+            }
         }
     }
 }
