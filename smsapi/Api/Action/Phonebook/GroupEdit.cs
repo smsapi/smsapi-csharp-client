@@ -36,7 +36,6 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "format", "json" },
                 { "edit_group", oldName },
                 { "name", newName },
                 { "info", info }

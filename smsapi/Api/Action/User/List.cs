@@ -21,7 +21,6 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "format", "json" },
                 { "list", "1" }
             };
         }

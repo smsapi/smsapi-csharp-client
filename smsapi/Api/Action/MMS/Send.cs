@@ -103,8 +103,6 @@ namespace SMSApi.Api.Action
         {
             var collection = new NameValueCollection();
 
-            collection.Add("format", "json");
-
             if (To != null)
             {
                 collection.Add("to", string.Join(",", To));

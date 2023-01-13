@@ -95,7 +95,6 @@ namespace SMSApi.Api.Action
         {
             var collection = new NameValueCollection
             {
-                { "format", "json" },
                 { "set_user", username }
             };
 

@@ -28,7 +28,6 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "format", "json" },
                 { "sch_del", string.Join("|", ids) }
             };
         }

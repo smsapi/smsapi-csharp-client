@@ -34,7 +34,6 @@ namespace SMSApi.Api.Action
         {
             var collection = new NameValueCollection
             {
-                { "format", "json" },
                 { "delete_group", name }
             };
 

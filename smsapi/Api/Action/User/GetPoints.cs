@@ -14,7 +14,6 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "format", "json" },
                 { "credits", "1" },
                 { "details", "1" }
             };

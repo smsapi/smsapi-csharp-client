@@ -22,7 +22,6 @@ namespace SMSApi.Api.Action
         {
             return new NameValueCollection
             {
-                { "format", "json" },
                 { "get_contact", number }
             };
         }

@@ -21,7 +21,7 @@ namespace SMSApi.Api.Action
             Validate();
 
             T response;
-            Stream data = proxy.Execute(Uri(), Values(), Files(), Method);
+            Stream data = proxy.Execute(Uri(), GetValues(), Files(), Method);
 
             HandleError(data);
 
@@ -45,7 +45,7 @@ namespace SMSApi.Api.Action
             Validate();
 
             T response;
-            Stream data = await proxy.ExecuteAsync(Uri(), Values(), Files(), Method);
+            Stream data = await proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method);
 
             HandleError(data);
 
@@ -104,7 +104,15 @@ namespace SMSApi.Api.Action
 
         protected virtual NameValueCollection Values()
         {
-            return HttpUtility.ParseQueryString(string.Empty);
+            return new NameValueCollection();
+        }
+
+        private NameValueCollection GetValues()
+        {
+            var values = GetValues();
+            return values.Count > 0
+                ? new NameValueCollection { { "format", "json" }, values }
+                : HttpUtility.ParseQueryString(string.Empty);
         }
 
         /**
