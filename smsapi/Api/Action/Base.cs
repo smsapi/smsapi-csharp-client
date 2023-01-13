@@ -99,7 +99,7 @@ namespace SMSApi.Api.Action
 
         private NameValueCollection GetValues()
         {
-            var values = GetValues();
+            var values = Values();
             return values.Count > 0
                 ? new NameValueCollection { { "format", "json" }, values }
                 : HttpUtility.ParseQueryString(string.Empty);
