@@ -134,7 +134,7 @@ namespace SMSApi.Api.Action
 
             if (birthdayDate != null)
             {
-                parameters.Add("birthday_date", birthdayDate.Value.ToString("Y-m-d"));
+                parameters.Add("birthday_date", birthdayDate.Value.ToString("yyyy-MM-dd"));
             }
 
             return parameters;
