@@ -1,21 +1,30 @@
 using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class GetGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public GetGroup(string groupId)
-			: base()
-		{
-			GroupId = groupId;
-		}
+    public class GetGroup : Base<Group>
+    {
+        private string groupId;
 
-		protected override string Resource { get { return "contacts/groups/" + GroupId; } }
+        public GetGroup(string groupId)
+        {
+            this.groupId = groupId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
-	}
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
+        }
+    }
 }

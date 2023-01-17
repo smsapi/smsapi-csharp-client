@@ -1,31 +1,26 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookGroupDelete : BaseSimple<SMSApi.Api.Response.Base>
+    [Obsolete("Use DeleteGroup")]
+    public class PhonebookGroupDelete : Base<Base>
     {
-        public PhonebookGroupDelete() : base() {
+        private string name;
+        private bool removeContacts;
+
+        protected override RequestMethod Method => RequestMethod.POST;
+
+        public PhonebookGroupDelete()
+        {
             removeContacts = false;
         }
 
-        protected override string Uri() { return "phonebook.do"; }
-
-        protected string name;
-        protected bool removeContacts;
-
-        protected override NameValueCollection Values()
+        public PhonebookGroupDelete Contacts(bool flag)
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("delete_group", name);
-
-            if (removeContacts == true)
-            {
-                collection.Add("remove_contacts", "1");
-            }
-
-            return collection;
+            removeContacts = flag;
+            return this;
         }
 
         public PhonebookGroupDelete Name(string name)
@@ -34,10 +29,24 @@ namespace SMSApi.Api.Action
             return this;
         }
 
-        public PhonebookGroupDelete Contacts(bool flag)
+        protected override string Uri()
         {
-            this.removeContacts = flag;
-            return this;
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var collection = new NameValueCollection
+            {
+                { "delete_group", name }
+            };
+
+            if (removeContacts)
+            {
+                collection.Add("remove_contacts", "1");
+            }
+
+            return collection;
         }
     }
 }

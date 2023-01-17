@@ -1,30 +1,30 @@
-﻿using System.Collections.Specialized;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserList : BaseArray<SMSApi.Api.Response.User>
+    public class UserList : Base<Array<User>>
     {
-        public UserList() : base() { }
+        protected override RequestMethod Method => RequestMethod.POST;
 
-        protected override string Uri() { return "user.do"; }
+        protected override Array<User> ResponseToObject(Stream data)
+        {
+            return new Array<User>(Deserialize<List<User>>(data));
+        }
+
+        protected override string Uri()
+        {
+            return "user.do";
+        }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("list", "1");
-
-            return collection;
-        }
-
-        protected string username;
-
-        public UserList Username(string username)
-        {
-            this.username = username;
-            return this;
+            return new NameValueCollection
+            {
+                { "list", "1" }
+            };
         }
     }
 }

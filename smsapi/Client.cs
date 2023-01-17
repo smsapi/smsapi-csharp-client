@@ -1,22 +1,33 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SMSApi.Api
 {
-    public class Client : ClientBase, IClient
+    public class Client : ClientBase,
+        IClient
     {
-        protected string username;
         protected string password;
+        protected string username;
 
         public Client(string username)
-            : base()
         {
             SetUsername(username);
         }
 
-        public void SetUsername(string username)
+        public override string GetAuthenticationHeader()
         {
-            this.username = username;
+            return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
+        }
+
+        public string GetPassword()
+        {
+            return password;
+        }
+
+        public string GetUsername()
+        {
+            return username;
         }
 
         public void SetPasswordHash(string password)
@@ -26,9 +37,9 @@ namespace SMSApi.Api
 
         public void SetPasswordRAW(string password)
         {
-            StringBuilder hash = new StringBuilder();
+            var hash = new StringBuilder();
 
-            MD5 md5 = MD5.Create();
+            var md5 = MD5.Create();
             byte[] hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             for (int i = 0; i < hashbin.Length; i++)
@@ -39,19 +50,9 @@ namespace SMSApi.Api
             SetPasswordHash(hash.ToString());
         }
 
-        public override string GetAuthenticationHeader()
+        public void SetUsername(string username)
         {
-            return "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(username + ":" + password));
-        }
-
-        public string GetUsername()
-        {
-            return username;
-        }
-
-        public string GetPassword()
-        {
-            return password;
+            this.username = username;
         }
     }
 }

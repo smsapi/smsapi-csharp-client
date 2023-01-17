@@ -5,48 +5,92 @@ namespace SMSApi.Api.Action
 {
     public class MMSSend : Send
     {
-        public MMSSend() : base() { }
+        private string Smil;
 
-        protected override string Uri() { return "mms.do"; }
+        private string Subject;
 
-        protected override NameValueCollection Values()
+        protected override RequestMethod Method => RequestMethod.POST;
+
+        public MMSSend SetCheckIDx(bool check = true)
         {
-            NameValueCollection collection = new NameValueCollection();
+            IdxCheck = check;
+            return this;
+        }
 
-            collection.Add("format", "json");
+        public MMSSend SetDateSent(string data)
+        {
+            DateSent = data;
+            return this;
+        }
 
-            if (To != null)
-                collection.Add("to", string.Join(",", To));
+        public MMSSend SetDateSent(DateTime data)
+        {
+            DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            return this;
+        }
 
-            if (Group != null)
-                collection.Add("group", Group);
+        public MMSSend SetGroup(string group)
+        {
+            Group = group;
+            return this;
+        }
 
-            if (Subject != null)
-                collection.Add("subject", Subject);
+        public MMSSend SetIDx(string idx)
+        {
+            Idx = new[] { idx };
+            return this;
+        }
 
-            collection.Add("smil", Smil);
+        public MMSSend SetIDx(string[] idx)
+        {
+            Idx = idx;
+            return this;
+        }
 
-            if (DateSent != null)
-                collection.Add("date", DateSent);
+        public MMSSend SetPartner(string partner)
+        {
+            Partner = partner;
+            return this;
+        }
 
-            if (Partner != null)
-                collection.Add("partner_id", Partner);
+        public MMSSend SetSmil(string smil)
+        {
+            Smil = smil;
+            return this;
+        }
 
-            if (Test == true)
-                collection.Add("test", "1");
+        public MMSSend SetSubject(string subject)
+        {
+            Subject = subject;
+            return this;
+        }
 
-            if (Idx != null && Idx.Length > 0)
-            {
-                collection.Add("check_idx", (IdxCheck ? "1" : "0"));
-                collection.Add("idx", string.Join("|", Idx));
-            }
+        public MMSSend SetTest(bool test = true)
+        {
+            Test = test;
+            return this;
+        }
 
-            return collection;
+        public MMSSend SetTo(string to)
+        {
+            To = new[] { to };
+            return this;
+        }
+
+        public MMSSend SetTo(string[] to)
+        {
+            To = to;
+            return this;
+        }
+
+        protected override string Uri()
+        {
+            return "mms.do";
         }
 
         protected override void Validate()
         {
-            if( To != null && Group != null )
+            if (To != null && Group != null)
             {
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
@@ -57,79 +101,49 @@ namespace SMSApi.Api.Action
             }
         }
 
-        private string Subject;
-        private string Smil;
-
-        public MMSSend SetTo(string to)
+        protected override NameValueCollection Values()
         {
-            this.To = new string[] { to };
-            return this;
-        }
+            var collection = new NameValueCollection();
 
-        public MMSSend SetTo(string[] to)
-        {
-            this.To = to;
-            return this;
-        }
+            if (To != null)
+            {
+                collection.Add("to", string.Join(",", To));
+            }
 
-        public MMSSend SetGroup(string group)
-        {
-            this.Group = group;
-            return this;
-        }
+            if (Group != null)
+            {
+                collection.Add("group", Group);
+            }
 
-        public MMSSend SetDateSent(string data)
-        {
-            this.DateSent = data;
-            return this;
-        }
+            if (Subject != null)
+            {
+                collection.Add("subject", Subject);
+            }
 
-        public MMSSend SetDateSent(DateTime data)
-        {
-            this.DateSent = data.ToString("yyyy-MM-ddTHH:mm:ssK");
-            return this;
-        }
+            collection.Add("smil", Smil);
 
-        public MMSSend SetIDx(string idx)
-        {
-            this.Idx = new string[] { idx };
-            return this;
-        }
+            if (DateSent != null)
+            {
+                collection.Add("date", DateSent);
+            }
 
-        public MMSSend SetIDx(string[] idx)
-        {
-            this.Idx = idx;
-            return this;
-        }
+            if (Partner != null)
+            {
+                collection.Add("partner_id", Partner);
+            }
 
-        public MMSSend SetCheckIDx(bool check = true)
-        {
-            this.IdxCheck = check;
-            return this;
-        }
+            if (Test)
+            {
+                collection.Add("test", "1");
+            }
 
-        public MMSSend SetSubject(string subject)
-        {
-            this.Subject = subject;
-            return this;
-        }
+            if (Idx != null && Idx.Length > 0)
+            {
+                collection.Add("check_idx", IdxCheck ? "1" : "0");
+                collection.Add("idx", string.Join("|", Idx));
+            }
 
-        public MMSSend SetSmil(string smil)
-        {
-            this.Smil = smil;
-            return this;
-        }
-
-        public MMSSend SetPartner(string partner)
-        {
-            this.Partner = partner;
-            return this;
-        }
-
-        public MMSSend SetTest(bool test = true)
-        {
-            this.Test = test;
-            return this;
+            return collection;
         }
     }
 }

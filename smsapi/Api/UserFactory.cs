@@ -1,78 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
     public class UserFactory : Factory
     {
-        public UserFactory(ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(address) 
-        { 
-        }
+        public UserFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
+            : base(address)
+        { }
 
-        public UserFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-            : base(client, address) 
-        { 
-        }
+        public UserFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
+            : base(client, address)
+        { }
 
-        public UserFactory(IClient client, Proxy proxy) 
-            : base(client, proxy) 
-        { 
-        }
+        public UserFactory(IClient client, Proxy proxy)
+            : base(client, proxy)
+        { }
 
-        public SMSApi.Api.Action.UserGetCredits ActionGetCredits()
+        public UserAdd ActionAdd()
         {
-            var action = new SMSApi.Api.Action.UserGetCredits();
-
-            action.Client(client);
+            var action = new UserAdd();
             action.Proxy(proxy);
-
             return action;
         }
 
-        public SMSApi.Api.Action.UserAdd ActionAdd()
+        public UserEdit ActionEdit(string username = null)
         {
-            var action = new SMSApi.Api.Action.UserAdd();
-
-            action.Client(client);
+            var action = new UserEdit();
             action.Proxy(proxy);
-
-            return action;
-        }
-
-        public SMSApi.Api.Action.UserEdit ActionEdit(string username = null)
-        {
-            var action = new SMSApi.Api.Action.UserEdit();
-
-            action.Client(client);
-            action.Proxy(proxy);
-
             action.Username(username);
-
             return action;
         }
 
-        public SMSApi.Api.Action.UserGet ActionGet(string username = null)
+        public UserGet ActionGet(string username = null)
         {
-            var action = new SMSApi.Api.Action.UserGet();
-
-            action.Client(client);
+            var action = new UserGet();
             action.Proxy(proxy);
-
             action.Username(username);
-
             return action;
         }
 
-        public SMSApi.Api.Action.UserList ActionList()
+        public UserGetCredits ActionGetCredits()
         {
-            var action = new SMSApi.Api.Action.UserList();
-
-            action.Client(client);
+            var action = new UserGetCredits();
             action.Proxy(proxy);
+            return action;
+        }
 
+        public UserList ActionList()
+        {
+            var action = new UserList();
+            action.Proxy(proxy);
             return action;
         }
     }

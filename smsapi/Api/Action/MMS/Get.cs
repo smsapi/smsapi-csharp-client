@@ -1,28 +1,17 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class MMSGet : BaseSimple<SMSApi.Api.Response.Status>
+    public class MMSGet : Base<Status>
     {
-        public MMSGet() : base() { }
+        private string[] ids;
 
-        protected override string Uri() { return "mms.do"; }
-
-        protected string[] ids;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("status", string.Join("|", ids));
-
-            return collection;
-        }
+        protected override RequestMethod Method => RequestMethod.POST;
 
         public MMSGet Id(string id)
         {
-            this.ids = new string[] { id };
+            ids = new[] { id };
             return this;
         }
 
@@ -30,6 +19,19 @@ namespace SMSApi.Api.Action
         {
             this.ids = ids;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "mms.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "status", string.Join("|", ids) }
+            };
         }
     }
 }

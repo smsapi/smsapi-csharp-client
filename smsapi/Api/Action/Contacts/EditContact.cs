@@ -1,102 +1,147 @@
 using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class EditContact : Rest<SMSApi.Api.Response.Contact>
-	{
-		public EditContact(string contactId)
-			: base()
-		{
-			ContactId = contactId;
-		}
+    public class EditContact : Base<Contact>
+    {
+        private DateTime? birthdayDate;
+        private string city;
+        private string description;
+        private string email;
+        private string firstName;
+        private string gender;
+        private string lastName;
+        private string phoneNumber;
+        private string source;
 
-		protected override string Resource { get { return "contacts/" + ContactId; } }
+        public EditContact(string contactId)
+        {
+            ContactId = contactId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        public string ContactId { get; }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (PhoneNumber  != null) parameters.Add("phone_number",  PhoneNumber);
-				if (Email        != null) parameters.Add("email",         Email);
-				if (FirstName    != null) parameters.Add("first_name",    FirstName);
-				if (LastName     != null) parameters.Add("last_name",     LastName);
-				if (Gender       != null) parameters.Add("gender",        Gender);
-				if (BirthdayDate != null) parameters.Add("birthday_date", BirthdayDate.Value.ToString("Y-m-d"));
-				if (Description  != null) parameters.Add("description",   Description);
-				if (City         != null) parameters.Add("city",          City);
-				if (Source       != null) parameters.Add("source",        Source);
-				return parameters;
-			}
-		}
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		private string contactId;
-		public string ContactId { get { return contactId; } private set { contactId = value; } }
+        public EditContact SetBirthdayDate(DateTime birthdayDate)
+        {
+            this.birthdayDate = birthdayDate;
+            return this;
+        }
 
-		public string PhoneNumber;
-		public EditContact SetPhoneNumber(string phoneNumber)
-		{
-			PhoneNumber = phoneNumber;
-			return this;
-		}
+        public EditContact SetCity(string city)
+        {
+            this.city = city;
+            return this;
+        }
 
-		public string Email;
-		public EditContact SetEmail(string email)
-		{
-			Email = email;
-			return this;
-		}
+        public EditContact SetDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
 
-		public string FirstName;
-		public EditContact SetFirstName(string firstName)
-		{
-			FirstName = firstName;
-			return this;
-		}
+        public EditContact SetEmail(string email)
+        {
+            this.email = email;
+            return this;
+        }
 
-		public string LastName;
-		public EditContact SetLastName(string lastName)
-		{
-			LastName = lastName;
-			return this;
-		}
+        public EditContact SetFirstName(string firstName)
+        {
+            this.firstName = firstName;
+            return this;
+        }
 
-		public string Gender;
-		public EditContact SetGender(string gender)
-		{
-			Gender = gender;
-			return this;
-		}
+        public EditContact SetGender(string gender)
+        {
+            this.gender = gender;
+            return this;
+        }
 
-		public DateTime? BirthdayDate;
-		public EditContact SetBirthdayDate(DateTime? birthdayDate)
-		{
-			BirthdayDate = birthdayDate;
-			return this;
-		}
+        public EditContact SetLastName(string lastName)
+        {
+            this.lastName = lastName;
+            return this;
+        }
 
-		public string Description;
-		public EditContact SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+        public EditContact SetPhoneNumber(string phoneNumber)
+        {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
 
-		public string City;
-		public EditContact SetCity(string city)
-		{
-			City = city;
-			return this;
-		}
+        public EditContact SetSource(string source)
+        {
+            this.source = source;
+            return this;
+        }
 
-		public string Source;
-		public EditContact SetSource(string source)
-		{
-			Source = source;
-			return this;
-		}
-	}
+        protected override string Uri()
+        {
+            return "contacts/" + ContactId;
+        }
+
+        protected override NameValueCollection Values()
+        {
+            var values = new NameValueCollection();
+
+            if (birthdayDate != null)
+            {
+                values.Add("birthday_date", birthdayDate.Value.ToString("yyyy-MM-dd"));
+            }
+
+            if (phoneNumber != null)
+            {
+                values.Add("phone_number", phoneNumber);
+            }
+
+            if (email != null)
+            {
+                values.Add("email", email);
+            }
+
+            if (firstName != null)
+            {
+                values.Add("first_name", firstName);
+            }
+
+            if (lastName != null)
+            {
+                values.Add("last_name", lastName);
+            }
+
+            if (gender != null)
+            {
+                values.Add("gender", gender);
+            }
+
+            if (description != null)
+            {
+                values.Add("description", description);
+            }
+
+            if (city != null)
+            {
+                values.Add("city", city);
+            }
+
+            if (source != null)
+            {
+                values.Add("source", source);
+            }
+
+            return values;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(ContactId))
+            {
+                throw new ArgumentException("ContactId cannot be empty");
+            }
+        }
+    }
 }

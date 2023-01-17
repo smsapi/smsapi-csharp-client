@@ -1,19 +1,21 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SMSApi.Api.Response
 {
     [DataContract]
     public class Array<T> : Countable
     {
-        protected Array() : base() { }
+        [DataMember(Name = "list", IsRequired = true)]
+        public readonly List<T> List;
 
-        public Array(System.Collections.Generic.List<T> list)
+        public Array(List<T> list)
             : base(list.Count)
         {
-            this.List = list;
+            List = list;
         }
 
-        [DataMember(Name = "list", IsRequired = true)]
-        public readonly System.Collections.Generic.List<T> List;
+        protected Array()
+        { }
     }
 }

@@ -1,21 +1,30 @@
 using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class DeleteField : Rest<SMSApi.Api.Response.Base>
-	{
-		public DeleteField(string fieldId)
-			: base()
-		{
-			FieldId = fieldId;
-		}
+    public class DeleteField : Base<Base>
+    {
+        private readonly string fieldId;
 
-		protected override string Resource { get { return "contacts/fields/" + FieldId; } }
+        public DeleteField(string fieldId)
+        {
+            this.fieldId = fieldId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.DELETE; } }
+        protected override RequestMethod Method => RequestMethod.DELETE;
 
-		private string fieldId;
-		public string FieldId { get { return fieldId; } private set { fieldId = value; } }
-	}
+        protected override string Uri()
+        {
+            return "contacts/fields/" + fieldId;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(fieldId))
+            {
+                throw new ArgumentException("FieldId cannot be empty");
+            }
+        }
+    }
 }

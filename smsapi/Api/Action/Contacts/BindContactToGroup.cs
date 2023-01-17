@@ -1,25 +1,37 @@
 using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class BindContactToGroup : Rest<SMSApi.Api.Response.Base>
-	{
-		public BindContactToGroup(string contactId, string groupId)
-			: base()
-		{
-			ContactId = contactId;
-			GroupId = groupId;
-		}
+    public class BindContactToGroup : Base<Base>
+    {
+        private readonly string contactId;
+        private readonly string groupId;
 
-		protected override string Resource { get { return "contacts/" + contactId + "/groups/" + groupId; } }
+        public BindContactToGroup(string contactId, string groupId)
+        {
+            this.contactId = contactId;
+            this.groupId = groupId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		private string contactId;
-		public string ContactId { get { return contactId; } private set { contactId = value; } }
+        protected override string Uri()
+        {
+            return "contacts/" + contactId + "/groups/" + groupId;
+        }
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
-	}
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(contactId))
+            {
+                throw new ArgumentException("ContactId cannot be empty");
+            }
+
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
+        }
+    }
 }

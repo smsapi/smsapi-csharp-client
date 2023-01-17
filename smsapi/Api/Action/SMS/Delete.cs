@@ -1,29 +1,31 @@
 ﻿using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSDelete : BaseSimple<SMSApi.Api.Response.Countable>
+    public class SMSDelete : Base<Countable>
     {
-        public SMSDelete() : base() { }
+        private string id;
 
-        protected override string Uri() { return "sms.do"; }
-
-        protected string id;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("sch_del", id);
-
-            return collection;
-        }
+        protected override RequestMethod Method => RequestMethod.POST;
 
         public SMSDelete Id(string id)
         {
             this.id = id;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "sms.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "sch_del", id }
+            };
         }
     }
 }

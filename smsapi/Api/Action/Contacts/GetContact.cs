@@ -1,21 +1,30 @@
 using System;
-using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class GetContact : Rest<SMSApi.Api.Response.Contact>
-	{
-		public GetContact(string contactId)
-			: base()
-		{
-			ContactId = contactId;
-		}
+    public class GetContact : Base<Contact>
+    {
+        private readonly string contactId;
 
-		protected override string Resource { get { return "contacts/" + ContactId; } }
+        public GetContact(string contactId)
+        {
+            this.contactId = contactId;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.GET; } }
+        protected override RequestMethod Method => RequestMethod.GET;
 
-		private string contactId;
-		public string ContactId { get { return contactId; } private set { contactId = value; } }
-	}
+        protected override string Uri()
+        {
+            return "contacts/" + contactId;
+        }
+
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(contactId))
+            {
+                throw new ArgumentException("ContactId cannot be empty");
+            }
+        }
+    }
 }

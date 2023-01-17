@@ -1,20 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderList : BaseArray<SMSApi.Api.Response.Sender>
+    public class SenderList : Base<Array<Sender>>
     {
-        protected override string Uri() { return "sender.do"; }
+        protected override RequestMethod Method => RequestMethod.POST;
+
+        protected override Array<Sender> ResponseToObject(Stream data)
+        {
+            return new Array<Sender>(Deserialize<List<Sender>>(data));
+        }
+
+        protected override string Uri()
+        {
+            return "sender.do";
+        }
 
         protected override NameValueCollection Values()
         {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("list", "1");
-
-            return collection;
+            return new NameValueCollection
+            {
+                { "list", "1" }
+            };
         }
     }
 }

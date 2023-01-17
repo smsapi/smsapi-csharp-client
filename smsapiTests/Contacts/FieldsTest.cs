@@ -8,21 +8,11 @@ namespace smsapiTests.Contacts
     {
         private Field _field;
 
-        [TestInitialize]
-        public override void SetUp()
-        {
-            base.SetUp();
-            _field = _factory.CreateField()
-                                .SetName("FieldX")
-                                .SetType(Field.TextType)
-                                .Execute();
-        }
-
         [TestCleanup]
         public void Cleanup()
         {
-            var fields = _factory.ListFields().Execute();
-            foreach (var field in fields.Collection)
+            Fields fields = _factory.ListFields().Execute();
+            foreach (Field field in fields.Collection)
             {
                 _factory.DeleteField(field.Id).Execute();
             }
@@ -31,10 +21,7 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void CreateField()
         {
-            _field = _factory.CreateField()
-                                .SetName("FieldXX")
-                                .SetType(Field.TextType)
-                                .Execute();
+            _field = _factory.CreateField().SetName("FieldXX").SetType(Field.TextType).Execute();
 
             Assert.IsNotNull(_field.Id);
             Assert.AreEqual("FieldXX", _field.Name);
@@ -43,9 +30,7 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void EditField()
         {
-            var editedField = _factory.EditField(_field.Id)
-                                .SetName("FieldY")
-                                .Execute();
+            Field editedField = _factory.EditField(_field.Id).SetName("FieldY").Execute();
 
             Assert.IsNotNull(editedField.Id);
             Assert.AreEqual(_field.Id, editedField.Id);
@@ -61,15 +46,22 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void ListFields()
         {
-            var fields = _factory.ListFields().Execute();
+            Fields fields = _factory.ListFields().Execute();
 
-            foreach (var field in fields.Collection)
+            foreach (Field field in fields.Collection)
             {
                 Assert.IsNotNull("", field.Name);
                 Assert.AreNotEqual("", field.Name);
                 Assert.IsNotNull("", field.Type);
                 Assert.AreNotEqual("", field.Type);
             }
+        }
+
+        [TestInitialize]
+        public override void SetUp()
+        {
+            base.SetUp();
+            _field = _factory.CreateField().SetName("FieldX").SetType(Field.TextType).Execute();
         }
     }
 }

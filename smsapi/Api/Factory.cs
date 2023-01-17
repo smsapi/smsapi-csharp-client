@@ -1,60 +1,43 @@
-﻿
-using System.Collections.Generic;
-
-namespace SMSApi.Api 
+﻿namespace SMSApi.Api
 {
     public abstract class Factory
     {
-        private static Dictionary<ProxyAddress, string> _addresses =
-            new Dictionary<ProxyAddress, string>
-            {
-                { ProxyAddress.SmsApiPl, "https://api.smsapi.pl/" },
-                { ProxyAddress.BackupSmsApiPl, "https://api2.smsapi.pl/" },
-                { ProxyAddress.SmsApiCom, "https://api.smsapi.com/" },
-                { ProxyAddress.BackupSmsApiCom, "https://api2.smsapi.com/" }
-            };
-
-        protected IClient client;
         protected Proxy proxy;
 
-        public Factory(ProxyAddress address = ProxyAddress.SmsApiPl)
+        private IClient client;
+
+        protected Factory(ProxyAddress address = ProxyAddress.SmsApiIo)
         {
             Proxy(address);
         }
 
-        public Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
+        protected Factory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
             : this(address)
         {
             Client(client);
         }
 
-        public Factory(IClient client, Proxy proxy) 
+        protected Factory(IClient client, Proxy proxy)
         {
             Client(client);
             Proxy(proxy);
         }
 
-        public void Client(IClient client)
+        private void Client(IClient client)
         {
             this.client = client;
-            if (proxy != null)
-            {
-                proxy.Authentication(client);
-            }
+            proxy?.Authentication(client);
         }
 
-        public void Proxy(Proxy proxy)
+        private void Proxy(Proxy proxy)
         {
             this.proxy = proxy;
-            if (proxy != null)
-            {
-                proxy.Authentication(client);
-            }
+            proxy?.Authentication(client);
         }
 
-        public void Proxy(ProxyAddress address)
+        private void Proxy(ProxyAddress address)
         {
-            Proxy(new ProxyHTTP(_addresses[address]));
+            Proxy(new ProxyHTTP(address.GetUrl()));
         }
     }
 }

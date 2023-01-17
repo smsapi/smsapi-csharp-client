@@ -1,29 +1,33 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactDelete : BaseSimple<SMSApi.Api.Response.Base>
+    [Obsolete("Use DeleteContact")]
+    public class PhonebookContactDelete : Base<Base>
     {
-        public PhonebookContactDelete() : base() { }
+        private string number;
 
-        protected override string Uri() { return "phonebook.do"; }
-
-        protected string number;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("delete_contact", number);
-
-            return collection;
-        }
+        protected override RequestMethod Method => RequestMethod.POST;
 
         public PhonebookContactDelete Number(string number)
         {
             this.number = number;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "delete_contact", number }
+            };
         }
     }
 }

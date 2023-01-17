@@ -1,50 +1,58 @@
-using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class CreateGroup : Rest<SMSApi.Api.Response.Group>
-	{
-		public CreateGroup()
-			: base()
-		{
-		}
+    public class CreateGroup : Base<Group>
+    {
+        private string description;
+        private string idx;
+        private string name;
 
-		protected override string Resource { get { return "contacts/groups"; } }
+        protected override RequestMethod Method => RequestMethod.POST;
 
-		protected override RequestMethod Method { get { return RequestMethod.POST; } }
+        public CreateGroup SetDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Name        != null) parameters.Add("name",       Name);
-				if (Description != null) parameters.Add("desciption", Description);
-				if (Idx         != null) parameters.Add("idx",        Idx);
-				return parameters;
-			}
-		}
+        public CreateGroup SetIdx(string idx)
+        {
+            this.idx = idx;
+            return this;
+        }
 
-		public string Name;
-		public CreateGroup SetName(string name)
-		{
-			Name = name;
-			return this;
-		}
+        public CreateGroup SetName(string name)
+        {
+            this.name = name;
+            return this;
+        }
 
-		public string Description;
-		public CreateGroup SetDescription(string description)
-		{
-			Description = description;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts/groups";
+        }
 
-		public string Idx;
-		public CreateGroup SetIdx(string idx)
-		{
-			Idx = idx;
-			return this;
-		}
-	}
+        protected override NameValueCollection Values()
+        {
+            var values = new NameValueCollection();
+            if (name != null)
+            {
+                values.Add("name", name);
+            }
+
+            if (description != null)
+            {
+                values.Add("desciption", description);
+            }
+
+            if (idx != null)
+            {
+                values.Add("idx", idx);
+            }
+
+            return values;
+        }
+    }
 }

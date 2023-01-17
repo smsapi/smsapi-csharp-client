@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SMSApi.Api;
-using SMSApi.Api.Tests;
-using System;
+﻿using System;
 using System.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
 namespace smsapiTests
 {
@@ -10,13 +9,13 @@ namespace smsapiTests
     {
         protected IClient _client;
         protected ProxyAddress _proxyAddress;
-        protected string _validTestNumber;
         protected string _username;
+        protected string _validTestNumber;
 
         [TestInitialize]
         public virtual void SetUp()
         {
-            var authorizationType = ConfigurationManager.AppSettings["authorizationType"];
+            string authorizationType = ConfigurationManager.AppSettings["authorizationType"];
             _username = ConfigurationManager.AppSettings["username"];
 
             if (authorizationType == AuthorizationType.basic.ToString())
@@ -30,7 +29,9 @@ namespace smsapiTests
                 _client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
             }
 
-            _proxyAddress = (ProxyAddress)Enum.Parse(typeof(ProxyAddress), ConfigurationManager.AppSettings["addressType"]);
+            _proxyAddress = (ProxyAddress)Enum.Parse(
+                typeof(ProxyAddress),
+                ConfigurationManager.AppSettings["addressType"]);
             _validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
         }
     }

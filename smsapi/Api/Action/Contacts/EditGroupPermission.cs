@@ -1,58 +1,69 @@
 using System;
 using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-	public class EditGroupPermission : Rest<SMSApi.Api.Response.GroupPermission>
-	{
-		public EditGroupPermission(string groupId, string username)
-			: base()
-		{
-			GroupId = groupId;
-			Username = username;
-		}
+    public class EditGroupPermission : Base<GroupPermission>
+    {
+        private string groupId;
+        private bool read;
+        private bool send;
+        private string username;
+        private bool write;
 
-		protected override string Resource { get { return "contacts/groups/" + GroupId + "/permissions/" + Username; } }
+        public EditGroupPermission(string groupId, string username)
+        {
+            this.groupId = groupId;
+            this.username = username;
+        }
 
-		protected override RequestMethod Method { get { return RequestMethod.PUT; } }
+        protected override RequestMethod Method => RequestMethod.PUT;
 
-		protected override NameValueCollection Parameters
-		{
-			get
-			{
-				NameValueCollection parameters = base.Parameters;
-				if (Read  != null) parameters.Add("read",  Convert.ToInt32(Read.Value).ToString());
-				if (Write != null) parameters.Add("write", Convert.ToInt32(Write.Value).ToString());
-				if (Send  != null) parameters.Add("send",  Convert.ToInt32(Send.Value).ToString());
-				return parameters;
-			}
-		}
+        public EditGroupPermission SetRead(bool read)
+        {
+            this.read = read;
+            return this;
+        }
 
-		private string groupId;
-		public string GroupId { get { return groupId; } private set { groupId = value; } }
+        public EditGroupPermission SetSend(bool send)
+        {
+            this.send = send;
+            return this;
+        }
 
-		private string username;
-		public string Username { get { return username; } private set { username = value; } }
+        public EditGroupPermission SetWrite(bool write)
+        {
+            this.write = write;
+            return this;
+        }
 
-		public bool? Read;
-		public EditGroupPermission SetRead(bool? read)
-		{
-			Read = read;
-			return this;
-		}
+        protected override string Uri()
+        {
+            return "contacts/groups/" + groupId + "/permissions/" + username;
+        }
 
-		public bool? Write;
-		public EditGroupPermission SetWrite(bool? write)
-		{
-			Write = write;
-			return this;
-		}
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "read", Convert.ToInt32(read).ToString() },
+                { "write", Convert.ToInt32(write).ToString() },
+                { "send", Convert.ToInt32(send).ToString() }
+            };
+        }
 
-		public bool? Send;
-		public EditGroupPermission SetSend(bool? send)
-		{
-			Send = send;
-			return this;
-		}
-	}
+        protected override void Validate()
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentException("Username cannot be empty");
+            }
+
+            if (string.IsNullOrEmpty(groupId))
+            {
+                throw new ArgumentException("GroupId cannot be empty");
+            }
+        }
+    }
 }

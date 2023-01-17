@@ -1,214 +1,187 @@
-using System;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
-	public class ContactsFactory : Factory
-	{
-		public ContactsFactory(ProxyAddress address = ProxyAddress.SmsApiPl)
-			: base(address)
-		{
-		}
+    public class ContactsFactory : Factory
+    {
+        public ContactsFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
+            : base(address)
+        { }
 
-		public ContactsFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiPl) 
-			: base(client, address)
-		{
-		}
+        public ContactsFactory(IClient client, ProxyAddress address = ProxyAddress.SmsApiIo)
+            : base(client, address)
+        { }
 
-        public ContactsFactory(IClient client, Proxy proxy) : base(client, proxy)
+        public ContactsFactory(IClient client, Proxy proxy)
+            : base(client, proxy)
+        { }
+
+        public BindContactToGroup BindContactToGroup(string contactId, string groupId)
         {
+            var action = new BindContactToGroup(contactId, groupId);
+            action.Proxy(proxy);
+            return action;
         }
 
-        public SMSApi.Api.Action.ListContacts ListContacts()
-		{
-			SMSApi.Api.Action.ListContacts action = new SMSApi.Api.Action.ListContacts();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public CreateContact CreateContact()
+        {
+            var action = new CreateContact();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.CreateContact CreateContact()
-		{
-			SMSApi.Api.Action.CreateContact action = new SMSApi.Api.Action.CreateContact();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public CreateField CreateField()
+        {
+            var action = new CreateField();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.DeleteContact DeleteContact(string contactId)
-		{
-			SMSApi.Api.Action.DeleteContact action = new SMSApi.Api.Action.DeleteContact(contactId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public CreateGroup CreateGroup()
+        {
+            var action = new CreateGroup();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.GetContact GetContact(string contactId)
-		{
-			SMSApi.Api.Action.GetContact action = new SMSApi.Api.Action.GetContact(contactId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public CreateGroupPermission CreateGroupPermission(string groupId)
+        {
+            var action = new CreateGroupPermission(groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.EditContact EditContact(string contactId)
-		{
-			SMSApi.Api.Action.EditContact action = new SMSApi.Api.Action.EditContact(contactId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public DeleteContact DeleteContact(string contactId)
+        {
+            var action = new DeleteContact(contactId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.ListGroups ListGroups()
-		{
-			SMSApi.Api.Action.ListGroups action = new SMSApi.Api.Action.ListGroups();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public DeleteField DeleteField(string fieldId)
+        {
+            var action = new DeleteField(fieldId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.CreateGroup CreateGroup()
-		{
-			SMSApi.Api.Action.CreateGroup action = new SMSApi.Api.Action.CreateGroup();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public DeleteGroup DeleteGroup(string groupId)
+        {
+            var action = new DeleteGroup(groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.DeleteGroup DeleteGroup(string groupId)
-		{
-			SMSApi.Api.Action.DeleteGroup action = new SMSApi.Api.Action.DeleteGroup(groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public DeleteGroupPermission DeleteGroupPermission(string groupId, string username)
+        {
+            var action = new DeleteGroupPermission(groupId, username);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.GetGroup GetGroup(string groupId)
-		{
-			SMSApi.Api.Action.GetGroup action = new SMSApi.Api.Action.GetGroup(groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public EditContact EditContact(string contactId)
+        {
+            var action = new EditContact(contactId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.EditGroup EditGroup(string groupId)
-		{
-			SMSApi.Api.Action.EditGroup action = new SMSApi.Api.Action.EditGroup(groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
-	
-		public SMSApi.Api.Action.ListGroupPermissions ListGroupPermissions(string groupId)
-		{
-			SMSApi.Api.Action.ListGroupPermissions action = new SMSApi.Api.Action.ListGroupPermissions(groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public EditField EditField(string fieldId)
+        {
+            var action = new EditField(fieldId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.ListFields ListFields()
-		{
-			SMSApi.Api.Action.ListFields action = new SMSApi.Api.Action.ListFields();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public EditGroup EditGroup(string groupId)
+        {
+            var action = new EditGroup(groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.CreateField CreateField()
-		{
-			SMSApi.Api.Action.CreateField action = new SMSApi.Api.Action.CreateField();
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public EditGroupPermission EditGroupPermission(string groupId, string username)
+        {
+            var action = new EditGroupPermission(groupId, username);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.DeleteField DeleteField(string fieldId)
-		{
-			SMSApi.Api.Action.DeleteField action = new SMSApi.Api.Action.DeleteField(fieldId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public GetContact GetContact(string contactId)
+        {
+            var action = new GetContact(contactId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.EditField EditField(string fieldId)
-		{
-			SMSApi.Api.Action.EditField action = new SMSApi.Api.Action.EditField(fieldId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public GetContactGroup GetContactGroup(string contactId, string groupId)
+        {
+            var action = new GetContactGroup(contactId, groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.ListFieldOptions ListFieldOptions(string fieldId)
-		{
-			SMSApi.Api.Action.ListFieldOptions action = new SMSApi.Api.Action.ListFieldOptions(fieldId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public GetGroup GetGroup(string groupId)
+        {
+            var action = new GetGroup(groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.BindContactToGroup BindContactToGroup(string contactId, string groupId)
-		{
-			SMSApi.Api.Action.BindContactToGroup action = new SMSApi.Api.Action.BindContactToGroup(contactId, groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public GetGroupPermission GetGroupPermission(string groupId, string username)
+        {
+            var action = new GetGroupPermission(groupId, username);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.UnbindContactFromGroup UnbindContactFromGroup(string contactId, string groupId)
-		{
-			SMSApi.Api.Action.UnbindContactFromGroup action = new SMSApi.Api.Action.UnbindContactFromGroup(contactId, groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListContactGroups ListContactGroups(string contactId)
+        {
+            var action = new ListContactGroups(contactId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.ListContactGroups ListContactGroups(string contactId)
-		{
-			SMSApi.Api.Action.ListContactGroups action = new SMSApi.Api.Action.ListContactGroups(contactId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListContacts ListContacts()
+        {
+            var action = new ListContacts();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.GetContactGroup GetContactGroup(string contactId, string groupId)
-		{
-			SMSApi.Api.Action.GetContactGroup action = new SMSApi.Api.Action.GetContactGroup(contactId, groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListFieldOptions ListFieldOptions(string fieldId)
+        {
+            var action = new ListFieldOptions(fieldId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.CreateGroupPermission CreateGroupPermission(string groupId)
-		{
-			SMSApi.Api.Action.CreateGroupPermission action = new SMSApi.Api.Action.CreateGroupPermission(groupId);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListFields ListFields()
+        {
+            var action = new ListFields();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.DeleteGroupPermission DeleteGroupPermission(string groupId, string username)
-		{
-			SMSApi.Api.Action.DeleteGroupPermission action = new SMSApi.Api.Action.DeleteGroupPermission(groupId, username);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListGroupPermissions ListGroupPermissions(string groupId)
+        {
+            var action = new ListGroupPermissions(groupId);
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.GetGroupPermission GetGroupPermission(string groupId, string username)
-		{
-			SMSApi.Api.Action.GetGroupPermission action = new SMSApi.Api.Action.GetGroupPermission(groupId, username);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
+        public ListGroups ListGroups()
+        {
+            var action = new ListGroups();
+            action.Proxy(proxy);
+            return action;
+        }
 
-		public SMSApi.Api.Action.EditGroupPermission EditGroupPermission(string groupId, string username)
-		{
-			SMSApi.Api.Action.EditGroupPermission action = new SMSApi.Api.Action.EditGroupPermission(groupId, username);
-			action.Client(client);
-			action.Proxy(proxy);
-			return action;
-		}
-	}
+        public UnbindContactFromGroup UnbindContactFromGroup(string contactId, string groupId)
+        {
+            var action = new UnbindContactFromGroup(contactId, groupId);
+            action.Proxy(proxy);
+            return action;
+        }
+    }
 }
-

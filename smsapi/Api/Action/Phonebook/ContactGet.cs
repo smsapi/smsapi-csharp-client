@@ -1,29 +1,33 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class PhonebookContactGet : BaseSimple<SMSApi.Api.Response.Contact>
+    [Obsolete("Use GetContact")]
+    public class PhonebookContactGet : Base<Contact>
     {
-        public PhonebookContactGet() : base() { }
+        private string number;
 
-        protected override string Uri() { return "phonebook.do"; }
-
-        protected string number;
-
-        protected override NameValueCollection Values()
-        {
-            NameValueCollection collection = new NameValueCollection();
-
-            collection.Add("format", "json");
-            collection.Add("get_contact", number);
-
-            return collection;
-        }
+        protected override RequestMethod Method => RequestMethod.POST;
 
         public PhonebookContactGet Number(string number)
         {
             this.number = number;
             return this;
+        }
+
+        protected override string Uri()
+        {
+            return "phonebook.do";
+        }
+
+        protected override NameValueCollection Values()
+        {
+            return new NameValueCollection
+            {
+                { "get_contact", number }
+            };
         }
     }
 }
