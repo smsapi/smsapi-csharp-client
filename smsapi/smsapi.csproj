@@ -53,9 +53,9 @@
     <None Include="docs\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="docs\LICENSE.md" Pack="true" PackagePath=""/>
+    <None Include="docs\LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="docs\icons\logo.jpg" Pack="true" PackagePath=""/>
+    <None Include="docs\icons\logo.jpg" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
