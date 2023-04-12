@@ -5,19 +5,20 @@ namespace SMSApi.Api.Action
 {
     public class SMSSend : Send
     {
-        private string DataCoding;
-        private string DateExpire;
-        private bool Details = true;
-        private string Encoding = "UTF-8";
-        private bool Fast;
-        private bool Flash;
-        private int MaxParts;
-        private bool Normalize;
-        private bool NoUnicode;
-        private string[] Params;
-        private string Sender;
-        private bool Single;
-        private string Text;
+        private const string Encoding = "UTF-8";
+        
+        private string dataCoding;
+        private string dateExpire;
+        private bool fast;
+        private bool flash;
+        private int maxParts;
+        private bool normalize;
+        private bool noUnicode;
+        private string[] @params;
+        private string sender;
+        private bool single;
+        private string text;
+        private string? template;
 
         protected override RequestMethod Method => RequestMethod.POST;
 
@@ -29,19 +30,19 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetDataCoding(string dataCoding)
         {
-            DataCoding = dataCoding;
+            this.dataCoding = dataCoding;
             return this;
         }
 
         public SMSSend SetDateExpire(string data)
         {
-            DateExpire = data;
+            dateExpire = data;
             return this;
         }
 
         public SMSSend SetDateExpire(DateTime data)
         {
-            DateExpire = data.ToString("yyyy-MM-ddTHH:mm:ssK");
+            dateExpire = data.ToString("yyyy-MM-ddTHH:mm:ssK");
             return this;
         }
 
@@ -67,13 +68,13 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetFast(bool fast = true)
         {
-            Fast = fast;
+            this.fast = fast;
             return this;
         }
 
         public SMSSend SetFlash(bool flash = true)
         {
-            Flash = flash;
+            this.flash = flash;
             return this;
         }
 
@@ -97,13 +98,13 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetNormalize(bool flag = true)
         {
-            Normalize = flag;
+            normalize = flag;
             return this;
         }
 
         public SMSSend SetNoUnicode(bool noUnicode = true)
         {
-            NoUnicode = noUnicode;
+            this.noUnicode = noUnicode;
             return this;
         }
 
@@ -119,12 +120,12 @@ namespace SMSApi.Api.Action
                 throw new IndexOutOfRangeException();
             }
 
-            if (Params == null)
+            if (@params == null)
             {
-                Params = new string[4];
+                @params = new string[4];
             }
 
-            Params[i] = text;
+            @params[i] = text;
 
             return this;
         }
@@ -137,13 +138,13 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetSender(string sender)
         {
-            Sender = sender;
+            this.sender = sender;
             return this;
         }
 
         public SMSSend SetSingle(bool single = true)
         {
-            Single = single;
+            this.single = single;
             return this;
         }
 
@@ -155,7 +156,7 @@ namespace SMSApi.Api.Action
 
         public SMSSend SetText(string text)
         {
-            Text = text;
+            this.text = text;
             return this;
         }
 
@@ -168,6 +169,13 @@ namespace SMSApi.Api.Action
         public SMSSend SetTo(string[] to)
         {
             To = to;
+            return this;
+        }
+        
+        public SMSSend SetTemplate(string templateName)
+        {
+            template = templateName;
+            
             return this;
         }
 
@@ -183,7 +191,7 @@ namespace SMSApi.Api.Action
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
 
-            if (Text == null)
+            if (text == null)
             {
                 throw new ArgumentException("Cannot send message without text!");
             }
@@ -193,9 +201,9 @@ namespace SMSApi.Api.Action
         {
             var collection = new NameValueCollection();
 
-            if (Sender != null)
+            if (sender != null)
             {
-                collection.Add("from", Sender);
+                collection.Add("from", sender);
             }
 
             if (To != null)
@@ -208,21 +216,22 @@ namespace SMSApi.Api.Action
                 collection.Add("group", Group);
             }
 
-            collection.Add("message", Text);
+            collection.Add("message", text);
 
-            collection.Add("single", Single ? "1" : "0");
-            collection.Add("nounicode", NoUnicode ? "1" : "0");
-            collection.Add("flash", Flash ? "1" : "0");
-            collection.Add("fast", Fast ? "1" : "0");
+            collection.Add("single", single ? "1" : "0");
+            collection.Add("nounicode", noUnicode ? "1" : "0");
+            collection.Add("flash", flash ? "1" : "0");
+            collection.Add("fast", fast ? "1" : "0");
+            collection.Add("details", "1");
 
-            if (DataCoding != null)
+            if (dataCoding != null)
             {
-                collection.Add("datacoding", DataCoding);
+                collection.Add("datacoding", dataCoding);
             }
 
-            if (MaxParts > 0)
+            if (maxParts > 0)
             {
-                collection.Add("max_parts", MaxParts.ToString());
+                collection.Add("max_parts", maxParts.ToString());
             }
 
             if (DateSent != null)
@@ -230,9 +239,9 @@ namespace SMSApi.Api.Action
                 collection.Add("date", DateSent);
             }
 
-            if (DateExpire != null)
+            if (dateExpire != null)
             {
-                collection.Add("expiration_date", DateExpire);
+                collection.Add("expiration_date", dateExpire);
             }
 
             if (Partner != null)
@@ -242,7 +251,7 @@ namespace SMSApi.Api.Action
 
             collection.Add("encoding", Encoding);
 
-            if (Normalize)
+            if (normalize)
             {
                 collection.Add("normalize", "1");
             }
@@ -258,20 +267,20 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
-            if (Details)
+            if (@params != null)
             {
-                collection.Add("details", "1");
-            }
-
-            if (Params != null)
-            {
-                for (int i = 0; i < Params.Length; i++)
+                for (int i = 0; i < @params.Length; i++)
                 {
-                    if (Params[i] != null)
+                    if (@params[i] != null)
                     {
-                        collection.Add("param" + (i + 1), Params[i]);
+                        collection.Add("param" + (i + 1), @params[i]);
                     }
                 }
+            }
+
+            if (template != null)
+            {
+                collection.Add("template", template);
             }
 
             return collection;

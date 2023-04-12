@@ -19,7 +19,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>SMSAPI.pl</PackageId>
-    <PackageVersion>2.0.0</PackageVersion>
+    <PackageVersion>2.1.0</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.smsapi.com</PackageProjectUrl>
