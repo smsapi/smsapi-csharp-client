@@ -57,7 +57,7 @@ namespace SMSApi.Api
             }
             catch (System.Exception e)
             {
-                throw new ProxyException("Failed to get response from " + client.BuildUri(request), e);
+                throw new ProxyException("Failed to get response from " + uri, e);
             }
 
             return responseStream;
@@ -98,7 +98,7 @@ namespace SMSApi.Api
             }
             catch (System.Exception e)
             {
-                throw new ProxyException("Failed to get response from " + client.BuildUri(request), e);
+                throw new ProxyException("Failed to get response from " + uri, e);
             }
 
             return responseStream;
@@ -137,15 +137,14 @@ namespace SMSApi.Api
         private RestClient CreateClient()
         {
             var options = new RestClientOptions(baseUrl);
-            var client = new RestClient(options);
 
             if (authentication != null)
             {
                 options.UserAgent = authentication.GetClientAgentHeader();
-                client.Authenticator = GetAuthenticator();
+                options.Authenticator = GetAuthenticator();
             }
 
-            return client;
+            return new RestClient(options);
         }
 
         private IAuthenticator GetAuthenticator()
