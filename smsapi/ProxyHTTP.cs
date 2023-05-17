@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using RestSharp;
-using RestSharp.Authenticators;
-using RestSharp.Authenticators.OAuth2;
 
 namespace SMSApi.Api
 {
@@ -140,21 +137,11 @@ namespace SMSApi.Api
 
             if (authentication != null)
             {
-                options.UserAgent = authentication.GetClientAgentHeader();
-                options.Authenticator = GetAuthenticator();
+                options.UserAgent = authentication.GetClientAgent();
+                options.Authenticator = authentication.Authenticator;
             }
 
             return new RestClient(options);
-        }
-
-        private IAuthenticator GetAuthenticator()
-        {
-            return authentication switch
-            {
-                ClientOAuth oauth => new OAuth2AuthorizationRequestHeaderAuthenticator(oauth.Token, "Bearer"),
-                Client basic => new HttpBasicAuthenticator(basic.GetUsername(), basic.GetPassword()),
-                _ => throw new NotSupportedException()
-            };
         }
     }
 }

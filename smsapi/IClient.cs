@@ -1,8 +1,11 @@
-﻿namespace SMSApi.Api
+﻿using RestSharp.Authenticators;
+
+namespace SMSApi.Api
 {
     public interface IClient
     {
-        string GetAuthenticationHeader();
-        string GetClientAgentHeader();
+        IAuthenticator Authenticator { get; }
+        
+        string GetClientAgent();
     }
 }

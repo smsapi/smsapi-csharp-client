@@ -1,61 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
-    <Deterministic>false</Deterministic>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <LangVersion>9.0</LangVersion>
-    <Title>SMSAPI</Title>
-    <Authors>SMSAPI</Authors>
-    <Copyright>SMSAPI</Copyright>
-    <RepositoryUrl>https://github.com/smsapi/smsapi-csharp-client</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <Company>SMSAPI</Company>
-    <Product>SMSAPI</Product>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageIconUrl>logo.jpg</PackageIconUrl>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PackageId>SMSAPI.pl</PackageId>
-    <PackageVersion>2.2.0</PackageVersion>
-    <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://www.smsapi.com</PackageProjectUrl>
-    <PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
-    <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
-    <PackageTags>smsapi;sms;marketing;shipment;mms;vms;message</PackageTags>
-    <TargetFrameworks>net6.0;net7.0;netcoreapp3.1</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Api\Action\Contacts\" />
-    <Folder Include="docs\icons" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="RestSharp" Version="109.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="docs\README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="docs\LICENSE.md" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="docs\icons\logo.jpg" Pack="true" PackagePath="" />
-  </ItemGroup>
+    <PropertyGroup>
+        <ProductVersion>8.0.30703</ProductVersion>
+        <SchemaVersion>2.0</SchemaVersion>
+        <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
+        <Deterministic>false</Deterministic>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <LangVersion>9.0</LangVersion>
+        <Title>SMSAPI</Title>
+        <Authors>SMSAPI</Authors>
+        <Copyright>SMSAPI</Copyright>
+        <RepositoryUrl>https://github.com/smsapi/smsapi-csharp-client</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Company>SMSAPI</Company>
+        <Product>SMSAPI</Product>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIconUrl>logo.jpg</PackageIconUrl>
+    </PropertyGroup>
+    <PropertyGroup>
+        <PackageId>SMSAPI.pl</PackageId>
+        <PackageVersion>2.2.1</PackageVersion>
+        <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://www.smsapi.com</PackageProjectUrl>
+        <PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
+        <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
+        <PackageTags>smsapi;sms;marketing;shipment;mms;vms;message</PackageTags>
+        <TargetFrameworks>net6.0;net7.0;netcoreapp3.1</TargetFrameworks>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Api\Action\Contacts\"/>
+        <Folder Include="docs\icons"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="RestSharp" Version="109.0.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="docs\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="docs\LICENSE.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="docs\icons\logo.jpg" Pack="true" PackagePath=""/>
+    </ItemGroup>
 </Project>

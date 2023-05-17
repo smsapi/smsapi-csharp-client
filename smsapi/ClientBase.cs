@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
+using RestSharp.Authenticators;
 
 namespace SMSApi.Api
 {
-    public abstract class ClientBase
+    public abstract class ClientBase : IClient
     {
         private readonly string _clientAgent;
 
-        public ClientBase()
+        protected ClientBase()
         {
             _clientAgent = $"smsapi-csharp-client:{Assembly.GetExecutingAssembly().GetName().Version};{Environment.Version}";
         }
 
-        public abstract string GetAuthenticationHeader();
+        public abstract IAuthenticator Authenticator { get; }
 
-        public string GetClientAgentHeader()
+        public string GetClientAgent()
         {
             return _clientAgent;
         }

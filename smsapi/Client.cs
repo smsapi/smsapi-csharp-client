@@ -1,38 +1,33 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using RestSharp.Authenticators;
 
 namespace SMSApi.Api
 {
-    public class Client : ClientBase,
-        IClient
+    [Obsolete("Basic authentication is deprecated, please use ClientOAuth instead")]
+    public class Client : ClientBase
     {
-        protected string password;
-        protected string username;
-
         public Client(string username)
         {
             SetUsername(username);
         }
 
-        public override string GetAuthenticationHeader()
+        public Client(string username, string passwordHash)
         {
-            return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
+            SetUsername(username);
+            SetPasswordHash(passwordHash);
         }
 
-        public string GetPassword()
-        {
-            return password;
-        }
+        private string _password;
+        private string _username;
 
-        public string GetUsername()
-        {
-            return username;
-        }
+        public override IAuthenticator Authenticator => new HttpBasicAuthenticator(_username, _password);
+
 
         public void SetPasswordHash(string password)
         {
-            this.password = password;
+            _password = password;
         }
 
         public void SetPasswordRAW(string password)
@@ -40,19 +35,16 @@ namespace SMSApi.Api
             var hash = new StringBuilder();
 
             var md5 = MD5.Create();
-            byte[] hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var hashbin = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            for (int i = 0; i < hashbin.Length; i++)
-            {
-                hash.Append(hashbin[i].ToString("x2"));
-            }
+            for (var i = 0; i < hashbin.Length; i++) hash.Append(hashbin[i].ToString("x2"));
 
             SetPasswordHash(hash.ToString());
         }
 
         public void SetUsername(string username)
         {
-            this.username = username;
+            _username = username;
         }
     }
 }
