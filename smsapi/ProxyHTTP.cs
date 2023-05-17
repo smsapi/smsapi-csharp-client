@@ -149,16 +149,12 @@ namespace SMSApi.Api
 
         private IAuthenticator GetAuthenticator()
         {
-            switch (authentication)
+            return authentication switch
             {
-                case ClientOAuth oauth:
-                    return new OAuth2AuthorizationRequestHeaderAuthenticator(oauth.Token, "Bearer");
-
-                case Client basic:
-                    return new HttpBasicAuthenticator(basic.GetUsername(), basic.GetPassword());
-            }
-
-            throw new NotSupportedException();
+                ClientOAuth oauth => new OAuth2AuthorizationRequestHeaderAuthenticator(oauth.Token, "Bearer"),
+                Client basic => new HttpBasicAuthenticator(basic.GetUsername(), basic.GetPassword()),
+                _ => throw new NotSupportedException()
+            };
         }
     }
 }
