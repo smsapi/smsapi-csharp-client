@@ -30,11 +30,11 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Api\Action\Contacts\"/>
-        <Folder Include="docs\icons"/>
+        <Folder Include="Api\Action\Contacts\" />
+        <Folder Include="docs\icons" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="RestSharp" Version="109.0.1"/>
+        <PackageReference Include="RestSharp" Version="109.0.1" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
@@ -50,12 +50,12 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <None Include="docs\README.md" Pack="true" PackagePath="\"/>
+        <None Include="docs\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="docs\LICENSE.md" Pack="true" PackagePath=""/>
+        <None Include="docs\LICENSE.md" Pack="true" PackagePath="" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="docs\icons\logo.jpg" Pack="true" PackagePath=""/>
+        <None Include="docs\icons\logo.jpg" Pack="true" PackagePath="" />
     </ItemGroup>
 </Project>

@@ -186,11 +186,6 @@ namespace SMSApi.Api.Action
 
         protected override void Validate()
         {
-            if (To != null && Group != null)
-            {
-                throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
-            }
-
             if (text == null)
             {
                 throw new ArgumentException("Cannot send message without text!");
