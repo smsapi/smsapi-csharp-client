@@ -8,12 +8,6 @@ namespace smsapiTests.Integration.Authorization;
 [TestClass]
 public class HttpClientAuthenticationTest : IntegrationTestBase
 {
-    [TestInitialize]
-    public void InitializeServer()
-    {
-        RunTestServer();
-    }
-
     [TestMethod]
     public void request_contains_oauth_authentication_header()
     {

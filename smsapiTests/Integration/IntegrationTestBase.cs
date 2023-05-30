@@ -3,22 +3,29 @@ using System.Net.Sockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 
 namespace smsapiTests.Integration;
 
 public abstract class IntegrationTestBase
 {
-    protected static string CurrentHost;
+    private static string _currentHost;
     
-    protected void RunTestServer()
+    [TestInitialize]
+    public void InitializeServer()
     {
-        CurrentHost = FreeHost();
+        RunTestServer();
+    }
+
+    private static void RunTestServer()
+    {
+        _currentHost = FreeHost();
         
         new WebHostBuilder()
             .UseKestrel()
             .UseStartup(typeof(Program))
-            .UseUrls(CurrentHost)
+            .UseUrls(_currentHost)
             .Configure(app => app.UseMiddleware<RequestInterceptorMiddleware>())
             .Build()
             .Start();
@@ -26,7 +33,7 @@ public abstract class IntegrationTestBase
 
     protected static ProxyHTTP GetProxy()
     {
-        return new ProxyHTTP(CurrentHost);
+        return new ProxyHTTP(_currentHost);
     }
 
     private static string FreeHost()
@@ -46,7 +53,7 @@ public class Program
     {
     }
 
-    public void Configure(IApplicationBuilder applicationBuilder)
+    public static void Configure(IApplicationBuilder applicationBuilder)
     {
     }
 }
