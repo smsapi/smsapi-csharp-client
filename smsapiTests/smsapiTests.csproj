@@ -3,7 +3,7 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyVersion>2.2.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

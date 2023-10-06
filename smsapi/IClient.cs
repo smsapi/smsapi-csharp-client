@@ -1,10 +1,10 @@
-﻿using RestSharp.Authenticators;
+﻿using System.Collections.Generic;
 
 namespace SMSApi.Api
 {
     public interface IClient
     {
-        IAuthenticator Authenticator { get; }
+        KeyValuePair<string, string> DefaultRequestHeaders { get; }
         
         string GetClientAgent();
     }

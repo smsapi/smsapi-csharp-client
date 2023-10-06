@@ -1,6 +1,6 @@
 ﻿using System;
-using RestSharp.Authenticators;
-using RestSharp.Authenticators.OAuth2;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace SMSApi.Api
 {
@@ -15,7 +15,7 @@ namespace SMSApi.Api
             _token = token;
         }
 
-        public override IAuthenticator Authenticator =>
-            new OAuth2AuthorizationRequestHeaderAuthenticator(_token, "Bearer");
+        public override KeyValuePair<string, string> DefaultRequestHeaders =>
+            KeyValuePair.Create("Authorization", $"Bearer {_token}");
     }
 }

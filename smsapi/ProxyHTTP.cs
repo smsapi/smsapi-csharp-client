@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -42,22 +44,18 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            RestClient client = CreateClient();
-            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
+            HttpClient client = CreateClient();
 
             try
             {
-                client.Execute(request);
+                return client.SendRequest(method, uri, data, files).GetAwaiter().GetResult();
             }
             catch (System.Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
-
-            return responseStream;
         }
 
         public async Task<Stream> ExecuteAsync(
@@ -83,65 +81,33 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            RestClient client = CreateClient();
-            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
+            HttpClient client = CreateClient();
 
             try
             {
-                await client.ExecuteAsync(request);
+                return await client.SendRequest(method, uri, data, files);
             }
             catch (System.Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
-
-            return responseStream;
         }
-
-        private static RestRequest CreateRequest(
-            string uri,
-            Stream responseStream,
-            NameValueCollection data,
-            Dictionary<string, Stream> files,
-            RequestMethod method)
+        
+        private HttpClient CreateClient()
         {
-            var request = new RestRequest(uri)
-            {
-                Method = method.ToMethod(),
-                ResponseWriter = s =>
-                {
-                    s.CopyTo(responseStream);
-                    return s;
-                }
-            };
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(baseUrl);
 
-            foreach (string key in data.Keys)
-            {
-                request.AddParameter(key, data[key]);
-            }
+            if (authentication == null) return client;
+            
+            var authHeader = authentication.DefaultRequestHeaders;
 
-            foreach (KeyValuePair<string, Stream> file in files)
-            {
-                request.AddFile(file.Key, () => file.Value, file.Key);
-            }
+            client.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
+            client.DefaultRequestHeaders.Add(HttpRequestHeader.UserAgent.ToString(), authentication.GetClientAgent());
 
-            return request;
-        }
-
-        private RestClient CreateClient()
-        {
-            var options = new RestClientOptions(baseUrl);
-
-            if (authentication != null)
-            {
-                options.UserAgent = authentication.GetClientAgent();
-                options.Authenticator = authentication.Authenticator;
-            }
-
-            return new RestClient(options);
+            return client;
         }
     }
 }

@@ -18,13 +18,7 @@ namespace smsapiTests
             string authorizationType = ConfigurationManager.AppSettings["authorizationType"];
             _username = ConfigurationManager.AppSettings["username"];
 
-            if (authorizationType == AuthorizationType.basic.ToString())
-            {
-                var basicClient = new Client(_username);
-                basicClient.SetPasswordHash(ConfigurationManager.AppSettings["password"]);
-                _client = basicClient;
-            }
-            else if (authorizationType == AuthorizationType.oauth.ToString())
+            if (authorizationType == AuthorizationType.oauth.ToString())
             {
                 _client = new ClientOAuth(ConfigurationManager.AppSettings["oauthToken"]);
             }

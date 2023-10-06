@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Reflection;
-using RestSharp.Authenticators;
 
 namespace SMSApi.Api
 {
@@ -12,8 +13,8 @@ namespace SMSApi.Api
         {
             _clientAgent = $"smsapi-csharp-client:{Assembly.GetExecutingAssembly().GetName().Version};{Environment.Version}";
         }
-
-        public abstract IAuthenticator Authenticator { get; }
+        
+        public abstract KeyValuePair<string, string> DefaultRequestHeaders { get; }
 
         public string GetClientAgent()
         {
