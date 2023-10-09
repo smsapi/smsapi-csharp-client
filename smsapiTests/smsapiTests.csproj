@@ -19,4 +19,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
     <ProjectReference Include="..\smsapi\smsapi.csproj" />
   </ItemGroup>
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="App.config" DestinationFiles="$(OutDir)\testhost.dll.config" />
+  </Target>
 </Project>

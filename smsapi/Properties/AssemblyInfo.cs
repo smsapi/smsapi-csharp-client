@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("libsmsapi")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("comvision")]
+[assembly: AssemblyCompany("LINK Mobility Poland")]
 [assembly: AssemblyProduct("libsmsapi")]
-[assembly: AssemblyCopyright("Copyright © comvision 2023")]
+[assembly: AssemblyCopyright("Copyright © LINK Mobility Poland 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
