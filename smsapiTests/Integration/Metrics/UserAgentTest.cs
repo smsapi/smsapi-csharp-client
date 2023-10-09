@@ -13,7 +13,7 @@ public class UserAgentTest : IntegrationTestBase
     {
         SendActionHelper.SendAnySms(GetProxy());
 
-        var expectedUserAgent = $"smsapi-csharp-client:{Assembly.GetExecutingAssembly().GetName().Version};{Environment.Version}";
+        var expectedUserAgent = $"smsapi-csharp-client/{Assembly.GetExecutingAssembly().GetName().Version} {Environment.Version}";
         RequestAssert.AssertContainsUserAgentHeader(expectedUserAgent);
     }
 }

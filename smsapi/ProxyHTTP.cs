@@ -105,7 +105,7 @@ namespace SMSApi.Api
             var authHeader = authentication.DefaultRequestHeaders;
 
             client.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
-            client.DefaultRequestHeaders.Add(HttpRequestHeader.UserAgent.ToString(), authentication.GetClientAgent());
+            client.DefaultRequestHeaders.Add("User-Agent", authentication.GetClientAgent());
 
             return client;
         }

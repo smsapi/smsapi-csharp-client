@@ -3,33 +3,28 @@ using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 
-namespace smsapiTests
+namespace smsapiTests;
+
+[TestClass]
+public class ConfigurationTest
 {
-    [TestClass]
-    public class ConfigurationTest
+    [TestMethod]
+    public void VerifyConfiguration()
     {
-        [TestMethod]
-        public void VerifyConfiguration()
-        {
-            string authorizationType = ConfigurationManager.AppSettings["authorizationType"];
- 
-            if (authorizationType == AuthorizationType.oauth.ToString())
-            {
-                string token = ConfigurationManager.AppSettings["oauthToken"];
-                Assert.IsNotNull(token);
-                Assert.AreNotEqual("", token);
-            }
+        ExeConfigurationFileMap map = new();
+        map.ExeConfigFilename = "testhost.dll.config";
+        Configuration config = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+        
+        var token = ConfigurationManager.AppSettings["oauthToken"];
+        Assert.IsNotNull(token);
+        Assert.AreNotEqual("", token);
 
-            string username = ConfigurationManager.AppSettings["username"];
-            Assert.IsNotNull(username);
-            Assert.AreNotEqual("", username);
+        var validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
+        Assert.IsNotNull(validTestNumber);
+        Assert.AreNotEqual("", validTestNumber);
 
-            string validTestNumber = ConfigurationManager.AppSettings["validTestNumber"];
-            Assert.IsNotNull(validTestNumber);
-            Assert.AreNotEqual("", validTestNumber);
-
-            ProxyAddress proxy;
-            Assert.IsTrue(Enum.TryParse(ConfigurationManager.AppSettings["addressType"], out proxy));
-        }
+        ProxyAddress proxy;
+        Assert.IsTrue(Enum.TryParse(ConfigurationManager.AppSettings["addressType"], out proxy));
     }
 }
+ 
