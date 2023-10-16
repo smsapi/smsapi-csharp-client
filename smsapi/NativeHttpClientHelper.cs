@@ -19,7 +19,7 @@ namespace SMSApi.Api
         )
         {
             HttpContent httpContent;
-            
+
             switch (method)
             {
                 case RequestMethod.GET:
@@ -44,23 +44,27 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files = null
         )
         {
-            var contentCollection = collection
-                .AllKeys
+            var contentCollectionKeys = collection.AllKeys;
+            
+            var contentCollection = contentCollectionKeys
                 .Select(key => new KeyValuePair<string, string>(key, collection[key]))
                 .ToList();
             var formUrlEncodedContent = new FormUrlEncodedContent(contentCollection);
 
-            if (files != null)
+            if (files == null) return formUrlEncodedContent;
+
+            var multipartContent = new MultipartFormDataContent();
+            
+            foreach (var keyValuePair in contentCollection)
             {
-                var multipartContent = new MultipartContent();
-                multipartContent.Add(formUrlEncodedContent);
-
-                files
-                    .ToList()
-                    .ForEach(pair => multipartContent.Add(new StreamContent(pair.Value)));
+                multipartContent.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
             }
+            
+            files
+                .ToList()
+                .ForEach(pair => multipartContent.Add(new StreamContent(pair.Value), "file", pair.Key));
 
-            return new FormUrlEncodedContent(contentCollection);
+            return multipartContent;
         }
     }
 }
