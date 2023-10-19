@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class GroupPermission : Base
+    public class GroupPermission : ErrorAwareResponse
     {
         [DataMember(Name = "group_id", IsRequired = false)]
         public readonly string GroupId;

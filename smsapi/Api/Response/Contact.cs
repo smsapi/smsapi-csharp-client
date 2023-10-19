@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Contact : Base
+    public class Contact : ErrorAwareResponse
     {
         public const string FemaleGender = "female";
         public const string MaleGender = "male";

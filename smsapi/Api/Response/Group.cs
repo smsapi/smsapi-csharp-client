@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Group : Base
+    public class Group : ErrorAwareResponse
     {
         [DataMember(Name = "created_by", IsRequired = false)]
         public readonly string CreatedBy;

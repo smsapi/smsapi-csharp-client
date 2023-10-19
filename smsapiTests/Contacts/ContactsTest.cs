@@ -12,8 +12,8 @@ namespace smsapiTests.Contacts
         [TestMethod]
         public void BindContactToGroup()
         {
-            Base response = _factory.BindContactToGroup(_contact.Id, _group.Id).Execute();
-            Assert.IsFalse(response.isError());
+            ErrorAwareResponse response = _factory.BindContactToGroup(_contact.Id, _group.Id).Execute();
+            Assert.IsFalse(response.IsError());
 
             _factory.DeleteGroup(_group.Id).Execute();
         }

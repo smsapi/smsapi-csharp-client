@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteGroup : Base<Base>
+    public class DeleteGroup : Base<ErrorAwareResponse>
     {
         private readonly string groupId;
 

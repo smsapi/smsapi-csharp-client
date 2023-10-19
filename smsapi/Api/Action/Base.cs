@@ -114,17 +114,17 @@ namespace SMSApi.Api.Action
          * 1000 Akcja dostępna tylko dla użytkownika głównego
          * 1001 Nieprawidłowa akcja
          */
-        private static bool IsClientError(string code)
+        private static bool IsClientError(int code)
         {
             switch (code)
             {
-                case "101":
-                case "102":
-                case "103":
-                case "105":
-                case "110":
-                case "1000":
-                case "1001":
+                case 101:
+                case 102:
+                case 103:
+                case 105:
+                case 110:
+                case 1000:
+                case 1001:
                     return true;
 
                 default:
@@ -138,14 +138,14 @@ namespace SMSApi.Api.Action
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private static bool IsHostError(string code)
+        private static bool IsHostError(int code)
         {
             switch (code)
             {
-                case "8":
-                case "201":
-                case "666":
-                case "999":
+                case 8:
+                case 201:
+                case 666:
+                case 999:
                     return true;
 
                 default:
@@ -159,24 +159,24 @@ namespace SMSApi.Api.Action
 
             try
             {
-                var error = Deserialize<Error>(data);
+                var error = Deserialize<ErrorAwareResponse>(data);
 
-                if (error.isError())
+                if (error.IsError())
                 {
-                    if (IsHostError(error.Code))
+                    if (IsHostError(error.ErrorCode))
                     {
-                        throw new HostException(error.Message, error.Code);
+                        throw new HostException(error.ErrorMessage, Convert.ToString(error.ErrorCode));
                     }
 
-                    if (IsClientError(error.Code))
+                    if (IsClientError(error.ErrorCode))
                     {
-                        throw new ClientException(error.Message, error.Code);
+                        throw new ClientException(error.ErrorMessage, error.ErrorCode);
                     }
 
-                    throw new ActionException(error.Message, error.Code);
+                    throw new ActionException(error.ErrorMessage, error.ErrorCode);
                 }
             }
-            catch (SerializationException e)
+            catch (SerializationException)
             { }
 
             data.Position = 0;

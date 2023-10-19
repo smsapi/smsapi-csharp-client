@@ -3,7 +3,7 @@
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class User : Base
+    public class User : ErrorAwareResponse
     {
         [DataMember(Name = "active", IsRequired = true)]
         public readonly bool Active;

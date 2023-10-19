@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : Base<Base>
+    public class SenderSetDefault : Base<ErrorAwareResponse>
     {
         private string name;
 

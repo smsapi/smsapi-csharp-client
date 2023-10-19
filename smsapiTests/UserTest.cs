@@ -18,13 +18,13 @@ namespace smsapiTests
             User addResponse =
                 _factory.ActionAdd().SetUsername(usernName).SetPassword("7815696ecbf1c96e6894b779456d330e").Execute();
 
-            Assert.IsFalse(addResponse.isError());
+            Assert.IsFalse(addResponse.IsError());
             Assert.AreEqual("", addResponse.Info);
 
             User editResponse =
                 _factory.ActionEdit(usernName).SetInfo("edited info").Execute();
 
-            Assert.IsFalse(addResponse.isError());
+            Assert.IsFalse(addResponse.IsError());
             Assert.AreEqual(addResponse.Username, editResponse.Username);
             Assert.AreEqual("edited info", editResponse.Info);
 
@@ -38,7 +38,7 @@ namespace smsapiTests
         {
             Credits pointsResponse = _factory.ActionGetCredits().Execute();
             Assert.IsNotNull(pointsResponse.Points);
-            Assert.IsFalse(pointsResponse.isError());
+            Assert.IsFalse(pointsResponse.IsError());
         }
 
         [TestInitialize]

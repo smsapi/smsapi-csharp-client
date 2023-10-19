@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UnbindContactFromGroup : Base<Base>
+    public class UnbindContactFromGroup : Base<ErrorAwareResponse>
     {
         private readonly string contactId;
         private readonly string groupId;

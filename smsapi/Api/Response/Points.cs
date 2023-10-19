@@ -3,7 +3,7 @@
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Credits : Base
+    public class Credits : ErrorAwareResponse
     {
         [DataMember(Name = "ecoCount", IsRequired = false)]
         public readonly int EcoCount;
