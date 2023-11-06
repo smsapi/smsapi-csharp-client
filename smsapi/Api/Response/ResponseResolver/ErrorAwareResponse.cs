@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SMSApi.Api.Response
+namespace SMSApi.Api.Response.ResponseResolver
 {
     [DataContract]
-    public class ErrorAwareResponse
+    public class ErrorAwareResponse: IErrorResponse
     {
         [DataMember(Name = "error", IsRequired = false)]
         public readonly int ErrorCode;
@@ -12,5 +12,6 @@ namespace SMSApi.Api.Response
         public readonly string ErrorMessage;
         
         public bool IsError() => ErrorCode != 0;
+        public string GetErrorMessage() => ErrorMessage;
     }
 }

@@ -23,12 +23,12 @@ namespace SMSApi.Api
             authentication = client;
         }
 
-        public Stream Execute(string uri, NameValueCollection data, RequestMethod method)
+        public HttpResponseEntity Execute(string uri, NameValueCollection data, RequestMethod method)
         {
             return Execute(uri, data, new Dictionary<string, Stream>(), method);
         }
 
-        public Stream Execute(
+        public HttpResponseEntity Execute(
             string uri,
             NameValueCollection data,
             Stream file,
@@ -37,7 +37,7 @@ namespace SMSApi.Api
             return Execute(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
 
-        public Stream Execute(
+        public HttpResponseEntity Execute(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
@@ -57,7 +57,7 @@ namespace SMSApi.Api
             }
         }
 
-        public async Task<Stream> ExecuteAsync(
+        public async Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             RequestMethod method)
@@ -65,7 +65,7 @@ namespace SMSApi.Api
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream>(), method);
         }
 
-        public async Task<Stream> ExecuteAsync(
+        public async Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Stream file,
@@ -74,7 +74,7 @@ namespace SMSApi.Api
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
 
-        public async Task<Stream> ExecuteAsync(
+        public async Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,

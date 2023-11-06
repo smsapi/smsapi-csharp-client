@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Web;
-using SMSApi.Api.Response;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {
@@ -71,13 +71,16 @@ namespace SMSApi.Api.Action
             return new NameValueCollection();
         }
 
-        private T ProcessResponse(Stream data)
+        private T ProcessResponse(HttpResponseEntity responseEntity)
         {
             T response;
-
+            Stream data = null;
+            
             try
             {
-                HandleError(data);
+                HandleError(responseEntity);
+                
+                data = responseEntity.Content.Result;
                 response = ResponseToObject(data);
             }
             catch (SerializationException e)
@@ -153,8 +156,15 @@ namespace SMSApi.Api.Action
             }
         }
 
-        private void HandleError(Stream data)
+        private void HandleError(HttpResponseEntity responseEntity)
         {
+            if (typeof(IResponseCodeAwareResolver).IsAssignableFrom(typeof(T)))
+            {
+                //TODO resolve code to status
+            }
+
+            var data = responseEntity.Content.Result;
+            
             data.Position = 0;
 
             try
@@ -165,15 +175,15 @@ namespace SMSApi.Api.Action
                 {
                     if (IsHostError(error.ErrorCode))
                     {
-                        throw new HostException(error.ErrorMessage, Convert.ToString(error.ErrorCode));
+                        throw new HostException(error.GetErrorMessage(), Convert.ToString(error.ErrorCode));
                     }
 
                     if (IsClientError(error.ErrorCode))
                     {
-                        throw new ClientException(error.ErrorMessage, error.ErrorCode);
+                        throw new ClientException(error.GetErrorMessage(), error.ErrorCode);
                     }
 
-                    throw new ActionException(error.ErrorMessage, error.ErrorCode);
+                    throw new ActionException(error.GetErrorMessage(), error.ErrorCode);
                 }
             }
             catch (SerializationException)

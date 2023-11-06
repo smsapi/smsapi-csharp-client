@@ -9,35 +9,35 @@ namespace SMSApi.Api
     {
         void Authentication(IClient client);
 
-        Stream Execute(
+        HttpResponseEntity Execute(
             string uri,
             NameValueCollection data,
             RequestMethod method);
 
-        Stream Execute(
+        HttpResponseEntity Execute(
             string uri,
             NameValueCollection data,
             Stream file,
             RequestMethod method);
 
-        Stream Execute(
+        HttpResponseEntity Execute(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
             RequestMethod method);
 
-        Task<Stream> ExecuteAsync(
+        Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             RequestMethod method);
 
-        Task<Stream> ExecuteAsync(
+        Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Stream file,
             RequestMethod method);
 
-        Task<Stream> ExecuteAsync(
+        Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
