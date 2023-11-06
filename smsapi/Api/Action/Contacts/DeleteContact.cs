@@ -1,5 +1,5 @@
 using System;
-using SMSApi.Api.Response;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {

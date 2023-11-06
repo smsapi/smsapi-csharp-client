@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Response;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace smsapiTests
 {
