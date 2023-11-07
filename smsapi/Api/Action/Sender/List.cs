@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -9,9 +8,9 @@ namespace SMSApi.Api.Action
     {
         protected override RequestMethod Method => RequestMethod.POST;
 
-        protected override Array<Sender> ResponseToObject(Stream data)
+        protected override Array<Sender> ResponseToObject(HttpResponseEntity data)
         {
-            return new Array<Sender>(Deserialize<List<Sender>>(data));
+            return new Array<Sender>(BaseJsonDeserializer.Deserialize<List<Sender>>(data));
         }
 
         protected override string Uri()

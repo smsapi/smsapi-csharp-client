@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Web;
-using SMSApi.Api.Response.ResponseResolver;
+using SMSApi.Api.Response.Deserialization;
 
 namespace SMSApi.Api.Action
 {
     public abstract class Base<T>
     {
+        private readonly IDeserializer _deserializer = new LegacyJsonResponseDeserializer();
+        protected BaseJsonDeserializer BaseJsonDeserializer = new();
         private Proxy proxy;
 
         protected abstract RequestMethod Method { get; }
@@ -33,38 +32,21 @@ namespace SMSApi.Api.Action
             this.proxy = proxy;
         }
 
-        protected TT Deserialize<TT>(Stream data)
-        {
-            TT result;
-            if (data.Length > 0)
-            {
-                data.Position = 0;
-                var serializer = new DataContractJsonSerializer(typeof(TT));
-                result = (TT)serializer.ReadObject(data);
-                data.Position = 0;
-            }
-            else
-            {
-                result = Activator.CreateInstance<TT>();
-            }
-
-            return result;
-        }
-
         protected virtual Dictionary<string, Stream> Files()
         {
             return new Dictionary<string, Stream>();
         }
 
-        protected virtual T ResponseToObject(Stream data)
+        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding
         {
-            return Deserialize<T>(data);
+            return _deserializer.Deserialize<T>(data);
         }
 
         protected abstract string Uri();
 
         protected virtual void Validate()
-        { }
+        {
+        }
 
         protected virtual NameValueCollection Values()
         {
@@ -73,31 +55,7 @@ namespace SMSApi.Api.Action
 
         private T ProcessResponse(HttpResponseEntity responseEntity)
         {
-            T response;
-            Stream data = null;
-            
-            try
-            {
-                HandleError(responseEntity);
-                
-                data = responseEntity.Content.Result;
-                response = ResponseToObject(data);
-            }
-            catch (SerializationException e)
-            {
-                //Problem z prasowaniem json'a
-                throw new HostException(e.Message + " /" + Uri(), HostException.E_JSON_DECODE);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                data?.Close();
-            }
-
-            return response;
+            return ResponseToObject(responseEntity);
         }
 
         private NameValueCollection GetValues()
@@ -106,90 +64,6 @@ namespace SMSApi.Api.Action
             return values.Count > 0
                 ? new NameValueCollection { { "format", "json" }, values }
                 : HttpUtility.ParseQueryString(string.Empty);
-        }
-
-        /**
-         * 101 Niepoprawne lub brak danych autoryzacji.
-         * 102 Nieprawidłowy login lub hasło
-         * 103 Brak punków dla tego użytkownika
-         * 105 Błędny adres IP
-         * 110 Usługa nie jest dostępna na danym koncie
-         * 1000 Akcja dostępna tylko dla użytkownika głównego
-         * 1001 Nieprawidłowa akcja
-         */
-        private static bool IsClientError(int code)
-        {
-            switch (code)
-            {
-                case 101:
-                case 102:
-                case 103:
-                case 105:
-                case 110:
-                case 1000:
-                case 1001:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        /**
-         * 8 Błąd w odwołaniu
-         * 666 Wewnętrzny błąd systemu
-         * 999 Wewnętrzny błąd systemu
-         * 201 Wewnętrzny błąd systemu
-         */
-        private static bool IsHostError(int code)
-        {
-            switch (code)
-            {
-                case 8:
-                case 201:
-                case 666:
-                case 999:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        private void HandleError(HttpResponseEntity responseEntity)
-        {
-            if (typeof(IResponseCodeAwareResolver).IsAssignableFrom(typeof(T)))
-            {
-                //TODO resolve code to status
-            }
-
-            var data = responseEntity.Content.Result;
-            
-            data.Position = 0;
-
-            try
-            {
-                var error = Deserialize<ErrorAwareResponse>(data);
-
-                if (error.IsError())
-                {
-                    if (IsHostError(error.ErrorCode))
-                    {
-                        throw new HostException(error.GetErrorMessage(), Convert.ToString(error.ErrorCode));
-                    }
-
-                    if (IsClientError(error.ErrorCode))
-                    {
-                        throw new ClientException(error.GetErrorMessage(), error.ErrorCode);
-                    }
-
-                    throw new ActionException(error.GetErrorMessage(), error.ErrorCode);
-                }
-            }
-            catch (SerializationException)
-            { }
-
-            data.Position = 0;
         }
     }
 }
