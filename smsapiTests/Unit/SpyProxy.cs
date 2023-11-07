@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using SMSApi.Api;
 
@@ -18,52 +20,52 @@ public class SpyProxy : Proxy
         throw new System.NotImplementedException();
     }
 
-    public Stream Execute(string uri, NameValueCollection data, RequestMethod method)
+    public HttpResponseEntity Execute(string uri, NameValueCollection data, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
-
-        return new MemoryStream();
+        
+        return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
 
-    public Stream Execute(string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public HttpResponseEntity Execute(string uri, NameValueCollection data, Stream file, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
 
-        return new MemoryStream();
+        return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
 
-    public Stream Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public HttpResponseEntity Execute(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
 
-        return new MemoryStream();
+        return new HttpResponseEntity();
     }
 
-    public Task<Stream> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
 
-        return new Task<Stream>(null);
+        return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<Stream> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
 
-        return new Task<Stream>(null);
+        return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<Stream> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
 
-        return new Task<Stream>(null);
+        return new Task<HttpResponseEntity>(null);
     }
 
     private void SetParameters(NameValueCollection collection)

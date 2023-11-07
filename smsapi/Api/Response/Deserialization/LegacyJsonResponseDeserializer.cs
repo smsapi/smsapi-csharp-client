@@ -17,7 +17,6 @@ namespace SMSApi.Api.Response.Deserialization
             try
             {
                 HandleError(responseEntity);
-
                 data = responseEntity.Content.Result;
                 response = _baseJsonDeserializer.Deserialize<T>(responseEntity);
             }

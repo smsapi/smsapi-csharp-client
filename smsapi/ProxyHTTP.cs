@@ -49,7 +49,7 @@ namespace SMSApi.Api
 
             try
             {
-                return client.SendRequest(method, uri, data, files).GetAwaiter().GetResult();
+                return client.SendRequest(method, uri, data, files).Result;
             }
             catch (System.Exception e)
             {
