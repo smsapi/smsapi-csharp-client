@@ -37,7 +37,7 @@ namespace SMSApi.Api.Action
             return new Dictionary<string, Stream>();
         }
 
-        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding
+        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding, exception will be never thrown
         {
             return _deserializer.Deserialize<T>(data);
         }
