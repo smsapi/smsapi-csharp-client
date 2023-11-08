@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,20 +33,20 @@ public class RestJsonResponseDeserializerTest
         var expectedMessage = "expired";
         Assert.ThrowsException<CustomException>(execution, expectedMessage);
     }
-    
+
     [TestMethod]
     public void deserialize_to_object_when_no_exception_mapper_found()
     {
         var action = new TestAction();
         action.Proxy(_proxyStub);
-        Dictionary<string, dynamic> response = new() {{"TestProperty", "abc"}};
+        Dictionary<string, dynamic> response = new() { { "TestProperty", "abc" } };
         _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
             response.ToHttpEntityStreamTask(),
             HttpStatusCode.OK
         );
 
         var result = action.Execute();
-        
+
         Assert.AreEqual("abc", result.TestProperty);
     }
 
@@ -67,24 +68,13 @@ public class RestJsonResponseDeserializerTest
     [DataContract]
     private class ResponseWithExceptionMapper : IResponseCodeAwareResolver
     {
-        [DataMember]
-        public String TestProperty;
-        
-        public bool IsError()
-        {
-            throw new NotImplementedException();
-        }
+        [DataMember] public string TestProperty;
 
-        public string GetErrorMessage()
+        public Dictionary<int, Action<Stream>> HandleExceptionActions()
         {
-            throw new NotImplementedException();
-        }
-
-        public Dictionary<int, Action> CodeToException()
-        {
-            return new Dictionary<int, Action>
+            return new Dictionary<int, Action<Stream>>
             {
-                { 408, () => throw new CustomException("expired", 408) }
+                { 408, _ => throw new CustomException("expired", 408) }
             };
         }
     }
