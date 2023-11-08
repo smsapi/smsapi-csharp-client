@@ -26,10 +26,10 @@ public class RestJsonResponseDeserializer : IDeserializer
         var responseObject = (IResponseCodeAwareResolver)Activator.CreateInstance<T>();
         var responseStatusCode = (int)responseEntity.StatusCode;
 
-        var codesMatchers = responseObject.HandleExceptionActions()
+        var exceptionsMatchers = responseObject.HandleExceptionActions()
             .Concat(responseCodesResolvers.SelectMany(resolver => resolver.HandleExceptionActions()));
 
-        var matchedExceptions = codesMatchers
+        var matchedExceptions = exceptionsMatchers
             .Where(pair => pair.Key.Equals(responseStatusCode))
             .ToHashSet();
 
