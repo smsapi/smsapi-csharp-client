@@ -3,7 +3,7 @@ using SMSApi.Api.Response.MFA;
 
 namespace SMSApi.Api.Action.MFA;
 
-public class VerifyMFACode : Base<MFACreationResponse>
+public class VerifyMFACode : Base<MFAVerificationResponse>
 {
     private readonly string code;
     private readonly string phoneNumber;
@@ -15,8 +15,7 @@ public class VerifyMFACode : Base<MFACreationResponse>
     }
 
     protected override RequestMethod Method => RequestMethod.POST;
-
-
+    
     protected override ApiType ApiType()
     {
         return Action.ApiType.Rest;

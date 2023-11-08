@@ -23,5 +23,13 @@ namespace SMSApi.Api
 
             return action;
         }
+        
+        public VerifyMFACode VerifyMfaCode(string phoneNumber, string code)
+        {
+            var action = new VerifyMFACode(phoneNumber, code);
+            action.Proxy(proxy);
+
+            return action;
+        }
     }
 }
