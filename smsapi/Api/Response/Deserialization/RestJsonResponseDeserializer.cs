@@ -8,14 +8,17 @@ public class RestJsonResponseDeserializer : IDeserializer
 {
     private readonly ValidationErrorsResolver validationErrorsResolver;
     private readonly LegacyJsonResponseDeserializer legacyJsonResponseDeserializer;
+    private readonly TooManyRequestsErrorResolver tooManyRequestsErrorResolver;
 
     public RestJsonResponseDeserializer(
         LegacyJsonResponseDeserializer legacyJsonResponseDeserializer,
-        ValidationErrorsResolver validationErrorsResolver
+        ValidationErrorsResolver validationErrorsResolver,
+        TooManyRequestsErrorResolver tooManyRequestsErrorResolver
     )
     {
         this.legacyJsonResponseDeserializer = legacyJsonResponseDeserializer;
         this.validationErrorsResolver = validationErrorsResolver;
+        this.tooManyRequestsErrorResolver = tooManyRequestsErrorResolver;
     }
 
     public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
@@ -25,10 +28,11 @@ public class RestJsonResponseDeserializer : IDeserializer
 
         var responseObject = (IResponseCodeAwareResolver)Activator.CreateInstance<T>();
         var responseStatusCode = (int)responseEntity.StatusCode;
-        
+
         var exceptionsMatchers =
             responseObject.HandleExceptionActions()
-                .Concat(validationErrorsResolver.HandleExceptionActions());
+                .Concat(validationErrorsResolver.HandleExceptionActions())
+                .Concat(tooManyRequestsErrorResolver.HandleExceptionActions());
 
         var matchedExceptions = exceptionsMatchers
             .Where(pair => pair.Key.Equals(responseStatusCode))
