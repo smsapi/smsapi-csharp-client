@@ -4,6 +4,6 @@ namespace SMSApi.Api.Response.ResponseResolver
 {
     public interface IResponseCodeAwareResolver: IErrorResponse
     {
-        public Dictionary<int, string> GetCodeErrorMap();
+        public Dictionary<int, System.Action> CodeToException();
     }
 }

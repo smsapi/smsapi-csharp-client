@@ -4,16 +4,18 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using SMSApi.Api.Response.Deserialization;
+using smsapi.Api.Response.Deserialization.Exception;
 
 namespace SMSApi.Api.Action
 {
     public abstract class Base<T>
     {
-        private readonly IDeserializer _deserializer = new LegacyJsonResponseDeserializer();
-        protected BaseJsonDeserializer BaseJsonDeserializer = new();
+        protected BaseJsonDeserializer BaseJsonDeserializer = new();//TODO remove after further refactor
         private Proxy proxy;
 
         protected abstract RequestMethod Method { get; }
+
+        protected virtual ApiType ApiType() => Action.ApiType.Legacy;
 
         public T Execute()
         {
@@ -37,9 +39,20 @@ namespace SMSApi.Api.Action
             return new Dictionary<string, Stream>();
         }
 
-        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding, exception will be never thrown
+        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding
         {
-            return _deserializer.Deserialize<T>(data);
+            IDeserializer deserializer = ApiType() switch
+            {
+                Action.ApiType.Rest => new RestJsonResponseDeserializer(new LegacyJsonResponseDeserializer()),
+                Action.ApiType.Legacy => new LegacyJsonResponseDeserializer(),
+                _ => throw new Exception("Unknown api type")
+            };
+
+            var deserializationResult = deserializer.Deserialize<T>(data);
+            
+            deserializationResult.ThrowErrors();
+
+            return deserializationResult.Result;
         }
 
         protected abstract string Uri();

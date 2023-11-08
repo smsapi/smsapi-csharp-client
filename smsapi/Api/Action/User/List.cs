@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
+using SMSApi.Api.Response.Deserialization;
+using smsapi.Api.Response.Deserialization.Exception;
 
 namespace SMSApi.Api.Action
 {
@@ -10,7 +12,10 @@ namespace SMSApi.Api.Action
 
         protected override Array<User> ResponseToObject(HttpResponseEntity data)
         {
-            return new Array<User>(BaseJsonDeserializer.Deserialize<List<User>>(data));
+            var result = BaseJsonDeserializer.Deserialize<List<User>>(data);
+            result.ThrowErrors();
+            
+            return new Array<User>(result.Result);
         }
 
         protected override string Uri()

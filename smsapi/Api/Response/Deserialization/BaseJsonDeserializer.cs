@@ -5,7 +5,7 @@ namespace SMSApi.Api.Response.Deserialization
 {
     public class BaseJsonDeserializer : IDeserializer
     {
-        public T Deserialize<T>(HttpResponseEntity responseEntity)
+        public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
         {
             T result;
             var data = responseEntity.Content.Result;
@@ -22,7 +22,10 @@ namespace SMSApi.Api.Response.Deserialization
                 result = Activator.CreateInstance<T>();
             }
 
-            return result;
+            var deserializationResult = new DeserializationResult<T>();
+            deserializationResult.Result = result;
+
+            return deserializationResult;
         }
     }
 }

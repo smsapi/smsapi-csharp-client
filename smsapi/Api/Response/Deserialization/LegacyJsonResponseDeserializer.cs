@@ -1,6 +1,7 @@
-using System;
+#nullable enable
 using System.IO;
 using System.Runtime.Serialization;
+using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response.Deserialization
@@ -9,14 +10,17 @@ namespace SMSApi.Api.Response.Deserialization
     {
         private readonly BaseJsonDeserializer _baseJsonDeserializer = new();
 
-        public T Deserialize<T>(HttpResponseEntity responseEntity)
+        public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
         {
-            T response;
-            Stream data = null;
-
+            DeserializationResult<T> response;
+            Stream? data = null;
+            
             try
             {
-                HandleError(responseEntity);
+                var errorDeserializationResult = new DeserializationResult<T>();
+                HandleError(responseEntity, errorDeserializationResult);
+                errorDeserializationResult.ThrowErrors();
+                
                 data = responseEntity.Content.Result;
                 response = _baseJsonDeserializer.Deserialize<T>(responseEntity);
             }
@@ -36,21 +40,30 @@ namespace SMSApi.Api.Response.Deserialization
             return response;
         }
 
-        private void HandleError(HttpResponseEntity responseEntity)
+        private void HandleError<T>(HttpResponseEntity responseEntity, DeserializationResult<T> deserializationResult)
         {
             try
             {
-                var error = _baseJsonDeserializer.Deserialize<ErrorAwareResponse>(responseEntity);
+                var error = _baseJsonDeserializer.Deserialize<ErrorAwareResponse>(responseEntity).Result;
 
                 if (!error.IsError()) return;
-                
+
                 if (IsHostError(error.ErrorCode))
-                    throw new HostException(error.GetErrorMessage(), Convert.ToString(error.ErrorCode));
+                {
+                    deserializationResult.HostError =
+                        new ResponseError(error.GetErrorMessage(), error.ErrorCode);
+                    return;
+                }
 
                 if (IsClientError(error.ErrorCode))
-                    throw new ClientException(error.GetErrorMessage(), error.ErrorCode);
+                {
+                    deserializationResult.ClientError =
+                        new ResponseError(error.GetErrorMessage(), error.ErrorCode);
+                    return;
+                }
 
-                throw new ActionException(error.GetErrorMessage(), error.ErrorCode);
+                deserializationResult.ActionError =
+                    new ResponseError(error.GetErrorMessage(), error.ErrorCode);
             }
             catch (SerializationException)
             {
