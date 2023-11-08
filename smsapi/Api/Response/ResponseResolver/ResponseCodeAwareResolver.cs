@@ -6,8 +6,5 @@ namespace SMSApi.Api.Response.ResponseResolver;
 
 public interface IResponseCodeAwareResolver : IErrorResponse
 {
-    public Dictionary<int, Action<Stream>> HandleExceptionActions()
-    {
-        return new Dictionary<int, Action<Stream>>();
-    }
+    public Dictionary<int, Action<Stream>> HandleExceptionActions() => new();
 }
