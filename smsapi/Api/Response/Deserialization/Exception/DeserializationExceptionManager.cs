@@ -15,7 +15,7 @@ namespace smsapi.Api.Response.Deserialization.Exception
                 throw new HostException(dr.HostError.Value.Message, Convert.ToString(dr.HostError.Value.Code));
 
             if (dr.ActionError != null)
-                throw new HostException(dr.ActionError.Value.Message, Convert.ToString(dr.ActionError.Value.Code));
+                throw new ActionException(dr.ActionError.Value.Message, dr.ActionError.Value.Code);
         }
     }
 }
