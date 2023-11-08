@@ -6,19 +6,16 @@ namespace SMSApi.Api.Response.Deserialization;
 
 public class RestJsonResponseDeserializer : IDeserializer
 {
-    private readonly ValidationErrorsResolver validationErrorsResolver;
     private readonly LegacyJsonResponseDeserializer legacyJsonResponseDeserializer;
-    private readonly TooManyRequestsErrorResolver tooManyRequestsErrorResolver;
+    private readonly IResponseCodeAwareResolver[] responseCodesResolvers;
 
     public RestJsonResponseDeserializer(
         LegacyJsonResponseDeserializer legacyJsonResponseDeserializer,
-        ValidationErrorsResolver validationErrorsResolver,
-        TooManyRequestsErrorResolver tooManyRequestsErrorResolver
+        params IResponseCodeAwareResolver[] responseCodesResolvers
     )
     {
         this.legacyJsonResponseDeserializer = legacyJsonResponseDeserializer;
-        this.validationErrorsResolver = validationErrorsResolver;
-        this.tooManyRequestsErrorResolver = tooManyRequestsErrorResolver;
+        this.responseCodesResolvers = responseCodesResolvers;
     }
 
     public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
@@ -29,12 +26,10 @@ public class RestJsonResponseDeserializer : IDeserializer
         var responseObject = (IResponseCodeAwareResolver)Activator.CreateInstance<T>();
         var responseStatusCode = (int)responseEntity.StatusCode;
 
-        var exceptionsMatchers =
-            responseObject.HandleExceptionActions()
-                .Concat(validationErrorsResolver.HandleExceptionActions())
-                .Concat(tooManyRequestsErrorResolver.HandleExceptionActions());
+        var codesMatchers = responseObject.HandleExceptionActions()
+            .Concat(responseCodesResolvers.SelectMany(resolver => resolver.HandleExceptionActions()));
 
-        var matchedExceptions = exceptionsMatchers
+        var matchedExceptions = codesMatchers
             .Where(pair => pair.Key.Equals(responseStatusCode))
             .ToHashSet();
 
