@@ -6,77 +6,83 @@ using System.Web;
 using SMSApi.Api.Response.Deserialization;
 using smsapi.Api.Response.Deserialization.Exception;
 
-namespace SMSApi.Api.Action
+namespace SMSApi.Api.Action;
+
+public abstract class Base<T>
 {
-    public abstract class Base<T>
+    protected BaseJsonDeserializer BaseJsonDeserializer = new(); //TODO remove after further refactor
+    private Proxy proxy;
+
+    protected abstract RequestMethod Method { get; }
+
+    protected virtual ApiType ApiType()
     {
-        protected BaseJsonDeserializer BaseJsonDeserializer = new();//TODO remove after further refactor
-        private Proxy proxy;
+        return Action.ApiType.Legacy;
+    }
 
-        protected abstract RequestMethod Method { get; }
+    public T Execute()
+    {
+        Validate();
+        return ProcessResponse(proxy.Execute(Uri(), GetValues(), Files(), Method));
+    }
 
-        protected virtual ApiType ApiType() => Action.ApiType.Legacy;
+    public async Task<T> ExecuteAsync()
+    {
+        Validate();
+        return ProcessResponse(await proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method));
+    }
 
-        public T Execute()
+    public void Proxy(Proxy proxy)
+    {
+        this.proxy = proxy;
+    }
+
+    protected virtual Dictionary<string, Stream> Files()
+    {
+        return new Dictionary<string, Stream>();
+    }
+
+    protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding
+    {
+        IDeserializer deserializer = ApiType() switch
         {
-            Validate();
-            return ProcessResponse(proxy.Execute(Uri(), GetValues(), Files(), Method));
-        }
+            Action.ApiType.Rest => new RestJsonResponseDeserializer(
+                new LegacyJsonResponseDeserializer(),
+                new ValidationErrorsResolver(new BaseJsonDeserializer()),
+                new TooManyRequestsErrorResolver()
+            ),
+            Action.ApiType.Legacy => new LegacyJsonResponseDeserializer(),
+            _ => throw new Exception("Unknown api type")
+        };
 
-        public async Task<T> ExecuteAsync()
-        {
-            Validate();
-            return ProcessResponse(await proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method));
-        }
+        var deserializationResult = deserializer.Deserialize<T>(data);
 
-        public void Proxy(Proxy proxy)
-        {
-            this.proxy = proxy;
-        }
+        deserializationResult.ThrowErrors();
 
-        protected virtual Dictionary<string, Stream> Files()
-        {
-            return new Dictionary<string, Stream>();
-        }
+        return deserializationResult.Result;
+    }
 
-        protected virtual T ResponseToObject(HttpResponseEntity data) //TODO get rid of overriding
-        {
-            IDeserializer deserializer = ApiType() switch
-            {
-                Action.ApiType.Rest => new RestJsonResponseDeserializer(new LegacyJsonResponseDeserializer()),
-                Action.ApiType.Legacy => new LegacyJsonResponseDeserializer(),
-                _ => throw new Exception("Unknown api type")
-            };
+    protected abstract string Uri();
 
-            var deserializationResult = deserializer.Deserialize<T>(data);
-            
-            deserializationResult.ThrowErrors();
+    protected virtual void Validate()
+    {
+    }
 
-            return deserializationResult.Result;
-        }
+    protected virtual NameValueCollection Values()
+    {
+        return new NameValueCollection();
+    }
 
-        protected abstract string Uri();
+    private T ProcessResponse(HttpResponseEntity responseEntity)
+    {
+        return ResponseToObject(responseEntity);
+    }
 
-        protected virtual void Validate()
-        {
-        }
-
-        protected virtual NameValueCollection Values()
-        {
-            return new NameValueCollection();
-        }
-
-        private T ProcessResponse(HttpResponseEntity responseEntity)
-        {
-            return ResponseToObject(responseEntity);
-        }
-
-        private NameValueCollection GetValues()
-        {
-            var values = Values();
-            return values.Count > 0
-                ? new NameValueCollection { { "format", "json" }, values }
-                : HttpUtility.ParseQueryString(string.Empty);
-        }
+    private NameValueCollection GetValues()
+    {
+        var values = Values();
+        return values.Count > 0
+            ? new NameValueCollection { { "format", "json" }, values }
+            : HttpUtility.ParseQueryString(string.Empty);
     }
 }
