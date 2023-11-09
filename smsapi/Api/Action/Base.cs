@@ -49,7 +49,8 @@ public abstract class Base<T>
             Action.ApiType.Rest => new RestJsonResponseDeserializer(
                 new LegacyJsonResponseDeserializer(),
                 new ValidationErrorsResolver(new BaseJsonDeserializer()),
-                new TooManyRequestsErrorResolver()
+                new TooManyRequestsErrorResolver(),
+                new AccessErrorResolver()
             ),
             Action.ApiType.Legacy => new LegacyJsonResponseDeserializer(),
             _ => throw new Exception("Unknown api type")
