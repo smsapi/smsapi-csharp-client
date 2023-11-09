@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Net;
+using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response.Deserialization;
@@ -35,6 +37,18 @@ public class RestJsonResponseDeserializer : IDeserializer
 
         if (matchedExceptions.Count > 0) matchedExceptions.First().Value.Invoke(responseEntity.Content.Result);
 
+        HandleUnknownErrors(responseEntity);
+
         return legacyJsonResponseDeserializer.Deserialize<T>(responseEntity);
+    }
+
+    private static void HandleUnknownErrors(HttpResponseEntity responseEntity)
+    {
+        if (responseEntity.StatusCode.Equals(HttpStatusCode.OK)) return;
+
+        throw new UnhandledRestException(
+            $"Unknown http status code: {(int)responseEntity.StatusCode}",
+            responseEntity.StatusCode.ToString()
+        );
     }
 }
