@@ -41,7 +41,7 @@ public class SpyProxy : Proxy
         RequestedUri = uri;
         SetParameters(data);
 
-        return new HttpResponseEntity();
+        return new HttpResponseEntity(Task.FromResult(Stream.Null), HttpStatusCode.OK);
     }
 
     public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method)
