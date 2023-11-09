@@ -24,10 +24,13 @@ public class RestJsonResponseDeserializer : IDeserializer
     {
         if (!typeof(IResponseCodeAwareResolver).IsAssignableFrom(typeof(T)))
             throw new Exception("Deserialization from non-rest response");
+        
+        var responseStatusCode = (int)responseEntity.StatusCode;
+        
+        if (responseStatusCode == (int)HttpStatusCode.OK)
+            return legacyJsonResponseDeserializer.Deserialize<T>(responseEntity);
 
         var responseObject = (IResponseCodeAwareResolver)Activator.CreateInstance<T>();
-        var responseStatusCode = (int)responseEntity.StatusCode;
-
         var exceptionsMatchers = responseObject.HandleExceptionActions()
             .Concat(responseCodesResolvers.SelectMany(resolver => resolver.HandleExceptionActions()));
 
@@ -37,15 +40,13 @@ public class RestJsonResponseDeserializer : IDeserializer
 
         if (matchedExceptions.Count > 0) matchedExceptions.First().Value.Invoke(responseEntity.Content.Result);
 
-        HandleUnknownErrors(responseEntity);
+        HandleUnknownError(responseEntity);
 
-        return legacyJsonResponseDeserializer.Deserialize<T>(responseEntity);
+        return default;
     }
 
-    private static void HandleUnknownErrors(HttpResponseEntity responseEntity)
+    private static void HandleUnknownError(HttpResponseEntity responseEntity)
     {
-        if (responseEntity.StatusCode.Equals(HttpStatusCode.OK)) return;
-
         throw new UnhandledRestException(
             $"Unknown http status code: {(int)responseEntity.StatusCode}",
             responseEntity.StatusCode.ToString()
