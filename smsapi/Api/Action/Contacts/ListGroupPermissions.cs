@@ -2,7 +2,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListGroupPermissions : Base<GroupPermissions>
+    public class ListGroupPermissions : Action<GroupPermissions>
     {
         private string groupId;
 

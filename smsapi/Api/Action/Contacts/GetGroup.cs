@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class GetGroup : Base<Group>
+    public class GetGroup : Action<Group>
     {
         private string groupId;
 

@@ -50,7 +50,7 @@ public class RestJsonResponseDeserializerTest
         Assert.AreEqual("abc", result.TestProperty);
     }
 
-    private class TestAction : Base<ResponseWithExceptionMapper>
+    private class TestAction : SMSApi.Api.Action.Action<ResponseWithExceptionMapper>
     {
         protected override RequestMethod Method { get; }
 
@@ -70,9 +70,9 @@ public class RestJsonResponseDeserializerTest
     {
         [DataMember] public string TestProperty;
 
-        public Dictionary<int, Action<Stream>> HandleExceptionActions()
+        public Dictionary<int, System.Action<Stream>> HandleExceptionActions()
         {
-            return new Dictionary<int, Action<Stream>>
+            return new Dictionary<int, System.Action<Stream>>
             {
                 { 408, _ => throw new CustomException("expired", 408) }
             };

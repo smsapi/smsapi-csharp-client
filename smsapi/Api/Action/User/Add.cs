@@ -4,7 +4,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserAdd : Base<User>
+    public class UserAdd : Action<User>
     {
         private bool active;
         private string info;

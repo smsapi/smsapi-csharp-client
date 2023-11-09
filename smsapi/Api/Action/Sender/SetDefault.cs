@@ -4,7 +4,7 @@ using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderSetDefault : Base<ErrorAwareResponse>
+    public class SenderSetDefault : Action<ErrorAwareResponse>
     {
         private string name;
 

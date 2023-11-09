@@ -4,7 +4,7 @@ using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteGroup : Base<ErrorAwareResponse>
+    public class DeleteGroup : Action<ErrorAwareResponse>
     {
         private readonly string groupId;
 

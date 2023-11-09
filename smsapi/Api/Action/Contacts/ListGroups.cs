@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListGroups : Base<Groups>
+    public class ListGroups : Action<Groups>
     {
         private string id;
         private string name;

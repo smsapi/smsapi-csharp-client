@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class HLRCheckNumber : Base<CheckNumber>
+    public class HLRCheckNumber : Action<CheckNumber>
     {
         private string number;
 

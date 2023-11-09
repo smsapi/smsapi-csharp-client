@@ -4,7 +4,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class EditGroup : Base<Group>
+    public class EditGroup : Action<Group>
     {
         private string description;
         private string groupId;

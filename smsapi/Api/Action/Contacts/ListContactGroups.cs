@@ -2,7 +2,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListContactGroups : Base<Groups>
+    public class ListContactGroups : Action<Groups>
     {
         private readonly string contactId;
 

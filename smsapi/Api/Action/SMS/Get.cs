@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSGet : Base<Status>
+    public class SMSGet : Action<Status>
     {
         private string[] id;
 

@@ -4,7 +4,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListContacts : Base<Contacts>
+    public class ListContacts : Action<Contacts>
     {
         private DateTime? birthdayDate;
         private string email;

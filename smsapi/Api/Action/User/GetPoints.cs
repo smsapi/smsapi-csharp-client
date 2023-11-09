@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGetCredits : Base<Credits>
+    public class UserGetCredits : Action<Credits>
     {
         protected override RequestMethod Method => RequestMethod.POST;
 

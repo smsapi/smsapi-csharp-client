@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class SMSDelete : Base<Countable>
+    public class SMSDelete : Action<Countable>
     {
         private string id;
 

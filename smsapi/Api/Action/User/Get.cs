@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class UserGet : Base<User>
+    public class UserGet : Action<User>
     {
         private string username;
 

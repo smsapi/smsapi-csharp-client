@@ -56,7 +56,7 @@ public class RestJsonResponseDeserializerValidationErrorsTest
         Assert.AreEqual("400", exception.Code);
     }
 
-    private class TestAction : Base<ResponseWithExceptionMapper>
+    private class TestAction : Action<ResponseWithExceptionMapper>
     {
         protected override RequestMethod Method { get; }
 

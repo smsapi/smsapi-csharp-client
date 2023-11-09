@@ -33,7 +33,7 @@ public class UnhandledRestCodeResponseTest
         Assert.AreEqual("FailedDependency", ex.Code);
     }
 
-    private class TestAction : Base<ResponseWithExceptionMapper>
+    private class TestAction : Action<ResponseWithExceptionMapper>
     {
         protected override RequestMethod Method { get; }
 

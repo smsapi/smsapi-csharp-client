@@ -4,7 +4,7 @@ using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderDelete : Base<ErrorAwareResponse>
+    public class SenderDelete : Action<ErrorAwareResponse>
     {
         private string name;
 

@@ -2,7 +2,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListFieldOptions : Base<FieldOptions>
+    public class ListFieldOptions : Action<FieldOptions>
     {
         private readonly string fieldId;
 

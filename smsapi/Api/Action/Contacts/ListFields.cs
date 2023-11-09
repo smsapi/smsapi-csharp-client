@@ -2,7 +2,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListFields : Base<Fields>
+    public class ListFields : Action<Fields>
     {
         protected override RequestMethod Method => RequestMethod.GET;
 

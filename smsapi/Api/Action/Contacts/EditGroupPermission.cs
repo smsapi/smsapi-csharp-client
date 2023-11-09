@@ -4,7 +4,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class EditGroupPermission : Base<GroupPermission>
+    public class EditGroupPermission : Action<GroupPermission>
     {
         private string groupId;
         private bool read;

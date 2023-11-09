@@ -3,7 +3,7 @@ using SMSApi.Api.Response.MFA;
 
 namespace SMSApi.Api.Action.MFA;
 
-public class CreateMFACode : Base<MFACreationResponse>
+public class CreateMFACode : Action<MFACreationResponse>
 {
     private readonly string phoneNumber;
     private string content;

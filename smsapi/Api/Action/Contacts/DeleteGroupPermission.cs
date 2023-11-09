@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteGroupPermission : Base<GroupPermission>
+    public class DeleteGroupPermission : Action<GroupPermission>
     {
         private readonly string groupId;
         private readonly string username;

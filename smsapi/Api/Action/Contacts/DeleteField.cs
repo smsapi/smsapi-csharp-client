@@ -4,7 +4,7 @@ using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteField : Base<ErrorAwareResponse>
+    public class DeleteField : Action<ErrorAwareResponse>
     {
         private readonly string fieldId;
 

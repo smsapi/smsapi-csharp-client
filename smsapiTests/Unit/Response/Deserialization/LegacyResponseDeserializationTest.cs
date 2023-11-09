@@ -32,7 +32,7 @@ public class LegacyResponseDeserializationTest
         Assert.AreEqual(testValue, result.TestProperty);
     }
 
-    private class TestAction : Base<BaseResponse>
+    private class TestAction : Action<BaseResponse>
     {
         protected override RequestMethod Method { get; }
 

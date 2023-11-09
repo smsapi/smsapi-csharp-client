@@ -73,7 +73,7 @@ public class LegacyResponseDeserializationExceptionTest
         };
     }
 
-    private class TestAction : Base<ErrorAwareResponse>
+    private class TestAction : Action<ErrorAwareResponse>
     {
         protected override RequestMethod Method { get; }
 

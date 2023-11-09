@@ -6,7 +6,7 @@ using smsapi.Api.Response.Deserialization.Exception;
 
 namespace SMSApi.Api.Action
 {
-    public class SenderList : Base<Array<Sender>>
+    public class SenderList : Action<Array<Sender>>
     {
         protected override RequestMethod Method => RequestMethod.POST;
 

@@ -5,7 +5,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class EditField : Base<Field>
+    public class EditField : Action<Field>
     {
         private string fieldId;
         private string name;

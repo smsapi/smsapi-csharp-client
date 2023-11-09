@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class CreateField : Base<Field>
+    public class CreateField : Action<Field>
     {
         private string name;
         private string type;

@@ -31,7 +31,7 @@ public class TooManyRequestsResponseTest
         Assert.ThrowsException<TooManyRequestsErrorResolver.TooManyRequestsException>(execution);
     }
 
-    private class TestAction : Base<ResponseWithExceptionMapper>
+    private class TestAction : Action<ResponseWithExceptionMapper>
     {
         protected override RequestMethod Method { get; }
 

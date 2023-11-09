@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class GetContact : Base<Contact>
+    public class GetContact : Action<Contact>
     {
         private readonly string contactId;
 
