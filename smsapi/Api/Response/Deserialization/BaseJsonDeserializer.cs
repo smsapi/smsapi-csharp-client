@@ -22,10 +22,10 @@ namespace SMSApi.Api.Response.Deserialization
                 result = Activator.CreateInstance<T>();
             }
 
-            var deserializationResult = new DeserializationResult<T>();
-            deserializationResult.Result = result;
-
-            return deserializationResult;
+            return new DeserializationResult<T>
+            {
+                Result = result
+            };
         }
     }
 }

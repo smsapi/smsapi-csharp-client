@@ -23,7 +23,7 @@ namespace SMSApi.Api
             switch (method)
             {
                 case RequestMethod.GET:
-                    var getResponse = await httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
+                    var getResponse = await httpClient.GetAsync(uri);
 
                     return new HttpResponseEntity(getResponse.Content.ReadAsStreamAsync(), getResponse.StatusCode);
                 case RequestMethod.POST:
