@@ -189,7 +189,7 @@ namespace SMSApi.Api
 
 public static class ContactsFeatureRegister
 {
-    public static ContactsFactory MFA(this Features features)
+    public static ContactsFactory Contacts(this Features features)
     {
         return new ContactsFactory(features.Client, features.Proxy);
     }
