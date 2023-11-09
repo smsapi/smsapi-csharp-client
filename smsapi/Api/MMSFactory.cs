@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -53,5 +54,13 @@ namespace SMSApi.Api
             action.SetTo(to);
             return action;
         }
+    }
+}
+
+public static class MMSFeatureRegister
+{
+    public static MMSFactory MMS(this Features features)
+    {
+        return new MMSFactory(features.Client, features.Proxy);
     }
 }

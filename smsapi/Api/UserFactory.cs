@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -52,5 +53,13 @@ namespace SMSApi.Api
             action.Proxy(proxy);
             return action;
         }
+    }
+}
+
+public static class UserFeatureRegister
+{
+    public static UserFactory User(this Features features)
+    {
+        return new UserFactory(features.Client, features.Proxy);
     }
 }

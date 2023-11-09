@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -54,5 +55,13 @@ namespace SMSApi.Api
             action.SetText(text);
             return action;
         }
+    }
+}
+
+public static class SMSFeatureRegister
+{
+    public static SMSFactory SMS(this Features features)
+    {
+        return new SMSFactory(features.Client, features.Proxy);
     }
 }

@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -23,5 +24,13 @@ namespace SMSApi.Api
             action.SetNumber(number);
             return action;
         }
+    }
+}
+
+public static class HlrFeatureRegister
+{
+    public static HLRFactory HLR(this Features features)
+    {
+        return new HLRFactory(features.Client, features.Proxy);
     }
 }

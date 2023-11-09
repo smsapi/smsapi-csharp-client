@@ -1,3 +1,4 @@
+using SMSApi.Api;
 using SMSApi.Api.Action;
 
 namespace SMSApi.Api
@@ -183,5 +184,13 @@ namespace SMSApi.Api
             action.Proxy(proxy);
             return action;
         }
+    }
+}
+
+public static class ContactsFeatureRegister
+{
+    public static ContactsFactory MFA(this Features features)
+    {
+        return new ContactsFactory(features.Client, features.Proxy);
     }
 }

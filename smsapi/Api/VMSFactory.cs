@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -53,5 +54,13 @@ namespace SMSApi.Api
             action.SetTo(to);
             return action;
         }
+    }
+}
+
+public static class VmsFeatureRegister
+{
+    public static VMSFactory VMS(this Features features)
+    {
+        return new VMSFactory(features.Client, features.Proxy);
     }
 }

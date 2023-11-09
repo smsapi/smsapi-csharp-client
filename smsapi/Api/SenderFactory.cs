@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action;
+﻿using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -46,5 +47,13 @@ namespace SMSApi.Api
             action.Name(name);
             return action;
         }
+    }
+}
+
+public static class SenderFeatureRegister
+{
+    public static SenderFactory Sender(this Features features)
+    {
+        return new SenderFactory(features.Client, features.Proxy);
     }
 }
