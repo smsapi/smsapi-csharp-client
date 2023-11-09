@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Net;
 using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
@@ -25,15 +24,14 @@ public class RestJsonResponseDeserializer : IDeserializer
         if (!typeof(IResponseCodeAwareResolver).IsAssignableFrom(typeof(T)))
             throw new Exception("Deserialization from non-rest response");
         
-        var responseStatusCode = (int)responseEntity.StatusCode;
-        
-        if (responseStatusCode == (int)HttpStatusCode.OK)
+        if (responseEntity.StatusCode.IsSuccessful())
             return legacyJsonResponseDeserializer.Deserialize<T>(responseEntity);
 
         var responseObject = (IResponseCodeAwareResolver)Activator.CreateInstance<T>();
         var exceptionsMatchers = responseObject.HandleExceptionActions()
             .Concat(responseCodesResolvers.SelectMany(resolver => resolver.HandleExceptionActions()));
 
+        var responseStatusCode = (int)responseEntity.StatusCode;
         var matchedExceptions = exceptionsMatchers
             .Where(pair => pair.Key.Equals(responseStatusCode))
             .ToHashSet();
