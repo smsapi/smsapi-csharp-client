@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using SMSApi.Api;
 
@@ -30,17 +31,17 @@ public class ProxyStub : Proxy
         return SyncExecutionResponse;
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method, CancellationToken cancellationToken = default)
     {
         throw new System.NotImplementedException();
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
     {
         throw new System.NotImplementedException();
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
     {
         throw new System.NotImplementedException();
     }

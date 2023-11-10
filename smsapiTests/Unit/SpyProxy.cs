@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using SMSApi.Api;
 
@@ -44,7 +45,7 @@ public class SpyProxy : Proxy
         return new HttpResponseEntity(Task.FromResult(Stream.Null), HttpStatusCode.OK);
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -52,7 +53,7 @@ public class SpyProxy : Proxy
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -60,7 +61,7 @@ public class SpyProxy : Proxy
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public Task<HttpResponseEntity> ExecuteAsync(string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
