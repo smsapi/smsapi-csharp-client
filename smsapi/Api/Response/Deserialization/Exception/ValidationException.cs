@@ -6,8 +6,11 @@ namespace smsapi.Api.Response.Deserialization.Exception;
 
 public class ValidationException : ClientException
 {
-    private ValidationException(string message) : base(message, 400)
+    public readonly ValidationErrorsResolver.ValidationErrors ValidationErrors;
+    
+    private ValidationException(ValidationErrorsResolver.ValidationErrors validationErrors, string message) : base(message, 400)
     {
+        ValidationErrors = validationErrors;
     }
 
     public static ValidationException Create(ValidationErrorsResolver.ValidationErrors validationErrors)
@@ -18,6 +21,6 @@ public class ValidationException : ClientException
 
         var errorMessage = string.Join(", ", errorMessages);
 
-        return new ValidationException(errorMessage);
+        return new ValidationException(validationErrors, errorMessage);
     }
 }

@@ -1,5 +1,6 @@
 using SMSApi.Api;
 using SMSApi.Api.Response.MFA;
+using smsapi.Api.Response.Deserialization.Exception;
 
 var client = new ClientOAuth("token");
 var features = new Features(client);
@@ -14,6 +15,10 @@ try
         .Execute();
     
     //code is valid at this point
+}
+catch (ValidationException ex)
+{
+    var errors = ex.ValidationErrors;
 }
 catch (MFAVerificationResponse.InvalidVerificationCodeException)
 {

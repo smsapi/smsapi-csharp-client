@@ -1,5 +1,6 @@
 using SMSApi.Api;
 using SMSApi.Api.Response.Deserialization;
+using smsapi.Api.Response.Deserialization.Exception;
 
 var client = new ClientOAuth("token");
 var features = new Features(client);
@@ -19,6 +20,10 @@ try
     Console.WriteLine(mfaCode.Code);
     Console.WriteLine(mfaCode.PhoneNumber);
     Console.WriteLine(mfaCode.From);
+}
+catch (ValidationException ex)
+{
+    var errors = ex.ValidationErrors;
 }
 catch (TooManyRequestsErrorResolver.TooManyRequestsException)
 {
