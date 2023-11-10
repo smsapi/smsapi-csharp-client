@@ -12,7 +12,7 @@ try
         .CreateMfaCode(phoneNumber)
         .AsFast()                                //Send code in fast message (optional)
         .FromSendername("SMSAPI")                //Send code from sendername (optional)
-        .WithContent("Your code is [%code%]")    //Send code with custom content
+        .WithContent("Your code is [%code%]")    //Send code with custom content (optional)
         .Execute();
     
     Console.WriteLine(mfaCode.Id);
