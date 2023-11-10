@@ -35,7 +35,7 @@ namespace SMSApi.Api
                     return new HttpResponseEntity(postResponse.Content.ReadAsStreamAsync(), postResponse.StatusCode);
                 case RequestMethod.PUT:
                     httpContent = ConvertNameValueCollectionToHttpContent(body, files);
-                    var putResponse = await httpClient.PutAsync(uri, httpContent);
+                    var putResponse = await httpClient.PutAsync(uri, httpContent, cancellationToken);
 
                     return new HttpResponseEntity(putResponse.Content.ReadAsStreamAsync(), putResponse.StatusCode);
                 case RequestMethod.DELETE:
