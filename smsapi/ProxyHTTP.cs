@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SMSApi.Api
@@ -60,7 +61,9 @@ namespace SMSApi.Api
         public async Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
-            RequestMethod method)
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            )
         {
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream>(), method);
         }
@@ -69,7 +72,9 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method)
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            )
         {
             return await ExecuteAsync(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
@@ -78,7 +83,9 @@ namespace SMSApi.Api
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method)
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            )
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -86,7 +93,7 @@ namespace SMSApi.Api
 
             try
             {
-                return await client.SendRequest(method, uri, data, files);
+                return await client.SendRequest(method, uri, data, files, cancellationToken);
             }
             catch (System.Exception e)
             {
@@ -98,13 +105,13 @@ namespace SMSApi.Api
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authentication.GetClientAgent());
 
             if (authentication == null) return client;
             
             var authHeader = authentication.DefaultRequestHeaders;
-
+            
             client.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authentication.GetClientAgent());
 
             return client;
         }

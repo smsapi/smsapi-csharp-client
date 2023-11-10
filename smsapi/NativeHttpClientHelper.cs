@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SMSApi.Api
@@ -15,7 +16,8 @@ namespace SMSApi.Api
             RequestMethod method,
             string uri,
             NameValueCollection body = null,
-            Dictionary<string, Stream> files = null
+            Dictionary<string, Stream> files = null,
+            CancellationToken cancellationToken = default
         )
         {
             HttpContent httpContent;
@@ -23,12 +25,12 @@ namespace SMSApi.Api
             switch (method)
             {
                 case RequestMethod.GET:
-                    var getResponse = await httpClient.GetAsync(uri);
+                    var getResponse = await httpClient.GetAsync(uri, cancellationToken);
 
                     return new HttpResponseEntity(getResponse.Content.ReadAsStreamAsync(), getResponse.StatusCode);
                 case RequestMethod.POST:
                     httpContent = ConvertNameValueCollectionToHttpContent(body, files);
-                    var postResponse = await httpClient.PostAsync(uri, httpContent);
+                    var postResponse = await httpClient.PostAsync(uri, httpContent, cancellationToken);
 
                     return new HttpResponseEntity(postResponse.Content.ReadAsStreamAsync(), postResponse.StatusCode);
                 case RequestMethod.PUT:
@@ -37,7 +39,7 @@ namespace SMSApi.Api
 
                     return new HttpResponseEntity(putResponse.Content.ReadAsStreamAsync(), putResponse.StatusCode);
                 case RequestMethod.DELETE:
-                    var deleteResult = await httpClient.DeleteAsync(uri);
+                    var deleteResult = await httpClient.DeleteAsync(uri, cancellationToken);
 
                     return new HttpResponseEntity(deleteResult.Content.ReadAsStreamAsync(), deleteResult.StatusCode);
                 default:

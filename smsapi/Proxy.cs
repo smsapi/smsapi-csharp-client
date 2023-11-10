@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SMSApi.Api
@@ -29,18 +30,24 @@ namespace SMSApi.Api
         Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
-            RequestMethod method);
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            );
 
         Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Stream file,
-            RequestMethod method);
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            );
 
         Task<HttpResponseEntity> ExecuteAsync(
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
-            RequestMethod method);
+            RequestMethod method,
+            CancellationToken cancellationToken = default
+            );
     }
 }
