@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class BasicCollection<T> : Countable
+    public class BasicCollection<T> : Countable, IResponseCodeAwareResolver
     {
         [DataMember(Name = "collection", IsRequired = false)]
         protected List<T> collection;
