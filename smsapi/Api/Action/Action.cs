@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using SMSApi.Api.Response.Deserialization;
@@ -26,10 +27,10 @@ public abstract class Action<T>
         return ProcessResponse(_proxy.Execute(Uri(), GetValues(), Files(), Method));
     }
 
-    public async Task<T> ExecuteAsync()
+    public async Task<T> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         Validate();
-        return ProcessResponse(await _proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method));
+        return ProcessResponse(await _proxy.ExecuteAsync(Uri(), GetValues(), Files(), Method, cancellationToken));
     }
 
     public void Proxy(Proxy proxy)
