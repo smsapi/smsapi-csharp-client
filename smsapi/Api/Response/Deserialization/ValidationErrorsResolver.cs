@@ -4,8 +4,8 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
+using smsapi.Api.Response.REST.Exception;
 
 namespace SMSApi.Api.Response.Deserialization;
 

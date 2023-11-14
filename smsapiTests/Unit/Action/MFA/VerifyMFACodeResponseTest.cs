@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action.MFA;
-using SMSApi.Api.Response.MFA;
+using SMSApi.Api.Response.MFA.Exception;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 
@@ -37,7 +37,7 @@ public class VerifyMFACodeResponseTest
         
         var action = () => VerifyMfaCodeAction(GetAnyPhoneNumber(), GetAnyVerificationCode()).Execute();
 
-        Assert.ThrowsException<MFAVerificationResponse.ExpiredVerificationCode>(action);
+        Assert.ThrowsException<ExpiredVerificationCodeException>(action);
     }
     
     [TestMethod]
@@ -50,7 +50,7 @@ public class VerifyMFACodeResponseTest
         
         var action = () => VerifyMfaCodeAction(GetAnyPhoneNumber(), GetAnyVerificationCode()).Execute();
 
-        Assert.ThrowsException<MFAVerificationResponse.InvalidVerificationCodeException>(action);
+        Assert.ThrowsException<InvalidVerificationCodeException>(action);
     }
    
     private static string GetAnyPhoneNumber() => "48500100100";

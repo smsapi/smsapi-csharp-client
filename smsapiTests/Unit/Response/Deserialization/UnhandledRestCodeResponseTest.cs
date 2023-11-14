@@ -3,8 +3,8 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action;
-using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
+using smsapi.Api.Response.REST.Exception;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
+using smsapi.Api.Response.REST.Exception;
 
 namespace SMSApi.Api.Response.Deserialization;
 

@@ -3,8 +3,8 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action;
-using SMSApi.Api.Response.Deserialization;
 using SMSApi.Api.Response.ResponseResolver;
+using smsapi.Api.Response.REST.Exception;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 
@@ -28,7 +28,7 @@ public class TooManyRequestsResponseTest
 
         var execution = () => action.Execute();
         
-        Assert.ThrowsException<TooManyRequestsErrorResolver.TooManyRequestsException>(execution);
+        Assert.ThrowsException<TooManyRequestsException>(execution);
     }
 
     private class TestAction : Action<ResponseWithExceptionMapper>

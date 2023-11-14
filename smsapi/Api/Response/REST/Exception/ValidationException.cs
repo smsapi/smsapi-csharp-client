@@ -2,7 +2,7 @@ using System.Linq;
 using SMSApi.Api;
 using SMSApi.Api.Response.Deserialization;
 
-namespace smsapi.Api.Response.Deserialization.Exception;
+namespace smsapi.Api.Response.REST.Exception;
 
 public class ValidationException : ClientException
 {

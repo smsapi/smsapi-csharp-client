@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SMSApi.Api.Response.ResponseResolver;
+using smsapi.Api.Response.REST.Exception;
 
 namespace SMSApi.Api.Response.Deserialization;
 
@@ -14,19 +15,5 @@ public class AccessErrorResolver : IResponseCodeAwareResolver
             { 401, _ => throw new UnauthorizedException() },
             { 403, _ => throw new AccessForbiddenException() }
         };
-    }
-
-    public class UnauthorizedException : ClientException
-    {
-        public UnauthorizedException() : base("Invalid credentials", 401)
-        {
-        }
-    }
-
-    public class AccessForbiddenException : ClientException
-    {
-        public AccessForbiddenException() : base("Access forbidden", 403)
-        {
-        }
     }
 }
