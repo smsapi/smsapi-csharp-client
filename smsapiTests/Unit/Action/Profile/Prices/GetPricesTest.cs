@@ -37,6 +37,7 @@ public class GetPricesTest
         var mcc = 310;
         var networkName = "Verizon";
         var mnc = 10;
+        var type = "hlr";
 
         var response = PricesCollectionMother.SinglePrice(
             amount,
@@ -44,7 +45,8 @@ public class GetPricesTest
             countryName,
             mcc,
             networkName,
-            mnc
+            mnc,
+            type
         );
         _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
             response.ToHttpEntityStreamTask(),
@@ -61,6 +63,7 @@ public class GetPricesTest
         Assert.AreEqual(mnc, firstResult.Network.MNC);
         Assert.AreEqual(amount, firstResult.Price.Amount);
         Assert.AreEqual(currency, firstResult.Price.Currency);
+        Assert.AreEqual(type, firstResult.Type);
     }
 
     private GetPrices GetPrices()

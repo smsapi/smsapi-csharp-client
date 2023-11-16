@@ -18,7 +18,8 @@ public static class PricesCollectionMother
         string countryName,
         int mcc,
         string networkName,
-        int mnc
+        int mnc,
+        string type
     )
     {
         return new Dictionary<string, dynamic>
@@ -26,8 +27,9 @@ public static class PricesCollectionMother
             {
                 "collection", new List<dynamic>
                 {
-                    new Dictionary<string, Dictionary<string, dynamic>>
+                    new Dictionary<string, dynamic>
                     {
+                        { "type", type },
                         {
                             "price", new Dictionary<string, dynamic>
                             {

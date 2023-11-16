@@ -10,6 +10,8 @@ public readonly struct PriceResponse
     [DataMember(Name = "country")] public readonly Country Country;
     
     [DataMember(Name = "network")] public readonly Network Network;
+    
+    [DataMember(Name = "type")] public readonly string Type;
 }
 
 [DataContract]
