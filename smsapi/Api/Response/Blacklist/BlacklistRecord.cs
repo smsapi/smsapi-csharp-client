@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using SMSApi.Api.Response.ResponseResolver;
 
-namespace SMSApi.Api.Response;
+namespace smsapi.Api.Response.Blacklist;
 
 [DataContract]
 public record struct BlacklistRecord : IResponseCodeAwareResolver
