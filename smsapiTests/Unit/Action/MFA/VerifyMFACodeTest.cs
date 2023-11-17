@@ -9,6 +9,12 @@ namespace smsapiTests.Unit.Action.MFA;
 public class VerifyMFACodeTest
 {
     private readonly SpyProxy _spyProxy = new();
+    private readonly ProxyAssert _proxyAssert;
+
+    public VerifyMFACodeTest()
+    {
+        _proxyAssert = new ProxyAssert(_spyProxy);
+    }
     
     [TestMethod]
     public void valid_uri()
@@ -26,8 +32,8 @@ public class VerifyMFACodeTest
 
         VerifyMfaCodeAction(phoneNumber, code).Execute();
         
-        AssertParametersContain("phone_number", phoneNumber);
-        AssertParametersContain("code", code);
+        _proxyAssert.AssertParametersContain("phone_number", phoneNumber);
+        _proxyAssert.AssertParametersContain("code", code);
     }
 
     private static string GetAnyPhoneNumber() => "48500100100";
@@ -39,15 +45,5 @@ public class VerifyMFACodeTest
         action.Proxy(_spyProxy);
 
         return action;
-    }
-    
-    private void AssertParametersContain(string name, string value)
-    {
-        var expectedParameter = new KeyValuePair<string, string>(name, value);
-
-        Assert.IsTrue(
-            _spyProxy.Parameters.Contains(expectedParameter),
-            $"Expected {value}, actual value: {_spyProxy.Parameters[name]}"
-        );
     }
 }

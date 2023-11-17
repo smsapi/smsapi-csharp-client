@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api.Action.MFA;
 
@@ -9,6 +7,12 @@ namespace smsapiTests.Unit.Action.MFA;
 public class CreateMFACodeTest
 {
     private readonly SpyProxy _spyProxy = new();
+    private readonly ProxyAssert _proxyAssert;
+
+    public CreateMFACodeTest()
+    {
+        _proxyAssert = new ProxyAssert(_spyProxy);
+    }
     
     [TestMethod]
     public void valid_uri()
@@ -27,10 +31,10 @@ public class CreateMFACodeTest
 
         CreateMfaCodeAction(phoneNumber).Execute();
         
-        AssertParametersContain("phone_number", phoneNumber);
-        AssertParametersDoesNotContain("content");
-        AssertParametersDoesNotContain("fast");
-        AssertParametersDoesNotContain("from");
+        _proxyAssert.AssertParametersContain("phone_number", phoneNumber);
+        _proxyAssert.AssertParametersDoesNotContain("content");
+        _proxyAssert.AssertParametersDoesNotContain("fast");
+        _proxyAssert.AssertParametersDoesNotContain("from");
     }
     
     [TestMethod]
@@ -41,7 +45,7 @@ public class CreateMFACodeTest
 
         create.Execute();
         
-        AssertParametersContain("fast", "1");
+        _proxyAssert.AssertParametersContain("fast", "1");
     }
     
     [TestMethod]
@@ -53,7 +57,7 @@ public class CreateMFACodeTest
 
         create.Execute();
         
-        AssertParametersContain("content", content);
+        _proxyAssert.AssertParametersContain("content", content);
     }
     
     [TestMethod]
@@ -65,7 +69,7 @@ public class CreateMFACodeTest
 
         create.Execute();
         
-        AssertParametersContain("from", sendername);
+        _proxyAssert.AssertParametersContain("from", sendername);
     }
 
     private static string GetAnyPhoneNumber() => "48500100100";
@@ -76,23 +80,5 @@ public class CreateMFACodeTest
         action.Proxy(_spyProxy);
 
         return action;
-    }
-    
-    private void AssertParametersContain(string name, string value)
-    {
-        var expectedParameter = new KeyValuePair<string, string>(name, value);
-
-        Assert.IsTrue(
-            _spyProxy.Parameters.Contains(expectedParameter),
-            $"Expected {value}, actual value: {_spyProxy.Parameters[name]}"
-        );
-    }
-    
-    private void AssertParametersDoesNotContain(string name)
-    {
-        Assert.IsFalse(
-            _spyProxy.Parameters.ContainsKey(name),
-            $"Key not expected {name}"
-        );
     }
 }

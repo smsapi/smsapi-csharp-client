@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api.Action;
@@ -13,6 +12,14 @@ public class SMSSendTest : UnitTestBase<SMSSend>
     private const string DateFormat = "yyyy-MM-ddTHH:mm:ssK";
 
     private static readonly DateTime DateTime = DateTime.Now;
+    
+    private readonly ProxyAssert _proxyAssert;
+
+    public SMSSendTest()
+    {
+        _proxyAssert = new ProxyAssert(SpyProxy);
+    }
+
 
     [TestMethod]
     public void action_has_proper_uri()
@@ -37,7 +44,7 @@ public class SMSSendTest : UnitTestBase<SMSSend>
 
         Execute(action);
 
-        AssertParametersContain(expectedName, expectedValue);
+        _proxyAssert.AssertParametersContain(expectedName, expectedValue);
     }
 
     [TestMethod]
@@ -67,7 +74,7 @@ public class SMSSendTest : UnitTestBase<SMSSend>
 
         Execute(action);
 
-        AssertParametersContain(expectedParameterName, expectedParameterValue);
+        _proxyAssert.AssertParametersContain(expectedParameterName, expectedParameterValue);
     }
 
     protected override SMSSend CreateAction()
@@ -127,15 +134,5 @@ public class SMSSendTest : UnitTestBase<SMSSend>
             new object[]
                 { "SetTo", new object[] { recipients }, "to", expectedRecipientsString, typeof(string[]) }
         };
-    }
-
-    private void AssertParametersContain(string name, string value)
-    {
-        var expectedParameter = new KeyValuePair<string, string>(name, value);
-
-        Assert.IsTrue(
-            SpyProxy.Parameters.Contains(expectedParameter),
-            $"Expected {value}, actual value: {SpyProxy.Parameters[name]}"
-        );
     }
 }
