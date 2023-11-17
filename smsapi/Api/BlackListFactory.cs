@@ -19,6 +19,14 @@ public class BlackListFactory : Factory
 
         return service;
     }
+    
+    public Add Add(string phoneNumber)
+    {
+        var service = new Add(phoneNumber);
+        service.Proxy(proxy);
+
+        return service;
+    }
 }
 
 public static class BlacklistFeatureRegister
