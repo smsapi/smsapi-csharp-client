@@ -1,16 +1,11 @@
 using System.Collections.Generic;
+using smsapiTests.Unit.Fixture;
 
 namespace smsapiTests.Unit.Action.Profile.Prices.Fixture;
 
 public static class PricesCollectionMother
 {
-    public static Dictionary<string, dynamic> EmptyCollection()
-    {
-        return new Dictionary<string, dynamic>
-        {
-            { "collection", new List<dynamic>() }
-        };
-    }
+    public static Dictionary<string, dynamic> EmptyCollection() => CollectionMother.Empty();
 
     public static Dictionary<string, dynamic> SinglePrice(
         float amount,
