@@ -38,14 +38,14 @@ public class CreateMFACodeTest
     }
     
     [TestMethod]
-    public void create_as_fast()
+    public void create_without_priority()
     {
         var create = CreateMfaCodeAction(GetAnyPhoneNumber())
-            .AsFast();
+            .WithoutPriority();
 
         create.Execute();
         
-        _proxyAssert.AssertParametersContain("fast", "1");
+        _proxyAssert.AssertParametersContain("fast", "0");
     }
     
     [TestMethod]

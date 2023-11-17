@@ -5,35 +5,35 @@ namespace SMSApi.Api.Action.MFA;
 
 public class CreateMFACode : Action<MFACreationResponse>
 {
-    private readonly string phoneNumber;
-    private string content;
-    private bool fast;
-    private string from;
+    private readonly string _phoneNumber;
+    private string _content;
+    private bool _withoutPriority;
+    private string _from;
 
     public CreateMFACode(string phoneNumber)
     {
-        this.phoneNumber = phoneNumber;
+        this._phoneNumber = phoneNumber;
     }
 
     protected override RequestMethod Method => RequestMethod.POST;
 
-    public CreateMFACode AsFast()
+    public CreateMFACode WithoutPriority()
     {
-        fast = true;
+        _withoutPriority = true;
 
         return this;
     }
 
     public CreateMFACode FromSendername(string sendername)
     {
-        from = sendername;
+        _from = sendername;
 
         return this;
     }
 
     public CreateMFACode WithContent(string content)
     {
-        this.content = content;
+        this._content = content;
 
         return this;
     }
@@ -50,16 +50,16 @@ public class CreateMFACode : Action<MFACreationResponse>
 
     protected override NameValueCollection Values()
     {
-        var parameters = new NameValueCollection { { "phone_number", phoneNumber } };
+        var parameters = new NameValueCollection { { "phone_number", _phoneNumber } };
 
-        if (content != null)
-            parameters.Add("content", content);
+        if (_content != null)
+            parameters.Add("content", _content);
 
-        if (fast)
-            parameters.Add("fast", "1");
+        if (_withoutPriority)
+            parameters.Add("fast", "0");
 
-        if (from != null)
-            parameters.Add("from", from);
+        if (_from != null)
+            parameters.Add("from", _from);
 
         return parameters;
     }
