@@ -1,4 +1,5 @@
-﻿using SMSApi.Api;
+﻿using System;
+using SMSApi.Api;
 using SMSApi.Api.Action;
 
 namespace SMSApi.Api
@@ -17,11 +18,21 @@ namespace SMSApi.Api
             : base(client, proxy)
         { }
 
+        [Obsolete($"Use {nameof(Lookup)} instead", false)]
         public HLRCheckNumber ActionCheckNumber(string number = null)
         {
             var action = new HLRCheckNumber();
             action.Proxy(proxy);
             action.SetNumber(number);
+            return action;
+        }
+        
+        public Lookup Lookup(string number)
+        {
+            var action = new Lookup(number);
+            
+            action.Proxy(proxy);
+            
             return action;
         }
     }
