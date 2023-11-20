@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SMSApi.Api.Response.Subusers;
+using smsapiTests.Unit.Fixture;
 
 namespace smsapiTests.Unit.Action.Subusers.Fixture;
 
@@ -13,24 +14,15 @@ public static class SubuersCollectionMother
         UserPoints userPoints
     )
     {
-        return new Dictionary<string, dynamic>
+        return CollectionMother.WithItems(new Dictionary<string, dynamic>
         {
+            { "id", id },
+            { "username", username },
+            { "active", active },
+            { "description", description },
             {
-                "collection", new List<dynamic>
-                {
-                    new Dictionary<string, dynamic>
-                    {
-                        { "id", id },
-                        { "username", username },
-                        { "active", active },
-                        { "description", description },
-                        {
-                            "points", userPoints
-                        }
-                    }
-                }
-            },
-            { "size", 1 }
-        };
+                "points", userPoints
+            }
+        });
     }
 }
