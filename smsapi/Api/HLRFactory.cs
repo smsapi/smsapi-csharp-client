@@ -35,6 +35,15 @@ namespace SMSApi.Api
             
             return action;
         }
+        
+        public ListLookups ListLookups()
+        {
+            var action = new ListLookups();
+            
+            action.Proxy(proxy);
+            
+            return action;
+        }
     }
 }
 
