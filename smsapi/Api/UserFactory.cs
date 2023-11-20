@@ -1,8 +1,10 @@
-﻿using SMSApi.Api;
+﻿using System;
+using SMSApi.Api;
 using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
+    [Obsolete($"Use {nameof(SubUsersFactory)} instead.")]
     public class UserFactory : Factory
     {
         public UserFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
@@ -58,6 +60,7 @@ namespace SMSApi.Api
 
 public static class UserFeatureRegister
 {
+    [Obsolete($"Use {nameof(SubusersFeatureRegister)} instead.")]
     public static UserFactory User(this Features features)
     {
         return new UserFactory(features.Client, features.Proxy);
