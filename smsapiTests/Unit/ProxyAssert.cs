@@ -12,6 +12,11 @@ public class ProxyAssert
     {
         _proxy = proxy;
     }
+
+    public void AssertUriEquals(string uri)
+    {
+        Assert.IsTrue(_proxy.RequestedUri.Equals(uri));
+    }
     
     public void AssertParametersContain(string name, string value)
     {

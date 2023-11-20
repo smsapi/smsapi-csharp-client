@@ -27,6 +27,14 @@ public class BlackListFactory : Factory
 
         return service;
     }
+    
+    public Remove Remove(string id)
+    {
+        var service = new Remove(id);
+        service.Proxy(proxy);
+
+        return service;
+    }
 }
 
 public static class BlacklistFeatureRegister
