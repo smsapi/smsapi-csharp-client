@@ -24,7 +24,7 @@ public class ActionPaginationTest
     [TestMethod]
     public void add_limit_to_uri()
     {
-        var limit = 10;
+        var limit = 10u;
         var action = GetAction();
         action.Limit = limit;
 
@@ -36,7 +36,7 @@ public class ActionPaginationTest
     [TestMethod]
     public void add_offset_to_uri()
     {
-        var offset = 10;
+        var offset = 10u;
         var action = GetAction();
         action.Offset = offset;
 
@@ -48,8 +48,8 @@ public class ActionPaginationTest
     [TestMethod]
     public void add_limit_and_offset_to_uri()
     {
-        var limit = 5;
-        var offset = 10;
+        var limit = 5u;
+        var offset = 10u;
         var action = GetAction();
         action.Limit = limit;
         action.Offset = offset;
@@ -80,8 +80,8 @@ public class ActionPaginationTest
 
         protected override string Uri() => Path;
         
-        public int? Limit { get; set; }
-        public int? Offset { get; set; }
+        public uint? Limit { get; set; }
+        public uint? Offset { get; set; }
     }
 
     private class Response{}

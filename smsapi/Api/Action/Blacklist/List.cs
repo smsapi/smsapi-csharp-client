@@ -11,6 +11,6 @@ public class List : Action<BasicCollection<BlacklistRecord>>, IPaginable
 
     protected override ApiType ApiType() => Action.ApiType.Rest;
     
-    public int? Limit { get; set; }
-    public int? Offset { get; set; }
+    public uint? Limit { get; set; }
+    public uint? Offset { get; set; }
 }

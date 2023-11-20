@@ -2,7 +2,7 @@ namespace SMSApi.Api.Action;
 
 public interface IPaginable
 {
-    int? Limit { get; set; }
+    uint? Limit { get; set; }
     
-    int? Offset { get; set; }
+    uint? Offset { get; set; }
 }

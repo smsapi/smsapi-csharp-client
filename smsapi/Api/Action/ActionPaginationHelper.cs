@@ -5,7 +5,7 @@ namespace SMSApi.Api.Action;
 
 public static class ActionPaginationHelper
 {
-    public static string ToUriWithPagination(this UriBuilder uriBuilder, int? limit, int? offset)
+    public static string ToUriWithPagination(this UriBuilder uriBuilder, uint? limit, uint? offset)
     {
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             
