@@ -6,7 +6,7 @@
         <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
         <Deterministic>false</Deterministic>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <LangVersion>9.0</LangVersion>
+        <LangVersion>10</LangVersion>
         <Title>SMSAPI</Title>
         <Authors>SMSAPI</Authors>
         <Copyright>SMSAPI</Copyright>
@@ -16,6 +16,7 @@
         <Product>SMSAPI</Product>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIconUrl>logo.jpg</PackageIconUrl>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup>
         <PackageId>SMSAPI.pl</PackageId>
@@ -26,7 +27,7 @@
         <PackageDescription>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageDescription>
         <PackageReleaseNotes>SMSAPI Client that allows to send SMS, MMS, VMS and manage your SMSAPI account.</PackageReleaseNotes>
         <PackageTags>smsapi;sms;marketing;shipment;mms;vms;message</PackageTags>
-        <TargetFrameworks>net6.0;net7.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0;net8.0;netcoreapp3.1</TargetFrameworks>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
@@ -54,5 +55,10 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="docs\icons\logo.jpg" Pack="true" PackagePath="" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json\10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>
