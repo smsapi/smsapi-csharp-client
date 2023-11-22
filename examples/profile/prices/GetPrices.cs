@@ -11,5 +11,5 @@ result.Collection
     .ToList()
     .ForEach(p =>
     {
-        Console.WriteLine($"Price for {p.Country.Name} / {p.Network.Name} is {p.Price.Amount} {p.Price.Currency}");
+        Console.WriteLine($"Price for {p.Type} in {p.Country.Name} / {p.Network.Name} is {p.Price.Amount} {p.Price.Currency}");
     });
