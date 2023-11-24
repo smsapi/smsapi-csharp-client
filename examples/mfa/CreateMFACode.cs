@@ -22,7 +22,10 @@ try
 }
 catch (ValidationException ex)
 {
-    var errors = ex.ValidationErrors;
+    foreach (var validationErrorsError in ex.ValidationErrors.Errors)
+    {
+        Console.WriteLine(validationErrorsError.Message);
+    }
 }
 catch (TooManyRequestsException)
 {

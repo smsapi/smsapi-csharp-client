@@ -19,9 +19,9 @@ try
     Console.WriteLine($"Created at: {result.DateCreated}");
     Console.WriteLine($"Expiring at: {result.DateExpired}");
 }
-catch (ValidationException exception)
+catch (ValidationException ex)
 {
-    foreach (var validationErrorsError in exception.ValidationErrors.Errors)
+    foreach (var validationErrorsError in ex.ValidationErrors.Errors)
     {
         Console.WriteLine(validationErrorsError.Message);
     }

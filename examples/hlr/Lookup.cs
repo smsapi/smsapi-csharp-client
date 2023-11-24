@@ -13,6 +13,10 @@ try
     
     //lookup successfully requested
 }
-catch (ValidationException)
+catch (ValidationException ex)
 {
+    foreach (var validationErrorsError in ex.ValidationErrors.Errors)
+    {
+        Console.WriteLine(validationErrorsError.Message);
+    }
 }
