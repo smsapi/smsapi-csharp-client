@@ -4,18 +4,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace smsapiTests.Unit;
 
-public class ProxyAssert
+public class ProxyAssert(SpyProxy proxy)
 {
-    private readonly SpyProxy _proxy;
-
-    public ProxyAssert(SpyProxy proxy)
-    {
-        _proxy = proxy;
-    }
-
     public void AssertUriEquals(string uri)
     {
-        Assert.IsTrue(_proxy.RequestedUri.Equals(uri));
+        Assert.IsTrue(proxy.RequestedUri.Equals(uri));
+    }
+
+    public void AssertNoParameters()
+    {
+        var parametersCount = proxy.Parameters.Count;
+        
+        Assert.IsTrue(parametersCount == 0, $"Parameters expected to be empty, {parametersCount} found");
     }
     
     public void AssertParametersContain(string name, string value)
@@ -23,15 +23,15 @@ public class ProxyAssert
         var expectedParameter = new KeyValuePair<string, string>(name, value);
 
         Assert.IsTrue(
-            _proxy.Parameters.Contains(value: expectedParameter),
-            $"Expected {value}, actual value: {_proxy.Parameters[name]}"
+            proxy.Parameters.Contains(value: expectedParameter),
+            $"Expected {value}, actual value: {proxy.Parameters[name]}"
         );
     }
     
     public void AssertParametersDoesNotContain(string name)
     {
         Assert.IsFalse(
-            _proxy.Parameters.ContainsKey(name),
+            proxy.Parameters.ContainsKey(name),
             $"Key not expected {name}"
         );
     }
