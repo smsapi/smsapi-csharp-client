@@ -1,4 +1,4 @@
-namespace SMSApi.Api.Response.MFA.Exception;
+namespace SMSApi.Api.Response.Blacklist.Exception;
 
 public class BlacklistRecordDoesNotExistException : ClientException
 {

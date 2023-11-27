@@ -1,6 +1,5 @@
 using SMSApi.Api;
-using smsapi.Api.Response.REST.Exception;
-using SMSApi.Api.Response.MFA.Exception;
+using SMSApi.Api.Response.Blacklist.Exception;
 
 var client = new ClientOAuth("token");
 var features = new Features(client);
@@ -17,4 +16,5 @@ try
 }
 catch (BlacklistRecordDoesNotExistException exception)
 {
+    System.Console.WriteLine(e.Message);
 }

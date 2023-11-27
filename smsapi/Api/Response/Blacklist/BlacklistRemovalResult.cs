@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using SMSApi.Api.Response.MFA.Exception;
+using SMSApi.Api.Response.Blacklist.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
-namespace smsapi.Api.Response.Blacklist.Exception;
+namespace smsapi.Api.Response.Blacklist;
 
 [DataContract]
 public class BlacklistRemovalResult : IResponseCodeAwareResolver

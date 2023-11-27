@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action.Blacklist;
-using SMSApi.Api.Response.MFA.Exception;
+using SMSApi.Api.Response.Blacklist.Exception;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 
