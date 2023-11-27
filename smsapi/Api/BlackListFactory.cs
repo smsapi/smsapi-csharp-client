@@ -35,6 +35,14 @@ public class BlackListFactory : Factory
 
         return service;
     }
+    
+    public RemoveAll RemoveAll()
+    {
+        var service = new RemoveAll();
+        service.Proxy(proxy);
+
+        return service;
+    }
 }
 
 public static class BlacklistFeatureRegister
