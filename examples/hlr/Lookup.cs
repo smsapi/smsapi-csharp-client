@@ -1,4 +1,5 @@
 using SMSApi.Api;
+using smsapi.Api.Response.REST.Exception;
 
 var client = new ClientOAuth("token");
 var features = new Features(client);
