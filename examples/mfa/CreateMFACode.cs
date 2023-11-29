@@ -27,9 +27,11 @@ catch (ValidationException ex)
         Console.WriteLine(validationErrorsError.Message);
     }
 }
-catch (TooManyRequestsException)
+catch (TooManyRequestsException ex)
 {
+    Console.WriteLine("Error: " + ex.Message);
 }
 catch (ClientException ex)
 {
+    Console.WriteLine("Error: " + ex.Message);
 }

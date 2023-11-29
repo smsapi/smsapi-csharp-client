@@ -24,9 +24,11 @@ catch (ValidationException ex)
         Console.WriteLine(validationErrorsError.Message);
     }
 }
-catch (InvalidVerificationCodeException)
+catch (InvalidVerificationCodeException ex)
 {
+    Console.WriteLine("Error: " + ex.Message);
 }
-catch (ExpiredVerificationCodeException)
+catch (ExpiredVerificationCodeException ex)
 {
+    Console.WriteLine("Error: " + ex.Message);
 }
