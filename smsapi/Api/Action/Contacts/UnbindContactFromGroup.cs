@@ -1,5 +1,4 @@
 using System;
-using SMSApi.Api.Response;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Action
@@ -16,6 +15,8 @@ namespace SMSApi.Api.Action
         }
 
         protected override RequestMethod Method => RequestMethod.DELETE;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
 
         protected override string Uri()
         {

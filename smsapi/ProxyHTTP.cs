@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -24,21 +25,23 @@ namespace SMSApi.Api
             authentication = client;
         }
 
-        public HttpResponseEntity Execute(string uri, NameValueCollection data, RequestMethod method)
+        public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method)
         {
-            return Execute(uri, data, new Dictionary<string, Stream>(), method);
+            return Execute(contentType, uri, data, new Dictionary<string, Stream>(), method);
         }
 
         public HttpResponseEntity Execute(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Stream file,
             RequestMethod method)
         {
-            return Execute(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
+            return Execute(contentType, uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
 
         public HttpResponseEntity Execute(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
@@ -50,6 +53,7 @@ namespace SMSApi.Api
 
             try
             {
+                client.AddContentTypeHeader(contentType);
                 return client.SendRequest(method, uri, data, files).Result;
             }
             catch (System.Exception e)
@@ -59,16 +63,18 @@ namespace SMSApi.Api
         }
 
         public async Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             RequestMethod method,
             CancellationToken cancellationToken = default
             )
         {
-            return await ExecuteAsync(uri, data, new Dictionary<string, Stream>(), method);
+            return await ExecuteAsync(contentType, uri, data, new Dictionary<string, Stream>(), method);
         }
 
         public async Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Stream file,
@@ -76,10 +82,11 @@ namespace SMSApi.Api
             CancellationToken cancellationToken = default
             )
         {
-            return await ExecuteAsync(uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
+            return await ExecuteAsync(contentType, uri, data, new Dictionary<string, Stream> { { "file", file } }, method);
         }
 
         public async Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
@@ -93,6 +100,7 @@ namespace SMSApi.Api
 
             try
             {
+                client.AddContentTypeHeader(contentType);
                 return await client.SendRequest(method, uri, data, files, cancellationToken);
             }
             catch (System.Exception e)

@@ -6,12 +6,23 @@ namespace SMSApi.Api.Response.ResponseResolver
     public class ErrorAwareResponse: IErrorResponse
     {
         [DataMember(Name = "error", IsRequired = false)]
-        public readonly int ErrorCode;
+        public readonly dynamic? ErrorCode;
 
         [DataMember(Name = "message", IsRequired = false)]
         public readonly string ErrorMessage;
+
+        public bool IsError()
+        {
+            if (ErrorCode == null) return false;
+                
+            if (ErrorCode is string)
+            {
+                return ErrorCode != "";
+            }
+
+            return ErrorCode != 0;
+        }
         
-        public bool IsError() => ErrorCode != 0;
         public string GetErrorMessage() => ErrorMessage;
     }
 }

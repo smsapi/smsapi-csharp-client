@@ -19,6 +19,8 @@ namespace SMSApi.Api.Action
 
         protected override RequestMethod Method => RequestMethod.GET;
 
+        protected override ApiType ApiType() => Action.ApiType.Rest;
+
         public ListContacts SetBirthdayDate(DateTime? birthdayDate)
         {
             this.birthdayDate = birthdayDate;

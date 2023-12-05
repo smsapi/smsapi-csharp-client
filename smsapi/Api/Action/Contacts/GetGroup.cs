@@ -13,6 +13,8 @@ namespace SMSApi.Api.Action
         }
 
         protected override RequestMethod Method => RequestMethod.GET;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
 
         protected override string Uri()
         {

@@ -5,7 +5,7 @@ using SMSApi.Api.Response.ResponseResolver;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Contact : ErrorAwareResponse
+    public class Contact : IResponseCodeAwareResolver
     {
         public const string FemaleGender = "female";
         public const string MaleGender = "male";

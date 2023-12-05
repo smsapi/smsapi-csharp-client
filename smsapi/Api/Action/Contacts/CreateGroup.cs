@@ -10,6 +10,10 @@ namespace SMSApi.Api.Action
         private string name;
 
         protected override RequestMethod Method => RequestMethod.POST;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
+
+        protected override ActionContentType ContentType => ActionContentType.FormWww;
 
         public CreateGroup SetDescription(string description)
         {

@@ -17,6 +17,8 @@ public abstract class Action<T>
 
     protected abstract RequestMethod Method { get; }
 
+    protected virtual ActionContentType ContentType => ActionContentType.Json;
+
     protected virtual ApiType ApiType()
     {
         return Action.ApiType.Legacy;
@@ -25,18 +27,18 @@ public abstract class Action<T>
     public T Execute()
     {
         Validate();
-        return ProcessResponse(_proxy.Execute(UriWithPagination(), GetValues(), Files(), Method));
+        return ProcessResponse(_proxy.Execute(ContentType, UriWithPagination(), GetValues(), Files(), Method));
     }
 
     public async Task<T> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         Validate();
-        return ProcessResponse(await _proxy.ExecuteAsync(UriWithPagination(), GetValues(), Files(), Method, cancellationToken));
-    }
+        return ProcessResponse(await _proxy.ExecuteAsync(ContentType, UriWithPagination(), GetValues(), Files(), Method, cancellationToken));
+    }   
 
     public void Proxy(Proxy proxy)
     {
-        this._proxy = proxy;
+        _proxy = proxy;
     }
 
     protected virtual Dictionary<string, Stream> Files()

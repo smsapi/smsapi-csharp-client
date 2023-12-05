@@ -17,6 +17,10 @@ namespace SMSApi.Api.Action
         }
 
         protected override RequestMethod Method => RequestMethod.PUT;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
+
+        protected override ActionContentType ContentType => ActionContentType.FormWww;
 
         public EditGroup SetDescription(string description)
         {

@@ -24,6 +24,10 @@ namespace SMSApi.Api.Action
         public string ContactId { get; }
 
         protected override RequestMethod Method => RequestMethod.PUT;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
+
+        protected override ActionContentType ContentType => ActionContentType.FormWww;
 
         public EditContact SetBirthdayDate(DateTime birthdayDate)
         {

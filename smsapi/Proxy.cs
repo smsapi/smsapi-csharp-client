@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -11,23 +12,27 @@ namespace SMSApi.Api
         void Authentication(IClient client);
 
         HttpResponseEntity Execute(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             RequestMethod method);
 
         HttpResponseEntity Execute(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Stream file,
             RequestMethod method);
 
         HttpResponseEntity Execute(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,
             RequestMethod method);
 
         Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             RequestMethod method,
@@ -35,6 +40,7 @@ namespace SMSApi.Api
             );
 
         Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Stream file,
@@ -43,6 +49,7 @@ namespace SMSApi.Api
             );
 
         Task<HttpResponseEntity> ExecuteAsync(
+            ActionContentType contentType,
             string uri,
             NameValueCollection data,
             Dictionary<string, Stream> files,

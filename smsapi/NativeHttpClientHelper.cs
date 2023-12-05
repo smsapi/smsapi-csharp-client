@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
@@ -59,7 +60,7 @@ namespace SMSApi.Api
                 .ToList();
             var formUrlEncodedContent = new FormUrlEncodedContent(contentCollection);
 
-            if (files == null) return formUrlEncodedContent;
+            if (files == null || files.Count == 0) return formUrlEncodedContent;
 
             var multipartContent = new MultipartFormDataContent();
 
@@ -71,6 +72,18 @@ namespace SMSApi.Api
                 .ForEach(pair => multipartContent.Add(new StreamContent(pair.Value), "file", pair.Key));
 
             return multipartContent;
+        }
+
+        public static void AddContentTypeHeader(this HttpClient httpClient, ActionContentType actionContentType)
+        {
+            var contentType = actionContentType switch
+            {
+                ActionContentType.Json => "application/json",
+                ActionContentType.FormWww => "application/x-www-form-urlencoded",
+                _ => throw new ArgumentOutOfRangeException(nameof(actionContentType), actionContentType, @"Not supported content type")
+            };
+
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("content-type", contentType);
         }
     }
 }

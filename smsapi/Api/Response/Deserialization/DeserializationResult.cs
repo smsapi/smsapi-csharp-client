@@ -14,10 +14,10 @@ namespace SMSApi.Api.Response.Deserialization
         public readonly string Message;
         public readonly int Code;
 
-        public ResponseError(string message, int code)
+        public ResponseError(string message, dynamic code)
         {
             Message = message;
-            Code = code;
+            Code = code is int i ? i : 0;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace SMSApi.Api.Response.Deserialization
             {
                 var error = _baseJsonDeserializer.Deserialize<ErrorAwareResponse>(responseEntity).Result;
 
-                if (!error.IsError()) return;
+                if (!error!.IsError()) return;
 
                 if (IsHostError(error.ErrorCode))
                 {
@@ -79,7 +79,7 @@ namespace SMSApi.Api.Response.Deserialization
         * 1000 Akcja dostępna tylko dla użytkownika głównego
         * 1001 Nieprawidłowa akcja
         */
-        private static bool IsClientError(int code)
+        private static bool IsClientError(dynamic code)
         {
             switch (code)
             {
@@ -103,7 +103,7 @@ namespace SMSApi.Api.Response.Deserialization
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private static bool IsHostError(int code)
+        private static bool IsHostError(dynamic code)
         {
             switch (code)
             {

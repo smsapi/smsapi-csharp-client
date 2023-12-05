@@ -9,6 +9,10 @@ namespace SMSApi.Api.Action
         private string type;
 
         protected override RequestMethod Method => RequestMethod.POST;
+        
+        protected override ApiType ApiType() => Action.ApiType.Rest;
+
+        protected override ActionContentType ContentType => ActionContentType.FormWww;
 
         public CreateField SetName(string name)
         {
