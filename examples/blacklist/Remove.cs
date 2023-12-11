@@ -14,7 +14,7 @@ try
     
     //record is deleted at this point
 }
-catch (BlacklistRecordDoesNotExistException exception)
+catch (BlacklistRecordDoesNotExistException ex)
 {
-    System.Console.WriteLine(e.Message);
+    System.Console.WriteLine(ex.Message);
 }
