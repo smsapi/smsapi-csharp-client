@@ -32,3 +32,7 @@ catch (ExpiredVerificationCodeException ex)
 {
     Console.WriteLine("Error: " + ex.Message);
 }
+catch (ClientException ex)
+{
+    Console.WriteLine("Message: " + ex.Message);
+}
