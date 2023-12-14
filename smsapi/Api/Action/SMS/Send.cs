@@ -186,7 +186,7 @@ namespace SMSApi.Api.Action
 
         protected override void Validate()
         {
-            if (text == null)
+            if (text == null && template == null)
             {
                 throw new ArgumentException("Cannot send message without text!");
             }
