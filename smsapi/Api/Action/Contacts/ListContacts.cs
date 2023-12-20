@@ -4,7 +4,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class ListContacts : Action<Contacts>
+    public class ListContacts : Action<Contacts>, IPaginable
     {
         private DateTime? birthdayDate;
         private string email;
@@ -141,5 +141,8 @@ namespace SMSApi.Api.Action
 
             return parameters;
         }
+
+        public uint? Limit { get; set; }
+        public uint? Offset { get; set; }
     }
 }

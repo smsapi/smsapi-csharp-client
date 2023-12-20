@@ -4,7 +4,7 @@ using SMSApi.Api.Response.ResponseResolver;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class GroupPermission : ErrorAwareResponse
+    public class GroupPermission : ErrorAwareResponse, IResponseCodeAwareResolver
     {
         [DataMember(Name = "group_id", IsRequired = false)]
         public readonly string GroupId;

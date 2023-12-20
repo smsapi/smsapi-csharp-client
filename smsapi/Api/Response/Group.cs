@@ -6,7 +6,7 @@ using SMSApi.Api.Response.ResponseResolver;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Group : ErrorAwareResponse
+    public class Group : ErrorAwareResponse, IResponseCodeAwareResolver
     {
         [DataMember(Name = "created_by", IsRequired = false)]
         public readonly string CreatedBy;

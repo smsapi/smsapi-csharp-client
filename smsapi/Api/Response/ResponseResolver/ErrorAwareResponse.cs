@@ -3,7 +3,7 @@
 namespace SMSApi.Api.Response.ResponseResolver
 {
     [DataContract]
-    public class ErrorAwareResponse: IErrorResponse
+    public class ErrorAwareResponse: IResponseCodeAwareResolver
     {
         [DataMember(Name = "error", IsRequired = false)]
         public readonly dynamic? ErrorCode;

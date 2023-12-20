@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
+using smsapi.Api.Response.Contacts.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
@@ -58,6 +61,14 @@ namespace SMSApi.Api.Response
         private DateTime? dateUpdated;
 
         public DateTime? BirthdayDate { get; private set; }
+
+        public Dictionary<int, Action<Stream>> HandleExceptionActions()
+        {
+            return new Dictionary<int, Action<Stream>>
+            {
+                { 409, _ => throw new ContactAlreadyExistsException() }
+            };
+        }
 
         [Obsolete("use DateCreated instead")]
         public uint DateAdd

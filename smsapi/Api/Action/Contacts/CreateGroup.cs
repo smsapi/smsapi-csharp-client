@@ -48,7 +48,7 @@ namespace SMSApi.Api.Action
 
             if (description != null)
             {
-                values.Add("desciption", description);
+                values.Add("description", description);
             }
 
             if (idx != null)

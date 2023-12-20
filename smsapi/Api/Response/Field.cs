@@ -1,9 +1,10 @@
 using System.Runtime.Serialization;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Field
+    public class Field : IResponseCodeAwareResolver
     {
         public const string DateType = "DATE";
         public const string EmailType = "EMAIL";
