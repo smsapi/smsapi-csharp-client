@@ -10,7 +10,7 @@ namespace SMSApi.Api.Action
         private string email;
         private string firstName;
         private string gender;
-        private int? groupId;
+        private string? groupId;
         private string lastName;
         private string phoneNumber;
         private string search;
@@ -44,6 +44,12 @@ namespace SMSApi.Api.Action
         }
 
         public ListContacts SetGroupId(int? groupId)
+        {
+            this.groupId = groupId.ToString();
+            return this;
+        }
+        
+        public ListContacts SetGroupId(string groupId)
         {
             this.groupId = groupId;
             return this;
@@ -120,7 +126,7 @@ namespace SMSApi.Api.Action
 
             if (groupId != null)
             {
-                parameters.Add("group_id", groupId.Value.ToString());
+                parameters.Add("group_id", groupId);
             }
 
             if (gender != null)
