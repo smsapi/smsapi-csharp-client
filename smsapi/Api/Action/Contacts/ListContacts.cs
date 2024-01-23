@@ -12,8 +12,6 @@ namespace SMSApi.Api.Action
         private string gender;
         private int? groupId;
         private string lastName;
-        private int? limit;
-        private int? offset;
         private string phoneNumber;
         private string search;
 
@@ -57,15 +55,21 @@ namespace SMSApi.Api.Action
             return this;
         }
 
+        [Obsolete($"Use {nameof(Limit)} instead", false)]
         public ListContacts SetLimit(int? limit)
         {
-            this.limit = limit;
+            if (limit != null)
+                Limit = (uint?)limit;
+            
             return this;
         }
 
+        [Obsolete($"Use {nameof(Offset)} instead", false)]
         public ListContacts SetOffset(int? offset)
         {
-            this.offset = offset;
+            if (offset != null)
+                Offset = (uint?)offset;
+            
             return this;
         }
 
@@ -92,16 +96,6 @@ namespace SMSApi.Api.Action
             if (search != null)
             {
                 parameters.Add("q", search);
-            }
-
-            if (offset != null)
-            {
-                parameters.Add("offset", offset.Value.ToString());
-            }
-
-            if (limit != null)
-            {
-                parameters.Add("limit", limit.Value.ToString());
             }
 
             if (phoneNumber != null)
