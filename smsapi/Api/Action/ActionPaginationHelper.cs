@@ -17,6 +17,6 @@ public static class ActionPaginationHelper
 
         uriBuilder.Query = query.ToString();
 
-        return uriBuilder.Path + uriBuilder.Query;
+        return uriBuilder.ToPathWithQuery();
     }
 }

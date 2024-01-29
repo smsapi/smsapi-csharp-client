@@ -33,8 +33,9 @@ public abstract class Action<T>
     public async Task<T> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         Validate();
-        return ProcessResponse(await _proxy.ExecuteAsync(ContentType, UriWithPagination(), GetValues(), Files(), Method, cancellationToken));
-    }   
+        return ProcessResponse(await _proxy.ExecuteAsync(ContentType, UriWithPagination(), GetValues(), Files(), Method,
+            cancellationToken));
+    }
 
     public void Proxy(Proxy proxy)
     {
@@ -67,7 +68,7 @@ public abstract class Action<T>
         return deserializationResult.Result;
     }
 
-     protected abstract string Uri();
+    protected abstract string Uri();
 
     protected virtual void Validate()
     {
@@ -80,16 +81,30 @@ public abstract class Action<T>
 
     private string UriWithPagination()
     {
-        if (!typeof(IPaginable).IsAssignableFrom(GetType())) return Uri();
-        
-        var uri = new UriBuilder
+        var uriBuilder = new UriBuilder
         {
             Path = Uri()
         };
-        
-        var action = (IPaginable) this;
 
-        return uri.ToUriWithPagination(action.Limit, action.Offset);
+        assignValuesToQuery(uriBuilder);
+
+        if (!typeof(IPaginable).IsAssignableFrom(GetType()))
+            return uriBuilder.ToPathWithQuery();
+
+        var action = (IPaginable)this;
+
+        return uriBuilder.ToUriWithPagination(action.Limit, action.Offset);
+    }
+
+    private void assignValuesToQuery(UriBuilder uriBuilder)
+    {
+        if (!Method.Equals(RequestMethod.GET)) return;
+
+        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+        query.Add(Values());
+
+        uriBuilder.Query = query.ToString();
     }
 
     private T ProcessResponse(HttpResponseEntity responseEntity)
