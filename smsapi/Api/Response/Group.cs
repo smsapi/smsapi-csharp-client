@@ -6,7 +6,7 @@ using SMSApi.Api.Response.ResponseResolver;
 namespace SMSApi.Api.Response
 {
     [DataContract]
-    public class Group : ErrorAwareResponse, IResponseCodeAwareResolver
+    public class Group : ErrorAwareResponse
     {
         [DataMember(Name = "created_by", IsRequired = false)]
         public readonly string CreatedBy;
@@ -23,11 +23,8 @@ namespace SMSApi.Api.Response
         [DataMember(Name = "permissions", IsRequired = false)]
         private List<GroupPermission> permissions;
 
-        private Group()
-        { }
-
         [DataMember(Name = "contacts_count", IsRequired = false)]
-        public int ContactsCount { get; private set; }
+        public int? ContactsCount { get; private set; }
 
         public DateTime? DateCreated { get; private set; }
 
