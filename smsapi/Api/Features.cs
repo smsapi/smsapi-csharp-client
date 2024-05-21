@@ -1,3 +1,5 @@
+using System.Net.Http;
+
 namespace SMSApi.Api;
 
 public class Features
@@ -8,6 +10,12 @@ public class Features
     public Features(IClient client, ProxyAddress proxy = ProxyAddress.SmsApiIo)
     {
         Proxy = new ProxyHTTP(proxy.GetUrl());
+        Client = client;
+    }
+    
+    public Features(IClient client, HttpClient httpClient)
+    {
+        Proxy = new ProxyHTTP(ProxyAddress.SmsApiIo.GetUrl(), httpClient);
         Client = client;
     }
     

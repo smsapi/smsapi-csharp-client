@@ -13,11 +13,13 @@ namespace SMSApi.Api
     public class ProxyHTTP : Proxy
     {
         private readonly string baseUrl;
+        private readonly HttpClient? httpClient;
         private IClient authentication;
 
-        public ProxyHTTP(string baseUrl)
+        public ProxyHTTP(string baseUrl, HttpClient? httpClient = null)
         {
             this.baseUrl = baseUrl;
+            this.httpClient = httpClient;
         }
 
         public void Authentication(IClient client)
@@ -111,7 +113,8 @@ namespace SMSApi.Api
         
         private HttpClient CreateClient()
         {
-            var client = new HttpClient();
+            var client = httpClient ?? new HttpClient();
+            
             client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authentication.GetClientAgent());
 
