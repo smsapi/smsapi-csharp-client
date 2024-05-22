@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using smsapi.Api.Response.Deserialization.Exception;

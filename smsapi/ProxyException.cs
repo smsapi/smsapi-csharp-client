@@ -1,6 +1,6 @@
 ﻿namespace SMSApi.Api
 {
-    public class ProxyException : Exception
+    public class ProxyException : System.Exception
     {
         public ProxyException(string message)
             : base(message)

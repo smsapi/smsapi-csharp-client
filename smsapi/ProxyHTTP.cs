@@ -58,7 +58,7 @@ namespace SMSApi.Api
                 client.AddContentTypeHeader(contentType);
                 return client.SendRequest(method, uri, data, files).Result;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
@@ -105,7 +105,7 @@ namespace SMSApi.Api
                 client.AddContentTypeHeader(contentType);
                 return await client.SendRequest(method, uri, data, files, cancellationToken);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }

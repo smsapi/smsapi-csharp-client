@@ -1,4 +1,6 @@
-﻿namespace SMSApi.Api
+﻿using System;
+
+namespace SMSApi.Api
 {
     public class SmsapiException : Exception
     {
