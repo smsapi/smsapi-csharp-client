@@ -14,9 +14,6 @@ namespace SMSApi.Api.Response
         [DataMember(Name = "size", IsRequired = false)]
         protected int size;
 
-        protected BasicCollection()
-        { }
-
         public List<T> Collection
         {
             get
