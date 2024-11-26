@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SMSApi.Api;
 
 namespace smsapiTests.Unit;
 
 public class ProxyAssert(SpyProxy proxy)
 {
+    public void AssertRequestMethod(RequestMethod requestMethod)
+    {
+        Assert.AreEqual(requestMethod, proxy.RequestMethod);
+    }
+    
     public void AssertUriEquals(string uri)
     {
         Assert.IsTrue(proxy.RequestedUri.Equals(uri));

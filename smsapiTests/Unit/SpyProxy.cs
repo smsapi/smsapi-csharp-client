@@ -14,7 +14,9 @@ namespace smsapiTests.Unit;
 public class SpyProxy : Proxy
 {
     public string RequestedUri { get; private set; }
-
+    
+    public RequestMethod RequestMethod { get; private set; } 
+    
     public Dictionary<string, string> Parameters { get; } = new();
 
     public void Authentication(IClient client)
@@ -26,6 +28,7 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
+        RequestMethod = method;
         
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
@@ -34,6 +37,7 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
+        RequestMethod = method;
 
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
@@ -42,7 +46,8 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
-
+        RequestMethod = method;
+        
         return new HttpResponseEntity(Task.FromResult(Stream.Null), HttpStatusCode.OK);
     }
 
@@ -50,6 +55,7 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
+        RequestMethod = method;
 
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
@@ -58,6 +64,7 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
+        RequestMethod = method;
 
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
@@ -66,6 +73,7 @@ public class SpyProxy : Proxy
     {
         RequestedUri = uri;
         SetParameters(data);
+        RequestMethod = method;
 
         return new Task<HttpResponseEntity>(null);
     }
