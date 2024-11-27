@@ -6,9 +6,6 @@ namespace SMSApi.Api.Response.Profile;
 [DataContract]
 public record struct Profile : IResponseCodeAwareResolver
 {
-    [DataMember(Name = "id")]
-    public readonly string Id;
-    
     [DataMember(Name = "name")]
     public readonly string Name;
     
@@ -25,7 +22,7 @@ public record struct Profile : IResponseCodeAwareResolver
     public readonly string UserType;
     
     [DataMember(Name = "points")]
-    public readonly decimal Points;
+    public readonly double Points;
     
     [DataMember(Name = "payment_type")]
     public readonly string PaymentType;

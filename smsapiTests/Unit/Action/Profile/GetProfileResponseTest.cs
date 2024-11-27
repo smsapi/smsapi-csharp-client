@@ -16,18 +16,16 @@ public class ProfileTest
     [TestMethod]
     public void see_profile_data()
     {
-        var id = "5A5359173738303F2F95B7E2";
         var name = "fancy name";
         var username = "fancy_username";
         var email = "any@any.pl";
         var phoneNumber = "48500100100";
         var userType = "native";
-        var points = 500.25m;
+        var points = 500.25d;
         var paymentType = "prepaid";
 
         var response = new Dictionary<string, dynamic>
         {
-            { "id", id },
             { "name", name },
             { "username", username },
             { "email", email },
@@ -42,8 +40,7 @@ public class ProfileTest
         );
 
         var result = CreateGetProfile().Execute();
-
-        Assert.AreEqual(id, result.Id);
+        
         Assert.AreEqual(name, result.Name);
         Assert.AreEqual(username, result.Username);
         Assert.AreEqual(email, result.Email);
