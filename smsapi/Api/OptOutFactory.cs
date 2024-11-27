@@ -1,5 +1,4 @@
-﻿using System;
-using SMSApi.Api.Action.OptOut;
+﻿using SMSApi.Api.Action.OptOut;
 
 namespace SMSApi.Api;
 
@@ -21,14 +20,6 @@ public class OptOutFactory : Factory
     }
 
     public DeleteOptOut DeleteOptOut(string optOutId)
-    {
-        var action = new DeleteOptOut(optOutId);
-        action.Proxy(proxy);
-
-        return action;
-    }
-    
-    public DeleteOptOut DeleteOptOut(Guid optOutId)
     {
         var action = new DeleteOptOut(optOutId);
         action.Proxy(proxy);

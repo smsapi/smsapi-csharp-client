@@ -1,4 +1,3 @@
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action.OptOut;
@@ -19,7 +18,7 @@ public class DeleteOptOutTest
     [TestMethod]
     public void valid_uri()
     {
-        var optOutId = Guid.NewGuid();
+        var optOutId = AnyId();
 
         CreateOptOutDelete(optOutId).Execute();
         
@@ -29,16 +28,18 @@ public class DeleteOptOutTest
     [TestMethod]
     public void valid_method()
     {
-        CreateOptOutDelete(Guid.NewGuid()).Execute();
+        CreateOptOutDelete(AnyId()).Execute();
         
         _proxyAssert.AssertRequestMethod(RequestMethod.DELETE);
     }
 
-    private DeleteOptOut CreateOptOutDelete(Guid optOutId)
+    private DeleteOptOut CreateOptOutDelete(string optOutId)
     {
         var action = new DeleteOptOut(optOutId);
         action.Proxy(_spyProxy);
 
         return action;
     }
+
+    private static string AnyId() => "5A5359173738303F2F95B7E2";
 }

@@ -44,7 +44,7 @@ public class DeleteOptOutResponseTest
 
     private DeleteOptOut DeleteOptOut()
     {
-        var action = new DeleteOptOut(Guid.NewGuid());
+        var action = new DeleteOptOut("any");
         action.Proxy(_proxyStub);
 
         return action;

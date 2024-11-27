@@ -11,11 +11,6 @@ public class DeleteOptOut : Action<OptOutDeletionResponse>
     {
         _optOutId = optOutId;
     }
-    
-    public DeleteOptOut(Guid optOutId)
-    {
-        _optOutId = optOutId.ToString();
-    }
 
     protected override RequestMethod Method => RequestMethod.DELETE;
 
