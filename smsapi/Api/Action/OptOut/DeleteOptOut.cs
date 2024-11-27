@@ -1,9 +1,8 @@
-using System;
 using SMSApi.Api.Response.OptOut;
 
 namespace SMSApi.Api.Action.OptOut;
 
-public class DeleteOptOut : Action<OptOutDeletionResponse>
+public sealed class DeleteOptOut : Action<OptOutDeletionResponse>
 {
     private readonly string _optOutId;
 
