@@ -42,6 +42,14 @@ public class OptOutFactory : Factory
 
         return action;
     }
+
+    public ChangeOptOutSettings ChangeSettings()
+    {
+        var action = new ChangeOptOutSettings();
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class OptOutFeatureRegister
