@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -27,7 +26,7 @@ namespace SMSApi.Api
             authentication = client;
         }
 
-        public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method)
+        public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method)
         {
             return Execute(contentType, uri, data, new Dictionary<string, Stream>(), method);
         }
@@ -35,7 +34,7 @@ namespace SMSApi.Api
         public HttpResponseEntity Execute(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Stream file,
             RequestMethod method)
         {
@@ -45,7 +44,7 @@ namespace SMSApi.Api
         public HttpResponseEntity Execute(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
@@ -55,8 +54,7 @@ namespace SMSApi.Api
 
             try
             {
-                client.AddContentTypeHeader(contentType);
-                return client.SendRequest(method, uri, data, files).Result;
+                return client.SendRequest(contentType, method, uri, data, files).Result;
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace SMSApi.Api
         public async Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             RequestMethod method,
             CancellationToken cancellationToken = default
             )
@@ -78,7 +76,7 @@ namespace SMSApi.Api
         public async Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Stream file,
             RequestMethod method,
             CancellationToken cancellationToken = default
@@ -90,7 +88,7 @@ namespace SMSApi.Api
         public async Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Dictionary<string, Stream> files,
             RequestMethod method,
             CancellationToken cancellationToken = default
@@ -102,8 +100,7 @@ namespace SMSApi.Api
 
             try
             {
-                client.AddContentTypeHeader(contentType);
-                return await client.SendRequest(method, uri, data, files, cancellationToken);
+                return await client.SendRequest(contentType, method, uri, data, files, cancellationToken);
             }
             catch (Exception e)
             {

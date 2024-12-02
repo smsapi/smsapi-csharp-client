@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,7 +23,7 @@ public class SpyProxy : Proxy
         throw new NotImplementedException();
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -33,7 +32,7 @@ public class SpyProxy : Proxy
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -42,7 +41,7 @@ public class SpyProxy : Proxy
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -51,7 +50,7 @@ public class SpyProxy : Proxy
         return new HttpResponseEntity(Task.FromResult(Stream.Null), HttpStatusCode.OK);
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -60,7 +59,7 @@ public class SpyProxy : Proxy
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -69,7 +68,7 @@ public class SpyProxy : Proxy
         return new Task<HttpResponseEntity>(() => new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK));
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
         SetParameters(data);
@@ -78,18 +77,17 @@ public class SpyProxy : Proxy
         return new Task<HttpResponseEntity>(null);
     }
 
-    private void SetParameters(NameValueCollection collection)
+    private void SetParameters(ISet<KeyValuePair<string, dynamic?>> collection)
     {
         Parameters.Clear();
 
-        var map = collection.AllKeys.SelectMany(
-            collection.GetValues,
-            (k, v) => new KeyValuePair<string, string>(k ,v)
-        );
-
-        foreach (var entry in map)
+        var dictionary = collection.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        
+        foreach (var entry in dictionary)
         {
             Parameters.Add(entry.Key, entry.Value);
         }
+
+        Parameters.Remove("format");//for easier, more concise testing
     }
 }

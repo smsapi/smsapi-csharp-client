@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,27 +13,27 @@ namespace SMSApi.Api
         HttpResponseEntity Execute(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             RequestMethod method);
 
         HttpResponseEntity Execute(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Stream file,
             RequestMethod method);
 
         HttpResponseEntity Execute(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Dictionary<string, Stream> files,
             RequestMethod method);
 
         Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             RequestMethod method,
             CancellationToken cancellationToken = default
             );
@@ -42,7 +41,7 @@ namespace SMSApi.Api
         Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Stream file,
             RequestMethod method,
             CancellationToken cancellationToken = default
@@ -51,7 +50,7 @@ namespace SMSApi.Api
         Task<HttpResponseEntity> ExecuteAsync(
             ActionContentType contentType,
             string uri,
-            NameValueCollection data,
+            ISet<KeyValuePair<string, dynamic?>> data,
             Dictionary<string, Stream> files,
             RequestMethod method,
             CancellationToken cancellationToken = default

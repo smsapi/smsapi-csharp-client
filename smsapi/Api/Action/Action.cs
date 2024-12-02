@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -80,6 +81,8 @@ public abstract class Action<T>
         return new NameValueCollection();
     }
 
+    protected virtual ISet<KeyValuePair<string, dynamic?>>? Request() => default;
+
     private string UriWithPagination()
     {
         var uriBuilder = new UriBuilder
@@ -87,7 +90,7 @@ public abstract class Action<T>
             Path = Uri()
         };
 
-        assignValuesToQuery(uriBuilder);
+        AssignValuesToQuery(uriBuilder);
 
         if (!typeof(IPaginable).IsAssignableFrom(GetType()))
             return uriBuilder.ToPathWithQuery();
@@ -97,7 +100,7 @@ public abstract class Action<T>
         return uriBuilder.ToUriWithPagination(action.Limit, action.Offset);
     }
 
-    private void assignValuesToQuery(UriBuilder uriBuilder)
+    private void AssignValuesToQuery(UriBuilder uriBuilder)
     {
         if (!Method.Equals(RequestMethod.GET)) return;
 
@@ -113,12 +116,20 @@ public abstract class Action<T>
         return ResponseToObject(responseEntity);
     }
 
-    private NameValueCollection GetValues()
+    private ISet<KeyValuePair<string, dynamic?>> GetValues()
     {
-        var values = Values();
+        var values = new HashSet<KeyValuePair<string, dynamic?>>
+        {
+            KeyValuePair.Create<string, dynamic?>("format", "json") ,
+        };
+        
+        Request()?.Let(requestData => requestData.ToList().ForEach(data => values.Add(data)));
+        
+        foreach (string key in Values().AllKeys)
+        {
+            values.Add(KeyValuePair.Create<string, dynamic?>(key, Values().Get(key)));
+        }
 
-        return values.Count > 0
-            ? new NameValueCollection { { "format", "json" }, values }
-            : HttpUtility.ParseQueryString(string.Empty);
+        return values;
     }
 }

@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,36 +14,36 @@ public class ProxyStub : Proxy
     
     public void Authentication(IClient client)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, Stream file, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public HttpResponseEntity Execute(ActionContentType contentType, string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method)
+    public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method)
     {
         return SyncExecutionResponse;
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method, CancellationToken cancellationToken = default)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, NameValueCollection data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
+    public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }
