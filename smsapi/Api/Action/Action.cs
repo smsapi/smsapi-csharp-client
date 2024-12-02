@@ -76,6 +76,7 @@ public abstract class Action<T>
     {
     }
 
+    [Obsolete($"Use {nameof(Request)}, that supports json types")]
     protected virtual NameValueCollection Values()
     {
         return new NameValueCollection();
