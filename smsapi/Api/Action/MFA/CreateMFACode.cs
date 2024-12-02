@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response.MFA;
 
@@ -48,7 +49,7 @@ public class CreateMFACode : Action<MFACreationResponse>
         return "mfa/codes";
     }
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
         var parameters = new NameValueCollection { { "phone_number", _phoneNumber } };
 
@@ -61,6 +62,6 @@ public class CreateMFACode : Action<MFACreationResponse>
         if (_from != null)
             parameters.Add("from", _from);
 
-        return parameters;
+        return (parameters, default);
     }
 }

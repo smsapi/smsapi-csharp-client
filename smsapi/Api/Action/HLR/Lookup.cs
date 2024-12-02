@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response.HLR;
 
@@ -18,8 +19,8 @@ public sealed class Lookup : Action<SingleCheckResult>
 
     protected override ApiType ApiType() => Action.ApiType.Rest;
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
-        return new NameValueCollection { { "phone_number", _numberToCheck } };
+        return (new NameValueCollection { { "phone_number", _numberToCheck } }, default);
     }
 }

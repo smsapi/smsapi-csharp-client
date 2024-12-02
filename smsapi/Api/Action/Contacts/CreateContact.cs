@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
@@ -81,7 +82,7 @@ namespace SMSApi.Api.Action
             return "contacts";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var values = new NameValueCollection();
             
@@ -130,7 +131,7 @@ namespace SMSApi.Api.Action
                 values.Add("source", source);
             }
 
-            return values;
+            return (values, default);
         }
     }
 }

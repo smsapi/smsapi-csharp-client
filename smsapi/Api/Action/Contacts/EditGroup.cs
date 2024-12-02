@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
@@ -45,7 +46,7 @@ namespace SMSApi.Api.Action
             return "contacts/groups/" + groupId;
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var parameters = new NameValueCollection();
             if (name != null)
@@ -63,7 +64,7 @@ namespace SMSApi.Api.Action
                 parameters.Add("idx", idx);
             }
 
-            return parameters;
+            return (parameters, default);
         }
 
         protected override void Validate()

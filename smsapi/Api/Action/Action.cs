@@ -75,14 +75,11 @@ public abstract class Action<T>
     protected virtual void Validate()
     {
     }
-
-    [Obsolete($"Use {nameof(Request)}, that supports json types")]
-    protected virtual NameValueCollection Values()
+    
+    protected virtual (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
-        return new NameValueCollection();
+        return (new NameValueCollection(), default);
     }
-
-    protected virtual ISet<KeyValuePair<string, dynamic?>>? Request() => default;
 
     private string UriWithPagination()
     {
@@ -107,7 +104,7 @@ public abstract class Action<T>
 
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
 
-        query.Add(Values());
+        query.Add(Values().Item1);
 
         uriBuilder.Query = query.ToString();
     }
@@ -124,11 +121,11 @@ public abstract class Action<T>
             KeyValuePair.Create<string, dynamic?>("format", "json") ,
         };
         
-        Request()?.Let(requestData => requestData.ToList().ForEach(data => values.Add(data)));
+        Values().Item2?.Let(requestData => requestData.ToList().ForEach(data => values.Add(data)));
         
-        foreach (string key in Values().AllKeys)
+        foreach (string key in Values().Item1.AllKeys)
         {
-            values.Add(KeyValuePair.Create<string, dynamic?>(key, Values().Get(key)));
+            values.Add(KeyValuePair.Create<string, dynamic?>(key, Values().Item1.Get(key)));
         }
 
         return values;

@@ -23,12 +23,12 @@ namespace SMSApi.Api.Action
             return "user.do";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
-            return new NameValueCollection
+            return (new NameValueCollection
             {
                 { "list", "1" }
-            };
+            }, default);
         }
     }
 }

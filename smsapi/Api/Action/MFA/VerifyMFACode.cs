@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response.MFA;
 
@@ -26,8 +27,8 @@ public class VerifyMFACode : Action<MFAVerificationResponse>
         return "mfa/codes/verifications";
     }
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
-        return new NameValueCollection { { "phone_number", phoneNumber }, { "code", code } };
+        return (new NameValueCollection { { "phone_number", phoneNumber }, { "code", code } }, default);
     }
 }

@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
-using SMSApi.Api.Response;
 using smsapi.Api.Response.Blacklist;
 
 namespace SMSApi.Api.Action.Blacklist;
@@ -44,13 +44,13 @@ public class Add : Action<BlacklistRecord>
         return Action.ApiType.Rest;
     }
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
         var values = new NameValueCollection { { "phone_number", phoneNumber } };
         
         if (withExpireAt != null)
             values.Add("expire_at", withExpireAt.Value.ToString("O"));
         
-        return values;
+        return (values, default);
     }
 }

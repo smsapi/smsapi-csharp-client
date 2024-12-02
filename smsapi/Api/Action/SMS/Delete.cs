@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
@@ -20,12 +21,12 @@ namespace SMSApi.Api.Action
             return "sms.do";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
-            return new NameValueCollection
+            return (new NameValueCollection
             {
                 { "sch_del", id }
-            };
+            }, default);
         }
     }
 }

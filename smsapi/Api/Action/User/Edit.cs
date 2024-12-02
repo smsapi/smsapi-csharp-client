@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using SMSApi.Api.Response;
 
@@ -93,7 +94,7 @@ namespace SMSApi.Api.Action
             return "user.do";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var collection = new NameValueCollection
             {
@@ -145,7 +146,7 @@ namespace SMSApi.Api.Action
                 collection.Add("without_prefix", "1");
             }
 
-            return collection;
+            return (collection, default);
         }
     }
 }

@@ -154,7 +154,7 @@ namespace SMSApi.Api.Action
             }
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var collection = new NameValueCollection();
 
@@ -214,7 +214,7 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
-            return collection;
+            return (collection, default);
         }
     }
 }

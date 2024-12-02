@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
@@ -31,7 +32,7 @@ namespace SMSApi.Api.Action
             return "contacts/fields";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var values = new NameValueCollection();
             if (name != null)
@@ -44,7 +45,7 @@ namespace SMSApi.Api.Action
                 values.Add("type", type);
             }
 
-            return values;
+            return (values, default);
         }
     }
 }

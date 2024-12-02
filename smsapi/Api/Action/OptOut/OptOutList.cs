@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 using OptOutModel = SMSApi.Api.Response.OptOut.OptOut;
@@ -30,12 +31,12 @@ public sealed class OptOutList : Action<BasicCollection<OptOutModel>>, IPaginabl
         return this;
     }
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
         var values = new NameValueCollection();
 
         _phoneNumber?.Let(number => values.Add("phone_number", number));
 
-        return values;
+        return (values, default);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response;
 
@@ -47,14 +48,14 @@ namespace SMSApi.Api.Action
             return "contacts/groups/" + groupId + "/permissions/" + username;
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
-            return new NameValueCollection
+            return (new NameValueCollection
             {
                 { "read", Convert.ToInt32(read).ToString() },
                 { "write", Convert.ToInt32(write).ToString() },
                 { "send", Convert.ToInt32(send).ToString() }
-            };
+            }, default);
         }
 
         protected override void Validate()

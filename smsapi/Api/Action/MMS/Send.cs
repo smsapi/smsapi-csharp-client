@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace SMSApi.Api.Action
@@ -101,7 +102,7 @@ namespace SMSApi.Api.Action
             }
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
             var collection = new NameValueCollection();
 
@@ -143,7 +144,7 @@ namespace SMSApi.Api.Action
                 collection.Add("idx", string.Join("|", Idx));
             }
 
-            return collection;
+            return (collection, default);
         }
     }
 }

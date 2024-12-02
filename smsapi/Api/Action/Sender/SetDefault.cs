@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using SMSApi.Api.Response;
 using SMSApi.Api.Response.ResponseResolver;
 
@@ -21,12 +22,12 @@ namespace SMSApi.Api.Action
             return "sender.do";
         }
 
-        protected override NameValueCollection Values()
+        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
         {
-            return new NameValueCollection
+            return (new NameValueCollection
             {
                 { "default", name }
-            };
+            }, default);
         }
     }
 }

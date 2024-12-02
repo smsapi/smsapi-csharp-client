@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using SMSApi.Api.Response.OptOut;
 
@@ -22,12 +23,12 @@ public sealed class ChangeOptOutSettings : Action<OptOutSettings>
         return this;
     }
 
-    protected override NameValueCollection Values()
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
         var values = new NameValueCollection();
         
         _brandName?.Let(newName => values.Add("brand", newName));
 
-        return values;
+        return (values, default);
     }
 }
