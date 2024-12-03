@@ -1,4 +1,5 @@
 using SMSApi.Api;
+using SMSApi.Api.Response.OptOut.Exception;
 
 var client = new ClientOAuth("token");
 var features = new Features(client);
@@ -7,9 +8,9 @@ var optOutList = features.OptOut()
     .List()
     .Execute();
 
-OptOutDeletionResponse DeleteOptOut(string optOutId)
+void DeleteOptOut(string optOutId)
 {
-    return features.OptOut()
+    features.OptOut()
         .DeleteOptOut(optOutId)
         .Execute();
 }
