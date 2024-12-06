@@ -1,31 +1,35 @@
 using System;
-using System.Runtime.Serialization.Json;
+using System.IO;
+using Newtonsoft.Json;
 
-namespace SMSApi.Api.Response.Deserialization
+namespace SMSApi.Api.Response.Deserialization;
+
+public class BaseJsonDeserializer : IDeserializer
 {
-    public class BaseJsonDeserializer : IDeserializer
+    public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
     {
-        public DeserializationResult<T> Deserialize<T>(HttpResponseEntity responseEntity)
-        {
-            T result;
-            var data = responseEntity.Content.Result;
-            
-            if (data.Length > 0)
-            {
-                data.Position = 0;
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                result = (T)serializer.ReadObject(data);
-                data.Position = 0;
-            }
-            else
-            {
-                result = Activator.CreateInstance<T>();
-            }
+        T result;
+        var data = responseEntity.Content.Result;
 
-            return new DeserializationResult<T>
-            {
-                Result = result
-            };
+        if (data.Length > 0)
+        {
+            var stringData = new StreamReader(data).ReadToEnd();
+
+            result = JsonConvert.DeserializeObject<T>(
+                stringData,
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new PrivateFieldsContractResolver(),
+                });
         }
+        else
+        {
+            result = Activator.CreateInstance<T>();
+        }
+
+        return new DeserializationResult<T>
+        {
+            Result = result
+        };
     }
 }
