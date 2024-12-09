@@ -23,15 +23,12 @@ namespace SMSApi.Api.Response.Deserialization
                 errorDeserializationResult.ThrowErrors();
                 
                 data = responseEntity.Content.Result;
+                
                 response = _baseJsonDeserializer.Deserialize<T>(responseEntity);
             }
             catch (SerializationException e)
             {
                 throw new HostException(e.Message, HostException.E_JSON_DECODE);
-            }
-            catch (Exception e)
-            {
-                throw e;
             }
             finally
             {
@@ -46,7 +43,7 @@ namespace SMSApi.Api.Response.Deserialization
             try
             {
                 var error = _baseJsonDeserializer.Deserialize<ErrorAwareResponse>(responseEntity).Result;
-
+    
                 if (!error!.IsError()) return;
 
                 if (IsHostError(error.ErrorCode))

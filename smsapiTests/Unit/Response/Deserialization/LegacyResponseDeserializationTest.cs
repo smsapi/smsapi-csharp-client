@@ -41,10 +41,9 @@ public class LegacyResponseDeserializationTest
             return "";
         }
     }
-
-    [DataContract]
+    
     private class BaseResponse : ErrorAwareResponse
     {
-        [DataMember] public string TestProperty;
+        public string TestProperty { get; set; }
     }
 }

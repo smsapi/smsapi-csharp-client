@@ -13,13 +13,14 @@ public class BaseJsonDeserializer : IDeserializer
 
         if (data.Length > 0)
         {
+            data.Position = 0;
             var stringData = new StreamReader(data).ReadToEnd();
 
             result = JsonConvert.DeserializeObject<T>(
                 stringData,
                 new JsonSerializerSettings
                 {
-                    ContractResolver = new PrivateFieldsContractResolver(),
+                    ContractResolver = new PrivateFieldsContractResolver()
                 });
         }
         else

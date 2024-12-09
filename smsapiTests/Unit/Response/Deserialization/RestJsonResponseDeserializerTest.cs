@@ -64,11 +64,10 @@ public class RestJsonResponseDeserializerTest
             return "";
         }
     }
-
-    [DataContract]
+    
     private class ResponseWithExceptionMapper : IResponseCodeAwareResolver
     {
-        [DataMember] public string TestProperty;
+        public string TestProperty { get; private set; }
 
         public Dictionary<int, System.Action<Stream>> HandleExceptionActions()
         {

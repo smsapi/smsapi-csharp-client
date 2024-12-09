@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using SMSApi.Api.Response.ResponseResolver;
 using smsapi.Api.Response.REST.Exception;
@@ -11,11 +11,11 @@ namespace SMSApi.Api.Response.Deserialization;
 
 public class ValidationErrorsResolver : IResponseCodeAwareResolver
 {
-    private readonly BaseJsonDeserializer baseJsonDeserializer;
+    private readonly BaseJsonDeserializer _baseJsonDeserializer;
 
     public ValidationErrorsResolver(BaseJsonDeserializer baseJsonDeserializer)
     {
-        this.baseJsonDeserializer = baseJsonDeserializer;
+        _baseJsonDeserializer = baseJsonDeserializer;
     }
 
     public Dictionary<int, Action<Stream>> HandleExceptionActions()
@@ -28,24 +28,25 @@ public class ValidationErrorsResolver : IResponseCodeAwareResolver
 
     private void ResolveErrors(Stream stream)
     {
-        var validationErrors = baseJsonDeserializer.Deserialize<ValidationErrors>(
+        var validationErrors = _baseJsonDeserializer.Deserialize<ValidationErrors>(
             new HttpResponseEntity(Task.FromResult(stream), HttpStatusCode.BadRequest)
         ).Result;
 
         throw ValidationException.Create(validationErrors);
     }
-
-    [DataContract]
-    public readonly struct ValidationErrors
+    
+    public sealed class ValidationErrors
     {
-        [DataMember(Name = "errors")] public readonly IEnumerable<ValidationError> Errors;
+        [JsonProperty("errors")]
+        public readonly IEnumerable<ValidationError> Errors;
     }
-
-    [DataContract]
-    public readonly struct ValidationError
+    
+    public sealed class ValidationError
     {
-        [DataMember(Name = "message")] public readonly string Message;
-
-        [DataMember(Name = "error")] public readonly string Error;
+        [JsonProperty("message")]
+        public readonly string Message;
+        
+        [JsonProperty("error")]
+        public readonly string Error;
     }
 }

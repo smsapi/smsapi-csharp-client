@@ -11,31 +11,40 @@ internal class PrivateFieldsContractResolver : DefaultContractResolver
 {
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
     {
-        var jsonProperties = base.CreateProperties(type, memberSerialization);
+        var jsonProperties = base.CreateProperties(type, memberSerialization)
+            .GroupBy(property => property.UnderlyingName, StringComparer.OrdinalIgnoreCase)
+            .Select(group => group.First())
+            .ToHashSet();
 
-        var readonlyFields = GetPublicReadonlyFields(type);
-        foreach (var field in readonlyFields)
-            if (jsonProperties.All(p => p.PropertyName != field.Name))
-                jsonProperties.Add(CreateProperty(field, memberSerialization));
+        AddReadonlyMembers(type, memberSerialization, jsonProperties);
 
-        return jsonProperties;
+        return jsonProperties.ToList();
+    }
+
+    private void AddReadonlyMembers(Type type, MemberSerialization memberSerialization,
+        HashSet<JsonProperty> jsonProperties)
+    {
+        IList<JsonProperty> readonlyProperties = new List<JsonProperty>();
+
+        foreach (var field in GetPublicReadonlyFields(type))
+            readonlyProperties.Add(CreateProperty(field, memberSerialization));
+
+        foreach (var property in GetReadonlyProperties(type))
+            readonlyProperties.Add(CreateProperty(property, memberSerialization));
+
+        jsonProperties.RemoveWhere(property => readonlyProperties.Contains(property));
     }
 
     protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
     {
         var jsonProperty = base.CreateProperty(member, memberSerialization);
 
-        switch (member)
+        jsonProperty.Writable = member switch
         {
-            case PropertyInfo propertyInfo:
-            {
-                if (HasPrivateSetter(propertyInfo)) jsonProperty.Writable = true;
-                break;
-            }
-            case FieldInfo { IsInitOnly: true }:
-                jsonProperty.Writable = true;
-                break;
-        }
+            PropertyInfo propertyInfo when HasPrivateSetter(propertyInfo) => true,
+            FieldInfo { IsInitOnly: true } => true,
+            _ => jsonProperty.Writable
+        };
 
         return jsonProperty;
     }
@@ -46,10 +55,21 @@ internal class PrivateFieldsContractResolver : DefaultContractResolver
             .Where(field => field.IsInitOnly);
     }
 
+    private static IEnumerable<PropertyInfo> GetReadonlyProperties(Type type)
+    {
+        return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(IsInitOnly);
+    }
+
     private static bool HasPrivateSetter(PropertyInfo propertyInfo)
     {
         var setMethod = propertyInfo.GetSetMethod(true);
+        return setMethod != null && !setMethod.IsPublic;
+    }
 
+    private static bool IsInitOnly(PropertyInfo propertyInfo)
+    {
+        var setMethod = propertyInfo.GetSetMethod(true);
         return setMethod != null && !setMethod.IsPublic;
     }
 }
