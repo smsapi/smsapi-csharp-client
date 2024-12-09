@@ -16,7 +16,7 @@ public class SpyProxy : Proxy
     
     public RequestMethod RequestMethod { get; private set; } 
     
-    public Dictionary<string, string> Parameters { get; } = new();
+    public Dictionary<string, dynamic?> Parameters { get; } = new();
 
     public void Authentication(IClient client)
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 
@@ -26,11 +27,23 @@ public class ProxyAssert(SpyProxy proxy)
     
     public void AssertParametersContain(string name, string value)
     {
-        var expectedParameter = new KeyValuePair<string, string>(name, value);
+        var expectedParameter = new KeyValuePair<string, dynamic?>(name, value);
 
         Assert.IsTrue(
             proxy.Parameters.Contains(value: expectedParameter),
             $"Expected {value}, actual value: {proxy.Parameters[name]}"
+        );
+    }
+    
+    public void AssertParametersContain(string name, dynamic value)
+    {
+        Assert.IsTrue(
+            proxy.Parameters.ContainsKey(name),
+            $"Key not found in sent parameters: {name}"
+        );
+        Assert.AreEqual(
+            JsonSerializer.Serialize(value),
+            JsonSerializer.Serialize(proxy.Parameters[name])
         );
     }
     
