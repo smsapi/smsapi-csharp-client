@@ -35,13 +35,13 @@ public class ValidationErrorsResolver : IResponseCodeAwareResolver
         throw ValidationException.Create(validationErrors);
     }
     
-    public sealed class ValidationErrors
+    public readonly record struct ValidationErrors
     {
         [JsonProperty("errors")]
         public readonly IEnumerable<ValidationError> Errors;
     }
     
-    public sealed class ValidationError
+    public readonly record struct ValidationError
     {
         [JsonProperty("message")]
         public readonly string Message;
