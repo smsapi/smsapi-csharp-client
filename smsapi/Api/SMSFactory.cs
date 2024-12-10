@@ -17,11 +17,11 @@ namespace SMSApi.Api
             : base(client, proxy)
         { }
 
-        public SMSDelete ActionDelete(string id = null)
+        public SMSDelete ActionDelete(params string[] id)
         {
-            var action = new SMSDelete();
+            var action = new SMSDelete(id);
             action.Proxy(proxy);
-            action.Id(id);
+            
             return action;
         }
 

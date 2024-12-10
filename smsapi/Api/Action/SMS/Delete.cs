@@ -1,32 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using SMSApi.Api.Response;
 
-namespace SMSApi.Api.Action
+namespace SMSApi.Api.Action;
+
+public sealed class SMSDelete : Action<Countable>
 {
-    public class SMSDelete : Action<Countable>
+    private string[] _ids;
+
+    public SMSDelete(params string[] id)
     {
-        private string id;
+        _ids = id;
+    }
 
-        protected override RequestMethod Method => RequestMethod.POST;
+    protected override RequestMethod Method => RequestMethod.POST;
 
-        public SMSDelete Id(string id)
+    [Obsolete($"Use {nameof(SMSDelete)} instead")]
+    public SMSDelete Id(string id)
+    {
+        _ids = new[] { id };
+
+        return this;
+    }
+
+    [Obsolete($"Use {nameof(SMSDelete)} instead")]
+    public SMSDelete Id(string[] ids)
+    {
+        _ids = ids;
+
+        return this;
+    }
+
+    protected override string Uri()
+    {
+        return "sms.do";
+    }
+
+    protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
+    {
+        return (new NameValueCollection
         {
-            this.id = id;
-            return this;
-        }
-
-        protected override string Uri()
-        {
-            return "sms.do";
-        }
-
-        protected override (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
-        {
-            return (new NameValueCollection
-            {
-                { "sch_del", id }
-            }, default);
-        }
+            { "sch_del", string.Join(",", _ids.ToHashSet()) }
+        }, default);
     }
 }

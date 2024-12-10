@@ -15,7 +15,10 @@ public class ProxyAssert(SpyProxy proxy)
     
     public void AssertUriEquals(string uri)
     {
-        Assert.IsTrue(proxy.RequestedUri.Equals(uri));
+        Assert.IsTrue(
+            proxy.RequestedUri.Equals(uri), 
+            $"expected: {uri}, got: {proxy.RequestedUri}"
+            );
     }
 
     public void AssertNoParameters()

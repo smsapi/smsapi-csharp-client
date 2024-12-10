@@ -1,22 +1,25 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class Countable
     {
-        private int count;
+        private int _count;
+
+        public Countable()
+        {
+        }
 
         protected Countable(int count = 0)
         {
-            this.count = count;
+            this._count = count;
         }
 
-        [DataMember(Name = "count", IsRequired = false)]
+        [JsonProperty("count")]
         public virtual int Count
         {
-            get => count;
-            private set => count = value;
+            get => _count;
+            set => _count = value;
         }
     }
 }
