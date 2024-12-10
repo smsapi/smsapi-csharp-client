@@ -9,6 +9,11 @@ namespace SMSApi.Api.Response.Deserialization;
 
 internal class PrivateFieldsContractResolver : DefaultContractResolver
 {
+    public PrivateFieldsContractResolver()
+    {
+        NamingStrategy = new SnakeCaseNamingStrategy();
+    }
+    
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
     {
         var jsonProperties = base.CreateProperties(type, memberSerialization)

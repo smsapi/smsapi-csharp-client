@@ -4,6 +4,7 @@ namespace SMSApi.Api.Response
 {
     public class Countable
     {
+        [JsonIgnore]
         private int _count;
 
         public Countable()
@@ -12,7 +13,7 @@ namespace SMSApi.Api.Response
 
         protected Countable(int count = 0)
         {
-            this._count = count;
+            _count = count;
         }
 
         [JsonProperty("count")]

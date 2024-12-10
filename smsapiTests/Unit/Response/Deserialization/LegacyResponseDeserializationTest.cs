@@ -21,7 +21,7 @@ public class LegacyResponseDeserializationTest
         var action = new TestAction();
         action.Proxy(_proxyStub);
         var testValue = "test value";
-        Dictionary<string, dynamic> errorResponse = new() { { "TestProperty", testValue } };
+        Dictionary<string, dynamic> errorResponse = new() { { "test_property", testValue } };
         _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
             errorResponse.ToHttpEntityStreamTask(),
             HttpStatusCode.OK

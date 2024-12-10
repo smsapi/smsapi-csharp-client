@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class BasicCollection<T> : Countable, IResponseCodeAwareResolver
     {
-        [DataMember(Name = "collection", IsRequired = false)]
         protected List<T> collection;
-
-        [DataMember(Name = "size", IsRequired = false)]
-        protected int size;
+        
+        [JsonProperty("size")]
+        private int _size;
 
         public List<T> Collection
         {
@@ -31,26 +29,28 @@ namespace SMSApi.Api.Response
         }
 
         [Obsolete("use Size instead")]
+        [JsonIgnore]
         public override int Count => Size;
 
         [Obsolete("use Collection instead")]
-        [DataMember(Name = "list", IsRequired = false)]
+        [JsonProperty("list")]
         public List<T> List
         {
             get => Collection;
             protected set => collection = value;
         }
 
+        [JsonIgnore]
         public int Size
         {
             get
             {
-                if (size == 0)
+                if (_size == 0)
                 {
                     return base.Count;
                 }
 
-                return size;
+                return _size;
             }
         }
     }

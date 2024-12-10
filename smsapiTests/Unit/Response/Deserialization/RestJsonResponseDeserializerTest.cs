@@ -39,7 +39,7 @@ public class RestJsonResponseDeserializerTest
     {
         var action = new TestAction();
         action.Proxy(_proxyStub);
-        Dictionary<string, dynamic> response = new() { { "TestProperty", "abc" } };
+        Dictionary<string, dynamic> response = new() { { "test_property", "abc" } };
         _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
             response.ToHttpEntityStreamTask(),
             HttpStatusCode.OK
