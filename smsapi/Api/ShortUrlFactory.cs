@@ -1,4 +1,5 @@
-﻿using SMSApi.Api.Action.ShortUrl;
+﻿using System.IO;
+using SMSApi.Api.Action.ShortUrl;
 
 namespace SMSApi.Api;
 
@@ -22,6 +23,22 @@ public class ShortUrlFactory : Factory
     public ShortUrlList List()
     {
         var action = new ShortUrlList();
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public CreateShortUrl Create(string name, string uri)
+    {
+        var action = new CreateShortUrl(name, uri);
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public CreateShortUrl Create(string name, Stream file)
+    {
+        var action = new CreateShortUrl(name, file);
         action.Proxy(proxy);
 
         return action;

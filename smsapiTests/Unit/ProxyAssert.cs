@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,6 +28,14 @@ public class ProxyAssert(SpyProxy proxy)
         
         Assert.IsTrue(parametersCount == 0, $"Parameters expected to be empty, {parametersCount} found");
     }
+
+    public void AssertParametersCount(int expectedCount)
+    {
+        Assert.AreEqual(
+            expectedCount,
+            proxy.Parameters.Count
+        );
+    }
     
     public void AssertParametersContain(string name, string value)
     {
@@ -35,6 +44,14 @@ public class ProxyAssert(SpyProxy proxy)
         Assert.IsTrue(
             proxy.Parameters.Contains(value: expectedParameter),
             $"Expected {value}, actual value: {proxy.Parameters[name]}"
+        );
+    }
+
+    public void AssertFileAttached(Stream file)
+    {
+        Assert.IsTrue(
+            proxy.Files.Contains(value: file),
+            "Not attached file found"
         );
     }
     

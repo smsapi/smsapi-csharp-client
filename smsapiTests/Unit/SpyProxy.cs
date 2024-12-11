@@ -17,6 +17,7 @@ public class SpyProxy : Proxy
     public RequestMethod RequestMethod { get; private set; } 
     
     public Dictionary<string, dynamic?> Parameters { get; } = new();
+    public ICollection<Stream> Files { get; } = new List<Stream>();
 
     public void Authentication(IClient client)
     {
@@ -28,6 +29,7 @@ public class SpyProxy : Proxy
         RequestedUri = uri;
         SetParameters(data);
         RequestMethod = method;
+
         
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
@@ -37,6 +39,7 @@ public class SpyProxy : Proxy
         RequestedUri = uri;
         SetParameters(data);
         RequestMethod = method;
+        Files.Add(file);
 
         return new HttpResponseEntity(new Task<Stream>(() => new MemoryStream()), HttpStatusCode.OK);
     }
@@ -46,6 +49,10 @@ public class SpyProxy : Proxy
         RequestedUri = uri;
         SetParameters(data);
         RequestMethod = method;
+        foreach (var file in files.Values)
+        {
+            Files.Add(file);
+        }
         
         return new HttpResponseEntity(Task.FromResult(Stream.Null), HttpStatusCode.OK);
     }

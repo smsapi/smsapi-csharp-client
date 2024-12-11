@@ -1,10 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Newtonsoft.Json;
+using SMSApi.Api.Response.ResponseResolver;
+using SMSApi.Api.Response.ShortUrl.Exception;
 
 namespace SMSApi.Api.Response.ShortUrl;
 
-public readonly record struct ShortLink
+public readonly record struct ShortLink: IResponseCodeAwareResolver
 {
+    public Dictionary<int, Action<Stream>> HandleExceptionActions()
+    {
+        return new()
+        {
+            { 409, _ => throw new ShortUrlWithNameAlreadyExistsException() },
+        };
+    }
+
     public readonly string Id;
 
     public readonly string Name;
