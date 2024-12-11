@@ -57,7 +57,8 @@ public abstract class Action<T>
                 new ValidationErrorsResolver(new BaseJsonDeserializer()),
                 new TooManyRequestsErrorResolver(),
                 new AccessErrorResolver(),
-                new NotFoundErrorResolver()
+                new NotFoundErrorResolver(),
+                new HostErrorsResolver()
             ),
             Action.ApiType.Legacy => new LegacyJsonResponseDeserializer(),
             _ => throw new Exception("Unknown api type")
