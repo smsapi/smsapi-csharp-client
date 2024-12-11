@@ -16,7 +16,7 @@ public class CreateShortUrlWithUrlResponseTest
     private readonly ProxyStub _proxyStub = new();
 
     [TestMethod]
-    public void create_opt_out()
+    public void create_short_url()
     {
         var id = "655B26893332330011B0B297";
         var name = "short link";
@@ -70,7 +70,7 @@ public class CreateShortUrlWithUrlResponseTest
             HttpStatusCode.Conflict
         );
 
-        var action = () => CreateShortUrl("any", "http://any.com").ExecuteAsync();
+        var action = () => CreateShortUrl("any", "http://example.com").ExecuteAsync();
 
         Assert.ThrowsExceptionAsync<ShortUrlWithNameAlreadyExistsException>(action);
     }

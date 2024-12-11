@@ -30,7 +30,7 @@ public class ShortUrlListResponseTest
     }
 
     [TestMethod]
-    public void list_opt_outs()
+    public void list_short_urls()
     {
         var id = "655B26893332330011B0B297";
         var name = "short link";
