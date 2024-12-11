@@ -59,6 +59,14 @@ public class ShortUrlFactory : Factory
 
         return action;
     }
+
+    public DeleteShortUrl DeleteShortUrl(string id)
+    {
+        var action = new DeleteShortUrl(id);
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class ShortUrlFeatureRegister
