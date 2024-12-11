@@ -15,4 +15,6 @@ public static class DictionaryToStreamHelper
         
         return Task.FromResult(new MemoryStream(bytes) as Stream);
     }
+
+    public static Task<Stream> EmptyStream => Task.FromResult<Stream>(new MemoryStream());
 }
