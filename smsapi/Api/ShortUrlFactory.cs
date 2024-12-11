@@ -51,6 +51,14 @@ public class ShortUrlFactory : Factory
 
         return action;
     }
+
+    public UpdateShortUrl UpdateShortUrl(string id)
+    {
+        var action = new UpdateShortUrl(id);
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class ShortUrlFeatureRegister
