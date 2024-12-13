@@ -75,6 +75,14 @@ public class ShortUrlFactory : Factory
 
         return action;
     }
+
+    public ListShortUrlClicksGroupedByDevice ListClicksGroupedByDeviceType(params string[] linkId)
+    {
+        var action = new ListShortUrlClicksGroupedByDevice(linkId);
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class ShortUrlFeatureRegister

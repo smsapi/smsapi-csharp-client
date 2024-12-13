@@ -107,6 +107,26 @@ public abstract class Action<T>
 
         query.Add(Values().Item1);
 
+        Values().Item2?.ToList().ForEach(pair =>
+        {
+            switch (pair.Value)
+            {
+                case string[] list:
+                {
+                    foreach (var item in list)
+                    {
+                        query.Add($"{pair.Key}[]", item);
+                    }
+
+                    break;
+                }
+                case string singleValue:
+                    query.Add(pair.Key, singleValue);
+                    break;
+                default: throw new Exception($"Unsupported query parameter type for parameter {pair.Key}");
+            }
+        });
+
         uriBuilder.Query = query.ToString();
     }
 
