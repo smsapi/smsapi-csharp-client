@@ -29,15 +29,17 @@ public class ProxyAssert(SpyProxy proxy)
         Assert.IsTrue(parametersCount == 0, $"Parameters expected to be empty, {parametersCount} found");
     }
 
-    public void AssertParametersCount(int expectedCount)
+    public ProxyAssert AssertParametersCount(int expectedCount)
     {
         Assert.AreEqual(
             expectedCount,
             proxy.Parameters.Count
         );
+
+        return this;
     }
     
-    public void AssertParametersContain(string name, string value)
+    public ProxyAssert AssertParametersContain(string name, string value)
     {
         var expectedParameter = new KeyValuePair<string, dynamic?>(name, value);
 
@@ -45,6 +47,8 @@ public class ProxyAssert(SpyProxy proxy)
             proxy.Parameters.Contains(value: expectedParameter),
             $"Expected {value}, actual value: {proxy.Parameters[name]}"
         );
+
+        return this;
     }
 
     public void AssertFileAttached(Stream file)

@@ -67,6 +67,14 @@ public class ShortUrlFactory : Factory
 
         return action;
     }
+
+    public ListShortUrlClicks ListClicks()
+    {
+        var action = new ListShortUrlClicks();
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class ShortUrlFeatureRegister
