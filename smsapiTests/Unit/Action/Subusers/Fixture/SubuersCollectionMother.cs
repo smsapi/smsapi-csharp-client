@@ -21,7 +21,11 @@ public static class SubuersCollectionMother
             { "active", active },
             { "description", description },
             {
-                "points", userPoints
+                "points", new Dictionary<string, double>
+                {
+                    { "from_account", userPoints.FromAccount },
+                    { "per_month", userPoints.PerMonth },
+                }
             }
         });
     }
