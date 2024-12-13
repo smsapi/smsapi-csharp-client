@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using smsapi.Api.Response.Contacts.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class Contact : IResponseCodeAwareResolver
     {
         public const string FemaleGender = "female";
@@ -15,52 +14,39 @@ namespace SMSApi.Api.Response
         public const string UndefinedGender = "undefined";
 
         [Obsolete("use BirthdayDate instead")]
-        [DataMember(Name = "birthday", IsRequired = false)]
         public readonly string Birthday;
 
-        [DataMember(Name = "city", IsRequired = false)]
         public readonly string City;
 
-        [DataMember(Name = "description", IsRequired = false)]
         public readonly string Description;
 
-        [DataMember(Name = "email", IsRequired = false)]
         public readonly string Email;
 
-        [DataMember(Name = "first_name", IsRequired = false)]
         public readonly string FirstName;
 
-        [DataMember(Name = "gender", IsRequired = false)]
         public readonly string Gender;
 
-        [DataMember(Name = "id", IsRequired = false)]
         public readonly string Id;
 
-        [DataMember(Name = "idx", IsRequired = false)]
         public readonly string Idx;
 
         [Obsolete("use Description instead")]
-        [DataMember(Name = "info", IsRequired = false)]
         public readonly string info;
 
-        [DataMember(Name = "last_name", IsRequired = false)]
         public readonly string LastName;
 
         [Obsolete("use Id instead")]
-        [DataMember(Name = "number", IsRequired = false)]
         public readonly string Number;
 
-        [DataMember(Name = "phone_number", IsRequired = false)]
         public readonly string PhoneNumber;
 
-        [DataMember(Name = "source", IsRequired = false)]
         public readonly string Source;
 
         private DateTime? dateCreated;
 
         private DateTime? dateUpdated;
 
-        public DateTime? BirthdayDate { get; private set; }
+        public readonly DateTime BirthdayDate;
 
         public Dictionary<int, Action<Stream>> HandleExceptionActions()
         {
@@ -94,20 +80,7 @@ namespace SMSApi.Api.Response
 
         public DateTime? DateUpdated => dateUpdated;
 
-        [DataMember(Name = "birthday_date", IsRequired = false)]
-        private string BirthdayDateSerializationHelper
-        {
-            set
-            {
-                if (value != null)
-                {
-                    BirthdayDate = DateTime.Parse(value);
-                }
-            }
-            get => "";
-        }
-
-        [DataMember(Name = "date_add", IsRequired = false)]
+        [JsonProperty("date_add")]
         private uint DateAddSerializationHelper
         {
             set
@@ -118,14 +91,14 @@ namespace SMSApi.Api.Response
             get => 0;
         }
 
-        [DataMember(Name = "date_created", IsRequired = false)]
+        [JsonProperty("date_created")]
         private string DateCreatedSerializationHelper
         {
             set => dateCreated = DateTime.Parse(value);
             get => "";
         }
 
-        [DataMember(Name = "date_mod", IsRequired = false)]
+        [JsonProperty("date_mod")]
         private uint DateModSerializationHelper
         {
             set
@@ -136,7 +109,7 @@ namespace SMSApi.Api.Response
             get => 0;
         }
 
-        [DataMember(Name = "date_updated", IsRequired = false)]
+        [JsonProperty("date_updated")]
         private string DateUpdatedSerializationHelper
         {
             set => dateUpdated = DateTime.Parse(value);

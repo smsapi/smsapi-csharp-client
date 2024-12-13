@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class CheckNumber : Countable
     {
-        [DataMember(Name = "list", IsRequired = true)]
         private List<NumberStatus> list;
 
         protected CheckNumber()

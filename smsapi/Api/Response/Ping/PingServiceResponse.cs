@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response.Ping;
 
-[DataContract]
-public readonly record struct PingServiceResponse : IResponseCodeAwareResolver
+public sealed class PingServiceResponse : IResponseCodeAwareResolver
 {
-    [DataMember(Name = "authorized")] public readonly bool Authorized;
+    public readonly bool Authorized;
 
-    [DataMember(Name = "unavailable")] public readonly IEnumerable<string> UnavailableServices;
+    [JsonProperty("unavailable")] public readonly IEnumerable<string> UnavailableServices;
 }

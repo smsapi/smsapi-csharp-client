@@ -1,38 +1,30 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class NumberStatus
     {
-        [DataMember(Name = "date", IsRequired = false)]
         public readonly int Date;
 
-        [DataMember(Name = "id", IsRequired = false)]
+        [JsonProperty("id")]
         public readonly string ID;
 
-        [DataMember(Name = "info", IsRequired = false)]
         public readonly string Info;
 
-        [DataMember(Name = "mcc", IsRequired = false)]
         public readonly int MCC;
 
-        [DataMember(Name = "mnc", IsRequired = false)]
         public readonly int MNC;
 
-        [DataMember(Name = "number", IsRequired = true)]
+        [JsonRequired]
         public readonly string Number;
 
-        [DataMember(Name = "price", IsRequired = false)]
+        [JsonProperty("price")]
         public readonly double Points;
 
-        [DataMember(Name = "ported", IsRequired = false)]
         public readonly int Ported;
 
-        [DataMember(Name = "ported_from", IsRequired = false)]
         public readonly int PortedFrom;
 
-        [DataMember(Name = "status", IsRequired = false)]
         public readonly string Status;
 
         private NumberStatus()

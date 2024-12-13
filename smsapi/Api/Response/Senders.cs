@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
     [DataContract]
     public class Senders : Countable
     {
-        [DataMember(Name = "list", IsRequired = false)]
+        [JsonProperty("list")]
         private List<Sender> list;
 
         private Senders()

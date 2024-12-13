@@ -1,27 +1,29 @@
 ﻿using System.Runtime.Serialization;
 using SMSApi.Api.Response.ResponseResolver;
+using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
     [DataContract]
     public class Credits : ErrorAwareResponse
     {
-        [DataMember(Name = "ecoCount", IsRequired = false)]
+        [JsonProperty("ecoCount")]
         public readonly int EcoCount;
 
-        [DataMember(Name = "mmsCount", IsRequired = false)]
+        [JsonProperty("mmsCount")]
         public readonly int MmsCount;
 
-        [DataMember(Name = "points", IsRequired = true)]
+        [JsonRequired]
+        [JsonProperty("points")]
         public readonly double Points;
 
-        [DataMember(Name = "proCount", IsRequired = false)]
+        [JsonProperty("proCount")]
         public readonly int ProCount;
 
-        [DataMember(Name = "vmsGsmCount", IsRequired = false)]
+        [JsonProperty("vmsGsmCount")]
         public readonly int VmsGsmCount;
 
-        [DataMember(Name = "vmsLandCount", IsRequired = false)]
+        [JsonProperty("vmsLandCount")]
         public readonly int VmsLandCount;
 
         private Credits()

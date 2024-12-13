@@ -1,17 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class Sender
     {
-        [DataMember(Name = "default", IsRequired = true)]
+        [JsonRequired]
         public readonly bool Default;
 
-        [DataMember(Name = "sender", IsRequired = true)]
+        [JsonRequired]
+        [JsonProperty("sender")]
         public readonly string Name;
 
-        [DataMember(Name = "status", IsRequired = true)]
+        [JsonRequired]
         public readonly string Status;
     }
 }

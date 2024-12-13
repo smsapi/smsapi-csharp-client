@@ -1,31 +1,16 @@
 using System;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace smsapi.Api.Response.Blacklist;
 
-[DataContract]
 public record struct BlacklistRecord : IResponseCodeAwareResolver
 {
-    [DataMember(Name = "id")] public readonly string Id;
-    
-    [DataMember(Name = "phone_number")] public readonly string PhoneNumber;
+    public readonly string Id;
 
-    public DateTime DateCreated;
-    
-    public DateTime? DateExpired;
-    
-    [DataMember(Name = "created_at")] 
-    private string DateCreatedDeserializer
-    {
-        set => DateCreated = DateTime.Parse(value);
-        get => default;
-    }
-    
-    [DataMember(Name = "expire_at")] 
-    private string? DateExpiredDeserializer
-    {
-        set => DateExpired = value != null ? DateTime.Parse(value) : null;
-        get => default;
-    }
+    public readonly string PhoneNumber;
+
+    [JsonProperty("created_at")] public readonly DateTime DateCreated;
+
+    [JsonProperty("expire_at")] public readonly DateTime? DateExpired;
 }

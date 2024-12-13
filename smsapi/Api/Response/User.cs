@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response
@@ -6,25 +7,25 @@ namespace SMSApi.Api.Response
     [DataContract]
     public class User : ErrorAwareResponse
     {
-        [DataMember(Name = "active", IsRequired = true)]
+        [JsonRequired]
         public readonly bool Active;
 
-        [DataMember(Name = "info", IsRequired = true)]
+        [JsonRequired]
         public readonly string Info;
 
-        [DataMember(Name = "limit", IsRequired = true)]
+        [JsonRequired]
         public readonly double Limit;
 
-        [DataMember(Name = "month_limit", IsRequired = true)]
+        [JsonRequired]
         public readonly double MonthLimit;
 
-        [DataMember(Name = "phonebook", IsRequired = true)]
+        [JsonRequired]
         public readonly uint Phonebook;
 
-        [DataMember(Name = "senders", IsRequired = true)]
+        [JsonRequired]
         public readonly uint Senders;
 
-        [DataMember(Name = "username", IsRequired = true)]
+        [JsonRequired]
         public readonly string Username;
 
         private User()

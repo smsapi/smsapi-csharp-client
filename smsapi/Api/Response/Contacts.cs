@@ -7,7 +7,6 @@ namespace SMSApi.Api.Response
     public class Contacts : BasicCollection<Contact>
     {
         [Obsolete("")]
-        [DataMember(Name = "total", IsRequired = false)]
         public readonly int Total;
     }
 }

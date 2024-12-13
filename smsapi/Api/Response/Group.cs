@@ -2,39 +2,35 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using SMSApi.Api.Response.ResponseResolver;
+using Newtonsoft.Json;
 
 namespace SMSApi.Api.Response
 {
-    [DataContract]
     public class Group : ErrorAwareResponse
     {
-        [DataMember(Name = "created_by", IsRequired = false)]
         public readonly string CreatedBy;
 
-        [DataMember(Name = "id", IsRequired = false)]
         public readonly string Id;
 
-        [DataMember(Name = "idx", IsRequired = false)]
         public readonly string Idx;
 
-        [DataMember(Name = "name", IsRequired = true)]
+        [JsonRequired]
         public readonly string Name;
 
-        [DataMember(Name = "permissions", IsRequired = false)]
         private List<GroupPermission> permissions;
 
-        [DataMember(Name = "contacts_count", IsRequired = false)]
+        [JsonProperty("contacts_count")]
         public int? ContactsCount { get; private set; }
 
         public DateTime? DateCreated { get; private set; }
 
         public DateTime? DateUpdated { get; private set; }
 
-        [DataMember(Name = "description", IsRequired = false)]
+        [JsonProperty("description")]
         public string Description { get; private set; }
 
         [Obsolete("use Description instead")]
-        [DataMember(Name = "info", IsRequired = false)]
+        [JsonProperty("info")]
         public string Info
         {
             get => Description;
@@ -42,7 +38,7 @@ namespace SMSApi.Api.Response
         }
 
         [Obsolete("use ContactsCount instead")]
-        [DataMember(Name = "numbers_count", IsRequired = false)]
+        [JsonProperty("numbers_count")]
         public uint NumbersCount
         {
             get => (uint)ContactsCount;
@@ -62,14 +58,14 @@ namespace SMSApi.Api.Response
             }
         }
 
-        [DataMember(Name = "date_created", IsRequired = false)]
+        [JsonProperty("date_created")]
         private string DateCreatedSerializationHelper
         {
             set => DateCreated = DateTime.Parse(value);
             get => "";
         }
 
-        [DataMember(Name = "date_updated", IsRequired = false)]
+        [JsonProperty("date_updated")]
         private string DateUpdatedSerializationHelper
         {
             set => DateUpdated = DateTime.Parse(value);
