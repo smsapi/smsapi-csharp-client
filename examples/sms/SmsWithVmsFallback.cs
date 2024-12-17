@@ -5,7 +5,7 @@ using SMSApi.Api.Response;
 var client = new ClientOAuth("token");
 var features = new Features(client);
 
-const string recipient = "48322320667";
+const string recipient = "4850010010";
 const string message = "message";
 
 var sendResult = features.SMS()
