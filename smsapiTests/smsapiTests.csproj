@@ -4,6 +4,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyVersion>3.0.0</AssemblyVersion>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
