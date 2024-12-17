@@ -1,0 +1,34 @@
+name: Unit tests
+
+on:
+  push:
+    branches:
+      - 3.x.x-dev
+  pull_request:
+    branches:
+      - 3.x.x-dev
+
+jobs:
+  build-and-test:
+    runs-on: debian-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ['6.0', '7.0', '8.0']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build the solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test smsapiTests/Unit --configuration Release --no-build --verbosity normal
