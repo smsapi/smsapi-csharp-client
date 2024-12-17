@@ -28,7 +28,7 @@ jobs:
         run: dotnet restore
 
       - name: Build the solution
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build smsapi/smsapi.csproj --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test smsapiTests/Unit --configuration Release --no-build --verbosity normal
+        run: dotnet test smsapiTests/smsapiTests.csproj --filter TestCategory=Unit --configuration Release --no-build --verbosity normal
