@@ -58,32 +58,33 @@ public static class NativeHttpClientHelper
     )
     {
         var collectionDictionary = collection.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        
+
         if (contentType == ActionContentType.Json)
-        {
             return new StringContent(JsonSerializer.Serialize(collectionDictionary), Encoding.UTF8, "application/json");
-        }
-        
+
         var contentCollection = collectionDictionary.Keys
             .Select(key => new KeyValuePair<string, string>(key, collectionDictionary[key]))
             .ToList();
 
         var formUrlEncodedContent = new FormUrlEncodedContent(contentCollection);
-        
+
         if (files == null || files.Count == 0) return formUrlEncodedContent;
-        
-        var multipartContent = new MultipartFormDataContent();
-        multipartContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-        
-        foreach (var keyValuePair in collection)
+
+        var streamContent = new StreamContent(files.Values.First());
+
+        streamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
         {
-            multipartContent.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
-        }
-        
-        files
-            .ToList()
-            .ForEach(pair => multipartContent.Add(new StreamContent(pair.Value), "file", pair.Key));
-        
-        return multipartContent;
+            Name = "\"file\"",
+            FileName = "\"abc\""
+        };
+
+        var content = new MultipartFormDataContent
+        {
+            streamContent
+        };
+
+        foreach (var keyValuePair in collection) content.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+
+        return content;
     }
 }

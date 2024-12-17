@@ -66,8 +66,9 @@ public class CreateShortUrlTest
 
         CreateShortUrl(name, file).Execute();
 
-        _proxyAssert.AssertParametersCount(1);
+        _proxyAssert.AssertParametersCount(2);
         _proxyAssert.AssertParametersContain("name", name);
+        _proxyAssert.AssertParametersContain("type", "FILE");
         _proxyAssert.AssertFileAttached(file);
     }
 

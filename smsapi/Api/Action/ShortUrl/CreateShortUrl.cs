@@ -39,6 +39,7 @@ public sealed class CreateShortUrl : Action<ShortLink>
     }
 
     protected override RequestMethod Method => RequestMethod.POST;
+    protected override ActionContentType ContentType => ActionContentType.FormWww;
 
     public CreateShortUrl WithExpiration(uint expireIn, ShortUrlExpirationUnit expirationUnit)
     {
@@ -82,6 +83,8 @@ public sealed class CreateShortUrl : Action<ShortLink>
                 ("expire_unit", expiration.Item2)
             );
         });
+
+        _file?.Let(_ => body.Add(("type", "FILE")));
 
         return (new NameValueCollection(), body);
     }
