@@ -60,8 +60,7 @@ public class CreateSubuserTest
     {
         var username = "new_username";
         var password = "password";
-        var apiPassword = "api_password";
-        var credentials = new SubuserCredentials(username, password, apiPassword);
+        var credentials = new SubuserCredentials(username, password);
 
         CreateSubuser(credentials).Execute();
 
@@ -69,7 +68,6 @@ public class CreateSubuserTest
         {
             { "username", username },
             { "password", password },
-            { "api_password", apiPassword }
         };
         _proxyAssert
             .AssertParametersCount(2) //credentials + active

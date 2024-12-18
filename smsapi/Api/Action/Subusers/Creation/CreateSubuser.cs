@@ -62,7 +62,6 @@ public sealed class CreateSubuser : Action<SubuserDetails>
                 {
                     { "username", _credentials.Username },
                     { "password", _credentials.Password },
-                    { "api_password", _credentials.ApiPassword }
                 }),
                 ("active", _active)
             }
