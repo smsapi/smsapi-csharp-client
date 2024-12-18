@@ -1,4 +1,5 @@
 using SMSApi.Api.Action.Subusers;
+using SMSApi.Api.Action.Subusers.Creation;
 
 namespace SMSApi.Api;
 
@@ -23,6 +24,15 @@ public class SubUsersFactory : Factory
     {
         var action = new List();
         
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public CreateSubuser Create(SubuserCredentials credentials)
+    {
+        var action = new CreateSubuser(credentials);
+
         action.Proxy(proxy);
 
         return action;

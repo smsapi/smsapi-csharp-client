@@ -1,6 +1,8 @@
+using SMSApi.Api.Response.ResponseResolver;
+
 namespace SMSApi.Api.Response.Subusers;
 
-public readonly record struct SubuserDetails
+public readonly record struct SubuserDetails : IResponseCodeAwareResolver
 {
     public readonly bool Active;
 
