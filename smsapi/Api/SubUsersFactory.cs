@@ -37,6 +37,15 @@ public class SubUsersFactory : Factory
 
         return action;
     }
+
+    public GetSubuser Get(string userId)
+    {
+        var action = new GetSubuser(userId);
+
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class SubusersFeatureRegister
