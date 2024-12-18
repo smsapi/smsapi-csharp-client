@@ -46,6 +46,15 @@ public class SubUsersFactory : Factory
 
         return action;
     }
+
+    public DeleteSubuser Delete(string userId)
+    {
+        var action = new DeleteSubuser(userId);
+
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class SubusersFeatureRegister
