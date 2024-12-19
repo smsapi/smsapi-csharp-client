@@ -32,4 +32,4 @@ jobs:
         run: dotnet build smsapi/smsapi.csproj --configuration Release --no-restore --framework net${{ matrix.dotnet-version }}
 
       - name: Run unit tests
-        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --verbosity normal --framework net${{ matrix.dotnet-version }}
+        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --framework net${{ matrix.dotnet-version }}
