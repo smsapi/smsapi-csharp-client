@@ -14,11 +14,12 @@ jobs:
 
     strategy:
       matrix:
-        dotnet-version: ['8.0']
+        dotnet-version: ['8.0', '9.0']
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -27,8 +28,8 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Build the solution
+      - name: Build the solution with current .NET version
         run: dotnet build smsapi/smsapi.csproj --configuration Release --no-restore --framework net${{ matrix.dotnet-version }}
 
       - name: Run unit tests
-        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --verbosity normal --framework net${{ matrix.dotnet-version }}
+        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --verbosity normal
