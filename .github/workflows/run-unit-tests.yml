@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: 9.0
 
       - name: Install dependencies
         run: dotnet restore
@@ -32,4 +32,4 @@ jobs:
         run: dotnet build smsapi/smsapi.csproj --configuration Release --no-restore --framework net${{ matrix.dotnet-version }}
 
       - name: Run unit tests
-        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --verbosity normal
+        run: dotnet test smsapiTests/smsapiTests.csproj --configuration Release --no-build --verbosity normal --framework net${{ matrix.dotnet-version }}
