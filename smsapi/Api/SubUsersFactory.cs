@@ -55,6 +55,15 @@ public class SubUsersFactory : Factory
 
         return action;
     }
+
+    public EditSubuser Edit(string userId)
+    {
+        var action = new EditSubuser(userId);
+
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class SubusersFeatureRegister
