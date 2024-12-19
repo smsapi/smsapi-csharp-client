@@ -131,7 +131,7 @@ public abstract class Action<T>
                 default: throw new Exception($"Unsupported query parameter type for parameter {pair.Key}");
             }
         });
-        Console.WriteLine(query.ToString());
+
         uriBuilder.Query = query.ToString();
     }
 
