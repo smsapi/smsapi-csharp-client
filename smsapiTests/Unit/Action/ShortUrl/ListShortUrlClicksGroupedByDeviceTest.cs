@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action.ShortUrl;
@@ -22,8 +23,8 @@ public class ListShortUrlClicksGroupedByDeviceTest
         var ids = new[] {"1", "2"};
 
         CreateShortUrGroupedByDevice(ids).Execute();
-        
-        _proxyAssert.AssertUriEquals("short_url/clicks_by_mobile_device?links[]=1&links[]=2");
+
+        _proxyAssert.AssertUriEquals("short_url/clicks_by_mobile_device?links%5b%5d=1&links%5b%5d=2");
     }
     
     [TestMethod]

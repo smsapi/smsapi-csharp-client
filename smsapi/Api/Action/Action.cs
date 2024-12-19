@@ -76,7 +76,7 @@ public abstract class Action<T>
     protected virtual void Validate()
     {
     }
-    
+
     protected virtual (NameValueCollection, ISet<KeyValuePair<string, dynamic?>>?) Values()
     {
         return (new NameValueCollection(), default);
@@ -115,7 +115,12 @@ public abstract class Action<T>
                 {
                     foreach (var item in list)
                     {
-                        query.Add($"{pair.Key}[]", item);
+                        var key = $"{pair.Key}[]";
+
+                        if (Environment.Version.Major < 9)
+                            key = HttpUtility.UrlEncode(key);
+
+                        query.Add(key, item);
                     }
 
                     break;
@@ -126,7 +131,7 @@ public abstract class Action<T>
                 default: throw new Exception($"Unsupported query parameter type for parameter {pair.Key}");
             }
         });
-
+        Console.WriteLine(query.ToString());
         uriBuilder.Query = query.ToString();
     }
 
@@ -141,9 +146,9 @@ public abstract class Action<T>
         {
             KeyValuePair.Create<string, dynamic?>("format", "json") ,
         };
-        
+
         Values().Item2?.Let(requestData => requestData.ToList().ForEach(data => values.Add(data)));
-        
+
         foreach (string key in Values().Item1.AllKeys)
         {
             values.Add(KeyValuePair.Create<string, dynamic?>(key, Values().Item1.Get(key)));
