@@ -16,6 +16,22 @@ public class CollectionIteratorTest
     private readonly ProxyStub _proxy = new();
 
     [TestMethod]
+    public void empty_result()
+    {
+        var mockedResult = CollectionMother.WithItems();
+        _proxy.SyncExecutionResponse = new HttpResponseEntity(
+            mockedResult.ToHttpEntityStreamTask(),
+            HttpStatusCode.OK
+        );
+
+        var result = GetAction().ToIterator();
+
+        var i = 0;
+        foreach (var iterableResult in result)
+            Assert.AreEqual(i++, iterableResult.I);
+    }
+
+    [TestMethod]
     public void iterate_through_single_result()
     {
         var mockedResult = CollectionMother.WithItems(
