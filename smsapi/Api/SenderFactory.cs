@@ -1,8 +1,10 @@
-﻿using SMSApi.Api;
+﻿using System;
+using SMSApi.Api;
 using SMSApi.Api.Action;
 
 namespace SMSApi.Api
 {
+    [Obsolete($"use {nameof(SendernamesFactory)} instead")]
     public class SenderFactory : Factory
     {
         public SenderFactory(ProxyAddress address = ProxyAddress.SmsApiIo)
@@ -52,6 +54,7 @@ namespace SMSApi.Api
 
 public static class SenderFeatureRegister
 {
+    [Obsolete($"use {nameof(SendernamesFeatureRegister.Sendernames)} instead")]
     public static SenderFactory Sender(this Features features)
     {
         return new SenderFactory(features.Client, features.Proxy);
