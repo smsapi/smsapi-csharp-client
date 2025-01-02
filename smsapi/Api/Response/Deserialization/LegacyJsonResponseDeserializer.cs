@@ -30,6 +30,10 @@ namespace SMSApi.Api.Response.Deserialization
             {
                 throw new HostException(e.Message, HostException.E_JSON_DECODE);
             }
+            finally
+            {
+                data?.Close();
+            }
 
             return response;
         }
