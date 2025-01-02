@@ -61,8 +61,6 @@ public sealed class CollectionIterator<T> : IEnumerable<T>
         {
             _internalCollectionOffset = 0;
             _offset = 0;
-            _overallOffset = 0;
-            _apiCollectionSize = 0;
             _currentBatch = new();
         }
 
