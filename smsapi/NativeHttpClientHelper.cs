@@ -63,7 +63,7 @@ public static class NativeHttpClientHelper
             return new StringContent(JsonSerializer.Serialize(collectionDictionary), Encoding.UTF8, "application/json");
 
         var contentCollection = collectionDictionary.Keys
-            .Select(key => new KeyValuePair<string, string>(key, collectionDictionary[key]))
+            .Select(key => new KeyValuePair<string, string>(key, collectionDictionary[key]?.ToString()))
             .ToList();
 
         var formUrlEncodedContent = new FormUrlEncodedContent(contentCollection);
