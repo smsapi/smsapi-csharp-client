@@ -21,7 +21,7 @@ public sealed class CreateShortUrl : Action<ShortLink>
 
     private string? _description;
     private (uint, string)? _expireAt;
-    private readonly Stream? _file;
+    private readonly FileInfo? _file;
 
     private readonly string _name;
     private readonly string? _url;
@@ -32,7 +32,7 @@ public sealed class CreateShortUrl : Action<ShortLink>
         _url = url;
     }
 
-    public CreateShortUrl(string name, Stream file)
+    public CreateShortUrl(string name, FileInfo file)
     {
         _name = name;
         _file = file;
@@ -93,7 +93,7 @@ public sealed class CreateShortUrl : Action<ShortLink>
     {
         var files = new Dictionary<string, Stream>();
 
-        _file?.Let(file => files.Add("file", file));
+        _file?.Let(file => files.Add(file.Name, file.OpenRead()));
 
         return files;
     }

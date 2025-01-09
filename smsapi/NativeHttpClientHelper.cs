@@ -75,7 +75,7 @@ public static class NativeHttpClientHelper
         streamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
         {
             Name = "\"file\"",
-            FileName = "\"file\""
+            FileName = $"\"{files.Keys.First()}\""
         };
 
         var content = new MultipartFormDataContent

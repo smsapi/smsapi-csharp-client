@@ -7,7 +7,7 @@ var client = new ClientOAuth("token");
 var features = new Features(client);
 
 const string name = "abc";
-var file = new FileStream("<path_to_file>", FileMode.Open);
+var file = new FileInfo("<path_to_file>");
 
 try
 {

@@ -62,14 +62,18 @@ public class CreateShortUrlTest
     public void send_name_and_file()
     {
         var name = "fancy name";
-        var file = new MemoryStream();
+        var fileName = "richMedia.txt";
+        var fileContent = "file content";
+        var filePath = Path.Combine(Path.GetTempPath(), fileName);
+        File.WriteAllText(filePath, fileContent);
+        var file = new FileInfo(filePath);
 
         CreateShortUrl(name, file).Execute();
 
         _proxyAssert.AssertParametersCount(2);
         _proxyAssert.AssertParametersContain("name", name);
         _proxyAssert.AssertParametersContain("type", "FILE");
-        _proxyAssert.AssertFileAttached(file);
+        _proxyAssert.AssertFileAttached(fileName, file.OpenRead());
     }
 
     [TestMethod]
@@ -96,7 +100,7 @@ public class CreateShortUrlTest
         return action;
     }
 
-    private CreateShortUrl CreateShortUrl(string name, Stream file)
+    private CreateShortUrl CreateShortUrl(string name, FileInfo file)
     {
         var action = new CreateShortUrl(name, file);
         action.Proxy(_spyProxy);

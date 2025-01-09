@@ -36,7 +36,7 @@ public class ShortUrlFactory : Factory
         return action;
     }
 
-    public CreateShortUrl Create(string name, Stream file)
+    public CreateShortUrl Create(string name, FileInfo file)
     {
         var action = new CreateShortUrl(name, file);
         action.Proxy(proxy);

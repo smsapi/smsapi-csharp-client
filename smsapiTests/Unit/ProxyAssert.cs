@@ -51,10 +51,10 @@ public class ProxyAssert(SpyProxy proxy)
         return this;
     }
 
-    public void AssertFileAttached(Stream file)
+    public void AssertFileAttached(string name, Stream file)
     {
         Assert.IsTrue(
-            proxy.Files.Contains(value: file),
+            proxy.Files.Contains(value: KeyValuePair.Create(name, new StreamReader(file).ReadToEnd())),
             "Not attached file found"
         );
     }
