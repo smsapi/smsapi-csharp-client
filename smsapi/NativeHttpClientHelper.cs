@@ -31,21 +31,21 @@ public static class NativeHttpClientHelper
             case RequestMethod.GET:
                 var getResponse = await httpClient.GetAsync(uri, cancellationToken);
 
-                return new HttpResponseEntity(getResponse.Content.ReadAsStreamAsync(), getResponse.StatusCode);
+                return new HttpResponseEntity(getResponse.Content.ReadAsStreamAsync(cancellationToken), getResponse.StatusCode);
             case RequestMethod.POST:
                 httpContent = ConvertRequestDataToHttpContent(actionContentType, body, files);
                 var postResponse = await httpClient.PostAsync(uri, httpContent, cancellationToken);
 
-                return new HttpResponseEntity(postResponse.Content.ReadAsStreamAsync(), postResponse.StatusCode);
+                return new HttpResponseEntity(postResponse.Content.ReadAsStreamAsync(cancellationToken), postResponse.StatusCode);
             case RequestMethod.PUT:
                 httpContent = ConvertRequestDataToHttpContent(actionContentType, body, files);
                 var putResponse = await httpClient.PutAsync(uri, httpContent, cancellationToken);
 
-                return new HttpResponseEntity(putResponse.Content.ReadAsStreamAsync(), putResponse.StatusCode);
+                return new HttpResponseEntity(putResponse.Content.ReadAsStreamAsync(cancellationToken), putResponse.StatusCode);
             case RequestMethod.DELETE:
                 var deleteResult = await httpClient.DeleteAsync(uri, cancellationToken);
 
-                return new HttpResponseEntity(deleteResult.Content.ReadAsStreamAsync(), deleteResult.StatusCode);
+                return new HttpResponseEntity(deleteResult.Content.ReadAsStreamAsync(cancellationToken), deleteResult.StatusCode);
             default:
                 throw new ArgumentOutOfRangeException(nameof(method), method, null);
         }
