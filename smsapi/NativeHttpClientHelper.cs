@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -71,12 +70,11 @@ public static class NativeHttpClientHelper
         if (files == null || files.Count == 0) return formUrlEncodedContent;
 
         var streamContent = new StreamContent(files.Values.First());
+        var filename = files.Keys.First();
+        var encodedFilename = Uri.EscapeDataString(filename);
 
-        streamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-        {
-            Name = "\"file\"",
-            FileName = $"\"{files.Keys.First()}\""
-        };
+        streamContent.Headers.TryAddWithoutValidation("Content-Disposition",
+            $"form-data; name=\"file\"; filename=\"{filename}\"; filename*=utf-8''{encodedFilename}");
 
         var content = new MultipartFormDataContent
         {
