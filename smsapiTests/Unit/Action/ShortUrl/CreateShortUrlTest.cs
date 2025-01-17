@@ -77,6 +77,24 @@ public class CreateShortUrlTest
     }
 
     [TestMethod]
+    public void send_file_with_unicode_chars()
+    {
+        var name = "fancy name";
+        var fileName = "Gżegżółka.txt";
+        var fileContent = "file content";
+        var filePath = Path.Combine(Path.GetTempPath(), fileName);
+        File.WriteAllText(filePath, fileContent);
+        var file = new FileInfo(filePath);
+
+        CreateShortUrl(name, file).Execute();
+
+        _proxyAssert.AssertParametersCount(2);
+        _proxyAssert.AssertParametersContain("name", name);
+        _proxyAssert.AssertParametersContain("type", "FILE");
+        _proxyAssert.AssertFileAttached(fileName, file.OpenRead());
+    }
+
+    [TestMethod]
     [DataRow(1, SMSApi.Api.Action.ShortUrl.CreateShortUrl.ShortUrlExpirationUnit.Days, "days")]
     [DataRow(2, SMSApi.Api.Action.ShortUrl.CreateShortUrl.ShortUrlExpirationUnit.Hours, "hours")]
     [DataRow(300, SMSApi.Api.Action.ShortUrl.CreateShortUrl.ShortUrlExpirationUnit.Minutes, "minutes")]
