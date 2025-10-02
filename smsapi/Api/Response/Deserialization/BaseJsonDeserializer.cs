@@ -11,7 +11,7 @@ public class BaseJsonDeserializer : IDeserializer
         T result;
         var data = responseEntity.Content.Result;
 
-        if (data.Length > 0)
+        if (data.Length > 0 && !responseEntity.IsEmptyContentCode)
         {
             data.Position = 0;
             var stringData = new StreamReader(data).ReadToEnd();
