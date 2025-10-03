@@ -13,7 +13,7 @@ namespace SMSApi.Api
     {
         private readonly string baseUrl;
         private readonly HttpClient? httpClient;
-        private IClient authentication;
+        private IClient? authentication;
 
         public ProxyHTTP(string baseUrl, HttpClient? httpClient = null)
         {
@@ -107,18 +107,21 @@ namespace SMSApi.Api
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
         }
-        
+
         private HttpClient CreateClient()
         {
             var client = httpClient ?? new HttpClient();
-            
+
             client.BaseAddress = new Uri(baseUrl);
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authentication.GetClientAgent());
+
+            authentication?.Let(
+                auth => client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", auth.GetClientAgent())
+            );
 
             if (authentication == null) return client;
-            
+
             var authHeader = authentication.DefaultRequestHeaders;
-            
+
             client.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
 
             return client;

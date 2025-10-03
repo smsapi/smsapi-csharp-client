@@ -45,7 +45,7 @@ public class ProxyAssert(SpyProxy proxy)
 
         Assert.IsTrue(
             proxy.Parameters.Contains(value: expectedParameter),
-            $"Expected {value}, actual value: {proxy.Parameters[name]}"
+            $"Expected {value} ({name.GetType()}), actual value: {proxy.Parameters[name]} ({proxy.Parameters[name]?.GetType()})"
         );
 
         return this;
