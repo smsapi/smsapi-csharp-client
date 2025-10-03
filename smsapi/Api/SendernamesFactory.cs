@@ -26,6 +26,38 @@ public class SendernamesFactory : Factory
 
         return action;
     }
+
+    public CreateSendername Create(string sender)
+    {
+        var action = new CreateSendername(sender);
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public GetSendername Get(string sender)
+    {
+        var action = new GetSendername(sender);
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public DeleteSendername Delete(string sender)
+    {
+        var action = new DeleteSendername(sender);
+        action.Proxy(proxy);
+
+        return action;
+    }
+
+    public ChangeDefaultSendername ChangeDefault(string sender)
+    {
+        var action = new ChangeDefaultSendername(sender);
+        action.Proxy(proxy);
+
+        return action;
+    }
 }
 
 public static class SendernamesFeatureRegister
