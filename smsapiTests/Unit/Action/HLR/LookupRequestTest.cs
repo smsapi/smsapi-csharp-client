@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api.Action;
 
-namespace smsapiTests.Unit.Action.Blacklist;
+namespace smsapiTests.Unit.Action.HLR;
 
 [TestClass]
 public class LookupRequestTest

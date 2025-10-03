@@ -16,7 +16,7 @@ result.Collection.ForEach(r =>
     Console.WriteLine($"MCC: {r.Country?.MCC}");
     Console.WriteLine($"Network name: {r.Network?.Name}");
     Console.WriteLine($"MNC: {r.Network?.MNC}");
-    Console.WriteLine($"Cost: {r.Cost.Points}");
+    Console.WriteLine($"Cost: {r.Cost}");
     Console.WriteLine($"Sent at: {r.SentAt}");
     Console.WriteLine($"Error code: {r.ErrorCode}");
     

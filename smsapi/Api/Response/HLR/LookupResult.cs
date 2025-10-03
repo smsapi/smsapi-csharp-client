@@ -7,7 +7,7 @@ namespace SMSApi.Api.Response.HLR;
 
 public record struct LookupResult
 {
-    public readonly LookupCost Cost;
+    public readonly double Cost;
     
     public readonly Country? Country;
 
@@ -23,16 +23,6 @@ public record struct LookupResult
     public readonly Ported? Ported;
 
     public readonly DateTime SentAt;
-}
-
-public readonly record struct LookupCost
-{
-    public readonly double Points;
-
-    public LookupCost(double points)
-    {
-        Points = points;
-    }
 }
 
 public readonly record struct Ported

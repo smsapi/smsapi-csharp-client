@@ -16,7 +16,7 @@ public static class LookupsCollectionMother
         string @interface,
         Country? country,
         Network? network,
-        LookupCost cost,
+        double cost,
         Ported? ported,
         uint? errorCode,
         DateTime sentAt

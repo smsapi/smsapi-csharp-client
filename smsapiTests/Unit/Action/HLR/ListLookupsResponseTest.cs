@@ -5,12 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
 using SMSApi.Api.Action;
 using SMSApi.Api.Response.Common.Telephony;
-using SMSApi.Api.Response.HLR;
 using smsapiTests.Unit.Action.HLR.Fixture;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 
-namespace smsapiTests.Unit.Action.Blacklist;
+namespace smsapiTests.Unit.Action.HLR;
 
 [TestClass]
 public class ListLookupsResponseTest
@@ -39,7 +38,7 @@ public class ListLookupsResponseTest
         var @interface = "api";
         var country = new Country("Poland", 260);
         var network = new Network("T-Mobile", 3);
-        var cost = new LookupCost(1.08);
+        var cost = 1.08;
         var sentAt = DateTime.Now;
         var response = LookupsCollectionMother.Lookups(
             id,
@@ -78,7 +77,7 @@ public class ListLookupsResponseTest
         var id = "655B26893332330011B0B297";
         var phoneNumber = "48500100100";
         var @interface = "api";
-        var cost = new LookupCost(1.08);
+        var cost = 1.08;
         var sentAt = DateTime.Now;
         var response = LookupsCollectionMother.Lookups(
             id,
