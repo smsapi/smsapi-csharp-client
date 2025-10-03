@@ -114,11 +114,9 @@ namespace SMSApi.Api
 
             client.BaseAddress = new Uri(baseUrl);
 
-            authentication?.Let(
-                auth => client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", auth.GetClientAgent())
-            );
-
             if (authentication == null) return client;
+
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", authentication.GetClientAgent());
 
             var authHeader = authentication.DefaultRequestHeaders;
 
