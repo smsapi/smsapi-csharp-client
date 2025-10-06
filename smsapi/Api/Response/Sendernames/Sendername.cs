@@ -1,8 +1,9 @@
 using System;
+using SMSApi.Api.Response.ResponseResolver;
 
 namespace SMSApi.Api.Response.Sendernames;
 
-public readonly record struct Sendername
+public readonly record struct Sendername : IResponseCodeAwareResolver
 {
     public readonly DateTime CreatedAt;
 
