@@ -17,7 +17,7 @@ namespace SMSApi.Api
 
         public ProxyHTTP(string baseUrl, HttpClient? httpClient = null)
         {
-            this.baseUrl = baseUrl;
+            this.baseUrl = baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/";
             this.httpClient = httpClient;
         }
 
