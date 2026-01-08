@@ -11,7 +11,7 @@ namespace smsapiTests.Integration;
 public abstract class IntegrationTestBase
 {
     protected virtual bool AutostartServer => true;
-    private static string _currentHost;
+    protected static string CurrentHost;
 
     [TestInitialize]
     public void InitializeServer()
@@ -27,12 +27,12 @@ public abstract class IntegrationTestBase
 
     private static void RunTestServer(string host)
     {
-        _currentHost = host;
+        CurrentHost = host;
 
         new WebHostBuilder()
             .UseKestrel()
             .UseStartup(typeof(Program))
-            .UseUrls(_currentHost)
+            .UseUrls(CurrentHost)
             .Configure(app => app.UseMiddleware<RequestInterceptorMiddleware>())
             .Build()
             .Start();
@@ -40,7 +40,7 @@ public abstract class IntegrationTestBase
 
     protected static ProxyHTTP GetProxy()
     {
-        return new ProxyHTTP(_currentHost);
+        return new ProxyHTTP(CurrentHost);
     }
 
     protected static string FreeHost()
