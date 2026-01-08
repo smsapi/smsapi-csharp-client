@@ -1,5 +1,3 @@
-using System;
-using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace smsapiTests.Integration;
@@ -24,13 +22,15 @@ public static class RequestAssert
         Assert.IsTrue(headerExists, $"Expected {value}, Found: {RequestStorage.UserAgentHeader}");
     }
     
-    public static void AsserPath(string path)
+    public static void AsserRawPath(string path)
     {
+        Assert.IsNotNull(RequestStorage.Path, "Missing request path");
+
         var pathEquals = RequestStorage
-            .Path
+            .RawPath
             .Equals(path);
 
-        Assert.IsTrue(pathEquals);
+        Assert.IsTrue(pathEquals, "Found: " + RequestStorage.RawPath);
     }
 
     public static void AssertContainsFormParameter(string name, string value)

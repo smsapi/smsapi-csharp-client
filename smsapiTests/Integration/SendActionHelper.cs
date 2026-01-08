@@ -11,8 +11,9 @@ public static class SendActionHelper
         {
             smsFactory.ActionSend("48500100100", "any").Execute();
         }
-        catch (MissingMethodException)
+        catch (MissingMethodException e)
         {
+            Console.WriteLine(@"Error sending message: " + e.Message);
         }
     }
     

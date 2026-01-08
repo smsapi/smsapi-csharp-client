@@ -1,8 +1,7 @@
-using System.Collections.Immutable;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace smsapiTests.Integration;
 
@@ -20,8 +19,9 @@ public class RequestInterceptorMiddleware
         RequestStorage.Method = context.Request.Method;
         RequestStorage.AuthorizationHeader = context.Request.Headers.Authorization;
         RequestStorage.UserAgentHeader = context.Request.Headers.UserAgent;
-        RequestStorage.FormParameters = context.Request.Form.ToDictionary(k => k.Key, v => v.Value.ToString());
         RequestStorage.Path = $"{context.Request.Scheme}://{context.Request.Host.Value}{context.Request.Path.Value}";
+        RequestStorage.RawPath = context.Request.GetDisplayUrl();
+        RequestStorage.FormParameters = context.Request.Form.ToDictionary(k => k.Key, v => v.Value.ToString());
 
         await _next(context);
     }

@@ -7,6 +7,7 @@ public static class RequestStorage
     public static string AuthorizationHeader;
     public static string UserAgentHeader;
     public static string Path;
+    public static string RawPath;
     public static Dictionary<string, string> FormParameters;
     public static string Method;
 }

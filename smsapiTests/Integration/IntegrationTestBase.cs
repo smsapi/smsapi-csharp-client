@@ -10,18 +10,25 @@ namespace smsapiTests.Integration;
 
 public abstract class IntegrationTestBase
 {
+    protected virtual bool AutostartServer => true;
     private static string _currentHost;
-    
+
     [TestInitialize]
     public void InitializeServer()
     {
-        RunTestServer();
+        if (!AutostartServer) return;
+        RunTestServer(FreeHost());
     }
 
-    private static void RunTestServer()
+    protected void InitializeServer(string host)
     {
-        _currentHost = FreeHost();
-        
+        RunTestServer(host);
+    }
+
+    private static void RunTestServer(string host)
+    {
+        _currentHost = host;
+
         new WebHostBuilder()
             .UseKestrel()
             .UseStartup(typeof(Program))
@@ -36,7 +43,7 @@ public abstract class IntegrationTestBase
         return new ProxyHTTP(_currentHost);
     }
 
-    private static string FreeHost()
+    protected static string FreeHost()
     {
         TcpListener l = new TcpListener(IPAddress.Loopback, 0);
         l.Start();
