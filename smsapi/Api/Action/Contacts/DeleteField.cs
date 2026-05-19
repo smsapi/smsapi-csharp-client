@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class DeleteField : Base<Base>
+    public class DeleteField : ContactsBase<Base>
     {
         private readonly string fieldId;
 

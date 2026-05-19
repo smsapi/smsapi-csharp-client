@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class BindContactToGroup : Base<Base>
+    public class BindContactToGroup : ContactsBase<Base>
     {
         private readonly string contactId;
         private readonly string groupId;

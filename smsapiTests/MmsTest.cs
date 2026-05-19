@@ -28,9 +28,7 @@ namespace smsapiTests
                 ids[i] = sendResponse.List[i].ID;
             }
 
-            Countable deletedResponse = _factory.ActionDelete().Ids(ids).Execute();
-
-            Assert.AreEqual(0, deletedResponse.Count);
+            Assert.ThrowsException<ActionException>(() => _factory.ActionDelete().Ids(ids).Execute());
         }
 
         [TestMethod]
