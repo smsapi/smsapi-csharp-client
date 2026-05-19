@@ -25,8 +25,14 @@ namespace SMSApi.Api.Response
         private Group()
         { }
 
-        [DataMember(Name = "contacts_count", IsRequired = false)]
         public int ContactsCount { get; private set; }
+
+        [DataMember(Name = "contacts_count", IsRequired = false)]
+        private int? ContactsCountSerializationHelper
+        {
+            get => ContactsCount;
+            set => ContactsCount = value ?? 0;
+        }
 
         public DateTime? DateCreated { get; private set; }
 
@@ -44,11 +50,17 @@ namespace SMSApi.Api.Response
         }
 
         [Obsolete("use ContactsCount instead")]
-        [DataMember(Name = "numbers_count", IsRequired = false)]
         public uint NumbersCount
         {
             get => (uint)ContactsCount;
             private set => ContactsCount = (int)value;
+        }
+
+        [DataMember(Name = "numbers_count", IsRequired = false)]
+        private int? NumbersCountSerializationHelper
+        {
+            get => ContactsCount;
+            set => ContactsCount = value ?? ContactsCount;
         }
 
         public List<GroupPermission> Permissions
