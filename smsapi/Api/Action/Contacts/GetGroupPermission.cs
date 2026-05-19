@@ -3,7 +3,7 @@ using SMSApi.Api.Response;
 
 namespace SMSApi.Api.Action
 {
-    public class GetGroupPermission : Base<GroupPermission>
+    public class GetGroupPermission : ContactsBase<GroupPermission>
     {
         private readonly string groupId;
         private readonly string username;

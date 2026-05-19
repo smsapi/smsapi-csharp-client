@@ -19,7 +19,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>SMSAPI.pl</PackageId>
-    <PackageVersion>2.2.0</PackageVersion>
+    <PackageVersion>2.2.1</PackageVersion>
     <PackagerequireLicenseAcceptance>false</PackagerequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.smsapi.com</PackageProjectUrl>
@@ -34,7 +34,7 @@
     <Folder Include="docs\icons" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="109.0.1" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

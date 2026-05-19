@@ -16,6 +16,8 @@ namespace SMSApi.Api.Action
 
         protected abstract RequestMethod Method { get; }
 
+        protected virtual bool IncludeJsonFormatParameter => true;
+
         public T Execute()
         {
             Validate();
@@ -100,9 +102,17 @@ namespace SMSApi.Api.Action
         private NameValueCollection GetValues()
         {
             var values = Values();
-            return values.Count > 0
-                ? new NameValueCollection { { "format", "json" }, values }
-                : HttpUtility.ParseQueryString(string.Empty);
+            if (values.Count == 0)
+            {
+                return HttpUtility.ParseQueryString(string.Empty);
+            }
+
+            if (!IncludeJsonFormatParameter)
+            {
+                return values;
+            }
+
+            return new NameValueCollection { { "format", "json" }, values };
         }
 
         /**

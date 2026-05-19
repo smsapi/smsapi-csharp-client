@@ -45,22 +45,20 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             RestClient client = CreateClient();
-            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
+            RestRequest request = CreateRequest(uri, data, files, method);
 
             try
             {
-                client.Execute(request);
+                var response = client.Execute(request);
+                return ToStream(response);
             }
             catch (System.Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
-
-            return responseStream;
         }
 
         public async Task<Stream> ExecuteAsync(
@@ -86,39 +84,37 @@ namespace SMSApi.Api
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
-            var responseStream = new MemoryStream();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             RestClient client = CreateClient();
-            RestRequest request = CreateRequest(uri, responseStream, data, files, method);
+            RestRequest request = CreateRequest(uri, data, files, method);
 
             try
             {
-                await client.ExecuteAsync(request);
+                var response = await client.ExecuteAsync(request);
+                return ToStream(response);
             }
             catch (System.Exception e)
             {
                 throw new ProxyException("Failed to get response from " + uri, e);
             }
+        }
 
-            return responseStream;
+        private static Stream ToStream(RestResponse response)
+        {
+            var bytes = response.RawBytes ?? Array.Empty<byte>();
+            return new MemoryStream(bytes, writable: false);
         }
 
         private static RestRequest CreateRequest(
             string uri,
-            Stream responseStream,
             NameValueCollection data,
             Dictionary<string, Stream> files,
             RequestMethod method)
         {
             var request = new RestRequest(uri)
             {
-                Method = method.ToMethod(),
-                ResponseWriter = s =>
-                {
-                    s.CopyTo(responseStream);
-                    return s;
-                }
+                Method = method.ToMethod()
             };
 
             foreach (string key in data.Keys)
