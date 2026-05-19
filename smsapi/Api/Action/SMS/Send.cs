@@ -191,7 +191,7 @@ namespace SMSApi.Api.Action
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
 
-            if (text == null)
+            if (text == null && template == null)
             {
                 throw new ArgumentException("Cannot send message without text!");
             }
