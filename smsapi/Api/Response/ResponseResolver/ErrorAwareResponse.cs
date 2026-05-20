@@ -6,24 +6,13 @@ public class ErrorAwareResponse : IResponseCodeAwareResolver
 {
     [JsonProperty("message")] public readonly string ErrorMessage;
 
-    [JsonProperty("error")] public readonly int? ErrorCode;
-
-    // [JsonProperty("error")]
-    // private JsonElement? _errorCode
-    // {
-    //     set => value?.Let(val =>
-    //     {
-    //         ErrorCode = val.ValueKind == JsonValueKind.Number ? val.GetInt32() : val.GetString();
-    //     });
-    // }
+    [JsonProperty("error")] public readonly string? ErrorCode;
 
     public bool IsError()
     {
-        if (ErrorCode == null) return false;
+        if (string.IsNullOrEmpty(ErrorCode)) return false;
 
-      //  if (ErrorCode is string) return ErrorCode != "";
-
-        return (ErrorCode as int? ?? 0) != 0;
+        return ErrorCode != "0";
     }
 
     public string GetErrorMessage()

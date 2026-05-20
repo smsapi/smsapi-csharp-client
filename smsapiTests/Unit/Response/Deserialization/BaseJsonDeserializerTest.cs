@@ -116,6 +116,32 @@ public class BaseJsonDeserializerTest
     }
     
     [TestMethod]
+    public void deserialize_ignores_property_marked_with_json_ignore_avoiding_name_collision()
+    {
+        var json = new Dictionary<string, int>
+        {
+            { "value", 42 }
+        };
+
+        var result = Deserialize<JsonIgnoreAvoidsNameCollision>(json);
+
+        Assert.AreEqual(42, result.Value);
+    }
+
+    [TestMethod]
+    public void deserialize_serialization_helper_writes_back_to_private_field()
+    {
+        var json = new Dictionary<string, int>
+        {
+            { "raw_value", 5 }
+        };
+
+        var result = Deserialize<SerializationHelperBackedProperty>(json);
+
+        Assert.AreEqual(10, result.DoubledValue);
+    }
+
+    [TestMethod]
     public void deserialize_readonly_record_struct()
     {
         var json = new Dictionary<string, string>
@@ -183,5 +209,34 @@ public class BaseJsonDeserializerTest
     private readonly record struct ReadonlyRecordStruct
     {
         public readonly string Field;
+    }
+
+    private class JsonIgnoreAvoidsNameCollision
+    {
+        [JsonIgnore]
+        public int LegacyValue => Value * 2;
+
+        public int Value { get; private set; }
+
+        [JsonProperty("value")]
+        private int? ValueSerializationHelper
+        {
+            get => Value;
+            set => Value = value ?? 0;
+        }
+    }
+
+    private class SerializationHelperBackedProperty
+    {
+        private int _value;
+
+        public int DoubledValue => _value * 2;
+
+        [JsonProperty("raw_value")]
+        private int RawValueSerializationHelper
+        {
+            get => _value;
+            set => _value = value;
+        }
     }
 }

@@ -77,9 +77,11 @@ namespace SMSApi.Api.Response.Deserialization
         * 1000 Akcja dostępna tylko dla użytkownika głównego
         * 1001 Nieprawidłowa akcja
         */
-        private static bool IsClientError(dynamic code)
+        private static bool IsClientError(string? code)
         {
-            switch (code)
+            if (!int.TryParse(code, out var n)) return false;
+
+            switch (n)
             {
                 case 101:
                 case 102:
@@ -101,9 +103,11 @@ namespace SMSApi.Api.Response.Deserialization
          * 999 Wewnętrzny błąd systemu
          * 201 Wewnętrzny błąd systemu
          */
-        private static bool IsHostError(dynamic code)
+        private static bool IsHostError(string? code)
         {
-            switch (code)
+            if (!int.TryParse(code, out var n)) return false;
+
+            switch (n)
             {
                 case 8:
                 case 201:

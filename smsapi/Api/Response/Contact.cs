@@ -57,6 +57,7 @@ namespace SMSApi.Api.Response
         }
 
         [Obsolete("use DateCreated instead")]
+        [JsonIgnore]
         public uint DateAdd
         {
             get
@@ -69,6 +70,7 @@ namespace SMSApi.Api.Response
         public DateTime? DateCreated => dateCreated;
 
         [Obsolete("use DateUpdated instead")]
+        [JsonIgnore]
         public uint DateMod
         {
             get

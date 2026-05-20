@@ -32,6 +32,22 @@ public class LegacyResponseDeserializationExceptionTest
     }
     
     [TestMethod]
+    public void throw_action_exception_for_non_numeric_error_code()
+    {
+        var action = new TestAction();
+        action.Proxy(_proxyStub);
+        Dictionary<string, dynamic> errorResponse = new() { { "error", "contact_not_found" }, { "message", "Cannot find contact" } };
+        _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
+            errorResponse.ToHttpEntityStreamTask(),
+            HttpStatusCode.OK
+        );
+
+        var execution = () => action.Execute();
+
+        Assert.ThrowsException<ActionException>(execution);
+    }
+
+    [TestMethod]
     [DynamicData(nameof(HostErrorCodes), DynamicDataSourceType.Method)]
     public void throw_host_exception(int errorCode)
     {
