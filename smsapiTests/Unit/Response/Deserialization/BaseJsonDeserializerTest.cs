@@ -213,16 +213,16 @@ public class BaseJsonDeserializerTest
 
     private class JsonIgnoreAvoidsNameCollision
     {
-        [JsonIgnore]
-        public int LegacyValue => Value * 2;
+        private int _backing;
 
-        public int Value { get; private set; }
+        [JsonIgnore]
+        public int Value => _backing;
 
         [JsonProperty("value")]
-        private int? ValueSerializationHelper
+        private int ValueSerializationHelper
         {
-            get => Value;
-            set => Value = value ?? 0;
+            get => _backing;
+            set => _backing = value;
         }
     }
 
