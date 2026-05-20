@@ -22,8 +22,10 @@ namespace SMSApi.Api.Response
         [JsonProperty("contacts_count")]
         public int? ContactsCount { get; private set; }
 
+        [JsonIgnore]
         public DateTime? DateCreated { get; private set; }
 
+        [JsonIgnore]
         public DateTime? DateUpdated { get; private set; }
 
         [JsonProperty("description")]

@@ -17,6 +17,7 @@ internal class PrivateFieldsContractResolver : DefaultContractResolver
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
     {
         var jsonProperties = base.CreateProperties(type, memberSerialization)
+            .Where(property => !property.Ignored)
             .GroupBy(property => property.UnderlyingName, StringComparer.OrdinalIgnoreCase)
             .Select(group => group.First())
             .ToHashSet();

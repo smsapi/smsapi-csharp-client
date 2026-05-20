@@ -67,6 +67,7 @@ namespace SMSApi.Api.Response
             }
         }
 
+        [JsonIgnore]
         public DateTime? DateCreated => dateCreated;
 
         [Obsolete("use DateUpdated instead")]
@@ -80,6 +81,7 @@ namespace SMSApi.Api.Response
             }
         }
 
+        [JsonIgnore]
         public DateTime? DateUpdated => dateUpdated;
 
         [JsonProperty("date_add")]
