@@ -24,8 +24,7 @@ namespace SMSApi.Api.Response
                 return collection;
             }
 
-            set
-            { }
+            set => collection = value;
         }
 
         [Obsolete("use Size instead")]

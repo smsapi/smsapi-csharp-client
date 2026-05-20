@@ -142,6 +142,20 @@ public class BaseJsonDeserializerTest
     }
 
     [TestMethod]
+    public void deserialize_populates_property_with_lazy_initializing_getter_and_field_writing_setter()
+    {
+        var json = new Dictionary<string, List<string>>
+        {
+            { "items", new List<string> { "a", "b", "c" } }
+        };
+
+        var result = Deserialize<LazyGetterFieldBackedCollection>(json);
+
+        Assert.AreEqual(3, result.Items.Count);
+        CollectionAssert.AreEqual(new[] { "a", "b", "c" }, result.Items);
+    }
+
+    [TestMethod]
     public void deserialize_readonly_record_struct()
     {
         var json = new Dictionary<string, string>
@@ -223,6 +237,18 @@ public class BaseJsonDeserializerTest
         {
             get => _backing;
             set => _backing = value;
+        }
+    }
+
+    private class LazyGetterFieldBackedCollection
+    {
+        private List<string> _items;
+
+        [JsonProperty("items")]
+        public List<string> Items
+        {
+            get => _items ??= new List<string>();
+            set => _items = value;
         }
     }
 
