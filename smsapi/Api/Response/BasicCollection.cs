@@ -12,6 +12,7 @@ namespace SMSApi.Api.Response
         [JsonProperty("size")]
         private int _size;
 
+        [JsonProperty("collection")]
         public List<T> Collection
         {
             get
