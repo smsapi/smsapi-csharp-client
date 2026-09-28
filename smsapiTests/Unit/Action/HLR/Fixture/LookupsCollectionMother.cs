@@ -18,7 +18,7 @@ public static class LookupsCollectionMother
         Network? network,
         double cost,
         Ported? ported,
-        uint? errorCode,
+        string? errorCode,
         DateTime sentAt
     )
     {

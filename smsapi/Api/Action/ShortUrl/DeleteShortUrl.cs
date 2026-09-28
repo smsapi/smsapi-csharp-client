@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response.ShortUrl;
 
 namespace SMSApi.Api.Action.ShortUrl;
@@ -21,5 +22,11 @@ public sealed class DeleteShortUrl : Action<ShortLinkRemovalResult>
     protected override string Uri()
     {
         return $"short_url/links/{_id}";
+    }
+
+    protected override void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(_id))
+            throw new ArgumentException("Id cannot be empty");
     }
 }

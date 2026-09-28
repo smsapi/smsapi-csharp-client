@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api;
+using SMSApi.Api.Action;
 
 namespace smsapiTests.Unit;
 
@@ -14,6 +15,11 @@ public class ProxyAssert(SpyProxy proxy)
         Assert.AreEqual(requestMethod, proxy.RequestMethod);
     }
     
+    public void AssertContentType(ActionContentType contentType)
+    {
+        Assert.AreEqual(contentType, proxy.ContentType);
+    }
+
     public void AssertUriEquals(string uri)
     {
         Assert.IsTrue(

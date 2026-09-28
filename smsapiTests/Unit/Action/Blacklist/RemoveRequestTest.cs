@@ -1,3 +1,4 @@
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SMSApi.Api.Action.Blacklist;
 
@@ -22,6 +23,16 @@ public class RemoveRequestTest
         Remove(recordId).Execute();
         
         _proxyAssert.AssertUriEquals($"blacklist/phone_numbers/{recordId}");
+    }
+
+    [DataTestMethod]
+    [DataRow("")]
+    [DataRow(" ")]
+    [DataRow(null)]
+    public void empty_id_is_rejected(string id)
+    {
+        Assert.ThrowsException<ArgumentException>(() => Remove(id).Execute());
+        Assert.IsNull(_spyProxy.RequestedUri);
     }
 
     private Remove Remove(string id)

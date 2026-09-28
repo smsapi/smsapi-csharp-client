@@ -8,6 +8,8 @@ namespace SMSApi.Api.Action
     public class VMSSend : Send
     {
         private Stream File;
+        private FileInfo FileInfo;
+        private string FileUrl;
         private string From;
         private int Interval;
         private bool SkipGSM;
@@ -16,6 +18,8 @@ namespace SMSApi.Api.Action
         private string TTSLector;
 
         protected override RequestMethod Method => RequestMethod.POST;
+
+        protected override ActionContentType ContentType => ActionContentType.FormWww;
 
         public VMSSend SetCheckIDx(bool check = true)
         {
@@ -38,6 +42,18 @@ namespace SMSApi.Api.Action
         public VMSSend SetFile(Stream file)
         {
             File = file;
+            return this;
+        }
+
+        public VMSSend SetFile(FileInfo file)
+        {
+            FileInfo = file;
+            return this;
+        }
+
+        public VMSSend SetFileUrl(string url)
+        {
+            FileUrl = url;
             return this;
         }
 
@@ -128,6 +144,11 @@ namespace SMSApi.Api.Action
                 files.Add("file", File);
             }
 
+            if (FileInfo != null)
+            {
+                files.Add(FileInfo.Name, FileInfo.OpenRead());
+            }
+
             return files;
         }
 
@@ -143,14 +164,23 @@ namespace SMSApi.Api.Action
                 throw new ArgumentException("Cannot use 'to' and 'group' at the same time!");
             }
 
-            if ((TTS == null || TTS.Length < 1) && (File == null || File.Length == 0))
+            if (To == null && Group == null)
+            {
+                throw new ArgumentException("Recipient required, use 'to' or 'group'!");
+            }
+
+            var hasTts = !string.IsNullOrEmpty(TTS);
+            var hasFile = (File != null && File.Length > 0) || (FileInfo != null && FileInfo.Length > 0);
+            var hasFileUrl = !string.IsNullOrEmpty(FileUrl);
+
+            if (!hasTts && !hasFile && !hasFileUrl)
             {
                 throw new ArgumentException("Cannot send message without content!");
             }
 
-            if (TTS != null && File != null)
+            if ((hasTts ? 1 : 0) + (hasFile ? 1 : 0) + (hasFileUrl ? 1 : 0) > 1)
             {
-                throw new ArgumentException("Cannot send TTS and file at the same time");
+                throw new ArgumentException("Only one of TTS, file or file URL can be used at the same time");
             }
         }
 
@@ -163,6 +193,11 @@ namespace SMSApi.Api.Action
                 collection.Add("to", string.Join(",", To));
             }
 
+            if (Group != null)
+            {
+                collection.Add("group", Group);
+            }
+
             if (From != null)
             {
                 collection.Add("from", From);
@@ -171,6 +206,11 @@ namespace SMSApi.Api.Action
             if (TTS != null)
             {
                 collection.Add("tts", TTS);
+            }
+
+            if (FileUrl != null)
+            {
+                collection.Add("file", FileUrl);
             }
 
             if (DateSent != null)

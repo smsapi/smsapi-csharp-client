@@ -1,3 +1,4 @@
+using System;
 using smsapi.Api.Response.Blacklist;
 
 namespace SMSApi.Api.Action.Blacklist;
@@ -16,4 +17,10 @@ public class Remove : Action<BlacklistRemovalResult>
     protected override string Uri() => $"blacklist/phone_numbers/{_id}";
 
     protected override ApiType ApiType() => Action.ApiType.Rest;
+
+    protected override void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(_id))
+            throw new ArgumentException("Id cannot be empty");
+    }
 }

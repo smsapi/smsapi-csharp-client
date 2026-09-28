@@ -32,7 +32,7 @@ public readonly record struct ShortLink: IResponseCodeAwareResolver
     public readonly string Type;
     
     [JsonProperty("expire")]
-    public readonly DateTime ExpireAt;
+    public readonly DateTime? ExpireAt;
 
     public readonly int Hits;
     

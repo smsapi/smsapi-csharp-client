@@ -87,7 +87,7 @@ public class ListLookupsResponseTest
             null,
             cost,
             null,
-            15,
+            "TELESERVICE_NOT_PROVISIONED",
             sentAt
         );
         _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
@@ -107,7 +107,7 @@ public class ListLookupsResponseTest
         Assert.AreEqual(null, firstElement.Ported);
         Assert.AreEqual(cost, firstElement.Cost);
         Assert.AreEqual(sentAt, firstElement.SentAt);
-        Assert.AreEqual(15u, firstElement.ErrorCode);
+        Assert.AreEqual("TELESERVICE_NOT_PROVISIONED", firstElement.ErrorCode);
     }
 
     private ListLookups GetList()

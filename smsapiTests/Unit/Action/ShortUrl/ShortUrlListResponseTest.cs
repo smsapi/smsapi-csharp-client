@@ -78,6 +78,38 @@ public class ShortUrlListResponseTest
         Assert.AreEqual(description, firstElement.Description);
     }
 
+    [TestMethod]
+    public void list_short_urls_without_expiration()
+    {
+        var response = CollectionMother.WithItems(
+            new Dictionary<string, dynamic>
+            {
+                { "id", "225143094" },
+                { "name", "test" },
+                { "domain", "www.idz.do" },
+                { "url", null },
+                { "short_url", "www.idz.do/test" },
+                { "filename", null },
+                { "type", null },
+                { "expire", null },
+                { "hits", 0 },
+                { "hits_unique", 0 }
+            });
+        _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
+            response.ToHttpEntityStreamTask(),
+            HttpStatusCode.OK
+        );
+
+        var result = GetList().Execute();
+
+        Assert.AreEqual(1, result.Size);
+        var firstElement = result.Collection.First();
+        Assert.AreEqual("225143094", firstElement.Id);
+        Assert.IsNull(firstElement.Url);
+        Assert.IsNull(firstElement.Type);
+        Assert.IsNull(firstElement.ExpireAt);
+    }
+
     private ShortUrlList GetList()
     {
         var action = new ShortUrlList();

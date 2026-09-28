@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response.Sendernames;
 
 namespace SMSApi.Api.Action.Sendernames;
@@ -20,5 +21,11 @@ public sealed class DeleteSendername : Action<DeleteSendernameResult>
     protected override string Uri()
     {
         return $"sms/sendernames/{_sender}";
+    }
+
+    protected override void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(_sender))
+            throw new ArgumentException("Sender cannot be empty");
     }
 }

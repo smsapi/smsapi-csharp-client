@@ -58,6 +58,9 @@ public static class NativeHttpClientHelper
     {
         var collectionDictionary = collection.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
+        if (contentType == ActionContentType.Json && files is { Count: > 0 })
+            throw new ArgumentException("Files cannot be sent with JSON content type, use form content type instead");
+
         if (contentType == ActionContentType.Json)
             return new StringContent(JsonSerializer.Serialize(collectionDictionary), Encoding.UTF8, "application/json");
 

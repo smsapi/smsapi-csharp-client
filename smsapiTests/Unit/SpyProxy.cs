@@ -15,6 +15,8 @@ public class SpyProxy : Proxy
     public string RequestedUri { get; private set; }
     
     public RequestMethod RequestMethod { get; private set; } 
+
+    public ActionContentType ContentType { get; private set; }
     
     public Dictionary<string, dynamic?> Parameters { get; } = new();
     public ICollection<KeyValuePair<string, string>> Files { get; } = new List<KeyValuePair<string, string>>();
@@ -27,6 +29,7 @@ public class SpyProxy : Proxy
     public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
 
@@ -37,6 +40,7 @@ public class SpyProxy : Proxy
     public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
         Files.Add(KeyValuePair.Create("", new StreamReader(file).ReadToEnd()));
@@ -48,6 +52,7 @@ public class SpyProxy : Proxy
     public HttpResponseEntity Execute(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
         foreach (var file in files)
@@ -64,6 +69,7 @@ public class SpyProxy : Proxy
     public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
 
@@ -73,6 +79,7 @@ public class SpyProxy : Proxy
     public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Stream file, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
 
@@ -82,6 +89,7 @@ public class SpyProxy : Proxy
     public Task<HttpResponseEntity> ExecuteAsync(ActionContentType contentType, string uri, ISet<KeyValuePair<string, dynamic?>> data, Dictionary<string, Stream> files, RequestMethod method, CancellationToken cancellationToken = default)
     {
         RequestedUri = uri;
+        ContentType = contentType;
         SetParameters(data);
         RequestMethod = method;
 

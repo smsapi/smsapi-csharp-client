@@ -11,7 +11,7 @@ public record struct LookupResult
     
     public readonly Country? Country;
 
-    public readonly uint? ErrorCode;
+    public readonly string? ErrorCode;
     public readonly string Id;
 
     public readonly string Interface;

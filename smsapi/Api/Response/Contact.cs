@@ -46,7 +46,7 @@ namespace SMSApi.Api.Response
 
         private DateTime? dateUpdated;
 
-        public readonly DateTime BirthdayDate;
+        public readonly DateTime? BirthdayDate;
 
         public Dictionary<int, Action<Stream>> HandleExceptionActions()
         {
@@ -98,7 +98,7 @@ namespace SMSApi.Api.Response
         [JsonProperty("date_created")]
         private string DateCreatedSerializationHelper
         {
-            set => dateCreated = DateTime.Parse(value);
+            set => dateCreated = value != null ? DateTime.Parse(value) : null;
             get => "";
         }
 
@@ -116,7 +116,7 @@ namespace SMSApi.Api.Response
         [JsonProperty("date_updated")]
         private string DateUpdatedSerializationHelper
         {
-            set => dateUpdated = DateTime.Parse(value);
+            set => dateUpdated = value != null ? DateTime.Parse(value) : null;
             get => "";
         }
     }

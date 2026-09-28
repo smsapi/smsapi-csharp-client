@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response.OptOut;
 
 namespace SMSApi.Api.Action.OptOut;
@@ -18,5 +19,11 @@ public sealed class DeleteOptOut : Action<OptOutDeletionResponse>
     protected override string Uri()
     {
         return $"opt_outs/{_optOutId}";
+    }
+
+    protected override void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(_optOutId))
+            throw new ArgumentException("OptOutId cannot be empty");
     }
 }

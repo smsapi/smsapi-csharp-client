@@ -1,3 +1,4 @@
+using System;
 using SMSApi.Api.Response.Subusers;
 
 namespace SMSApi.Api.Action.Subusers.Creation;
@@ -16,4 +17,10 @@ public sealed class DeleteSubuser : Action<SubuserDeletionResult>
     protected override string Uri() => $"subusers/{_userId}";
 
     protected override ApiType ApiType() => Action.ApiType.Rest;
+
+    protected override void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+            throw new ArgumentException("UserId cannot be empty");
+    }
 }
