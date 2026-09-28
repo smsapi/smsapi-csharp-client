@@ -7,6 +7,7 @@
 - VMS: added `SetFileUrl` and `SetFile(FileInfo)`
 - Blacklist: `Remove` with empty id throws `ArgumentException` instead of removing whole blacklist (same validation for `DeleteShortUrl`, `DeleteOptOut`, `DeleteSendername`, `DeleteSubuser`)
 - Sending files with JSON content type throws instead of silently dropping them
+- `SmsapiException.Response` holds the raw API response; set when response deserialization fails (`HostException` with code `-1`, instead of a raw `JsonSerializationException`) and for `UnhandledRestException`
 - **BC**: `ShortLink.ExpireAt` is `DateTime?`
 - **BC**: `LookupResult.ErrorCode` is `string?` (API returns textual codes, e.g. `TELESERVICE_NOT_PROVISIONED`)
 - **BC**: `Contact.BirthdayDate` is `DateTime?`

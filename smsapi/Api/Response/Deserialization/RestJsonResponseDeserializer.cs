@@ -47,7 +47,8 @@ public class RestJsonResponseDeserializer : IDeserializer
     {
         throw new UnhandledRestException(
             $"Unknown http status code: {(int)responseEntity.StatusCode}",
-            responseEntity.StatusCode.ToString()
+            responseEntity.StatusCode.ToString(),
+            responseEntity.ReadContentAsString()
         );
     }
 }

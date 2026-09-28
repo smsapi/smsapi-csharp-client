@@ -33,6 +33,22 @@ public class UnhandledRestCodeResponseTest
         Assert.AreEqual("FailedDependency", ex.Code);
     }
 
+    [TestMethod]
+    public void exception_contains_api_response()
+    {
+        var action = new TestAction();
+        action.Proxy(_proxyStub);
+        Dictionary<string, dynamic> response = new() { { "message", "dependency failed" } };
+        _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
+            response.ToHttpEntityStreamTask(),
+            HttpStatusCode.FailedDependency
+        );
+
+        var ex = Assert.ThrowsException<UnhandledRestException>(() => action.Execute());
+
+        Assert.AreEqual("{\"message\":\"dependency failed\"}", ex.Response);
+    }
+
     private class TestAction : Action<ResponseWithExceptionMapper>
     {
         protected override RequestMethod Method { get; }

@@ -7,4 +7,8 @@ public class UnhandledRestException : HostException
     public UnhandledRestException(string message, string code) : base(message, code)
     {
     }
+
+    public UnhandledRestException(string message, string code, string response) : base(message, code, response)
+    {
+    }
 }

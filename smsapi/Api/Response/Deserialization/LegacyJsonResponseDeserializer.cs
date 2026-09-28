@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using smsapi.Api.Response.Deserialization.Exception;
 using SMSApi.Api.Response.ResponseResolver;
 
@@ -26,9 +27,9 @@ namespace SMSApi.Api.Response.Deserialization
                 
                 response = _baseJsonDeserializer.Deserialize<T>(responseEntity);
             }
-            catch (SerializationException e)
+            catch (System.Exception e) when (e is SerializationException or JsonException)
             {
-                throw new HostException(e.Message, HostException.E_JSON_DECODE);
+                throw new HostException(e.Message, HostException.E_JSON_DECODE, responseEntity.ReadContentAsString(), e);
             }
             finally
             {

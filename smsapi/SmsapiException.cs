@@ -9,6 +9,15 @@ namespace SMSApi.Api
             Code = code;
         }
 
+        protected SmsapiException(string message, string code, string response, Exception innerException = null)
+            : base(message, innerException)
+        {
+            Code = code;
+            Response = response;
+        }
+
         public string Code { get; private set; }
+        
+        public string Response { get; private set; }
     }
 }

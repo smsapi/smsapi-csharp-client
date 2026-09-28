@@ -19,5 +19,15 @@ namespace SMSApi.Api
             Content = content;
             StatusCode = statusCode;
         }
+
+        public string ReadContentAsString()
+        {
+            var stream = Content.Result;
+
+            if (!stream.CanRead) return null;
+            if (stream.CanSeek) stream.Position = 0;
+
+            return new StreamReader(stream).ReadToEnd();
+        }
     }
 }
