@@ -1,8 +1,10 @@
+using smsapi.Api.Response.REST.Exception;
+
 namespace SMSApi.Api.Response.OptOut.Exception;
 
-public class OptOutNotFoundException : ClientException
+public class OptOutNotFoundException : NotFoundException
 {
-    public OptOutNotFoundException() : base("Opt-out not found", 404)
+    public OptOutNotFoundException() : base("Opt-out not found")
     {
     }
 }

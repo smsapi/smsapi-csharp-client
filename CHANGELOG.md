@@ -26,6 +26,7 @@
 - VMS: `SetFileUrl` and `SetFile(FileInfo)`
 - `SmsapiException.Response` holds the raw API response; set when response deserialization fails (`HostException` with code `-1`, instead of a raw `JsonSerializationException`) and for `UnhandledRestException`
 - Pagination support (`Limit` / `Offset`) on listings
+- `OptOutNotFoundException` and `BlacklistRecordDoesNotExistException` derive from `NotFoundException` — one catch for every "resource not found" (404)
 - Examples for every feature in `examples/`
 
 ### Fixed

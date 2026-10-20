@@ -163,7 +163,7 @@ catch (ProxyException e)
 
 REST endpoints (contacts, sender names, short URLs, subusers, opt-out, blacklist, MFA, HLR) additionally throw typed
 exceptions from `smsapi.Api.Response.REST.Exception` — `ValidationException` (with `ValidationErrors`),
-`NotFoundException`, `UnauthorizedException`, `AccessForbiddenException`, `TooManyRequestsException`,
+`NotFoundException` (base for feature-specific ones like `OptOutNotFoundException`), `UnauthorizedException`, `AccessForbiddenException`, `TooManyRequestsException`,
 `ServiceUnavailableException` — and feature-specific ones such as `ContactAlreadyExistsException` or
 `ShortUrlWithNameAlreadyExistsException`.
 

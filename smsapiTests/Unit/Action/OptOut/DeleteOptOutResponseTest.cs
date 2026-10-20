@@ -6,6 +6,7 @@ using SMSApi.Api;
 using SMSApi.Api.Action.OptOut;
 using SMSApi.Api.Response.OptOut;
 using SMSApi.Api.Response.OptOut.Exception;
+using smsapi.Api.Response.REST.Exception;
 using smsapiTests.Unit.Fixture;
 using smsapiTests.Unit.Helper;
 
@@ -40,6 +41,20 @@ public class DeleteOptOutResponseTest
         OptOutDeletionResponse Delete() => DeleteOptOut().Execute();
 
         Assert.ThrowsException<OptOutNotFoundException>((Func<OptOutDeletionResponse>)Delete);
+    }
+
+    [TestMethod]
+    public void missing_opt_out_is_catchable_as_not_found()
+    {
+        _proxyStub.SyncExecutionResponse = new HttpResponseEntity(
+            new Dictionary<string, dynamic>().ToHttpEntityStreamTask(),
+            HttpStatusCode.NotFound
+        );
+
+        OptOutDeletionResponse Delete() => DeleteOptOut().Execute();
+
+        var exception = Assert.ThrowsException<OptOutNotFoundException>((Func<OptOutDeletionResponse>)Delete);
+        Assert.IsInstanceOfType(exception, typeof(NotFoundException));
     }
 
     private DeleteOptOut DeleteOptOut()
